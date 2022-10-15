@@ -1,0 +1,81 @@
+html,
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.machine-container {
+  position: relative;
+  height: 100vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 0.7;
+  user-select: none;
+}
+
+.machine-img {
+  width: 100%;
+  height: 100%;
+}
+
+.container-cups {
+  position: absolute;
+  width: 48%;
+  height: 60%;
+  top: 8%;
+  left: 13.9%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(22%, 1fr));
+  justify-content: center;
+  align-items: center;
+}
+
+.container-map {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.2);
+
+    & + .quantity-display {
+      display: flex;
+    }
+  }
+}
+
+.quantity-display {
+  width: 70%;
+  aspect-ratio: 1;
+  position: absolute;
+  background-color: red;
+  z-index: 10000;
+  border-radius: 10%;
+  flex-direction: column;
+  align-items: center;
+  animation: scale 0.2s ease;
+  display: none;
+}
+
+.pointer {
+  width: 20%;
+  aspect-ratio: 1;
+  background-color: red;
+  position: absolute;
+  left: -6%;
+  transform: rotate(45deg) translateY(-50%);
+  top: 50%;
+}
+
+@keyframes scale {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.name-overlay {
+  color: white;
+}
