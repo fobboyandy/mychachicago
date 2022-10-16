@@ -1,5 +1,5 @@
 import React from "react";
-import Homelogo from "../longstuff/homelogo";
+import Homelogo from "../longstuff/Homelogo";
 import "./home.scss";
 
 const Nav = () => {
