@@ -1,7 +1,6 @@
 html,
 body {
   margin: 0;
-  overflow: hidden;
 }
 
 .machine-container {
@@ -78,4 +77,13 @@ body {
 
 .name-overlay {
   color: white;
+}
+.qty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  z-index: 2;
+  font-size: 25px;
+  color: #638921;
 }

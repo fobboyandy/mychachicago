@@ -44,7 +44,7 @@ const App = () => {
                 id={drink.id}
                 className='container-map'
               >
-                <Boba />
+                <Boba drink={drink} />
               </div>
               <QtyOverlay drink={drink} />
             </div>
