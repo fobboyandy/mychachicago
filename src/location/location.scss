@@ -1,0 +1,17 @@
+.container-locations {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+  gap: 5%;
+}
+
+.container-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.img-location {
+  width: 100%;
+}

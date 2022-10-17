@@ -1,4 +1,6 @@
 import React from "react";
+import Background from "../Background";
+import MainLocations from "../location/MainLocations";
 import "./home.scss";
 import Nav from "./Nav";
 import Scrolldiv from "./Scrolldiv";
@@ -8,6 +10,8 @@ const Home = () => {
     <div id='parent'>
       <Nav />
       <Scrolldiv />
+      <MainLocations />
+      <Background />
       <div style={{ height: "100vh" }}></div>
     </div>
   );

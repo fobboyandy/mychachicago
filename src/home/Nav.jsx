@@ -11,7 +11,7 @@ const Nav = () => {
         <div className='li-nav'>Home</div>
         <div className='li-nav'>Locations</div>
         <div className='li-nav'>Menu</div>
-        <div className='li-nav'>Contact Us</div>
+        <div className='li-nav'>Contact</div>
       </div>
     </div>
   );

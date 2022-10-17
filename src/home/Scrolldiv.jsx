@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import $ from "jquery";
 
 const Scrolldiv = () => {
@@ -6,11 +6,23 @@ const Scrolldiv = () => {
 
   const [vpWidth, setVpWidth] = useState(0);
   const [smooth, setSmooth] = useState(true);
-
   useEffect(() => {
     const value = window.innerWidth;
     setVpWidth(value);
   }, []);
+
+  const resize = useCallback(() => {
+    setVpWidth(window.innerWidth);
+    console.log(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", resize);
+    console.log("rann");
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, [resize]);
 
   useEffect(() => {
     if (!vpWidth) return;
@@ -20,7 +32,6 @@ const Scrolldiv = () => {
           init(value, notfirst);
         }, 500);
       }
-      console.log(value);
 
       if (value === 0 && notfirst) {
         setSmooth(true);
@@ -84,6 +95,7 @@ const Scrolldiv = () => {
           style={{ width: vpWidth + "px" }}
         ></div>
       </div>
+      <div className='alllocations'>See Locations</div>
     </div>
   );
 };
