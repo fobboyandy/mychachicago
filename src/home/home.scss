@@ -25,6 +25,7 @@
 
 .container-scroll {
   width: 100%;
+  position: relative;
 }
 
 #container2 {
@@ -36,32 +37,123 @@
   scroll-snap-type: inline mandatory;
 }
 .child-scroll {
-  height: 100vh;
+  height: 65vh;
   width: 100%;
   scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#b37 {
-  background: url(../../assets/b37loc2.png) no-repeat center center;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+// #b37 {
+//   background: url(../../assets/b37loc2.png) no-repeat center center;
+//   background-position: center;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+// }
+
+// #uic {
+//   background-image: url(../../assets/b37loc2.png);
+//   background-position: center;
+//   background-size: cover;
+// }
+
+// #ucmed {
+//   background-image: url(../../assets/b37loc2.png);
+//   background-position: center;
+//   background-size: cover;
+// }
+
+// #rush {
+//   background-image: url(../../assets/b37loc2.png);
+//   background-position: center;
+//   background-size: cover;
+// }
+
+.scroll-title {
+  color: rgb(109, 214, 49);
+  font-size: 45px;
+  font-weight: 600;
+  font-family: cursive;
+  text-align: center;
 }
 
-#uic {
-  background-image: url(../../assets/b37loc2.png);
-  background-position: center;
-  background-size: cover;
+.scroll-desc {
+  color: white;
+  font-size: 24px;
+  width: 80%;
+  font-family: cursive;
+  text-align: center;
 }
 
-#ucmed {
-  background-image: url(../../assets/b37loc2.png);
-  background-position: center;
-  background-size: cover;
+.container-titledesc {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-items: center;
 }
 
-#rush {
-  background-image: url(../../assets/b37loc2.png);
-  background-position: center;
-  background-size: cover;
+body {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 254, 234, 1) 0%,
+    rgba(255, 254, 234, 1) 35%,
+    #b7e8eb 100%
+  );
+  overflow-x: hidden;
+}
+
+.ocean {
+  height: 5%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #015871;
+}
+
+.wave {
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)
+    repeat-x;
+  position: absolute;
+  top: -198px;
+  width: 6400px;
+  height: 198px;
+  animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave:nth-of-type(2) {
+  top: -175px;
+  animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -0.125s infinite,
+    swell 7s ease -1.25s infinite;
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -1600px;
+  }
+}
+
+@keyframes swell {
+  0%,
+  100% {
+    transform: translate3d(0, -25px, 0);
+  }
+  50% {
+    transform: translate3d(0, 5px, 0);
+  }
+}
+
+.our-locations-btn {
+  color: black;
+  text-decoration: underline;
+  margin-top: 10px;
+  cursor: pointer;
+  font-family: cursive;
 }

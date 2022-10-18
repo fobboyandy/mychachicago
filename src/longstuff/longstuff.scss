@@ -1,6 +1,6 @@
 #bobacup1 {
   transform: rotate(45deg);
-  top: 50%;
+  top: 45%;
   left: 20%;
   position: absolute;
 }
@@ -25,4 +25,17 @@
   bottom: 10%;
   right: 5%;
   transform: rotate(45deg);
+}
+
+#pocky {
+  position: absolute;
+  right: 32%;
+  top: 0%;
+  transform: rotate(55deg);
+}
+
+#palm {
+  position: absolute;
+  transform: rotate(-45deg);
+  bottom: 5%;
 }
