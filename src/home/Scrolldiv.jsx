@@ -126,11 +126,7 @@ const Scrolldiv = () => {
             <div className="our-locations-btn">Our Locations</div>
           </div>
         </div>
-        <div
-          className="child-scroll"
-          id="b37"
-          style={{ width: vpWidth + "px" }}
-        >
+        <div className="child-scroll" style={{ width: vpWidth + "px" }}>
           <div className="container-titledesc">
             <div className="scroll-title">The Milk Tea ATM</div>
             <div className="scroll-desc">

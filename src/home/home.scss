@@ -37,7 +37,7 @@
   scroll-snap-type: inline mandatory;
 }
 .child-scroll {
-  height: 65vh;
+  height: 60vh;
   width: 100%;
   scroll-snap-align: start;
   display: flex;
@@ -75,7 +75,7 @@
   color: rgb(109, 214, 49);
   font-size: 45px;
   font-weight: 600;
-  font-family: cursive;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
   text-align: center;
 }
 
@@ -83,7 +83,7 @@
   color: white;
   font-size: 24px;
   width: 80%;
-  font-family: cursive;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
   text-align: center;
 }
 
@@ -155,5 +155,5 @@ body {
   text-decoration: underline;
   margin-top: 10px;
   cursor: pointer;
-  font-family: cursive;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
