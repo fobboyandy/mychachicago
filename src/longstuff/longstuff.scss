@@ -1,0 +1,28 @@
+#bobacup1 {
+  transform: rotate(45deg);
+  top: 50%;
+  left: 20%;
+  position: absolute;
+}
+
+.machine-img2 {
+  height: 250px;
+  aspect-ratio: 0.7;
+  position: absolute;
+  right: 20%;
+  top: 24%;
+  transform: rotate(-45deg);
+}
+
+#cup2 {
+  top: 10%;
+  position: absolute;
+  left: 5%;
+}
+
+#cup3 {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  transform: rotate(45deg);
+}

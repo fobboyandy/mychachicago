@@ -7,7 +7,7 @@ import Scrolldiv from "./Scrolldiv";
 
 const Home = () => {
   return (
-    <div id='parent'>
+    <div id="parent">
       <Nav />
       <Scrolldiv />
       <MainLocations />

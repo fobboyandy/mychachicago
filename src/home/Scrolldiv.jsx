@@ -6,6 +6,7 @@ const Scrolldiv = () => {
 
   const [vpWidth, setVpWidth] = useState(0);
   const [smooth, setSmooth] = useState(true);
+
   useEffect(() => {
     const value = window.innerWidth;
     setVpWidth(value);
@@ -13,12 +14,10 @@ const Scrolldiv = () => {
 
   const resize = useCallback(() => {
     setVpWidth(window.innerWidth);
-    console.log(window.innerWidth);
   }, []);
 
   useEffect(() => {
     window.addEventListener("resize", resize);
-    console.log("rann");
     return () => {
       window.removeEventListener("resize", resize);
     };
@@ -54,7 +53,7 @@ const Scrolldiv = () => {
       } else {
         setSmooth(true);
         setTimeout(() => {
-          containerRef.current.scrollLeft += vpWidth;
+          containerRef.current.scrollLeft += vpWidth - 15.5;
           init(value + 1);
         }, 10000);
       }
@@ -63,39 +62,38 @@ const Scrolldiv = () => {
   }, [vpWidth]);
 
   return (
-    <div className='container-scroll' id='scrollcontainer'>
+    <div className="container-scroll" id="scrollcontainer">
       <div
-        id='container2'
+        id="container2"
         ref={containerRef}
         style={{ scrollBehavior: smooth ? "smooth" : "auto" }}
       >
         <div
-          className='child-scroll'
-          id='b37'
+          className="child-scroll"
+          id="b37"
           style={{ width: vpWidth + "px" }}
         ></div>
         <div
-          className='child-scroll'
-          id='uic'
+          className="child-scroll"
+          id="uic"
           style={{ width: vpWidth + "px" }}
         ></div>
         <div
-          className='child-scroll'
-          id='ucmed'
+          className="child-scroll"
+          id="ucmed"
           style={{ width: vpWidth + "px" }}
         ></div>
         <div
-          className='child-scroll'
-          id='rush'
+          className="child-scroll"
+          id="rush"
           style={{ width: vpWidth + "px" }}
         ></div>
         <div
-          className='child-scroll'
-          id='b37'
+          className="child-scroll"
+          id="b37"
           style={{ width: vpWidth + "px" }}
         ></div>
       </div>
-      <div className='alllocations'>See Locations</div>
     </div>
   );
 };

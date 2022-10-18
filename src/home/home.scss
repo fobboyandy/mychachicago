@@ -33,41 +33,35 @@
   grid-auto-flow: column;
   grid-auto-columns: 100%;
   overflow-x: hidden;
+  scroll-snap-type: inline mandatory;
 }
 .child-scroll {
   height: 100vh;
   width: 100%;
+  scroll-snap-align: start;
 }
 
 #b37 {
-  background-image: url(../../assets/unknown.png);
+  background: url(../../assets/b37loc2.png) no-repeat center center;
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #uic {
-  background-image: url(../../assets/research-1090x595.jpeg);
+  background-image: url(../../assets/b37loc2.png);
   background-position: center;
   background-size: cover;
 }
 
 #ucmed {
-  background-image: url(../../assets/ucmed.png);
+  background-image: url(../../assets/b37loc2.png);
   background-position: center;
   background-size: cover;
 }
 
 #rush {
-  background-image: url(../../assets/rush.png);
+  background-image: url(../../assets/b37loc2.png);
   background-position: center;
   background-size: cover;
-}
-
-.alllocations {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: pointer;
-  color: white;
 }
