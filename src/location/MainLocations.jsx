@@ -30,7 +30,7 @@ const MainLocations = () => {
 
             <div className="location-checkqty">
               <img
-                src="../../../assets/leafnobg.png"
+                src="assets/leafnobg.png"
                 style={{ height: "45px", width: "45px", userSelect: "none" }}
               />
               <div className="check-stock">Check Location Stock</div>
