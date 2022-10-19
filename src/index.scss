@@ -6,6 +6,11 @@ body {
   color: rgb(51, 51, 51);
 }
 
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("comic-sans-ms/comici.ttf");
+}
+
 .machine-container {
   position: relative;
   height: 100vh;
