@@ -70,7 +70,7 @@ const Scrolldiv = () => {
       <div
         id="container2"
         ref={containerRef}
-        style={{ scrollBehavior: smooth ? "smooth" : "auto" }}
+        style={{ scrollBehavior: smooth ? "smooth" : "auto", zIndex: 8 }}
       >
         <div
           className="child-scroll"
@@ -123,7 +123,9 @@ const Scrolldiv = () => {
               We have many locations across Chicago and constantly adding more.
               Find one near you.
             </div>
-            <div className="our-locations-btn">Our Locations</div>
+            <a className="our-locations-btn" href="/locations">
+              Our Locations
+            </a>
           </div>
         </div>
         <div className="child-scroll" style={{ width: vpWidth + "px" }}>

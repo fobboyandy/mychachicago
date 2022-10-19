@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Background from "../Background";
 import "./location.scss";
 import { location } from "./locationsobj";
 
@@ -10,6 +11,7 @@ const MainLocations = () => {
         width: "100%",
         justifyContent: "center",
         marginTop: "5vh",
+        overflow: "hidden",
       }}
     >
       <div style={{ width: "80%" }} className="container-locations">
@@ -38,6 +40,7 @@ const MainLocations = () => {
           </div>
         ))}
       </div>
+      <Background />
     </div>
   );
 };
