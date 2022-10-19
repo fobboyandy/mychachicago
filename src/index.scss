@@ -1,14 +1,14 @@
 html,
 body {
   margin: 0;
-  font-family: "Comic Sans MS", "Comic Sans";
+  font-family: "Comic Sans MS";
   overflow-x: hidden;
   color: rgb(51, 51, 51);
 }
 
 @font-face {
   font-family: "Comic Sans MS";
-  src: url("comic-sans-ms/comici.ttf");
+  src: url("fonts/comic-sans-ms/comici.ttf");
 }
 
 .machine-container {
