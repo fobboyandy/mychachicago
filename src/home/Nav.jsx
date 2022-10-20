@@ -6,20 +6,21 @@ import "./home.scss";
 const Nav = () => {
   const history = useNavigate();
   return (
-    <div className="nav-home" style={{ zIndex: 10, userSelect: "none" }}>
+    <div className='nav-home' style={{ zIndex: 10, userSelect: "none" }}>
       <Homelogo />
       <div style={{ flexGrow: 1 }} />
-      <div className="li-container" style={{ marginRight: "5%" }}>
-        <div className="li-nav" onClick={() => history("/")}>
+      <div className='li-container' style={{ marginRight: "5%" }}>
+        <div className='li-nav' onClick={() => history("/")}>
           Home
         </div>
-        <div className="li-nav" onClick={() => history("/locations")}>
+        <div className='li-nav'>Catering</div>
+        <div className='li-nav' onClick={() => history("/locations")}>
           Locations
         </div>
-        <div className="li-nav" onClick={() => history("/menu")}>
+        <div className='li-nav' onClick={() => history("/menu")}>
           Menu
         </div>
-        <div className="li-nav" onClick={() => history("/contact")}>
+        <div className='li-nav' onClick={() => history("/contact")}>
           Contact
         </div>
       </div>

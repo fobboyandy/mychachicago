@@ -7,6 +7,10 @@ body {
   color: rgb(51, 51, 51);
 }
 
+img {
+  user-select: none;
+}
+
 @font-face {
   font-family: "comic_sans_msitalic";
   src: url("../fonts/sqfont/comici-webfont.eot");
