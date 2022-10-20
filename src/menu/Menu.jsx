@@ -1,11 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Background from "../Background";
 import "./menu.scss";
 
 import Leaf from "../longstuff/Leaf";
 import { menuobj } from "./menuobj";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Menu = () => {
+  const history = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state) {
+      switch (location.state.from) {
+        case "fruit":
+          const fruittea = document.getElementById("fruitteasection");
+          fruittea.scrollIntoView({
+            block: "start",
+            inline: "nearest",
+            behavior: "smooth",
+          });
+          break;
+        case "milktea":
+          const milktea = document.getElementById("milkteasection");
+          milktea.scrollIntoView({
+            block: "start",
+            inline: "nearest",
+            behavior: "smooth",
+          });
+          break;
+        case "special":
+          const speciality = document.getElementById("specialsection");
+          speciality.scrollIntoView({
+            block: "start",
+            inline: "nearest",
+            behavior: "smooth",
+          });
+          console.log("ran");
+          break;
+      }
+    } else {
+      window.scrollTo({ top: 0 });
+    }
+  }, []);
   return (
     <div>
       <div className="sliding-placeholder">PLACEHOLDER</div>
@@ -39,11 +76,10 @@ const Menu = () => {
               />
               <div className="container-sectionmenu">
                 {section.items.map((item) => (
-                  <div className="menu-half" id={item.id}>
+                  <div className="menu-half" id={item.htmlid}>
                     <div className="img-menucontainer">
                       <div
                         className="img-menu"
-                        id={item.id}
                         style={{
                           backgroundImage: `url(${item.image})`,
                           border:
@@ -59,14 +95,17 @@ const Menu = () => {
 
                     <div className="menu-txtcontainer">
                       <div className="name-menu">{item.name}</div>
-                      <div
-                        style={{
-                          cursor: "pointer",
-                          marginTop: "8px",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        Learn More
+                      <div>
+                        <span
+                          style={{
+                            cursor: "pointer",
+                            marginTop: "8px",
+                            textDecoration: "underline",
+                          }}
+                          onClick={() => history(`/menu/${item.id}`)}
+                        >
+                          Learn More
+                        </span>
                       </div>
                     </div>
                   </div>

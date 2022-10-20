@@ -2,8 +2,10 @@ import React from "react";
 import "./home.scss";
 
 import Leaf from "../longstuff/Leaf";
+import { useNavigate } from "react-router-dom";
 
 const Section2 = () => {
+  const history = useNavigate();
   return (
     <div className="container-section2">
       <div className="innercontainer-section2">
@@ -23,9 +25,24 @@ const Section2 = () => {
 
         <div className="desc-section2">Our menu consists of:</div>
         <div className="menucontainer-section2">
-          <div id="first-menu" className="image-menu" text="Fruit Teas" />
-          <div id="second-menu" className="image-menu" text="Milk Teas" />
-          <div id="third-menu" className="image-menu" text="Specialty Drinks" />
+          <div
+            id="first-menu"
+            className="image-menu"
+            text="Fruit Teas"
+            onClick={() => history("/menu", { state: { from: "fruit" } })}
+          />
+          <div
+            id="second-menu"
+            className="image-menu"
+            text="Milk Teas"
+            onClick={() => history("/menu", { state: { from: "milktea" } })}
+          />
+          <div
+            id="third-menu"
+            className="image-menu"
+            text="Specialty Drinks"
+            onClick={() => history("/menu", { state: { from: "special" } })}
+          />
         </div>
 
         <a
@@ -54,9 +71,12 @@ const Section2 = () => {
         </div>
 
         <div className="desc-section2" style={{ marginTop: "30px" }}>
-          At Mycha, we guarantee quality and freshness. Our drinks have a shelf
-          life of 24-48 hours and drinks that reach this point are immediately
-          removed
+          At Mycha, we guarantee{" "}
+          <span style={{ color: "rgb(109, 214, 49)", fontStyle: "italic" }}>
+            quality and freshness.
+          </span>{" "}
+          Our drinks have a shelf life of 24-48 hours and drinks that reach this
+          point are immediately removed
         </div>
       </div>
     </div>

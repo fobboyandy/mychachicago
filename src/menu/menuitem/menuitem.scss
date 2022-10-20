@@ -1,0 +1,46 @@
+table {
+  border-collapse: collapse;
+}
+th {
+  display: table-cell;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.mitem-parent {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
+.mitem-container {
+  width: 70%;
+  max-width: 1100px;
+  //   background-color: red;
+  display: flex;
+  flex-direction: row;
+}
+
+.mitem-tableparent {
+  width: 60%;
+  margin-left: 10vw;
+}
+
+.table-head {
+  width: 100%;
+  display: table;
+}
+
+.tablebody-top {
+  display: table-row-group;
+}
+
+.tr-top {
+  padding: 15px 0;
+}
