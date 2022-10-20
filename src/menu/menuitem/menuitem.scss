@@ -28,8 +28,14 @@ th {
 }
 
 .mitem-tableparent {
-  width: 60%;
+  width: 120%;
   margin-left: 10vw;
+  max-width: 1200px;
+  overflow: hidden;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 10px;
 }
 
 .table-head {
@@ -43,4 +49,20 @@ th {
 
 .tr-top {
   padding: 15px 0;
+}
+
+.tr-bot {
+  padding: 4px 0;
+}
+
+.f500 {
+  font-weight: 500;
+}
+
+.px4-888 {
+  border-bottom: 4px solid #888;
+}
+
+.px1-888 {
+  border-bottom: 1px solid #888;
 }
