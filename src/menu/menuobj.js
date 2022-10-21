@@ -185,6 +185,36 @@ const allItems = [
     name: "Passionfruit Jasmine Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032497287550734336/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
   {
     id: 4,
@@ -192,6 +222,36 @@ const allItems = [
     name: "Jasmine Milk Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032507744583958599/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
     nutrition: {
       //correct
       small: {
@@ -267,6 +327,36 @@ const allItems = [
     name: "Matcha Milk Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032508025770082334/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
 
   {
@@ -275,6 +365,36 @@ const allItems = [
     name: "Taro Milk Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032508240900137030/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
 
   {
@@ -283,6 +403,36 @@ const allItems = [
     name: "Coffee Milk Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032508527182360617/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
   {
     id: 9,
@@ -290,6 +440,36 @@ const allItems = [
     name: "Thai Iced Tea",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032508684833665084/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
 
   {
@@ -298,6 +478,36 @@ const allItems = [
     name: "Vietnamese Coffee",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032508887384993842/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
   {
     id: 11,
@@ -305,6 +515,36 @@ const allItems = [
     name: "Mango Lassi",
     image:
       "https://cdn.discordapp.com/attachments/779278654714675232/1032509056822280233/unknown.png",
+    nutrition: {
+      //correct
+      small: {
+        serving_size: 400,
+        calories: 325,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [48, 17],
+        dietary_fiber: [0, 0],
+        total_sugars: 27,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+
+      large: {
+        serving_size: 400,
+        calories: 332,
+        total_fat: [14, 18],
+        saturated_fat: [0, 0],
+        trans_fat: 0,
+        sodium: [0, 0],
+        total_carbohydrate: [49, 18],
+        dietary_fiber: [0, 0],
+        total_sugars: 30,
+        added_sugars: [0, 0],
+        protein: [1, 2],
+      },
+    },
   },
 ];
 

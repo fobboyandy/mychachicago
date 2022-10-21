@@ -22,25 +22,68 @@ th {
 .mitem-container {
   width: 70%;
   max-width: 1100px;
-  //   background-color: red;
   display: flex;
   flex-direction: row;
+
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5vh;
+  }
+}
+
+.mitem-imgcontainer {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+}
+
+.mitem-img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .mitem-tableparent {
   width: 120%;
-  margin-left: 10vw;
-  max-width: 1200px;
+  max-width: 620px;
   overflow: hidden;
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 100%;
   gap: 10px;
+  scroll-behavior: smooth;
+  scroll-snap-type: inline mandatory;
+  @media only screen and (max-width: 700px) {
+    width: 163%;
+  }
+}
+
+.mitem-tableouter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 7vw;
+  width: 50%;
+
+  @media only screen and (max-width: 700px) {
+    margin-left: 0;
+    margin-top: 30px;
+    width: 85%;
+  }
 }
 
 .table-head {
   width: 100%;
   display: table;
+  scroll-snap-align: start;
 }
 
 .tablebody-top {
@@ -65,4 +108,25 @@ th {
 
 .px1-888 {
   border-bottom: 1px solid #888;
+}
+
+.mitem-head {
+  font-size: 24px;
+  text-align: center;
+}
+
+.mitem-select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mitem-selectchild {
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 20px;
+  padding-bottom: 5px;
 }
