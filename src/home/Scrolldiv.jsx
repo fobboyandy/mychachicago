@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import $ from "jquery";
 
+import gsap from "gsap";
+
 const Scrolldiv = () => {
   const containerRef = useRef(null);
 

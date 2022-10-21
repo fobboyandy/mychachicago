@@ -1,45 +1,170 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./home.scss";
+import $ from "jquery";
 
 import Leaf from "../longstuff/Leaf";
 import { useNavigate } from "react-router-dom";
 
+import gsap from "gsap";
 const Section2 = () => {
   const history = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      $("#storycontainer").addClass("fadeintop");
+      $("#storycontainer").removeClass("op0");
+    }, 700);
+
+    const one = document.getElementById("intersecting-observer1");
+    const two = document.getElementById("intersecting-observer2");
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          //remove opacity 0 classes
+          $("#menu-top").removeClass("op0");
+
+          gsap.fromTo(
+            "#menu-top",
+            { opacity: 0, x: "70%" },
+            {
+              opacity: 1,
+              x: 0,
+              ease: "power1",
+              duration: 1,
+            }
+          );
+
+          setTimeout(() => {
+            $("#first-menu").removeClass("op0");
+            gsap.fromTo(
+              "#first-menu",
+              { opacity: 0, x: "70%" },
+              {
+                opacity: 1,
+                x: 0,
+                ease: "power1",
+                duration: 1,
+              }
+            );
+          }, 200);
+
+          setTimeout(() => {
+            $("#second-menu").removeClass("op0");
+            gsap.fromTo(
+              "#second-menu",
+              { opacity: 0, x: "70%" },
+              {
+                opacity: 1,
+                x: 0,
+                ease: "power1",
+                duration: 1,
+              }
+            );
+          }, 600);
+
+          setTimeout(() => {
+            $("#third-menu").removeClass("op0");
+            gsap.fromTo(
+              "#third-menu",
+              { opacity: 0, x: "70%" },
+              {
+                opacity: 1,
+                x: 0,
+                ease: "power1",
+                duration: 1,
+              }
+            );
+          }, 1000);
+          setTimeout(() => {
+            $("#menuhref").removeClass("op0");
+            gsap.fromTo(
+              "#menuhref",
+              { opacity: 0, x: "70%" },
+              {
+                opacity: 1,
+                x: 0,
+                ease: "power1",
+                duration: 1,
+              }
+            );
+          }, 1000);
+
+          observer.unobserve(one);
+        }
+      });
+    });
+
+    const observer2 = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          $("#foranimation-operate").removeClass("op0");
+          gsap.fromTo(
+            "#foranimation-operate",
+            { opacity: 0, x: "30%" },
+            {
+              opacity: 1,
+              x: 0,
+              ease: "power1",
+              duration: 1,
+            }
+          );
+
+          observer.unobserve(two);
+        }
+      });
+    });
+
+    console.log(one);
+    observer.observe(one);
+    observer2.observe(two);
+  }, []);
   return (
     <div className="container-section2">
       <div className="innercontainer-section2">
-        <div className="head-section2">Mycha's Story</div>
-        <Leaf />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          id="storycontainer"
+          className="op0"
+        >
+          <div className="head-section2">Mycha's Story</div>
+          <Leaf />
 
-        <div className="desc-section2">
-          FILL WITH STORY Mycha is a self-service fridge with a variety of
-          bubble tea, fruit tea, and coffee selections. Mycha provides popular
-          Asian drinks on the spot 24/7 in the Chicagoland, making this an
-          extremely convenient option for you on a regular basis.
+          <div className="desc-section2">
+            FILL WITH STORY Mycha is a self-service fridge with a variety of
+            bubble tea, fruit tea, and coffee selections. Mycha provides popular
+            Asian drinks on the spot 24/7 in the Chicagoland, making this an
+            extremely convenient option for you on a regular basis.
+          </div>
         </div>
 
-        <div className="head-section2" style={{ marginTop: "15vh" }}>
-          Menu
-        </div>
+        <div id="menu-top" className="op0">
+          <div className="head-section2" style={{ marginTop: "15vh" }}>
+            Menu
+          </div>
 
-        <div className="desc-section2">Our menu consists of:</div>
+          <div className="desc-section2">Our menu consists of:</div>
+        </div>
         <div className="menucontainer-section2">
+          <div id="intersecting-observer1" />
           <div
             id="first-menu"
-            className="image-menu"
+            className="image-menu op0"
             text="Fruit Teas"
             onClick={() => history("/menu", { state: { from: "fruit" } })}
           />
           <div
             id="second-menu"
-            className="image-menu"
+            className="image-menu op0"
             text="Milk Teas"
             onClick={() => history("/menu", { state: { from: "milktea" } })}
           />
           <div
             id="third-menu"
-            className="image-menu"
+            className="image-menu op0"
             text="Specialty Drinks"
             onClick={() => history("/menu", { state: { from: "special" } })}
           />
@@ -54,29 +179,46 @@ const Section2 = () => {
             color: "rgba(51,51,51)",
           }}
           href="/menu"
+          id="menuhref"
+          className="op0"
         >
           See our full menu
         </a>
 
-        <div className="head-section2" style={{ marginTop: "15vh" }}>
-          How We Operate
-        </div>
-        <Leaf />
-        <div className="desc-section2">
-          Mycha is dedicated to providing you the best quality drinks using the
-          most convenient form of service. We select premium tea leaves from the
-          most authentic tea plantations to ensure a real tea enjoyment. We
-          prepare hand-crafted drinks daily in our health department regulated
-          kitchen and stock our machines with fresh products every morning.
-        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            position: "relative",
+          }}
+          id="foranimation-operate"
+        >
+          <div id="intersecting-observer2" />
+          <div
+            className="head-section2"
+            style={{ marginTop: "15vh", textAlign: "center" }}
+          >
+            How We Operate
+          </div>
+          <Leaf />
+          <div className="desc-section2">
+            Mycha is dedicated to providing you the best quality drinks using
+            the most convenient form of service. We select premium tea leaves
+            from the most authentic tea plantations to ensure a real tea
+            enjoyment. We prepare hand-crafted drinks daily in our health
+            department regulated kitchen and stock our machines with fresh
+            products every morning.
+          </div>
 
-        <div className="desc-section2" style={{ marginTop: "30px" }}>
-          At Mycha, we guarantee{" "}
-          <span style={{ color: "rgb(109, 214, 49)", fontStyle: "italic" }}>
-            quality and freshness.
-          </span>{" "}
-          Our drinks have a shelf life of 24-48 hours and drinks that reach this
-          point are immediately removed
+          <div className="desc-section2" style={{ marginTop: "30px" }}>
+            At Mycha, we guarantee{" "}
+            <span style={{ color: "rgb(109, 214, 49)", fontStyle: "italic" }}>
+              quality and freshness.
+            </span>{" "}
+            Our drinks have a shelf life of 24-48 hours and drinks that reach
+            this point are immediately removed
+          </div>
         </div>
       </div>
     </div>

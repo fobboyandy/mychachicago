@@ -10,6 +10,10 @@
   top: 0;
 }
 
+.op0 {
+  opacity: 0;
+}
+
 .li-nav {
   cursor: pointer;
   color: rgba(51, 51, 51);
@@ -180,6 +184,7 @@ body {
 .head-section2 {
   color: rgb(109, 214, 49);
   font-size: 30px;
+  text-align: center;
 }
 
 .desc-section2 {
@@ -193,6 +198,7 @@ body {
   width: 130%;
   justify-content: space-evenly;
   margin-top: 3vh;
+  position: relative;
 
   @media only screen and (max-width: 700px) {
     flex-direction: column;
@@ -259,4 +265,34 @@ body {
   background-image: url(../../assets/speciality.png);
   background-size: cover;
   background-position: center;
+}
+
+.fadeintop {
+  animation: fadetop 1.2s ease;
+}
+
+@keyframes fadetop {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#intersecting-observer1 {
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+#intersecting-observer2 {
+  height: 11px;
+  width: 100%;
+  position: absolute;
+  top: 13vh;
 }
