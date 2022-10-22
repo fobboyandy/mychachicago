@@ -2,13 +2,109 @@ import React, { useEffect } from "react";
 import Background from "../Background";
 import "./menu.scss";
 
+import gsap from "gsap";
+
 import Leaf from "../longstuff/Leaf";
 import { menuobj } from "./menuobj";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import MenuCup1 from "./menucups/MenuCup1";
+import Oranges from "./menucups/Oranges";
+import Grapefruit from "./menucups/Grapefruit";
+import Lime from "./menucups/Lime";
+import Mychamenu from "./menucups/Mychamenu";
+import Pfruit from "./menucups/Pfruit";
+import PockyMenu from "./menucups/PockyMenu";
+
 const Menu = () => {
   const history = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    gsap.fromTo(
+      "#pfruit",
+      { opacity: 0, x: "50%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#pockymenu",
+      { opacity: 0, x: "50%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#menucup1",
+      { opacity: 0, x: "-50%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#lime",
+      { opacity: 0, x: "-50%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#grapefruit",
+      { opacity: 0, y: "-50%" },
+      { opacity: 1, y: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#oranges",
+      { opacity: 0, x: "50%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#mychamenu",
+      { opacity: 0, y: "50%" },
+      { opacity: 1, y: 0, duration: 1.2 }
+    );
+
+    gsap.fromTo(
+      "#fruitteasection",
+      { opacity: 0, x: "-10%" },
+      { opacity: 1, x: 0, duration: 1.2 }
+    );
+
+    const milktea = document.getElementsByClassName(
+      "intersecting-milkteasection"
+    )[0];
+    const special = document.getElementsByClassName(
+      "intersecting-specialsection"
+    )[0];
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          gsap.fromTo(
+            "#milkteasection",
+            { opacity: 0, x: "-10%" },
+            { opacity: 1, x: 0, duration: 1.2 }
+          );
+          observer.unobserve(milktea);
+        }
+      });
+    });
+
+    const observer2 = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          gsap.fromTo(
+            "#specialsection",
+            { opacity: 0, x: "-10%" },
+            { opacity: 1, x: 0, duration: 1.2 }
+          );
+          observer2.unobserve(special);
+        }
+      });
+    });
+
+    observer.observe(milktea);
+    observer2.observe(special);
+  }, []);
 
   useEffect(() => {
     if (location.state) {
@@ -45,7 +141,15 @@ const Menu = () => {
   }, []);
   return (
     <div>
-      <div className="sliding-placeholder">PLACEHOLDER</div>
+      <div className="sliding-placeholder">
+        <MenuCup1 />
+        <Oranges />
+        <Grapefruit />
+        <Lime />
+        <Mychamenu />
+        <Pfruit />
+        <PockyMenu />
+      </div>
       <div className="outercontainer-menu">
         <div className="innercontainer-menu">
           {menuobj.map((section) => (
@@ -55,22 +159,19 @@ const Menu = () => {
                 display: "flex",
                 flexDirection: "column",
                 marginBottom: "10vh",
+                position: "relative",
+                opacity: 0,
               }}
               id={section.id}
             >
+              <div className={`intersecting-${section.id}`} />
               <div className="menu-title">
                 <Leaf />
                 {section.section}
               </div>
               <div
                 style={{
-                  backgroundColor:
-                    // section.id === "fruitteasection"
-                    //   ? "rgb(109, 214, 49)"
-                    //   : section.id === "milkteasection"
-                    //   ? " rgb(197, 131, 247)"
-                    //   : "rgb(51,51,51)",
-                    "rgb(109, 214, 49) ",
+                  backgroundColor: "rgb(109, 214, 49) ",
                 }}
                 className="menu-divider"
               />
@@ -82,13 +183,7 @@ const Menu = () => {
                         className="img-menu"
                         style={{
                           backgroundImage: `url(${item.image})`,
-                          border:
-                            // section.id === "fruitteasection"
-                            //   ? "2px rgb(109, 214, 49) solid "
-                            //   : section.id === "milkteasection"
-                            //   ? " 2px solid rgb(197, 131, 247)"
-                            //   : "2px solid rgb(51,51,51)",
-                            "2px solid rgb(109, 214, 49) ",
+                          border: "2px solid rgb(109, 214, 49) ",
                         }}
                       />
                     </div>
@@ -121,19 +216,3 @@ const Menu = () => {
 };
 
 export default Menu;
-/*    <div className="menu-half">
-                <div className="img-menucontainer">
-                  <div
-                    className="img-menu"
-                    id={items.id}
-                    style={{ backgroundImage: `url(${items.image})` }}
-                  />
-                </div>
-
-                <div className="menu-txtcontainer">
-                  <div className="name-menu">{items.name}</div>
-                  <div style={{ cursor: "pointer", marginTop: "8px" }}>
-                    Learn More
-                  </div>
-                </div>
-              </div>*/

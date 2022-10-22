@@ -146,7 +146,9 @@ const Section2 = () => {
             Menu
           </div>
 
-          <div className="desc-section2">Our menu consists of:</div>
+          <div className="desc-section2" style={{ width: "100%" }}>
+            Our menu consists of:
+          </div>
         </div>
         <div className="menucontainer-section2">
           <div id="intersecting-observer1" />

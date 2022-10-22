@@ -2,12 +2,15 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 10vh;
 }
 
 .sliding-placeholder {
   width: 100%;
-  height: 40vh;
+  height: 50vh;
   font-size: 50px;
+  position: relative;
+  background-image: linear-gradient(162deg, #fce6fa 0%, #fdedff 100%);
 }
 
 .innercontainer-menu {
@@ -74,4 +77,18 @@
   width: 100%;
   margin: 1vh 0 2vh;
   border-radius: 50%;
+}
+
+.intersecting-milkteasection {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 17%;
+}
+
+.intersecting-specialsection {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 17%;
 }

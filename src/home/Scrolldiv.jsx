@@ -233,10 +233,9 @@ const Scrolldiv = () => {
             <div className="scroll-title">Locations across Chicagoland</div>
             <div className="scroll-desc">
               We have many locations across Chicago and constantly adding more.
-              Find one near you.
             </div>
             <a className="our-locations-btn" href="/locations">
-              Our Locations
+              Find one near you
             </a>
           </div>
         </div>
