@@ -5,6 +5,47 @@
   grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
   gap: 2% 5%;
   margin-bottom: 25vh;
+  position: relative;
+}
+
+.parent-location {
+  width: 100%;
+  height: 50vh;
+  content: "background gif is from https://giphy.com/stickers/CheetahDigital-chicago-skyline-signals19-cheetah-digital-TLTtAWQvY0Mq92rsiu";
+  background: url(../../assets/gifsky.webp);
+  background-size: cover;
+  background-position: center;
+  background-color: white;
+  padding-top: 10vh;
+  opacity: 0.3;
+  position: relative;
+  z-index: 3;
+}
+
+.locations-header {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: rgb(109, 214, 49);
+  z-index: 4;
+  font-weight: 600;
+  margin-top: 10vh;
+}
+
+.background-gif {
+  // background: linear-gradient(to left #41e3ff95, #a6fffc);
+  background-image: linear-gradient(45deg, #29dfff33, #a6fffc2c);
+  opacity: 1;
+}
+
+.outer-location {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 50vh;
+  margin-bottom: 17vh;
 }
 
 .container-info {
@@ -83,4 +124,25 @@
 .location-hours {
   color: rgba(51, 51, 51);
   margin-bottom: 10px;
+}
+
+#intersecting-locations1 {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 25%;
+}
+
+#intersecting-locations2 {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 52%;
+}
+
+#intersecting-locations3 {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 80%;
 }
