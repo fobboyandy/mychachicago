@@ -28,7 +28,6 @@ const Scrolldiv = () => {
   useEffect(() => {
     if (!vpWidth) return;
     const init = (value, notfirst) => {
-      console.log("value", value);
       if (document.hidden) {
         return setTimeout(() => {
           init(value, notfirst);
@@ -206,14 +205,14 @@ const Scrolldiv = () => {
 
   return (
     <div className="container-scroll" id="scrollcontainer">
-      <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
-      </div>
       <div
         id="container2"
         ref={containerRef}
-        style={{ scrollBehavior: smooth ? "smooth" : "auto", zIndex: 8 }}
+        style={{
+          scrollBehavior: smooth ? "smooth" : "auto",
+          zIndex: 8,
+          position: "relative",
+        }}
       >
         <div
           className="child-scroll"
@@ -279,6 +278,10 @@ const Scrolldiv = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
       </div>
     </div>
   );

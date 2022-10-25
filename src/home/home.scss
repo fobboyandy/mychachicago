@@ -1,13 +1,14 @@
 .nav-home {
   width: 100%;
-  height: 14vh;
+  height: 11vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   //   justify-content: space-between;
   position: fixed;
-  margin-left: 5%;
+  padding-left: 5%;
   top: 0;
+  background-color: white;
 }
 
 .op0 {
@@ -19,6 +20,25 @@
   // color: rgba(51, 51, 51);
   font-size: larger;
   color: black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  &::after {
+    content: "";
+    width: 0;
+    position: absolute;
+    bottom: -5px;
+    background-color: black;
+    height: 2.5px;
+    border-radius: 35%;
+    transition: all 0.5s ease;
+    opacity: 0;
+  }
+
+  &:hover::after {
+    width: 100%;
+    opacity: 1;
+  }
 }
 
 .li-container {
@@ -26,7 +46,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  width: 35%;
+  width: 40%;
+
+  @media only screen and (max-width: 1000px) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 800px) {
+    width: 60%;
+  }
 }
 
 .container-scroll {
@@ -129,7 +157,7 @@ body {
   bottom: 0;
   left: 0;
   background: #015871;
-  z-index: -1;
+  z-index: 1;
 }
 
 .wave {
@@ -336,4 +364,89 @@ body {
   align-items: center;
   width: 120%;
   position: relative;
+}
+
+.li-container2 {
+  width: 20%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  @media only screen and (max-width: 400px) {
+    width: 25%;
+  }
+}
+
+.hamburger-nav {
+  width: 40px;
+  height: 2px;
+  background-color: black;
+
+  &::before {
+    content: "";
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    background-color: black;
+    top: 35%;
+  }
+
+  &::after {
+    content: "";
+    width: 40px;
+    height: 2px;
+    position: absolute;
+    background-color: black;
+    bottom: 35%;
+  }
+}
+
+.overlay-nav {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.overlay-child {
+  cursor: pointer;
+  font-size: 40px;
+}
+
+.x-container {
+  position: absolute;
+  right: 30px;
+  top: 40px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+}
+
+#x {
+  width: 30px;
+  height: 2px;
+  background-color: black;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 14px;
+
+  &::before {
+    content: "";
+    width: 30px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
 }

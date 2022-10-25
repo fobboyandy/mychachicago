@@ -103,6 +103,10 @@ const MainLocations = () => {
     }
   }, [window.innerWidth]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <div
       style={{
@@ -111,6 +115,7 @@ const MainLocations = () => {
         overflow: "hidden",
         flexDirection: "column",
         alignItems: "center",
+        paddingTop: "11vh",
       }}
       className="location-actualparent"
     >

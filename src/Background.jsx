@@ -10,7 +10,10 @@ import Pocky from "./longstuff/Pocky";
 
 const Background = () => {
   return (
-    <div style={{ top: 0, position: "fixed" }} className="fixed-background">
+    <div
+      style={{ top: "8.5vh", position: "fixed" }}
+      className="fixed-background"
+    >
       <Cup />
       <Machine2 />
       <Cup2 />

@@ -132,13 +132,14 @@ const Menu = () => {
             inline: "nearest",
             behavior: "smooth",
           });
-          console.log("ran");
+
           break;
       }
     } else {
-      window.scrollTo({ top: 0 });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, []);
+
   return (
     <div>
       <div className="sliding-placeholder">
@@ -158,7 +159,7 @@ const Menu = () => {
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
-                marginBottom: "10vh",
+                marginBottom: section.id === "milkteasection" ? "17vh" : "9vh",
                 position: "relative",
                 opacity: 0,
               }}
