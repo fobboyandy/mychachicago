@@ -15,6 +15,7 @@ import Lime from "./menucups/Lime";
 import Mychamenu from "./menucups/Mychamenu";
 import Pfruit from "./menucups/Pfruit";
 import PockyMenu from "./menucups/PockyMenu";
+import Catering from "./Catering";
 
 const Menu = () => {
   const history = useNavigate();
@@ -134,6 +135,16 @@ const Menu = () => {
           });
 
           break;
+
+        case "catering":
+          const catering = document.getElementById("catering-p");
+          catering.scrollIntoView({
+            block: "start",
+            inline: "nearest",
+            behavior: "smooth",
+          });
+
+          break;
       }
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -209,8 +220,10 @@ const Menu = () => {
               </div>
             </div>
           ))}
+          <Catering />
         </div>
       </div>
+
       <Background />
     </div>
   );

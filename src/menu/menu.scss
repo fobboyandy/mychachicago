@@ -38,6 +38,10 @@
   color: rbg(51, 51, 51);
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: 550px) {
+    font-size: 25px;
+  }
 }
 
 .menu-half {
@@ -96,4 +100,44 @@
   height: 1px;
   position: absolute;
   top: 17%;
+}
+
+.catering-parent {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10vh;
+}
+
+.catering-desc {
+  font-size: 22px;
+  margin-bottom: 30px;
+  width: 60%;
+
+  @media only screen and (max-width: 800px) {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 110%;
+    text-align: center;
+  }
+}
+
+.catering-form {
+  cursor: pointer;
+  color: black;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 10px 10px 10px;
+  font-size: 21px;
 }

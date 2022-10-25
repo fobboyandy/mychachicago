@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Homelogo from "../longstuff/Homelogo";
 import "./home.scss";
 
+import gsap from "gsap";
 const Nav = ({ openNav }) => {
   const history = useNavigate();
 
@@ -19,6 +20,14 @@ const Nav = ({ openNav }) => {
       window.removeEventListener("resize", resized);
     };
   }, [window.innerWidth]);
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".nav-home",
+      { opacity: 0, y: "-30%" },
+      { opacity: 1, y: 0, duration: 1 }
+    );
+  }, []);
   return (
     <div className="nav-home" style={{ zIndex: 10, userSelect: "none" }}>
       <Homelogo />
@@ -28,7 +37,12 @@ const Nav = ({ openNav }) => {
           <div className="li-nav" onClick={() => history("/")}>
             Home
           </div>
-          <div className="li-nav">Catering</div>
+          <div
+            className="li-nav"
+            onClick={() => history("/menu", { state: { from: "catering" } })}
+          >
+            Catering
+          </div>
           <div className="li-nav" onClick={() => history("/locations")}>
             Locations
           </div>

@@ -3,8 +3,6 @@ import React from "react";
 const Mychamenu = () => {
   return (
     <svg
-      width="282"
-      height="50"
       viewBox="0 0 282 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

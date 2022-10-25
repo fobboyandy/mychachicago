@@ -27,6 +27,14 @@ const Overlay = ({ closeNav }) => {
       history("/locations");
     }, 800);
   }
+
+  function goCatering() {
+    closeNav();
+    setTimeout(() => {
+      history("/menu", { state: { from: "catering" } });
+    }, 800);
+  }
+
   return (
     <div className="overlay-nav">
       <div className="x-container" onClick={() => closeNav()}>
@@ -36,7 +44,9 @@ const Overlay = ({ closeNav }) => {
         Home
       </div>
 
-      <div className="overlay-child">Catering</div>
+      <div className="overlay-child" onClick={() => goCatering()}>
+        Catering
+      </div>
 
       <div className="overlay-child" onClick={() => goMenu()}>
         Menu
