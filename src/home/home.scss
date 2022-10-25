@@ -16,8 +16,9 @@
 
 .li-nav {
   cursor: pointer;
-  color: rgba(51, 51, 51);
+  // color: rgba(51, 51, 51);
   font-size: larger;
+  color: black;
 }
 
 .li-container {
@@ -315,8 +316,24 @@ body {
 }
 
 #intersecting-observer2 {
-  height: 11px;
+  height: 1px;
   width: 100%;
   position: absolute;
   top: 19vh;
+}
+
+#intersecting-observer3 {
+  height: 11px;
+  width: 100%;
+  position: absolute;
+  top: 7vh;
+}
+
+.instagram {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120%;
+  position: relative;
 }

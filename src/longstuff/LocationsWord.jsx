@@ -3,7 +3,6 @@ import React from "react";
 const LocationsWord = () => {
   return (
     <svg
-      width="439"
       height="51"
       viewBox="0 0 439 51"
       fill="none"

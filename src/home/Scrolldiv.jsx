@@ -59,14 +59,19 @@ const Scrolldiv = () => {
     init(0);
   }, [vpWidth]);
 
+  //stop is to ensure the function does not run when we leave the page. recursive func will keep running when user leaves the page without stop
   useEffect(() => {
+    let stop = false;
     const init = (num, bool) => {
+      if (stop) return;
       if (document.hidden) {
+        if (stop) return;
         return setTimeout(() => {
           init(num, bool);
         }, 500);
       }
       if (num === 0 && bool) {
+        if (stop) return;
         gsap.fromTo(
           "#scroll-one",
           { opacity: 0, x: "20%" },
@@ -74,6 +79,7 @@ const Scrolldiv = () => {
         );
 
         setTimeout(() => {
+          if (stop) return;
           gsap.fromTo(
             "#scroll-one",
             { opacity: 1, x: 0 },
@@ -81,6 +87,7 @@ const Scrolldiv = () => {
           );
 
           setTimeout(() => {
+            if (stop) return;
             init(1);
           }, 1400);
         }, 6200);
@@ -90,6 +97,7 @@ const Scrolldiv = () => {
 
       switch (num) {
         case 0:
+          if (stop) return;
           gsap.fromTo(
             "#scroll-one",
             { opacity: 0, x: "20%" },
@@ -97,6 +105,7 @@ const Scrolldiv = () => {
           );
 
           setTimeout(() => {
+            if (stop) return;
             gsap.fromTo(
               "#scroll-one",
               { opacity: 1, x: 0 },
@@ -104,11 +113,13 @@ const Scrolldiv = () => {
             );
 
             setTimeout(() => {
+              if (stop) return;
               init(1);
             }, 1400);
           }, 6200);
           break;
         case 1:
+          if (stop) return;
           gsap.fromTo(
             "#scroll-two",
             { opacity: 0, x: "20%" },
@@ -116,6 +127,7 @@ const Scrolldiv = () => {
           );
 
           setTimeout(() => {
+            if (stop) return;
             gsap.fromTo(
               "#scroll-two",
               { opacity: 1, x: 0 },
@@ -123,12 +135,14 @@ const Scrolldiv = () => {
             );
 
             setTimeout(() => {
+              if (stop) return;
               init(2);
             }, 1400);
           }, 6200);
           break;
 
         case 2:
+          if (stop) return;
           gsap.fromTo(
             "#scroll-three",
             { opacity: 0, x: "20%" },
@@ -136,6 +150,7 @@ const Scrolldiv = () => {
           );
 
           setTimeout(() => {
+            if (stop) return;
             gsap.fromTo(
               "#scroll-three",
               { opacity: 1, x: 0 },
@@ -143,12 +158,14 @@ const Scrolldiv = () => {
             );
 
             setTimeout(() => {
+              if (stop) return;
               init(3);
             }, 1400);
           }, 6200);
           break;
 
         case 3:
+          if (stop) return;
           gsap.fromTo(
             "#scroll-four",
             { opacity: 0, x: "20%" },
@@ -156,6 +173,7 @@ const Scrolldiv = () => {
           );
 
           setTimeout(() => {
+            if (stop) return;
             gsap.fromTo(
               "#scroll-four",
               { opacity: 1, x: 0 },
@@ -163,6 +181,7 @@ const Scrolldiv = () => {
             );
 
             setTimeout(() => {
+              if (stop) return;
               init(0, true);
             }, 1400);
           }, 6200);
@@ -171,6 +190,18 @@ const Scrolldiv = () => {
     };
 
     init(0);
+
+    return () => {
+      stop = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    gsap.fromTo(
+      "#scroll-one",
+      { opacity: 0, x: "10%" },
+      { opacity: 1, x: 0, duration: 1 }
+    );
   }, []);
 
   return (

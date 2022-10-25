@@ -30,6 +30,8 @@ const MainLocations = () => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
+
     const one = document.getElementById("intersecting-locations1");
     const two = document.getElementById("intersecting-locations2");
     const three = document.getElementById("intersecting-locations3");
@@ -89,15 +91,17 @@ const MainLocations = () => {
           //   { opacity: 1, x: 0, duration: 1.4 }
           // );
 
-          observer2.unobserve(two);
+          observer3.unobserve(three);
         }
       });
     });
 
-    observer1.observe(one);
-    observer2.observe(two);
-    observer3.observe(three);
-  }, []);
+    if (window.innerWidth > 700) {
+      observer1.observe(one);
+      observer2.observe(two);
+      observer3.observe(three);
+    }
+  }, [window.innerWidth]);
 
   return (
     <div
@@ -108,6 +112,7 @@ const MainLocations = () => {
         flexDirection: "column",
         alignItems: "center",
       }}
+      className="location-actualparent"
     >
       <div className="outer-location">
         <div className="parent-location"></div>
@@ -132,7 +137,10 @@ const MainLocations = () => {
         <div id="intersecting-locations2" />
         <div id="intersecting-locations3" />
         {location.map((location, i) => (
-          <div className="container-info op0" id={location.id}>
+          <div
+            className={`container-info ${window.innerWidth > 700 ? "op0" : ""}`}
+            id={location.id}
+          >
             <div style={{ width: "100%", height: "100%" }}>
               <img
                 src={location.image}
@@ -140,9 +148,9 @@ const MainLocations = () => {
                 className="img-location"
               />
             </div>
-            <div className="location-name">{location.name}</div>
-            <div className="location-add">{location.address}</div>
-            <div className="location-hours">
+            <div className="location-name ">{location.name}</div>
+            <div className="location-add location-desc">{location.address}</div>
+            <div className="location-hours location-desc">
               {location.hours !== "" ? ` ${location.hours}` : ""}
             </div>
 
@@ -151,7 +159,9 @@ const MainLocations = () => {
                 src="https://cdn.discordapp.com/attachments/779278654714675232/1031734843148615720/leafnobg.png"
                 style={{ height: "45px", width: "45px", userSelect: "none" }}
               />
-              <div className="check-stock">Check Location Stock</div>
+              <div className="check-stock location-desc">
+                Check Location Stock
+              </div>
             </div>
           </div>
         ))}
