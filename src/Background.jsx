@@ -27,7 +27,7 @@ const Background = () => {
       style={{
         top: "8.5vh",
         position: "fixed",
-        opacity: width < 700 ? 0.1 : 0.8,
+        opacity: width < 1000 ? 0.2 : 0.6,
       }}
       className="fixed-background"
     >

@@ -6,6 +6,7 @@ import Leaf from "../longstuff/Leaf";
 import { useNavigate } from "react-router-dom";
 
 import gsap from "gsap";
+import Contact from "./Contact";
 
 const Section2 = () => {
   const history = useNavigate();
@@ -279,6 +280,7 @@ const Section2 = () => {
           />
           <div id="intersecting-observer3" />
         </div>
+        <Contact />
       </div>
     </div>
   );
