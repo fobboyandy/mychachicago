@@ -9,17 +9,12 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [reason, setReason] = useState("issue"); //change to question whend oen
+  const [reason, setReason] = useState("question"); //change to question whend oen
   const [location, setLocation] = useState("uiceast");
   const [paymentType, setPaymentType] = useState("");
   const [last4, setLast4] = useState("");
 
   const [desc, setDesc] = useState("");
-
-  console.log(email);
-  console.log(phone);
-  console.log(name);
-  console.log(reason);
 
   const [state, handleSubmit] = useForm("xpznyjqd", {
     data: {
@@ -48,21 +43,73 @@ const Contact = () => {
   });
   $("#textarea-container").find("textarea").keydown();
 
-  const handleSubmit2 = (e) => {
-    e.preventDefault();
-    if (!isValidEmail(email)) return;
-
-    const information = {
-      name: name,
-      email: email,
-      phone: phone,
-      reason: reason,
-      location: reason === "issue" ? location : "reason is question",
-      paymentType: reason === "issue" ? paymentType : "reason is question",
-      last4digits: reason === "issue" ? last4 : "reason is question",
-      description: desc,
-    };
+  const handleSubmit2 = () => {
+    $("#form--contact").addClass("nodisplay");
+    $("#spinner-form").removeClass("nodisplay");
   };
+
+  //error states
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [paymentTypeError, setPaymentTypeError] = useState(false);
+  const [last4Error, setLast4Error] = useState(false);
+  const [descError, setDescError] = useState(false);
+  function checkValid() {
+    let valid = true;
+    if (name === "") {
+      setNameError(true);
+      valid = false;
+    } else {
+      setNameError(false);
+    }
+
+    if (!isValidEmail(email)) {
+      valid = false;
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+
+    if (phone === "") {
+      valid = false;
+      setPhoneError(true);
+    } else {
+      setPhoneError(false);
+    }
+
+    if (reason === "question") {
+      if (desc === "") {
+        valid = false;
+        setDescError(true);
+      } else {
+        setDescError(false);
+      }
+    } else if (reason === "issue") {
+      if (desc === "") {
+        valid = false;
+        setDescError(true);
+      } else {
+        setDescError(false);
+      }
+
+      if (paymentType === "") {
+        valid = false;
+        setPaymentTypeError(true);
+      } else if (paymentType === "card") {
+        if (last4.length !== 4) {
+          valid = false;
+          setLast4Error(true);
+        } else {
+          setLast4Error(false);
+        }
+      } else {
+        setPaymentTypeError(false);
+      }
+    }
+
+    return valid;
+  }
 
   return (
     <div className="contact-parent" id="contactparent">
@@ -107,151 +154,217 @@ const Contact = () => {
         . We are only seconds away.
       </div>
 
-      <form
-        className="form-contact"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(e);
-          console.log("ran");
-        }}
-      >
-        <label htmlFor="name-contact" className="label-contact">
-          Name<span className="star">*</span>
-        </label>
-        <input
-          id="name-contact"
-          className="input-contact"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          name="name"
-        />
-
-        <label htmlFor="email-contact" className="label-contact">
-          Email<span className="star">*</span>
-        </label>
-        <input
-          id="email-contact"
-          className="input-contact"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-        />
-
-        <label htmlFor="phone-contact" className="label-contact">
-          Phone Number<span className="star">*</span>
-        </label>
-        <input
-          id="phone-contact"
-          className="input-contact"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-
-        <label for="reason-contact" className="label-contact">
-          Reason<span className="star">*</span>
-        </label>
-        <select
-          className="input-contact"
-          id="reason-contact"
-          onChange={(e) => setReason(e.target.value)}
-          value={reason}
+      {!state.succeeded ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <option value="question">Question</option>
-          <option value="issue">Machine/Transaction Issue</option>
-        </select>
-
-        {reason === "question" ? (
-          ""
-        ) : (
-          <div>
-            <div className="label-contact">
-              ATM Location<span className="star">*</span>
-            </div>
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="input-contact"
+          <form
+            className="form-contact"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const shouldSubmit = checkValid();
+              if (shouldSubmit) {
+                handleSubmit(e);
+                handleSubmit2();
+              } else return;
+            }}
+            id="form--contact"
+          >
+            <label htmlFor="name-contact" className="label-contact">
+              Name<span className="star">*</span>
+            </label>
+            <div
+              className="errormsg"
+              style={{ display: nameError ? "" : "none" }}
             >
-              <option value="uiceast">UIC East</option>
-              <option value="uicwest">UIC West</option>
-              <option value="block37">Block 37</option>
-              <option value="uicbsb">UIC Behavioral Science Building</option>
-              <option value="rush">Rush University</option>
-              <option value="beardpapa">Beard Papa</option>
-              <option value="ucmed">University of Chicago</option>
-              <option value="submarine">Submarine</option>
+              Missing Name!
+            </div>
+            <input
+              id="name-contact"
+              className="input-contact"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              name="name"
+            />
+
+            <label htmlFor="email-contact" className="label-contact">
+              Email<span className="star">*</span>
+            </label>
+
+            <div
+              className="errormsg"
+              style={{ display: emailError ? "" : "none" }}
+            >
+              Invalid Email!
+            </div>
+            <input
+              id="email-contact"
+              className="input-contact"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+            />
+
+            <label htmlFor="phone-contact" className="label-contact">
+              Phone Number<span className="star">*</span>
+            </label>
+            <div
+              className="errormsg"
+              style={{ display: phoneError ? "" : "none" }}
+            >
+              Invalid Number!
+            </div>
+            <input
+              id="phone-contact"
+              className="input-contact"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              type="tel"
+            />
+
+            <label for="reason-contact" className="label-contact">
+              Reason<span className="star">*</span>
+            </label>
+            <select
+              className="input-contact"
+              id="reason-contact"
+              onChange={(e) => setReason(e.target.value)}
+              value={reason}
+            >
+              <option value="question">Question</option>
+              <option value="issue">Machine/Transaction Issue</option>
             </select>
 
-            <div className="label-contact">
-              Form of Payment<span className="star">*</span>
-            </div>
-            <div className="radio-container">
-              <input
-                type="radio"
-                onClick={() => setPaymentType("card")}
-                name="paymenttype"
-              />
-              <label className="mleft10">Card Swipe</label>
-            </div>
-
-            <div className="radio-container">
-              <input
-                type="radio"
-                onClick={() => setPaymentType("mobilewallet")}
-                name="paymenttype"
-              />
-              <label className="mleft10">
-                Mobile Wallet (Google Pay, Apple Pay, etc)
-              </label>
-            </div>
-            <div className="radio-container">
-              <input
-                type="radio"
-                onClick={() => setPaymentType("cash")}
-                name="paymenttype"
-              />
-              <label className="mleft10">Cash</label>
-            </div>
-
-            {paymentType === "card" ? (
-              <div style={{ marginTop: "10px" }}>
-                <label for="name-contact" className="label-contact">
-                  Last 4 Digits of Card<span className="star">*</span>
-                </label>
-                <input
-                  className="input-contact"
-                  value={last4}
-                  onChange={(e) => setLast4(e.target.value)}
-                  maxLength={4}
-                />
-              </div>
-            ) : (
+            {reason === "question" ? (
               ""
+            ) : (
+              <div>
+                <div className="label-contact">
+                  ATM Location<span className="star">*</span>
+                </div>
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="input-contact"
+                >
+                  <option value="uiceast">UIC East</option>
+                  <option value="uicwest">UIC West</option>
+                  <option value="block37">Block 37</option>
+                  <option value="uicbsb">
+                    UIC Behavioral Science Building
+                  </option>
+                  <option value="rush">Rush University</option>
+                  <option value="beardpapa">Beard Papa</option>
+                  <option value="ucmed">University of Chicago</option>
+                  <option value="submarine">Submarine</option>
+                </select>
+
+                <div className="label-contact">
+                  Form of Payment<span className="star">*</span>
+                </div>
+                <div
+                  className="errormsg"
+                  style={{ display: paymentTypeError ? "" : "none" }}
+                >
+                  Please Select
+                </div>
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    onClick={() => setPaymentType("card")}
+                    name="paymenttype"
+                  />
+                  <label className="mleft10">Card Swipe</label>
+                </div>
+
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    onClick={() => setPaymentType("mobilewallet")}
+                    name="paymenttype"
+                  />
+                  <label className="mleft10">
+                    Mobile Wallet (Google Pay, Apple Pay, etc)
+                  </label>
+                </div>
+                <div className="radio-container">
+                  <input
+                    type="radio"
+                    onClick={() => setPaymentType("cash")}
+                    name="paymenttype"
+                  />
+                  <label className="mleft10">Cash</label>
+                </div>
+
+                {paymentType === "card" ? (
+                  <div style={{ marginTop: "10px" }}>
+                    <label for="name-contact" className="label-contact">
+                      Last 4 Digits of Card<span className="star">*</span>
+                    </label>
+                    <div
+                      className="errormsg"
+                      style={{ display: last4Error ? "" : "none" }}
+                    >
+                      Missing 4 digits!
+                    </div>
+                    <input
+                      className="input-contact"
+                      value={last4}
+                      onChange={(e) => setLast4(e.target.value)}
+                      maxLength={4}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             )}
+
+            <div
+              id="textarea-container"
+              style={{ marginTop: reason === "question" ? 0 : "15px" }}
+            >
+              <label for="name-contact" className="label-contact">
+                {reason === "question"
+                  ? "Your Question Below"
+                  : "Please describe the issue"}
+                <span className="star">*</span>
+              </label>
+              <div
+                className="errormsg"
+                style={{ display: descError ? "" : "none" }}
+              >
+                Missing description!
+              </div>
+              <textarea
+                className="tarea-contact"
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
+              />
+            </div>
+
+            <button type="submit" className="submitbut-contact">
+              Submit
+            </button>
+          </form>
+
+          <div className="lds-ring nodisplay" id="spinner-form">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-        )}
-
-        <div
-          id="textarea-container"
-          style={{ marginTop: reason === "question" ? 0 : "15px" }}
-        >
-          <label for="name-contact" className="label-contact">
-            {reason === "question"
-              ? "Your Question Below"
-              : "Please describe the issue"}
-            <span className="star">*</span>
-          </label>
-          <textarea
-            className="tarea-contact"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
         </div>
-
-        <button type="submit" className="submitbut-contact">
-          Submit
-        </button>
-      </form>
+      ) : (
+        <div className="ty-message">
+          Thank you, your message has been received.
+        </div>
+      )}
     </div>
   );
 };

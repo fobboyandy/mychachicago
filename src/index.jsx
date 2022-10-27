@@ -15,12 +15,10 @@ const root = ReactDOM.createRoot(document.getElementById("app"));
 
 function openNav() {
   gsap.to(".overlay-nav", { y: 0, duration: 0.8, opacity: 1 });
-  console.log("ran");
 }
 
 function closeNav() {
   gsap.to(".overlay-nav", { y: "-100%", duration: 0.8, opacity: 0 });
-  console.log("ran");
 }
 
 root.render(
