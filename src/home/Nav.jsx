@@ -4,10 +4,13 @@ import Homelogo from "../longstuff/Homelogo";
 import "./home.scss";
 
 import gsap from "gsap";
+import $ from "jquery";
+
 const Nav = ({ openNav }) => {
   const history = useNavigate();
 
   const [width, setWidth] = useState(window.innerWidth);
+  const [current, setCurrent] = useState("");
 
   const resized = useCallback(() => {
     setWidth(window.innerWidth);
@@ -28,28 +31,76 @@ const Nav = ({ openNav }) => {
       { opacity: 1, y: 0, duration: 1 }
     );
   }, []);
+
+  useEffect(() => {
+    setCurrent(window.location.href);
+  }, [window.location.href]);
+
+  function scrollCatering() {
+    const catering = document.getElementById("catering-p");
+    catering.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
+  }
+
+  function scrollContact() {
+    $(document).ready(() => {
+      $("#contactparent")[0].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+
   return (
     <div className="nav-home" style={{ zIndex: 10, userSelect: "none" }}>
       <Homelogo />
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (
         <div className="li-container" style={{ marginRight: "5%" }}>
-          <div className="li-nav" onClick={() => history("/")}>
+          <div
+            className="li-nav"
+            onClick={() => {
+              current[current.length - 1] === "/"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/");
+            }}
+          >
             Home
           </div>
           <div
             className="li-nav"
-            onClick={() => history("/menu", { state: { from: "catering" } })}
+            onClick={() => {
+              current.slice(current.length - 4, current.length) === "menu"
+                ? scrollCatering()
+                : history("/menu", { state: { from: "catering" } });
+            }}
           >
             Catering
           </div>
           <div className="li-nav" onClick={() => history("/locations")}>
             Locations
           </div>
-          <div className="li-nav" onClick={() => history("/menu")}>
+          <div
+            className="li-nav"
+            onClick={() => {
+              current.slice(current.length - 4, current.length) === "menu"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/menu");
+            }}
+          >
             Menu
           </div>
-          <div className="li-nav" onClick={() => history("/contact")}>
+          <div
+            className="li-nav"
+            onClick={() => {
+              current[current.length - 1] === "/"
+                ? scrollContact()
+                : history("/", { state: { from: "contact" } });
+            }}
+          >
             Contact
           </div>
         </div>

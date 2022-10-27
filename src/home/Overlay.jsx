@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import $ from "jquery";
 
 const Overlay = ({ closeNav }) => {
   const history = useNavigate();
+  const [current, setCurrent] = useState("");
+
+  function scrollCatering() {
+    const catering = document.getElementById("catering-p");
+    catering.scrollIntoView({
+      block: "start",
+      inline: "nearest",
+      behavior: "smooth",
+    });
+  }
+
+  function scrollContact() {
+    $(document).ready(() => {
+      $("#contactparent")[0].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
 
   function goHome() {
     closeNav();
 
     setTimeout(() => {
-      history("/");
+      current[current.length - 1] === "/"
+        ? window.scrollTo({ top: 0, behavior: "smooth" })
+        : history("/");
     }, 800);
   }
 
@@ -16,7 +39,9 @@ const Overlay = ({ closeNav }) => {
     closeNav();
 
     setTimeout(() => {
-      history("/menu");
+      current.slice(current.length - 4, current.length) === "menu"
+        ? window.scrollTo({ top: 0, behavior: "smooth" })
+        : history("/menu");
     }, 800);
   }
 
@@ -31,9 +56,24 @@ const Overlay = ({ closeNav }) => {
   function goCatering() {
     closeNav();
     setTimeout(() => {
-      history("/menu", { state: { from: "catering" } });
+      current.slice(current.length - 4, current.length) === "menu"
+        ? scrollCatering()
+        : history("/menu", { state: { from: "catering" } });
     }, 800);
   }
+
+  function goContact() {
+    closeNav();
+    setTimeout(() => {
+      current[current.length - 1] === "/"
+        ? scrollContact()
+        : history("/", { state: { from: "contact" } });
+    }, 800);
+  }
+
+  useEffect(() => {
+    setCurrent(window.location.href);
+  }, [window.location.href]);
 
   return (
     <div className="overlay-nav">
@@ -56,7 +96,9 @@ const Overlay = ({ closeNav }) => {
         Locations
       </div>
 
-      <div className="overlay-child">Contact</div>
+      <div className="overlay-child" onClick={() => goContact()}>
+        Contact
+      </div>
     </div>
   );
 };
