@@ -1,11 +1,12 @@
 .footer-parent {
-  height: 25vh;
   width: 100%;
   background-color: white;
   border-top: 1px solid black;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 7vh;
+  position: relative;
 }
 
 .footer-icons {
@@ -87,4 +88,12 @@
 
 .li-footer {
   cursor: pointer;
+}
+
+.contact-footercontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 3vh;
+  margin-top: 12px;
 }

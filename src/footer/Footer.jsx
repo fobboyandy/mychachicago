@@ -4,6 +4,8 @@ import Facebook from "../longstuff/Facebook";
 import Instagram from "../longstuff/Instagram";
 import Yelp from "../longstuff/Yelp";
 import { useNavigate } from "react-router-dom";
+import PhoneIcon from "../longstuff/PhoneIcon";
+import Mail from "../longstuff/Mail";
 
 const Footer = () => {
   const [current, setCurrent] = useState("");
@@ -37,81 +39,104 @@ const Footer = () => {
 
   return (
     <div className="footer-parent">
-      <div className="icons-container">
-        <a
-          className="footer-icons"
-          href="https://www.facebook.com/mychamachine"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Facebook />
-        </a>
-        <a
-          className="footer-icons"
-          href="https://www.instagram.com/mychachicago/?hl=en"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Instagram />
-        </a>
-        <a
-          className="footer-icons"
-          href="https://www.yelp.com/biz/mycha-chicago-2"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Yelp />
-        </a>
-      </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          zIndex: 2,
+        }}
+      >
+        <div className="icons-container">
+          <a
+            className="footer-icons"
+            href="https://www.facebook.com/mychamachine"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Facebook />
+          </a>
+          <a
+            className="footer-icons"
+            href="https://www.instagram.com/mychachicago/?hl=en"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Instagram />
+          </a>
+          <a
+            className="footer-icons"
+            href="https://www.yelp.com/biz/mycha-chicago-2"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Yelp />
+          </a>
+        </div>
 
-      <div className="ul-footer">
-        <div
-          className="li-footer"
-          onClick={() => {
-            current[current.length - 1] === "/"
-              ? window.scrollTo({ top: 0, behavior: "smooth" })
-              : history("/");
-          }}
-        >
-          Home
+        <div className="contact-footercontainer">
+          <PhoneIcon />
+          &nbsp; (847) 260-8387
         </div>
-        <div
-          className="li-footer"
-          onClick={() => {
-            current.slice(current.length - 4, current.length) === "menu"
-              ? scrollCatering()
-              : history("/menu", { state: { from: "catering" } });
-          }}
-        >
-          Catering
-        </div>
-        <div
-          className="li-footer"
-          onClick={() => {
-            current.slice(current.length - 4, current.length) === "menu"
-              ? window.scrollTo({ top: 0, behavior: "smooth" })
-              : history("/menu");
-          }}
-        >
-          Menu
-        </div>
-        <div className="li-footer" onClick={() => history("/locations")}>
-          Locations
-        </div>
-        <div
-          className="li-footer"
-          onClick={() => {
-            current[current.length - 1] === "/"
-              ? scrollContact()
-              : history("/", { state: { from: "contact" } });
-          }}
-        >
-          Contact
-        </div>
-      </div>
 
-      <div style={{ marginTop: "10px" }}>
-        <span style={{ fontSize: "22px" }}>© </span>2022 Mycha LLC
+        <div className="contact-footercontainer">
+          <Mail />
+          &nbsp; mychamachine@gmail.com
+        </div>
+
+        <div className="ul-footer">
+          <div
+            className="li-footer"
+            onClick={() => {
+              current[current.length - 1] === "/"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/");
+            }}
+          >
+            Home
+          </div>
+          <div
+            className="li-footer"
+            onClick={() => {
+              current.slice(current.length - 4, current.length) === "menu"
+                ? scrollCatering()
+                : history("/menu", { state: { from: "catering" } });
+            }}
+          >
+            Catering
+          </div>
+          <div
+            className="li-footer"
+            onClick={() => {
+              current.slice(current.length - 4, current.length) === "menu"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/menu");
+            }}
+          >
+            Menu
+          </div>
+          <div className="li-footer" onClick={() => history("/locations")}>
+            Locations
+          </div>
+          <div
+            className="li-footer"
+            onClick={() => {
+              current[current.length - 1] === "/"
+                ? scrollContact()
+                : history("/", { state: { from: "contact" } });
+            }}
+          >
+            Contact
+          </div>
+        </div>
+
+        <div style={{ marginTop: "20px" }}>
+          <span style={{ fontSize: "22px" }}>© </span>2022 Mycha LLC
+        </div>
+        <div style={{ fontStyle: "italic" }}>
+          Life is full of important choices
+        </div>
       </div>
     </div>
   );
