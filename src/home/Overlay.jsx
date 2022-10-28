@@ -8,20 +8,24 @@ const Overlay = ({ closeNav }) => {
   const [current, setCurrent] = useState("");
 
   function scrollCatering() {
-    const catering = document.getElementById("catering-p");
-    catering.scrollIntoView({
-      block: "start",
-      inline: "nearest",
+    const catering = document
+      .getElementById("catering-p")
+      .getBoundingClientRect();
+
+    window.scrollTo({
+      top: catering.top + window.pageYOffset - 100,
       behavior: "smooth",
     });
   }
 
   function scrollContact() {
-    $(document).ready(() => {
-      $("#contactparent")[0].scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    const contact = document
+      .getElementById("contactparent")
+      .getBoundingClientRect();
+
+    window.scrollTo({
+      top: contact.top + window.pageYOffset - 140,
+      behavior: "smooth",
     });
   }
 

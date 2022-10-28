@@ -19,7 +19,12 @@ const Home = () => {
   useEffect(() => {
     $(document).ready(() => {
       if (state.state?.from === "contact") {
-        $("#contactparent")[0].scrollIntoView({
+        const contact = document
+          .getElementById("contactparent")
+          .getBoundingClientRect();
+
+        window.scrollTo({
+          top: contact.top + window.pageYOffset - 10,
           behavior: "smooth",
         });
       } else {

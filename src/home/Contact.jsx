@@ -55,6 +55,7 @@ const Contact = () => {
   const [paymentTypeError, setPaymentTypeError] = useState(false);
   const [last4Error, setLast4Error] = useState(false);
   const [descError, setDescError] = useState(false);
+
   function checkValid() {
     let valid = true;
     if (name === "") {

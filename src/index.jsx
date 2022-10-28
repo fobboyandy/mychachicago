@@ -10,6 +10,7 @@ import MenuItem from "./menu/menuitem/MenuItem";
 import Overlay from "./home/Overlay";
 
 import gsap from "gsap";
+import Footer from "./footer/Footer";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
@@ -34,6 +35,7 @@ root.render(
           <Route exact path="/menu/:id" element={<MenuItem />} />
           <Route exact path="/quantity" element={<App />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </React.StrictMode>
   </>

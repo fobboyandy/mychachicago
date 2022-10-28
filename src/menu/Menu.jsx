@@ -137,13 +137,14 @@ const Menu = () => {
           break;
 
         case "catering":
-          const catering = document.getElementById("catering-p");
-          catering.scrollIntoView({
-            block: "start",
-            inline: "nearest",
+          const catering = document
+            .getElementById("catering-p")
+            .getBoundingClientRect();
+
+          window.scrollTo({
+            top: catering.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
-
           break;
       }
     } else {
