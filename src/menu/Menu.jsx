@@ -166,11 +166,21 @@ const Menu = () => {
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+
+    gsap.fromTo(
+      "#topmenu-container",
+      { opacity: 0 },
+      { opacity: 1, duration: 1.5 }
+    );
   }, []);
 
   return (
-    <div>
-      <div className="sliding-placeholder">
+    <div style={{ position: "relative" }}>
+      <div
+        className="sliding-placeholder"
+        id="topmenu-container"
+        style={{ zIndex: 2 }}
+      >
         <MenuCup1 />
         <Oranges />
         <Grapefruit />
@@ -179,6 +189,17 @@ const Menu = () => {
         <Pfruit />
         <PockyMenu />
       </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          backgroundColor: "white",
+          width: "100%",
+          height: "50vh",
+          paddingTop: "11vh",
+        }}
+        id="covermenu"
+      />
       <div className="outercontainer-menu">
         <div className="innercontainer-menu">
           {menuobj.map((section) => (

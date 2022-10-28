@@ -105,6 +105,8 @@ const MainLocations = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    gsap.fromTo("#outerlocation", { opacity: 0 }, { opacity: 1, duration: 3 });
   }, []);
 
   return (
@@ -119,7 +121,7 @@ const MainLocations = () => {
       }}
       className="location-actualparent"
     >
-      <div className="outer-location">
+      <div className="outer-location" id="outerlocation">
         <div className="parent-location"></div>
         <div className="locations-header">
           <LocationWord />

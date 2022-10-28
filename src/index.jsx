@@ -22,6 +22,10 @@ function closeNav() {
   gsap.to(".overlay-nav", { y: "-100%", duration: 0.8, opacity: 0 });
 }
 
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+
 root.render(
   <>
     <React.StrictMode>
