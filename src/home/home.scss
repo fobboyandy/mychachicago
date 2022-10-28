@@ -89,31 +89,6 @@ textarea {
   justify-content: center;
 }
 
-// #b37 {
-//   background: url(../../assets/b37loc2.png) no-repeat center center;
-//   background-position: center;
-//   background-size: cover;
-//   background-repeat: no-repeat;
-// }
-
-// #uic {
-//   background-image: url(../../assets/b37loc2.png);
-//   background-position: center;
-//   background-size: cover;
-// }
-
-// #ucmed {
-//   background-image: url(../../assets/b37loc2.png);
-//   background-position: center;
-//   background-size: cover;
-// }
-
-// #rush {
-//   background-image: url(../../assets/b37loc2.png);
-//   background-position: center;
-//   background-size: cover;
-// }
-
 .scroll-title {
   color: rgb(109, 214, 49);
   font-size: 45px;
@@ -466,6 +441,7 @@ body {
   align-items: center;
   margin-top: 10vh;
   width: 60%;
+  position: relative;
 
   @media only screen and (max-width: 1250px) {
     width: 100%;
@@ -600,4 +576,11 @@ body {
     width: 160%;
     text-align: center;
   }
+}
+
+#contact-intersectingobserver {
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 7vh;
 }

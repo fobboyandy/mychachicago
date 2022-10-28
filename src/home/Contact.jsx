@@ -22,9 +22,12 @@ const Contact = () => {
       email1: email,
       phone1: phone,
       reason1: reason,
-      location: reason === "issue" ? location : "N/A reason is question",
-      paymentType: reason === "issue" ? paymentType : "N/A reason is question",
-      last4digits: reason === "issue" ? last4 : "N/A reason is question",
+      location:
+        reason === "issue" ? location : "N/A reason is question/suggestion",
+      paymentType:
+        reason === "issue" ? paymentType : "N/A reason is question/suggestion",
+      last4digits:
+        reason === "issue" ? last4 : "N/A reason is question/suggestion",
       description: desc,
     },
   });
@@ -79,7 +82,7 @@ const Contact = () => {
       setPhoneError(false);
     }
 
-    if (reason === "question") {
+    if (reason === "question/suggestion") {
       if (desc === "") {
         valid = false;
         setDescError(true);
@@ -113,12 +116,14 @@ const Contact = () => {
   }
 
   return (
-    <div className="contact-parent" id="contactparent">
+    <div className="contact-parent op0" id="contactparent">
+      <div id="contact-intersectingobserver" />
       <div className="head-section2">Contact Us</div>
       <Leaf />
 
       <div className="desc-section2 mbot">
-        From questions to machine/transaction issues, we are here to help!
+        From questions and suggestions to machine or transaction issues, we are
+        here to help!
       </div>
 
       <div className="desc-section2 mbot">
@@ -237,11 +242,11 @@ const Contact = () => {
               onChange={(e) => setReason(e.target.value)}
               value={reason}
             >
-              <option value="question">Question</option>
+              <option value="question/suggestion">Question/Suggestion</option>
               <option value="issue">Machine/Transaction Issue</option>
             </select>
 
-            {reason === "question" ? (
+            {reason === "question/suggestion" ? (
               ""
             ) : (
               <div>
@@ -331,8 +336,8 @@ const Contact = () => {
               style={{ marginTop: reason === "question" ? 0 : "15px" }}
             >
               <label for="name-contact" className="label-contact">
-                {reason === "question"
-                  ? "Your Question Below"
+                {reason === "question/suggestion"
+                  ? "Your Question/Suggestion Below"
                   : "Please describe the issue"}
                 <span className="star">*</span>
               </label>
@@ -346,6 +351,7 @@ const Contact = () => {
                 className="tarea-contact"
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
+                style={{ marginTop: "5px" }}
               />
             </div>
 

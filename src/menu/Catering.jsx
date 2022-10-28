@@ -3,7 +3,8 @@ import Leaf from "../longstuff/Leaf";
 
 const Catering = () => {
   return (
-    <div className="catering-parent" id="catering-p">
+    <div className="catering-parent op0" id="catering-p">
+      <div id="catering-intersectingobserver" />
       <div className="menu-title">Bring Mycha to You!</div>
       <Leaf />
       <div className="catering-desc">

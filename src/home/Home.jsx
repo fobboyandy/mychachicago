@@ -12,10 +12,6 @@ import $ from "jquery";
 const Home = () => {
   const state = useLocation();
 
-  // useEffect(() => {
-  //   window.scrollTo({ top: 0, behavior: "smooth" });
-  // }, []);
-
   useEffect(() => {
     $(document).ready(() => {
       if (state.state?.from === "contact") {
@@ -28,7 +24,8 @@ const Home = () => {
           behavior: "smooth",
         });
       } else {
-        window.scrollTo({ top: 0 });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        console.log("ran");
       }
     });
   }, []);
@@ -37,8 +34,6 @@ const Home = () => {
       <Scrolldiv />
       <Section2 />
       <Background />
-
-      {/* <div style={{ height: "100vh" }}></div> */}
     </div>
   );
 };
