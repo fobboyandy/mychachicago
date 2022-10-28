@@ -9,7 +9,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [reason, setReason] = useState("question"); //change to question whend oen
+  const [reason, setReason] = useState("question/suggestion"); //change to question whend oen
   const [location, setLocation] = useState("uiceast");
   const [paymentType, setPaymentType] = useState("");
   const [last4, setLast4] = useState("");
