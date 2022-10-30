@@ -33,7 +33,7 @@ const Home = () => {
     <div id="parent" style={{ marginTop: "11vh" }}>
       <Scrolldiv />
       <Section2 />
-      <Background />
+      {/* <Background /> */}
     </div>
   );
 };

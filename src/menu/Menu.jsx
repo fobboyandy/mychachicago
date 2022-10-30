@@ -262,7 +262,7 @@ const Menu = () => {
         </div>
       </div>
 
-      <Background />
+      {/* <Background /> */}
     </div>
   );
 };

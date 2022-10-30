@@ -40,7 +40,7 @@ const MenuItem = () => {
 
   return (
     <div style={{ width: "100%" }} className="mitem-parent">
-      <Background />
+      {/* <Background /> */}
       <div className="mitem-container">
         <div className="mitem-imgcontainer">
           <img src={selectedItem.image} className="mitem-img" />

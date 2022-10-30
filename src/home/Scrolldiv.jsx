@@ -265,7 +265,7 @@ const Scrolldiv = () => {
               We have many locations across Chicago and constantly adding more.
             </div>
             <a className="our-locations-btn" href="/locations">
-              Find one near you
+              Locations
             </a>
           </div>
         </div>
@@ -279,10 +279,9 @@ const Scrolldiv = () => {
           </div>
         </div>
       </div>
-      <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
-      </div>
+
+      <div className="backgroundimage-scrolldiv" />
+      <div className="scrolldivoverlay" />
     </div>
   );
 };

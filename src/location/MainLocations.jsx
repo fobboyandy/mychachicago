@@ -173,7 +173,7 @@ const MainLocations = () => {
           </div>
         ))}
       </div>
-      <Background />
+      {/* <Background /> */}
     </div>
   );
 };
