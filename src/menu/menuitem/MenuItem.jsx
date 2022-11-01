@@ -4,6 +4,7 @@ import "./menuitem.scss";
 import { allItems } from "../menuobj";
 import { useParams } from "react-router-dom";
 import NutritionTable from "./NutritionTable";
+import NotFound from "../../NotFound";
 
 const MenuItem = () => {
   const [selectedItem, setSelectedItem] = useState({});
@@ -31,12 +32,16 @@ const MenuItem = () => {
     const item = allItems.find((item) => item.id === Number(id));
 
     setSelectedItem(item);
-    setSmallNutrition(item.nutrition.small);
-    setLargeNutrition(item.nutrition.large);
+    setSmallNutrition(item?.nutrition.small);
+    setLargeNutrition(item?.nutrition.large);
     setIsLoading(false);
   }, []);
 
   if (isLoading) return "loading";
+
+  if (!isLoading && !selectedItem?.id) {
+    return <NotFound />;
+  }
 
   return (
     <div style={{ width: "100%" }} className="mitem-parent">

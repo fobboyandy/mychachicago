@@ -27,9 +27,19 @@ const App = () => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  if (!drinkStock.id) {
+  if (!drinkStock.id && states.state?.from) {
     return (
-      <div className="lds-ring nodisplay" id="spinner-form">
+      <div
+        className="lds-ring"
+        style={{
+          width: "100%",
+          height: "60vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        id="spinner-form"
+      >
         <div></div>
         <div></div>
         <div></div>
@@ -38,6 +48,7 @@ const App = () => {
     );
   }
 
+  console.log(selected);
   return (
     <div className="quantity-container">
       <div className="quantity-locationcontainer">
@@ -63,108 +74,122 @@ const App = () => {
             <option value={location.id}>{location.name}</option>
           ))}
         </select>
-        {/* <div className="quantity-information">
-          <div className="location-name">{selected.name}</div>
-          <div className="location-desc">{selected.address}</div>
-          <div>{selected.hours}</div>
-          <div>{selected.desc}</div>
-        </div> */}
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "25%",
-          marginTop: "20px",
-        }}
-      >
-        <div
-          className="select-qty"
-          style={{
-            borderBottom:
-              selected2 === "interactive" ? "1px black solid" : "none",
-          }}
-          onClick={() => {
-            setSelected2("interactive");
-            qtyRef.current.scrollLeft -= 2000;
-          }}
-        >
-          Interactive
-        </div>
-        <div
-          className="select-qty"
-          style={{
-            borderBottom: selected2 === "raw" ? "1px black solid" : "none",
-          }}
-          onClick={() => {
-            setSelected2("raw");
-            qtyRef.current.scrollLeft += 2000;
-          }}
-        >
-          Raw
+        <div className="quantity-information">
+          <div className="location-name">{selected?.name}</div>
+          <div className="location-desc">{selected?.address}</div>
+          <div>{selected?.hours}</div>
+          <div>{selected?.desc}</div>
         </div>
       </div>
-      <div style={{ width: "50%" }}>
-        <div className="quantity-slider" ref={qtyRef}>
-          <div className="machine-container snapinline">
-            <img
-              src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
-              className="machine-img"
-              alt="cup"
-            />
+      {selected.id ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "25%",
+            marginTop: "20px",
+          }}
+        >
+          <div
+            className="select-qty"
+            style={{
+              borderBottom:
+                selected2 === "interactive" ? "1px black solid" : "none",
+            }}
+            onClick={() => {
+              setSelected2("interactive");
+              qtyRef.current.scrollLeft -= 2000;
+            }}
+          >
+            Interactive
+          </div>
+          <div
+            className="select-qty"
+            style={{
+              borderBottom: selected2 === "raw" ? "1px black solid" : "none",
+            }}
+            onClick={() => {
+              setSelected2("raw");
+              qtyRef.current.scrollLeft += 2000;
+            }}
+          >
+            Raw
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {selected.id ? (
+        <div style={{ width: "50%" }}>
+          <div className="quantity-slider" ref={qtyRef}>
+            <div className="machine-container snapinline">
+              <img
+                src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
+                className="machine-img"
+                alt="cup"
+              />
 
-            <div className="container-cups">
-              {arr.map((drink) => (
-                <div>
-                  <div
-                    style={{ position: "relative", zIndex: 1 }}
-                    id={drink.id}
-                    className="container-map"
-                  >
-                    <Boba drink={drink} />
+              <div className="container-cups">
+                {arr.map((drink) => (
+                  <div>
+                    <div
+                      style={{ position: "relative", zIndex: 1 }}
+                      id={drink.id}
+                      className="container-map"
+                    >
+                      <Boba drink={drink} />
+                    </div>
+                    <QtyOverlay drink={drink} />
                   </div>
-                  <QtyOverlay drink={drink} />
+                ))}
+              </div>
+            </div>
+            <div className="snapinline raw-container" style={{ width: "100%" }}>
+              {allItems.map((drink) => (
+                <div className="stockdrink-container">
+                  <img
+                    src={drink.image}
+                    style={{ width: "100%", height: "70%" }}
+                  />
+                  <div
+                    style={{ textDecoration: "underline", marginTop: "10px" }}
+                  >
+                    {drink.name}
+                  </div>
+                  {drink.htmlid === "jasminemilktea" ||
+                  drink.htmlid === "oolongmilktea" ? (
+                    <div
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <div>
+                        Small w Boba: {drinkStock[drink.htmlid].boba[0]}
+                      </div>
+                      <div>
+                        Large w Boba: {drinkStock[drink.htmlid].boba[1]}
+                      </div>
+                      <div>Small no Boba: {drinkStock[drink.htmlid].nb[0]}</div>
+                      <div>Large no Boba: {drinkStock[drink.htmlid].nb[1]}</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>Small: {drinkStock[drink.htmlid][0]}</div>
+                      <div>Large: {drinkStock[drink.htmlid][1]}</div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
-          </div>
-          <div className="snapinline raw-container" style={{ width: "100%" }}>
-            {allItems.map((drink) => (
-              <div className="stockdrink-container">
-                <img
-                  src={drink.image}
-                  style={{ width: "100%", height: "70%" }}
-                />
-                <div style={{ textDecoration: "underline", marginTop: "10px" }}>
-                  {drink.name}
-                </div>
-                {drink.htmlid === "jasminemilktea" ||
-                drink.htmlid === "oolongmilktea" ? (
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div>Small w Boba: {drinkStock[drink.htmlid].boba[0]}</div>
-                    <div>Large w Boba: {drinkStock[drink.htmlid].boba[1]}</div>
-                    <div>Small no Boba: {drinkStock[drink.htmlid].nb[0]}</div>
-                    <div>Large no Boba: {drinkStock[drink.htmlid].nb[1]}</div>
-                  </div>
-                ) : (
-                  <div>
-                    <div>Small: {drinkStock[drink.htmlid][0]}</div>
-                    <div>Large: {drinkStock[drink.htmlid][1]}</div>
-                  </div>
-                )}
-              </div>
-            ))}
+            ): ''}
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
