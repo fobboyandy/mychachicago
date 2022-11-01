@@ -70,4 +70,148 @@ const location = [
   },
 ];
 
-export { location };
+const stock = [
+  {
+    id: "uice",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+
+  {
+    id: "uicw",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+  {
+    id: "b37ped",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+  {
+    id: "uicbsb",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+  {
+    id: "rushu",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+  {
+    id: "bpapa",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+  {
+    id: "uchimed",
+    mangojasmine: [1, 2],
+    lycheefruittea: [1, 2],
+    passionfruittea: [1, 2],
+    jasminemilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    oolongmilktea: {
+      boba: [1, 2],
+      nb: [1, 2],
+    },
+    matchamilktea: [1, 2],
+    taromilktea: [1, 2],
+    coffeemilktea: [1, 2],
+    thaiicedtea: [1, 2],
+    vietnamesecoffee: [1, 2],
+    mangolassi: [1, 2],
+  },
+];
+
+export { location, stock };

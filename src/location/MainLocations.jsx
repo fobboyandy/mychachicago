@@ -7,8 +7,11 @@ import LocationWord from "../longstuff/LocationsWord";
 
 import $ from "jquery";
 import gsap from "gsap";
+import { useNavigate } from "react-router-dom";
 
 const MainLocations = () => {
+  const history = useNavigate();
+
   useEffect(() => {
     gsap.fromTo(
       "#locationword",
@@ -166,7 +169,14 @@ const MainLocations = () => {
                 src="https://cdn.discordapp.com/attachments/779278654714675232/1031734843148615720/leafnobg.png"
                 style={{ height: "45px", width: "45px", userSelect: "none" }}
               />
-              <div className="check-stock location-desc">
+              <div
+                className="check-stock location-desc"
+                onClick={() =>
+                  history(`/locations/check`, {
+                    state: { from: location.id },
+                  })
+                }
+              >
                 Check Location Stock
               </div>
             </div>

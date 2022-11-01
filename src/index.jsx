@@ -37,7 +37,7 @@ root.render(
           <Route exact path="/locations" element={<MainLocations />} />
           <Route exact path="/menu" element={<Menu />} />
           <Route exact path="/menu/:id" element={<MenuItem />} />
-          <Route exact path="/quantity" element={<App />} />
+          <Route exact path="/locations/check" element={<App />} />
         </Routes>
         <Footer />
       </BrowserRouter>
