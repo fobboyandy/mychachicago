@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import Machine from "./Machine";
 import Boba from "./Boba";
 import QtyOverlay from "./QtyOverlay";
-import { arr } from "./longstuff/drinks";
+import { arr } from "../longstuff/drinks";
 import "./quantity.scss";
 import $ from "jquery";
 
-import { location, stock } from "./location/locationsobj";
-import { allItems } from "./menu/menuobj";
+import { location, stock } from "../location/locationsobj";
+import { allItems } from "../menu/menuobj";
 import { useLocation, useParams } from "react-router-dom";
-import Leaf from "./longstuff/Leaf";
+import Leaf from "../longstuff/Leaf";
 
 const App = () => {
   const qtyRef = useRef(null);
@@ -81,48 +81,16 @@ const App = () => {
           <div>{selected?.desc}</div>
         </div>
       </div>
+
       {selected.id ? (
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: "25%",
-            marginTop: "20px",
+            width: "100%",
+            minWidth: "350px",
           }}
         >
-          <div
-            className="select-qty"
-            style={{
-              borderBottom:
-                selected2 === "interactive" ? "1px black solid" : "none",
-            }}
-            onClick={() => {
-              setSelected2("interactive");
-              qtyRef.current.scrollLeft -= 2000;
-            }}
-          >
-            Interactive
-          </div>
-          <div
-            className="select-qty"
-            style={{
-              borderBottom: selected2 === "raw" ? "1px black solid" : "none",
-            }}
-            onClick={() => {
-              setSelected2("raw");
-              qtyRef.current.scrollLeft += 2000;
-            }}
-          >
-            Raw
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {selected.id ? (
-        <div style={{ width: "50%" }}>
           <div className="quantity-slider" ref={qtyRef}>
-            <div className="machine-container snapinline">
+            <div className="machine-container ">
               <img
                 src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
                 className="machine-img"
@@ -130,8 +98,8 @@ const App = () => {
               />
 
               <div className="container-cups">
-                {arr.map((drink) => (
-                  <div>
+                {allItems.map((drink) => (
+                  <div id={drink.id + "cupmap"}>
                     <div
                       style={{ position: "relative", zIndex: 1 }}
                       id={drink.id}
@@ -139,52 +107,11 @@ const App = () => {
                     >
                       <Boba drink={drink} />
                     </div>
-                    <QtyOverlay drink={drink} />
+                    <QtyOverlay drink={drink} stock={stock} />
                   </div>
                 ))}
               </div>
             </div>
-            <div className="snapinline raw-container" style={{ width: "100%" }}>
-              {allItems.map((drink) => (
-                <div className="stockdrink-container">
-                  <img
-                    src={drink.image}
-                    style={{ width: "100%", height: "70%" }}
-                  />
-                  <div
-                    style={{ textDecoration: "underline", marginTop: "10px" }}
-                  >
-                    {drink.name}
-                  </div>
-                  {drink.htmlid === "jasminemilktea" ||
-                  drink.htmlid === "oolongmilktea" ? (
-                    <div
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div>
-                        Small w Boba: {drinkStock[drink.htmlid].boba[0]}
-                      </div>
-                      <div>
-                        Large w Boba: {drinkStock[drink.htmlid].boba[1]}
-                      </div>
-                      <div>Small no Boba: {drinkStock[drink.htmlid].nb[0]}</div>
-                      <div>Large no Boba: {drinkStock[drink.htmlid].nb[1]}</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div>Small: {drinkStock[drink.htmlid][0]}</div>
-                      <div>Large: {drinkStock[drink.htmlid][1]}</div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            ): ''}
           </div>
         </div>
       ) : (
