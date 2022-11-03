@@ -115,6 +115,8 @@ const Contact = () => {
     return valid;
   }
 
+  console.log(paymentType);
+
   return (
     <div className="contact-parent op0" id="contactparent">
       <div id="contact-intersectingobserver" />
@@ -199,7 +201,7 @@ const Contact = () => {
             />
 
             <label htmlFor="email-contact" className="label-contact">
-              Email<span className="star">*</span>
+              Your Email<span className="star">*</span>
             </label>
 
             <div

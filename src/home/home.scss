@@ -92,7 +92,7 @@ textarea {
   top: 0;
   width: 100%;
   height: 100%;
-  background-image: url(../../assets/finalatt.png);
+  background-image: url(../../assets/homeback.png);
   background-size: cover;
   background-position: center;
   opacity: 1;
@@ -596,7 +596,7 @@ body {
   width: 100px;
   cursor: pointer;
   align-self: center;
-  margin-top: 8px;
+  margin-top: 20px;
   border-radius: 10%;
   font-size: 16px;
 }
@@ -661,4 +661,18 @@ body {
   height: 1px;
   position: absolute;
   top: 7vh;
+}
+
+#insta-animation {
+  width: 60%;
+  border: 1px #f4f4f4 solid;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5), 0 1px 10px 0 rgba(0, 0, 0, 0.15);
+
+  @media only screen and (max-width: 900px) {
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: 120%;
+  }
 }
