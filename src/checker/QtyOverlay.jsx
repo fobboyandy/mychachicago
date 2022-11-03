@@ -53,7 +53,6 @@ const QtyOverlay = ({ drink, stock }) => {
         const top = e.offsetTop;
         const width = e.offsetWidth;
         const height = e.offsetHeight;
-
         $(`#${drink.id}-qty`).css(
           "top",
           top + (cupheight - overlay) / 2 + "px"

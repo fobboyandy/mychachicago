@@ -65,7 +65,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 92%;
 }
 
 .quantity-display {
@@ -85,6 +85,7 @@
 
   @media only screen and (max-width: 420px) {
     min-width: 120px;
+    min-height: 70px;
   }
 }
 
@@ -105,6 +106,7 @@
 
   @media only screen and (max-width: 500px) {
     font-size: 17px;
+    margin-bottom: 0px;
   }
 }
 
@@ -135,4 +137,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#input210 {
+  width: 40%;
+
+  @media only screen and (max-width: 500px) {
+    width: 85%;
+  }
 }

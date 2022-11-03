@@ -11,13 +11,14 @@ import { allItems } from "../menu/menuobj";
 import { useLocation, useParams } from "react-router-dom";
 import Leaf from "../longstuff/Leaf";
 
+import "./quantity.scss";
+
 const App = () => {
   const qtyRef = useRef(null);
   const states = useLocation();
 
   const [selected, setSelected] = useState({});
   const [drinkStock, setDrinkStock] = useState({});
-  const [selected2, setSelected2] = useState("interactive");
 
   useEffect(() => {
     const obj = location.find((item) => item.id === states.state?.from);
@@ -48,7 +49,6 @@ const App = () => {
     );
   }
 
-  console.log(selected);
   return (
     <div className="quantity-container">
       <div className="quantity-locationcontainer">
@@ -57,7 +57,9 @@ const App = () => {
         </div> */}
         <div className="location-name2">Mycha Location Stock Checker</div>
         <Leaf />
-        <div className="location-name2">Choose a location below</div>
+        <div className="location-name2" style={{ marginBottom: "15px" }}>
+          Choose a location below
+        </div>
         <select
           onChange={(e) => {
             const v = location.find((loc) => loc.id === e.target.value);
@@ -66,7 +68,7 @@ const App = () => {
             setDrinkStock(st);
           }}
           className="input-contact"
-          style={{ width: "40%" }}
+          id="input210"
           value={selected.id}
         >
           <option disabled={selected.id}>Select One</option>
@@ -76,7 +78,9 @@ const App = () => {
         </select>
         <div className="quantity-information">
           <div className="location-name">{selected?.name}</div>
-          <div className="location-desc">{selected?.address}</div>
+          <div className="location-desc" style={{ marginBottom: "15px" }}>
+            {selected?.address}
+          </div>
           <div>{selected?.hours}</div>
           <div>{selected?.desc}</div>
         </div>
