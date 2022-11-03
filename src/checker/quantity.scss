@@ -81,6 +81,7 @@
   flex-direction: column;
   align-items: center;
   animation: scale 0.2s ease;
+  opacity: 0;
   // display: none;
 
   @media only screen and (max-width: 420px) {

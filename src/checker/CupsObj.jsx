@@ -1,5 +1,8 @@
 import ReactDOMServer from "react-dom/server";
 import MangoJasmine from "./checkerimages/MangoJasmine";
+import Lychee from "./checkerimages/Lychee";
+import PassionFruit from "./checkerimages/PassionFruit";
+import JasmineMt from "./checkerimages/JasmineMt";
 
 const cups2 = {
   default:
@@ -9,15 +12,15 @@ const cups2 = {
   },
 
   lycheefruittea: () => {
-    return ReactDOMServer.renderToString(<MangoJasmine />);
+    return ReactDOMServer.renderToString(<Lychee />);
   },
 
   passionfruittea: () => {
-    return ReactDOMServer.renderToString(<MangoJasmine />);
+    return ReactDOMServer.renderToString(<PassionFruit />);
   },
 
   jasminemilktea: () => {
-    return ReactDOMServer.renderToString(<MangoJasmine />);
+    return ReactDOMServer.renderToString(<JasmineMt />);
   },
   oolongmilktea: () => {
     return ReactDOMServer.renderToString(<MangoJasmine />);

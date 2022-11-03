@@ -26,12 +26,12 @@ const App = () => {
     setDrinkStock(stock.find((item) => item.id === states.state?.from) || {});
 
     window.scrollTo({ top: 0 });
-  }, []);
+  }, [states.state?.from]);
 
   if (!drinkStock.id && states.state?.from) {
     return (
       <div
-        className="lds-ring"
+        className='lds-ring'
         style={{
           width: "100%",
           height: "60vh",
@@ -39,7 +39,7 @@ const App = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        id="spinner-form"
+        id='spinner-form'
       >
         <div></div>
         <div></div>
@@ -50,14 +50,14 @@ const App = () => {
   }
 
   return (
-    <div className="quantity-container">
-      <div className="quantity-locationcontainer">
+    <div className='quantity-container'>
+      <div className='quantity-locationcontainer'>
         {/* <div className="quantity-imgcontainer">
           <img src={selected.image} style={{ width: "100%", height: "100%" }} />
         </div> */}
-        <div className="location-name2">Mycha Location Stock Checker</div>
+        <div className='location-name2'>Mycha Location Stock Checker</div>
         <Leaf />
-        <div className="location-name2" style={{ marginBottom: "15px" }}>
+        <div className='location-name2' style={{ marginBottom: "15px" }}>
           Choose a location below
         </div>
         <select
@@ -67,8 +67,8 @@ const App = () => {
             setSelected(v);
             setDrinkStock(st);
           }}
-          className="input-contact"
-          id="input210"
+          className='input-contact'
+          id='input210'
           value={selected.id}
         >
           <option disabled={selected.id}>Select One</option>
@@ -76,9 +76,9 @@ const App = () => {
             <option value={location.id}>{location.name}</option>
           ))}
         </select>
-        <div className="quantity-information">
-          <div className="location-name">{selected?.name}</div>
-          <div className="location-desc" style={{ marginBottom: "15px" }}>
+        <div className='quantity-information'>
+          <div className='location-name'>{selected?.name}</div>
+          <div className='location-desc' style={{ marginBottom: "15px" }}>
             {selected?.address}
           </div>
           <div>{selected?.hours}</div>
@@ -93,21 +93,21 @@ const App = () => {
             minWidth: "350px",
           }}
         >
-          <div className="quantity-slider" ref={qtyRef}>
-            <div className="machine-container ">
+          <div className='quantity-slider' ref={qtyRef}>
+            <div className='machine-container '>
               <img
-                src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
-                className="machine-img"
-                alt="cup"
+                src='https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png'
+                className='machine-img'
+                alt='cup'
               />
 
-              <div className="container-cups">
+              <div className='container-cups'>
                 {allItems.map((drink) => (
                   <div id={drink.id + "cupmap"}>
                     <div
                       style={{ position: "relative", zIndex: 1 }}
                       id={drink.id}
-                      className="container-map"
+                      className='container-map'
                     >
                       <Boba drink={drink} />
                     </div>
