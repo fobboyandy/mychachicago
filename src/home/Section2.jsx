@@ -224,7 +224,6 @@ const Section2 = () => {
         <a
           style={{
             textDecoration: "underline",
-            fontSize: "22px",
             cursor: "pointer",
             marginTop: "25px",
             color: "rgba(51,51,51)",

@@ -213,6 +213,7 @@ const Menu = () => {
                 opacity: 0,
               }}
               id={section.id}
+              key={section.id}
             >
               <div className={`intersecting-${section.id}`} />
               <div className="menu-title">
@@ -227,7 +228,7 @@ const Menu = () => {
               />
               <div className="container-sectionmenu">
                 {section.items.map((item) => (
-                  <div className="menu-half" id={item.htmlid}>
+                  <div className="menu-half" id={item.htmlid} key={item.htmlid}>
                     <div className="img-menucontainer">
                       <div
                         className="img-menu"

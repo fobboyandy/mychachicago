@@ -5,7 +5,7 @@ const Catering = () => {
   return (
     <div className="catering-parent op0" id="catering-p">
       <div id="catering-intersectingobserver" />
-      <div className="menu-title">Bring Mycha to You!</div>
+      <div className="menu-title" style={{textAlign:'center'}}>Bring Mycha to You!</div>
       <Leaf />
       <div className="catering-desc">
         Special moments calls for a grand celebration. Celebrate your big

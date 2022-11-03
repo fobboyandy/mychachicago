@@ -150,6 +150,7 @@ const MainLocations = () => {
           <div
             className={`container-info ${window.innerWidth > 700 ? "op0" : ""}`}
             id={location.id}
+            key={location.id}
           >
             <div style={{ width: "100%", height: "100%" }}>
               <img

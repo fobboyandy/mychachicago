@@ -26,7 +26,9 @@ function closeNav() {
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
-
+console.log(
+  "Thanks for checking out Mycha Website! Made with love by Yingson Yu <3."
+);
 root.render(
   <>
     <React.StrictMode>

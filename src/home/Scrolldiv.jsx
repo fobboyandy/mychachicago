@@ -26,36 +26,49 @@ const Scrolldiv = () => {
   }, [resize]);
 
   useEffect(() => {
+    let stop = false;
+
     if (!vpWidth) return;
     const init = (value, notfirst) => {
+      if (stop) return;
       if (document.hidden) {
+        if (stop) return;
         return setTimeout(() => {
+          if (stop) return;
           init(value, notfirst);
         }, 500);
       }
 
       if (value === 0 && notfirst) {
-        // setSmooth(true);
+        if (stop) return;
         return setTimeout(() => {
+          if (stop) return;
           containerRef.current.scrollLeft += vpWidth;
           init(value + 1);
         }, 7600);
       }
 
       if (value === 3) {
+        if (stop) return;
         setTimeout(() => {
+          if (stop) return;
           containerRef.current.scrollLeft += -10000;
           init(0, true);
         }, 7600);
       } else {
-        // setSmooth(true);
+        if (stop) return;
         setTimeout(() => {
+          if (stop) return;
           containerRef.current.scrollLeft += vpWidth - 15.5;
           init(value + 1);
         }, 7600);
       }
     };
     init(0);
+
+    return () => {
+      stop = true;
+    };
   }, [vpWidth]);
 
   //stop is to ensure the function does not run when we leave the page. recursive func will keep running when user leaves the page without stop

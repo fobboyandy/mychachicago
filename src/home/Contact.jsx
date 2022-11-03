@@ -233,7 +233,7 @@ const Contact = () => {
               type="tel"
             />
 
-            <label for="reason-contact" className="label-contact">
+            <label htmlFor="reason-contact" className="label-contact">
               Reason<span className="star">*</span>
             </label>
             <select
@@ -309,7 +309,7 @@ const Contact = () => {
 
                 {paymentType === "card" ? (
                   <div style={{ marginTop: "10px" }}>
-                    <label for="name-contact" className="label-contact">
+                    <label htmlFor="name-contact" className="label-contact">
                       Last 4 Digits of Card<span className="star">*</span>
                     </label>
                     <div
@@ -335,7 +335,7 @@ const Contact = () => {
               id="textarea-container"
               style={{ marginTop: reason === "question" ? 0 : "15px" }}
             >
-              <label for="name-contact" className="label-contact">
+              <label htmlFor="name-contact" className="label-contact">
                 {reason === "question/suggestion"
                   ? "Your Question/Suggestion Below"
                   : "Please describe the issue"}

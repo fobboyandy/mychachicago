@@ -17,7 +17,7 @@ th {
   display: flex;
   justify-content: center;
   margin-top: 20vh;
-  margin-bottom: 10vh;
+  margin-bottom: 4vh;
 }
 
 .mitem-container {
@@ -137,4 +137,19 @@ th {
   cursor: pointer;
   font-size: 20px;
   padding-bottom: 5px;
+}
+
+.checkstock-button {
+  width: 120px;
+  height: 50px;
+  background-color: rgb(109, 214, 49);
+  border-radius: 18px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

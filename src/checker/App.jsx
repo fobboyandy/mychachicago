@@ -1,3 +1,5 @@
+//stock checker main component
+
 import React, { useEffect, useRef, useState } from "react";
 import Machine from "./Machine";
 import Boba from "./Boba";
@@ -28,7 +30,8 @@ const App = () => {
     window.scrollTo({ top: 0 });
   }, [states.state?.from]);
 
-  if (!drinkStock.id && states.state?.from) {
+  if (!drinkStock?.id && states.state?.from) {
+    //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
     return (
       <div
         className="lds-ring"
@@ -49,7 +52,6 @@ const App = () => {
     );
   }
 
-  console.log(drinkStock);
   return (
     <div className="quantity-container">
       <div className="quantity-locationcontainer">
@@ -74,7 +76,9 @@ const App = () => {
         >
           <option disabled={selected.id}>Select One</option>
           {location.map((location) => (
-            <option value={location.id}>{location.name}</option>
+            <option value={location.id} key={location.id}>
+              {location.name}
+            </option>
           ))}
         </select>
         <div className="quantity-information">
@@ -96,6 +100,16 @@ const App = () => {
         >
           <div className="quantity-slider" ref={qtyRef}>
             <div className="machine-container ">
+              <div
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                  fontStyle: "italic",
+                }}
+                className="hoverorclick"
+              >
+                Hover or Click each drink to see stock!
+              </div>
               <img
                 src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
                 className="machine-img"
@@ -104,7 +118,7 @@ const App = () => {
 
               <div className="container-cups">
                 {allItems.map((drink) => (
-                  <div id={drink.id + "cupmap"}>
+                  <div id={drink.id + "cupmap"} key={drink.id}>
                     <div
                       style={{ position: "relative", zIndex: 1 }}
                       id={drink.id}

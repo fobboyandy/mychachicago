@@ -9,10 +9,10 @@ const Mychamenu = () => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       id="mychamenu"
     >
-      <rect width="282" height="50" fill="url(#pattern05)" />
+      <rect width="282" height="50" fill="url(#pattern05222)" />
       <defs>
         <pattern
-          id="pattern05"
+          id="pattern05222"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"

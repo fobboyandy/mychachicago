@@ -3,13 +3,12 @@ import React from "react";
 const Homelogo = () => {
   return (
     <svg
-      width="110"
-      height="95"
       viewBox="0 0 131 95"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       style={{ marginLeft: "5px" }}
+      className="mainnavlogo"
     >
       <g filter="url(#filter0_d_1_5)">
         <rect
@@ -17,7 +16,7 @@ const Homelogo = () => {
           width="123"
           height="87"
           fill="url(#pattern0)"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
       </g>
       <defs>
@@ -28,9 +27,9 @@ const Homelogo = () => {
           width="131"
           height="95"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"

@@ -25,7 +25,6 @@ const Home = () => {
         });
       } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
-        console.log("ran");
       }
     });
   }, []);

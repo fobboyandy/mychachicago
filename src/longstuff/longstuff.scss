@@ -48,3 +48,13 @@
     width: 280px;
   }
 }
+
+.mainnavlogo {
+  width: 110px;
+  height: 95px;
+  @media only screen and (max-width: 450px) {
+    margin-top: 4px;
+    width: 95px;
+    height: 83px;
+  }
+}
