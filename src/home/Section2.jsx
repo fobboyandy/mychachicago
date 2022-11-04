@@ -296,7 +296,7 @@ const Section2 = () => {
 
           <iframe
             src="https://www.instagram.com/p/CHcMnOxld6Q/embed/captioned/"
-            frameborder="0"
+            frameBorder="0"
             scrolling="no"
             allowtransparency="true"
             id="insta-animation"
