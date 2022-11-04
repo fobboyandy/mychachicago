@@ -68,6 +68,10 @@
   align-items: center;
   margin-right: 5%;
   margin-left: 5%;
+
+  @media only screen and (max-width: 450px) {
+    margin-top: 50px;
+  }
 }
 
 .quantity-information {
