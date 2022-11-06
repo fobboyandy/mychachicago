@@ -37,6 +37,7 @@ const QtyOverlay = ({ drink, stock }) => {
     $(`#${drink.id}-qty`).css("display", "flex");
     const overlay = document.getElementById(`${drink.id}-qty`).offsetHeight;
     $(`#${drink.id}-qty`).css("display", "none");
+
     $(document).ready(() => {
       $(`#${drink.id}`).each((i, e) => {
         const left = e.offsetLeft;

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Background from "../../Background";
 import "./menuitem.scss";
 import { allItems } from "../menuobj";
 import { useNavigate, useParams } from "react-router-dom";

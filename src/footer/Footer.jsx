@@ -3,13 +3,14 @@ import "./footer.scss";
 import Facebook from "../longstuff/Facebook";
 import Instagram from "../longstuff/Instagram";
 import Yelp from "../longstuff/Yelp";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PhoneIcon from "../longstuff/PhoneIcon";
 import Mail from "../longstuff/Mail";
 
 const Footer = () => {
   const [current, setCurrent] = useState("");
   const history = useNavigate();
+  const loc = useLocation();
 
   function scrollCatering() {
     const catering = document
@@ -122,9 +123,9 @@ const Footer = () => {
           <div
             className="li-footer"
             onClick={() => {
-              current[current.length - 1] === "/"
-                ? scrollContact()
-                : history("/", { state: { from: "contact" } });
+              loc.pathname === "/contact"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/contact");
             }}
           >
             Contact

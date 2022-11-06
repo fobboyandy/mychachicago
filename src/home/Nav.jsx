@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Homelogo from "../longstuff/Homelogo";
 import "./home.scss";
 
@@ -8,6 +8,7 @@ import $ from "jquery";
 
 const Nav = ({ openNav }) => {
   const history = useNavigate();
+  const loc = useLocation();
 
   const [width, setWidth] = useState(window.innerWidth);
   const [current, setCurrent] = useState("");
@@ -60,14 +61,14 @@ const Nav = ({ openNav }) => {
 
   return (
     <div className="nav-home" style={{ zIndex: 10, userSelect: "none" }}>
-      <Homelogo />
+      <Homelogo history={history} />
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (
         <div className="li-container" style={{ marginRight: "5%" }}>
           <div
             className="li-nav"
             onClick={() => {
-              current[current.length - 1] === "/"
+              loc.pathname === "/"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
                 : history("/");
             }}
@@ -100,9 +101,9 @@ const Nav = ({ openNav }) => {
           <div
             className="li-nav"
             onClick={() => {
-              current[current.length - 1] === "/"
-                ? scrollContact()
-                : history("/", { state: { from: "contact" } });
+              loc.pathname === "/contact"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/contact");
             }}
           >
             Contact

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./home.scss";
 import $ from "jquery";
-//            dangerouslySetInnerHTML={{ __html: instagram }}
 
 import Leaf from "../longstuff/Leaf";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +20,7 @@ const Section2 = () => {
     const one = document.getElementById("intersecting-observer1");
     const two = document.getElementById("intersecting-observer2");
     const three = document.getElementById("intersecting-observer3");
-    const four = document.getElementById("contact-intersectingobserver");
+
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -138,29 +137,9 @@ const Section2 = () => {
       });
     });
 
-    const observer4 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#contactparent",
-            { opacity: 0, x: "25%" },
-            {
-              opacity: 1,
-              x: 0,
-              ease: "power1",
-              duration: 1.4,
-            }
-          );
-
-          observer4.unobserve(four);
-        }
-      });
-    });
-
     observer.observe(one);
     observer2.observe(two);
     observer3.observe(three);
-    observer4.observe(four);
   }, []);
 
   return (
@@ -284,15 +263,6 @@ const Section2 = () => {
           </div>
 
           <Leaf />
-          {/* <div
-            style={{
-              marginTop: "20px",
-              width: "120%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-            id="insta-animation"
-          /> */}
 
           <iframe
             src="https://www.instagram.com/p/CHcMnOxld6Q/embed/captioned/"
@@ -303,7 +273,6 @@ const Section2 = () => {
           ></iframe>
           <div id="intersecting-observer3" />
         </div>
-        <Contact />
       </div>
     </div>
   );

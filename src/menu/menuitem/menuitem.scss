@@ -152,4 +152,69 @@ th {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  position: relative;
+  transition: all 0.5s ease;
+
+  &:hover {
+    border-radius: 9px;
+    opacity: 0.9;
+    animation: opacity 1s ease;
+  }
 }
+
+@keyframes opacity {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0.9;
+  }
+}
+
+// .ripple-o {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   overflow: hidden;
+//   background: transparent;
+//   z-index: 2;
+// }
+
+// .ripple-c {
+//   width: 0;
+//   height: 0;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   opacity: 0;
+//   width: 0;
+//   height: 0;
+//   border-radius: 50%;
+//   background: rgba(255, 255, 255, 0.25);
+
+//   .ripple-o.is-active & {
+//     animation: a-ripple 0.4s ease-in;
+//   }
+// }
+
+// @keyframes a-ripple {
+//   0% {
+//     opacity: 0;
+//   }
+//   25% {
+//     opacity: 1;
+//   }
+//   100% {
+//     width: 200%;
+//     padding-bottom: 200%;
+//     opacity: 0;
+//   }
+// }

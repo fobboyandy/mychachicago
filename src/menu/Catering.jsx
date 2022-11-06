@@ -5,7 +5,9 @@ const Catering = () => {
   return (
     <div className="catering-parent op0" id="catering-p">
       <div id="catering-intersectingobserver" />
-      <div className="menu-title" style={{textAlign:'center'}}>Bring Mycha to You!</div>
+      <div className="menu-title" style={{ textAlign: "center" }}>
+        Bring Mycha to You!
+      </div>
       <Leaf />
       <div className="catering-desc">
         Special moments calls for a grand celebration. Celebrate your big
@@ -63,7 +65,7 @@ const Catering = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        Catering Form
+        <span className="catering-formchild">Catering Form</span>
       </a>{" "}
     </div>
   );

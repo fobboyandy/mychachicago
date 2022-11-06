@@ -12,6 +12,7 @@ import Overlay from "./home/Overlay";
 import gsap from "gsap";
 import Footer from "./footer/Footer";
 import NotFound from "./NotFound";
+import Contact from "./home/Contact";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
@@ -38,6 +39,7 @@ root.render(
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/locations" element={<MainLocations />} />
+          <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/menu" element={<Menu />} />
           <Route exact path="/menu/:id" element={<MenuItem />} />
           <Route exact path="/locations/check" element={<App />} />

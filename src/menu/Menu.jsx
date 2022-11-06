@@ -174,6 +174,7 @@ const Menu = () => {
     );
   }, []);
 
+  //nested map so the same code isnt repeated 3 times for the 3 sections
   return (
     <div style={{ position: "relative" }}>
       <div

@@ -1,14 +1,22 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-const Homelogo = () => {
+const Homelogo = ({ history }) => {
+  const loc = useLocation();
+
   return (
     <svg
       viewBox="0 0 131 95"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      style={{ marginLeft: "5px" }}
+      style={{ marginLeft: "5px", cursor: "pointer" }}
       className="mainnavlogo"
+      onClick={() =>
+        loc.pathname === "/"
+          ? window.scrollTo({ top: 0, behavior: "smooth" })
+          : history("/")
+      }
     >
       <g filter="url(#filter0_d_1_5)">
         <rect
