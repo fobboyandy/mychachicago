@@ -65,16 +65,19 @@ const Nav = ({ openNav }) => {
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (
         <div className="li-container" style={{ marginRight: "5%" }}>
-          <div
-            className="li-nav"
-            onClick={() => {
-              loc.pathname === "/"
-                ? window.scrollTo({ top: 0, behavior: "smooth" })
-                : history("/");
-            }}
-          >
-            Home
-          </div>
+          {loc.pathname === "/" ? (
+            <div
+              className="li-nav"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              Home
+            </div>
+          ) : (
+            <a className="li-nav" href="/" style={{ textDecoration: "none" }}>
+              Home
+            </a>
+          )}
+
           <div
             className="li-nav"
             onClick={() => {

@@ -6,7 +6,6 @@ import Leaf from "../longstuff/Leaf";
 import { useNavigate } from "react-router-dom";
 
 import gsap from "gsap";
-import Contact from "./Contact";
 
 const Section2 = () => {
   const history = useNavigate();
@@ -264,13 +263,19 @@ const Section2 = () => {
 
           <Leaf />
 
-          <iframe
-            src="https://www.instagram.com/p/CHcMnOxld6Q/embed/captioned/"
-            frameBorder="0"
-            scrolling="no"
-            allowtransparency="true"
-            id="insta-animation"
-          ></iframe>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+            id="instacontainer"
+          >
+            <iframe
+              src="https://www.instagram.com/p/CHcMnOxld6Q/embed/captioned/"
+              frameBorder="0"
+              scrolling="no"
+              allowtransparency="true"
+              id="insta-animation"
+              loading="eager"
+            ></iframe>
+          </div>
           <div id="intersecting-observer3" />
         </div>
       </div>
