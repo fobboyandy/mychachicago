@@ -25,6 +25,18 @@ img {
   font-style: normal;
 }
 
+input[type="text"] {
+  font-family: comic_sans_msitalic;
+}
+
+input[type="tel"] {
+  font-family: comic_sans_msitalic;
+}
+
+textarea[type="text"] {
+  font-family: comic_sans_msitalic;
+}
+
 .pointer {
   width: 20%;
   aspect-ratio: 1;

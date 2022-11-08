@@ -246,9 +246,7 @@ const Scrolldiv = () => {
           style={{ width: vpWidth + "px" }}
         >
           <div className="container-titledesc op0" id="scroll-two">
-            <div className="scroll-title">
-              Made Fresh with the Best Ingredients
-            </div>
+            <div className="scroll-title">Premium Ingredients Only</div>
             <div className="scroll-desc">
               Our drinks are made daily with premium tea leaves from the most
               authentic tea plantations.

@@ -87,16 +87,18 @@ const Footer = () => {
         </div>
 
         <div className="ul-footer">
-          <div
-            className="li-footer"
-            onClick={() => {
-              current[current.length - 1] === "/"
-                ? window.scrollTo({ top: 0, behavior: "smooth" })
-                : history("/");
-            }}
-          >
-            Home
-          </div>
+          {loc.pathname === "/" ? (
+            <div
+              className="li-nav"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            >
+              Home
+            </div>
+          ) : (
+            <a className="li-nav" href="/" style={{ textDecoration: "none" }}>
+              Home
+            </a>
+          )}
           <div
             className="li-footer"
             onClick={() => {

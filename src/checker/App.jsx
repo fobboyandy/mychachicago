@@ -1,19 +1,19 @@
 //stock checker main component
 
 import React, { useEffect, useRef, useState } from "react";
-import Machine from "./Machine";
-import Boba from "./Boba";
-import QtyOverlay from "./QtyOverlay";
-import { arr } from "../longstuff/drinks";
-import "./quantity.scss";
+import { useLocation } from "react-router-dom";
+
 import $ from "jquery";
+import gsap from "gsap";
 
 import { location, stock } from "../location/locationsobj";
 import { allItems } from "../menu/menuobj";
-import { useLocation, useParams } from "react-router-dom";
-import Leaf from "../longstuff/Leaf";
 
 import "./quantity.scss";
+
+import Boba from "./Boba";
+import QtyOverlay from "./QtyOverlay";
+import Leaf from "../longstuff/Leaf";
 
 const App = () => {
   const qtyRef = useRef(null);
@@ -22,6 +22,46 @@ const App = () => {
   const [selected, setSelected] = useState({});
   const [drinkStock, setDrinkStock] = useState({});
 
+  const [showSelect, setShowSelect] = useState(false);
+
+  function handleChange(id) {
+    const v = location.find((loc) => loc.id === id);
+    const st = stock.find((item) => item.id === id);
+    setSelected(v);
+    setDrinkStock(st);
+  }
+
+  function optionSlideIn1() {
+    setShowSelect((prev) => !prev);
+    let delay = 0;
+    location.forEach((loca) => {
+      gsap.fromTo(
+        `#${loca.id}`,
+        { opacity: 0, y: "-100%" },
+        { opacity: 1, y: 0, duration: 0.2, delay: delay }
+      );
+
+      delay += 0.1;
+    });
+  }
+
+  function optionSlideOut() {
+    let delay = location.length * 0.1;
+
+    setTimeout(() => {
+      setShowSelect((prev) => !prev);
+    }, delay * 1000 + 260);
+    location.forEach((loca) => {
+      gsap.fromTo(
+        `#${loca.id}`,
+        { opacity: 1, y: 0 },
+        { opacity: 0, y: "-100%", duration: 0.2, delay: delay }
+      );
+
+      delay -= 0.1;
+    });
+  }
+
   useEffect(() => {
     const obj = location.find((item) => item.id === states.state?.from);
     setSelected(obj || {});
@@ -29,6 +69,17 @@ const App = () => {
 
     window.scrollTo({ top: 0 });
   }, [states.state?.from]);
+
+  useEffect(() => {
+    const f =
+      document.getElementsByClassName("select-container3")[0]?.offsetHeight;
+    let count2 = f;
+
+    $(".li-contact").each((index, element) => {
+      element.style.top = count2 * (index + 1) + "px";
+      element.style.opacity = 0;
+    });
+  }, [showSelect]);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
@@ -55,32 +106,35 @@ const App = () => {
   return (
     <div className="quantity-container">
       <div className="quantity-locationcontainer">
-        {/* <div className="quantity-imgcontainer">
-          <img src={selected.image} style={{ width: "100%", height: "100%" }} />
-        </div> */}
         <div className="location-name2">Mycha Location Stock Checker</div>
         <Leaf />
         <div className="location-name2" style={{ marginBottom: "15px" }}>
           Choose a location below
         </div>
-        <select
-          onChange={(e) => {
-            const v = location.find((loc) => loc.id === e.target.value);
-            const st = stock.find((item) => item.id === e.target.value);
-            setSelected(v);
-            setDrinkStock(st);
+
+        <div
+          className="select-container3"
+          onClick={() => {
+            showSelect ? optionSlideOut() : optionSlideIn1();
           }}
-          className="input-contact"
-          id="input210"
-          value={selected.id}
+          style={{ zIndex: 9 }}
         >
-          <option disabled={selected.id}>Select One</option>
+          <div className="select-contact2">
+            {location.find((item) => item.id === selected.id)?.name ||
+              "Select a location"}
+          </div>
           {location.map((location) => (
-            <option value={location.id} key={location.id}>
+            <div
+              className="li-contact op0"
+              onClick={() => handleChange(location.id)}
+              id={location.id}
+              style={{ display: showSelect ? "" : "none" }}
+              key={location.id}
+            >
               {location.name}
-            </option>
+            </div>
           ))}
-        </select>
+        </div>
         <div className="quantity-information">
           <div className="location-name">{selected?.name}</div>
           <div className="location-desc" style={{ marginBottom: "15px" }}>

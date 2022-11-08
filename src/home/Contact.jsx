@@ -4,6 +4,7 @@ import { useForm } from "@formspree/react";
 
 import $ from "jquery";
 import gsap from "gsap";
+import { loc } from "./loc";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -24,7 +25,9 @@ const Contact = () => {
       phone1: phone,
       reason1: reason,
       location:
-        reason === "issue" ? location : "N/A reason is question/suggestion",
+        reason === "issue"
+          ? loc[location]
+          : "N/A reason is question/suggestion",
       paymentType:
         reason === "issue" ? paymentType : "N/A reason is question/suggestion",
       last4digits:
@@ -32,6 +35,9 @@ const Contact = () => {
       description: desc,
     },
   });
+
+  const [showSelect, setShowSelect] = useState(false);
+  const [showSelect2, setShowSelect2] = useState(false);
 
   //test for valid email
   const isValidEmail = (v) => {
@@ -116,6 +122,70 @@ const Contact = () => {
     return valid;
   }
 
+  function optionSlideIn1() {
+    gsap.fromTo(
+      "#question-suggestion",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2 }
+    );
+
+    gsap.fromTo(
+      "#machine-transaction-issue",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.1 }
+    );
+  }
+
+  function optionSlideIn2() {
+    gsap.fromTo(
+      "#uiceast-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2 }
+    );
+
+    gsap.fromTo(
+      "#uicwest-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.1 }
+    );
+
+    gsap.fromTo(
+      "#b37-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.2 }
+    );
+
+    gsap.fromTo(
+      "#uicbsb-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.3 }
+    );
+
+    gsap.fromTo(
+      "#rush-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.4 }
+    );
+
+    gsap.fromTo(
+      "#beardpapa-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.5 }
+    );
+
+    gsap.fromTo(
+      "#ucmed-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.6 }
+    );
+
+    gsap.fromTo(
+      "#submarine-option",
+      { opacity: 0, y: "-100%" },
+      { opacity: 1, y: 0, duration: 0.2, delay: 0.7 }
+    );
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     gsap.fromTo(
@@ -129,6 +199,29 @@ const Contact = () => {
       }
     );
   }, []);
+
+  useEffect(() => {
+    $(document).ready(() => {
+      const v =
+        document.getElementsByClassName("select-container")[0].offsetHeight;
+      let count = v;
+
+      $(".li-contact").each((index, element) => {
+        element.style.top = count + "px";
+        element.style.opacity = 0;
+        count += count;
+      });
+
+      const f =
+        document.getElementsByClassName("select-container2")[0].offsetHeight;
+      let count2 = f;
+
+      $(".li-contact2").each((index, element) => {
+        element.style.top = count2 * (index + 1) + "px";
+        element.style.opacity = 0;
+      });
+    });
+  }, [showSelect, showSelect2]);
 
   return (
     <div
@@ -193,6 +286,7 @@ const Contact = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              paddingBottom: "10vh",
             }}
           >
             <form
@@ -222,6 +316,7 @@ const Contact = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 name="name"
+                type="text"
               />
 
               <label htmlFor="email-contact" className="label-contact">
@@ -240,6 +335,7 @@ const Contact = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 name="email"
+                type="text"
               />
 
               <label htmlFor="phone-contact" className="label-contact">
@@ -262,15 +358,39 @@ const Contact = () => {
               <label htmlFor="reason-contact" className="label-contact">
                 Reason<span className="star">*</span>
               </label>
-              <select
-                className="input-contact"
-                id="reason-contact"
-                onChange={(e) => setReason(e.target.value)}
-                value={reason}
+
+              <div
+                className="select-container"
+                onClick={() => {
+                  showSelect ? "" : optionSlideIn1();
+                  setShowSelect((prev) => !prev);
+                }}
+                style={{ zIndex: 10 }}
               >
-                <option value="question/suggestion">Question/Suggestion</option>
-                <option value="issue">Machine/Transaction Issue</option>
-              </select>
+                <div className="select-contact2">
+                  {reason === "question/suggestion"
+                    ? "Question/Suggestion"
+                    : "Machine/Transaction Issue"}
+                </div>
+
+                <div
+                  className="li-contact"
+                  onClick={() => setReason("question/suggestion")}
+                  id="question-suggestion"
+                  style={{ display: showSelect ? "" : "none" }}
+                >
+                  Question/Suggestion
+                </div>
+
+                <div
+                  className="li-contact"
+                  onClick={() => setReason("issue")}
+                  id="machine-transaction-issue"
+                  style={{ display: showSelect ? "" : "none" }}
+                >
+                  Machine/Transaction Issue
+                </div>
+              </div>
 
               {reason === "question/suggestion" ? (
                 ""
@@ -279,22 +399,88 @@ const Contact = () => {
                   <div className="label-contact">
                     ATM Location<span className="star">*</span>
                   </div>
-                  <select
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="input-contact"
+
+                  <div
+                    className="select-container2"
+                    onClick={() => {
+                      showSelect2 ? "" : optionSlideIn2();
+                      setShowSelect2((prev) => !prev);
+                    }}
                   >
-                    <option value="uiceast">UIC East</option>
-                    <option value="uicwest">UIC West</option>
-                    <option value="block37">Block 37</option>
-                    <option value="uicbsb">
+                    <div className="select-contact2">{loc[location]}</div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("uiceast")}
+                      id="uiceast-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      UIC East
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("uicwest")}
+                      id="uicwest-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      UIC West
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("block37")}
+                      id="b37-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      Block 37
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("uicbsb")}
+                      id="uicbsb-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
                       UIC Behavioral Science Building
-                    </option>
-                    <option value="rush">Rush University</option>
-                    <option value="beardpapa">Beard Papa</option>
-                    <option value="ucmed">University of Chicago</option>
-                    <option value="submarine">Submarine</option>
-                  </select>
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("rush")}
+                      id="rush-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      Rush University
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("beardpapa")}
+                      id="beardpapa-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      Beard Papa
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("ucmed")}
+                      id="ucmed-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      University of Chicago
+                    </div>
+
+                    <div
+                      className="li-contact2"
+                      onClick={() => setLocation("submarine")}
+                      id="submarine-option"
+                      style={{ display: showSelect2 ? "" : "none" }}
+                    >
+                      Submarine
+                    </div>
+                  </div>
 
                   <div className="label-contact">
                     Form of Payment<span className="star">*</span>
@@ -349,6 +535,7 @@ const Contact = () => {
                         value={last4}
                         onChange={(e) => setLast4(e.target.value)}
                         maxLength={4}
+                        type="text"
                       />
                     </div>
                   ) : (
@@ -378,6 +565,7 @@ const Contact = () => {
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   style={{ marginTop: "5px" }}
+                  type="text"
                 />
               </div>
 

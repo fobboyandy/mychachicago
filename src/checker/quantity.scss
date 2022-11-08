@@ -89,7 +89,7 @@
   padding: 5px 5px 10px 5px;
   position: absolute;
   background-color: red;
-  z-index: 10000;
+  z-index: 7;
   border-radius: 10%;
   flex-direction: column;
   align-items: center;
@@ -159,4 +159,29 @@
   @media only screen and (max-width: 500px) {
     width: 85%;
   }
+}
+
+.li-location9a {
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid black;
+  position: absolute;
+  background-color: rgb(244, 244, 244);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  margin-top: 3px;
+
+  &:hover {
+    background-color: rgb(51, 51, 51);
+    color: white;
+  }
+}
+
+.select-container3 {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  user-select: none;
+  margin-bottom: 10px;
 }

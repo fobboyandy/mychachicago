@@ -59,6 +59,27 @@ const Nav = ({ openNav }) => {
     });
   }
 
+  const boxShadow = useCallback(() => {
+    if (window.scrollY > 120) {
+      $(".nav-home").css("box-shadow", "0 0 3px black");
+    }
+
+    if (window.scrollY < 120) {
+      $(".nav-home").css("box-shadow", "none");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.scrollY < 120) {
+      $(".nav-home").css("box-shadow", "none");
+    }
+    window.addEventListener("scroll", boxShadow);
+
+    return () => {
+      window.removeEventListener("scroll", boxShadow);
+    };
+  }, []);
+
   return (
     <div className="nav-home" style={{ zIndex: 10, userSelect: "none" }}>
       <Homelogo history={history} />
