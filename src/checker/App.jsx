@@ -1,6 +1,6 @@
 //stock checker main component
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import $ from "jquery";
@@ -92,12 +92,31 @@ const App = () => {
     let count2 = f;
 
     $(".li-contact").each((index, element) => {
-      element.style.top = count2 * (index + 1) + "px";
+      element.style.top = count2 + "px";
       element.style.opacity = 0;
+      count2 += element.offsetHeight;
     });
   }, [showSelect]);
 
-  useEffect(() => {}, [showSelect, ready]);
+  //handle inspect element resizing
+  const resize = useCallback(() => {
+    const f =
+      document.getElementsByClassName("select-container3")[0]?.offsetHeight;
+    let count2 = f;
+
+    $(".li-contact").each((index, element) => {
+      element.style.top = count2 + "px";
+      count2 += element.offsetHeight;
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", resize);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
 
   let isAnimating = false;
 
@@ -124,8 +143,6 @@ const App = () => {
       }
     }
   });
-
-  console.log(ready);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case

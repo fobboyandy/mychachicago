@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Overlay = ({ closeNav }) => {
   const history = useNavigate();
+  const loc = useLocation();
   const [current, setCurrent] = useState("");
 
   function scrollCatering() {
@@ -41,7 +42,7 @@ const Overlay = ({ closeNav }) => {
     closeNav();
 
     setTimeout(() => {
-      current.slice(current.length - 4, current.length) === "menu"
+      loc.pathname === "/menu"
         ? window.scrollTo({ top: 0, behavior: "smooth" })
         : history("/menu");
     }, 800);
@@ -58,7 +59,7 @@ const Overlay = ({ closeNav }) => {
   function goCatering() {
     closeNav();
     setTimeout(() => {
-      current.slice(current.length - 4, current.length) === "menu"
+      loc.pathname === "/menu"
         ? scrollCatering()
         : history("/menu", { state: { from: "catering" } });
     }, 800);
@@ -67,9 +68,9 @@ const Overlay = ({ closeNav }) => {
   function goContact() {
     closeNav();
     setTimeout(() => {
-      current[current.length - 1] === "/"
-        ? scrollContact()
-        : history("/", { state: { from: "contact" } });
+      loc.pathname === "/contact"
+        ? window.scrollTo({ top: 0, behavior: "smooth" })
+        : history("/contact");
     }, 800);
   }
 

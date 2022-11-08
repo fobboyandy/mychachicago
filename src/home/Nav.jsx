@@ -102,7 +102,7 @@ const Nav = ({ openNav }) => {
           <div
             className="li-nav"
             onClick={() => {
-              current.slice(current.length - 4, current.length) === "menu"
+              loc.pathname === "/menu"
                 ? scrollCatering()
                 : history("/menu", { state: { from: "catering" } });
             }}
@@ -115,7 +115,7 @@ const Nav = ({ openNav }) => {
           <div
             className="li-nav"
             onClick={() => {
-              current.slice(current.length - 4, current.length) === "menu"
+              loc.pathname === "/menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
                 : history("/menu");
             }}
