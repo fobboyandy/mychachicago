@@ -24,6 +24,8 @@ const App = () => {
 
   const [showSelect, setShowSelect] = useState(false);
 
+  const [ready, setReady] = useState(true);
+
   function handleChange(id) {
     const v = location.find((loc) => loc.id === id);
     const st = stock.find((item) => item.id === id);
@@ -32,25 +34,39 @@ const App = () => {
   }
 
   function optionSlideIn1() {
-    setShowSelect((prev) => !prev);
+    if (!ready) return;
+    setReady(false);
+    setTimeout(() => {
+      setReady(true);
+    }, 1500);
+
+    setShowSelect(true);
     let delay = 0;
     location.forEach((loca) => {
       gsap.fromTo(
         `#${loca.id}`,
         { opacity: 0, y: "-100%" },
-        { opacity: 1, y: 0, duration: 0.2, delay: delay }
+        { opacity: 1, y: 0, duration: 0.15, delay: delay }
       );
 
       delay += 0.1;
     });
+
+    setTimeout(() => {}, location.length * 0.1 + 200);
   }
 
   function optionSlideOut() {
+    if (!ready) return;
+    setReady(false);
+    setTimeout(() => {
+      setReady(true);
+    }, 1500);
     let delay = location.length * 0.1;
 
     setTimeout(() => {
-      setShowSelect((prev) => !prev);
+      setShowSelect(false);
     }, delay * 1000 + 260);
+
     location.forEach((loca) => {
       gsap.fromTo(
         `#${loca.id}`,
@@ -80,6 +96,36 @@ const App = () => {
       element.style.opacity = 0;
     });
   }, [showSelect]);
+
+  useEffect(() => {}, [showSelect, ready]);
+
+  let isAnimating = false;
+
+  $(document).click(function (event) {
+    if (isAnimating) {
+      return;
+    }
+    var $target = $(event.target);
+    if (
+      !$target.closest(".select-container3").length &&
+      $(".select-container3").is(":visible")
+    ) {
+      isAnimating = true;
+      if (!ready) return;
+      setTimeout(() => {
+        setReady(false);
+      }, 1200);
+      if (showSelect && ready) {
+        optionSlideOut();
+
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1500);
+      }
+    }
+  });
+
+  console.log(ready);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
@@ -115,9 +161,10 @@ const App = () => {
         <div
           className="select-container3"
           onClick={() => {
+            if (!ready) return;
             showSelect ? optionSlideOut() : optionSlideIn1();
           }}
-          style={{ zIndex: 9 }}
+          style={{ zIndex: 9, pointerEvents: ready ? "" : "none" }}
         >
           <div className="select-contact2">
             {location.find((item) => item.id === selected.id)?.name ||
