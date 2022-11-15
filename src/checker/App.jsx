@@ -26,6 +26,12 @@ const App = () => {
 
   const [ready, setReady] = useState(true);
 
+  const [lastClicked, setLastClicked] = useState("");
+  const [lastClicked2, setLastClicked2] = useState("");
+
+  const tl = gsap.timeline();
+  const tl2 = gsap.timeline();
+
   function handleChange(id) {
     const v = location.find((loc) => loc.id === id);
     const st = stock.find((item) => item.id === id);
@@ -34,48 +40,68 @@ const App = () => {
   }
 
   function optionSlideIn1() {
+    //prevent spamming
+    if (new Date().getTime() - lastClicked < 700) {
+      setLastClicked(new Date().getTime());
+      return;
+    }
     if (!ready) return;
-    setReady(false);
-    setTimeout(() => {
-      setReady(true);
-    }, 1500);
+    setLastClicked(new Date().getTime());
 
     setShowSelect(true);
     let delay = 0;
-    location.forEach((loca) => {
-      gsap.fromTo(
-        `#${loca.id}`,
-        { opacity: 0, y: "-100%" },
-        { opacity: 1, y: 0, duration: 0.15, delay: delay }
-      );
+    tl2.progress(1);
 
-      delay += 0.1;
-    });
+    if (!tl2.isActive()) {
+      location.forEach((loca) => {
+        tl2.fromTo(
+          `#${loca.id}`,
+          { opacity: 0, y: "-100%" },
+          { opacity: 1, y: 0, duration: 0.05, delay: delay }
+        );
+
+        delay += 0.009;
+      });
+    }
 
     setTimeout(() => {}, location.length * 0.1 + 200);
   }
 
   function optionSlideOut() {
+    if (new Date().getTime() - lastClicked2 < 700) {
+      setLastClicked2(new Date().getTime());
+      return;
+    }
+
     if (!ready) return;
     setReady(false);
-    setTimeout(() => {
-      setReady(true);
-    }, 1500);
-    let delay = location.length * 0.1;
+    setLastClicked2(new Date().getTime());
+    tl.progress(1);
 
-    setTimeout(() => {
-      setShowSelect(false);
-    }, delay * 1000 + 260);
-
-    location.forEach((loca) => {
-      gsap.fromTo(
-        `#${loca.id}`,
-        { opacity: 1, y: 0 },
-        { opacity: 0, y: "-100%", duration: 0.2, delay: delay }
-      );
-
-      delay -= 0.1;
-    });
+    let delay = 0;
+    if (!tl.isActive()) {
+      location.reverse().forEach((loca, i) => {
+        tl.fromTo(
+          `#${loca.id}`,
+          { opacity: 1, y: 0 },
+          {
+            opacity: 0,
+            y: "-100%",
+            duration: 0.1,
+            delay: delay,
+            onComplete: !location[i - 1]
+              ? () => {
+                  setTimeout(() => {
+                    setShowSelect(false);
+                    setReady(true);
+                  }, 1000);
+                }
+              : "",
+          }
+        );
+        delay += 0.01;
+      });
+    }
   }
 
   useEffect(() => {
@@ -118,28 +144,14 @@ const App = () => {
     };
   }, []);
 
-  let isAnimating = false;
-
   $(document).click(function (event) {
-    if (isAnimating) {
-      return;
-    }
     var $target = $(event.target);
     if (
       !$target.closest(".select-container3").length &&
       $(".select-container3").is(":visible")
     ) {
-      isAnimating = true;
-      if (!ready) return;
-      setTimeout(() => {
-        setReady(false);
-      }, 1200);
-      if (showSelect && ready) {
+      if (showSelect) {
         optionSlideOut();
-
-        setTimeout(() => {
-          isAnimating = false;
-        }, 1500);
       }
     }
   });
@@ -178,10 +190,9 @@ const App = () => {
         <div
           className="select-container3"
           onClick={() => {
-            if (!ready) return;
             showSelect ? optionSlideOut() : optionSlideIn1();
           }}
-          style={{ zIndex: 9, pointerEvents: ready ? "" : "none" }}
+          style={{ zIndex: 9 }}
         >
           <div className="select-contact2">
             {location.find((item) => item.id === selected.id)?.name ||

@@ -9,10 +9,12 @@
     "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-react": "^2.1.0",
     "body-parser": "^1.20.1",
+    "concurrently": "^7.5.0",
     "express": "^4.18.2",
     "gsap": "^3.11.3",
     "jquery": "^3.6.1",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
@@ -25,7 +27,8 @@
     "set": "set NODE_ENV=production",
     "start2": "vite ",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev2": "concurrently \"vite build --watch\" \"nodemon server/server.js\""
   },
   "eslintConfig": {
     "extends": [

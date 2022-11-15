@@ -140,49 +140,49 @@ const Contact = () => {
     gsap.fromTo(
       "#uiceast-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2 }
+      { opacity: 1, y: 0, duration: 0.05 }
     );
 
     gsap.fromTo(
       "#uicwest-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.1 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.05 }
     );
 
     gsap.fromTo(
       "#b37-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.2 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.1 }
     );
 
     gsap.fromTo(
       "#uicbsb-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.3 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.15 }
     );
 
     gsap.fromTo(
       "#rush-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.4 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.2 }
     );
 
     gsap.fromTo(
       "#beardpapa-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.5 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.25 }
     );
 
     gsap.fromTo(
       "#ucmed-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.6 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.3 }
     );
 
     gsap.fromTo(
       "#submarine-option",
       { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.7 }
+      { opacity: 1, y: 0, duration: 0.05, delay: 0.35 }
     );
   }
 

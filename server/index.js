@@ -11,6 +11,9 @@ app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../dist")));
 
+// /assets virtual path for the images
+app.use("/assets", express.static(path.join(__dirname, "../assets")));
+
 const v = async function () {
   const vite = await createServer({
     server: { middlewareMode: true },

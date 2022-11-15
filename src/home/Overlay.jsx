@@ -17,24 +17,11 @@ const Overlay = ({ closeNav }) => {
     });
   }
 
-  function scrollContact() {
-    const contact = document
-      .getElementById("contactparent")
-      .getBoundingClientRect();
-
-    window.scrollTo({
-      top: contact.top + window.pageYOffset - 140,
-      behavior: "smooth",
-    });
-  }
-
   function goHome() {
     closeNav();
 
     setTimeout(() => {
-      current[current.length - 1] === "/"
-        ? window.scrollTo({ top: 0, behavior: "smooth" })
-        : history("/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }, 800);
   }
 
@@ -52,7 +39,9 @@ const Overlay = ({ closeNav }) => {
     closeNav();
 
     setTimeout(() => {
-      history("/locations");
+      loc.pathname === "/locations"
+        ? window.scrollTo({ top: 0, behavior: "smooth" })
+        : history("/locations");
     }, 800);
   }
 
@@ -83,9 +72,19 @@ const Overlay = ({ closeNav }) => {
       <div className="x-container" onClick={() => closeNav()}>
         <div id="x" />
       </div>
-      <div className="overlay-child" onClick={() => goHome()}>
-        Home
-      </div>
+      {loc.pathname === "/" ? (
+        <div onClick={() => goHome()} className="overlay-child">
+          Home
+        </div>
+      ) : (
+        <a
+          className="overlay-child"
+          href="/"
+          style={{ textDecoration: "none", color: "rgb(51,51,51)" }}
+        >
+          Home
+        </a>
+      )}
 
       <div className="overlay-child" onClick={() => goCatering()}>
         Catering

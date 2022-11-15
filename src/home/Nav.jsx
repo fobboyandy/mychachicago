@@ -94,6 +94,8 @@ const Nav = ({ openNav }) => {
               Home
             </div>
           ) : (
+            //note: home is an anchor because if history() is used, instagram bugs out and only loads like half of the iframe. if you resize it, it turns back to normal. honestly idk why it happens, but I have no solution so I decided to just use an anchor isntead.
+            // you can also use dangerouslysethtml for instagram, but it is too risky.
             <a className="li-nav" href="/" style={{ textDecoration: "none" }}>
               Home
             </a>
@@ -109,7 +111,14 @@ const Nav = ({ openNav }) => {
           >
             Catering
           </div>
-          <div className="li-nav" onClick={() => history("/locations")}>
+          <div
+            className="li-nav"
+            onClick={() => {
+              loc.pathname === "/locations"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/locations");
+            }}
+          >
             Locations
           </div>
           <div

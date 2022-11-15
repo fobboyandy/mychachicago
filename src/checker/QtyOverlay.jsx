@@ -7,8 +7,6 @@ const QtyOverlay = ({ drink, stock }) => {
     const cupheight =
       document.getElementsByClassName("drink-cups")[0].offsetHeight;
 
-    //display the element for a quick second, get the height, then display none.
-    //if it is display none from the start, we cannot get height
     $(`#${drink.id}-qty`).css("display", "flex");
     const overlay = document.getElementById(`${drink.id}-qty`).offsetHeight;
     $(`#${drink.id}-qty`).css("display", "none");
@@ -19,8 +17,6 @@ const QtyOverlay = ({ drink, stock }) => {
         const top = e.offsetTop;
         const width = e.offsetWidth;
         const height = e.offsetHeight;
-
-        //sets top to the same as the cup, then subtracts cup height from overlay height and adds to the top. this will center the overlay with the cup image no matter how big the overlay div is
         $(`#${drink.id}-qty`).css(
           "top",
           top + (cupheight - overlay) / 2 + "px"
