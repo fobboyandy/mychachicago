@@ -46,7 +46,6 @@ const Footer = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          zIndex: 2,
         }}
       >
         <div className="icons-container">

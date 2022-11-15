@@ -127,26 +127,29 @@ const Menu = () => {
     if (location.state) {
       switch (location.state.from) {
         case "fruit":
-          const fruittea = document.getElementById("fruitteasection");
-          fruittea.scrollIntoView({
-            block: "start",
-            inline: "nearest",
+          const fruittea = document
+            .getElementById("fruitteasection")
+            .getBoundingClientRect();
+          window.scrollTo({
+            top: fruittea.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
           break;
         case "milktea":
-          const milktea = document.getElementById("milkteasection");
-          milktea.scrollIntoView({
-            block: "start",
-            inline: "nearest",
+          const milktea = document
+            .getElementById("milkteasection")
+            .getBoundingClientRect();
+          window.scrollTo({
+            top: milktea.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
           break;
         case "special":
-          const speciality = document.getElementById("specialsection");
-          speciality.scrollIntoView({
-            block: "start",
-            inline: "nearest",
+          const speciality = document
+            .getElementById("specialsection")
+            .getBoundingClientRect();
+          window.scrollTo({
+            top: speciality.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
 
@@ -180,7 +183,7 @@ const Menu = () => {
       <div
         className="sliding-placeholder"
         id="topmenu-container"
-        style={{ zIndex: 2 }}
+        style={{ zIndex: -2, position: "fixed" }}
       >
         <MenuCup1 />
         <Oranges />
@@ -192,12 +195,13 @@ const Menu = () => {
       </div>
       <div
         style={{
-          position: "absolute",
+          position: "",
           top: 0,
           backgroundColor: "white",
           width: "100%",
           height: "50vh",
           paddingTop: "11vh",
+          backgroundColor: "transparent",
         }}
         id="covermenu"
       />

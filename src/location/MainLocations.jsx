@@ -113,17 +113,7 @@ const MainLocations = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        overflow: "hidden",
-        flexDirection: "column",
-        alignItems: "center",
-        paddingTop: "11vh",
-      }}
-      className="location-actualparent"
-    >
+    <div className="location-actualparent">
       <div className="outer-location" id="outerlocation">
         <div className="parent-location"></div>
         <div className="locations-header">
@@ -133,16 +123,25 @@ const MainLocations = () => {
 
       <div
         style={{
-          position: "absolute",
           width: "100%",
           height: "60vh",
-          backgroundColor: "white",
-          zIndex: 2,
         }}
         className=" background-gif"
       />
 
-      <div style={{ width: "80%" }} className="container-locations">
+      <div className="heightholder-locations" />
+
+      <div
+        style={{
+          width: "80%",
+          backgroundColor: "white",
+          zIndex: 4,
+          paddingLeft: "10%",
+          paddingRight: "10%",
+          paddingTop: "5vh",
+        }}
+        className="container-locations"
+      >
         <div id="intersecting-locations1" />
         <div id="intersecting-locations2" />
         <div id="intersecting-locations3" />

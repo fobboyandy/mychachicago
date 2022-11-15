@@ -2,7 +2,9 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 10vh;
+  padding-top: 10vh;
+  background: white;
+  z-index: 10;
 }
 
 .sliding-placeholder {
