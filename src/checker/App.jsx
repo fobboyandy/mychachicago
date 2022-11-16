@@ -80,27 +80,30 @@ const App = () => {
 
     let delay = 0;
     if (!tl.isActive()) {
-      location.reverse().forEach((loca, i) => {
-        tl.fromTo(
-          `#${loca.id}`,
-          { opacity: 1, y: 0 },
-          {
-            opacity: 0,
-            y: "-100%",
-            duration: 0.1,
-            delay: delay,
-            onComplete: !location[i - 1]
-              ? () => {
-                  setTimeout(() => {
-                    setShowSelect(false);
-                    setReady(true);
-                  }, 1000);
-                }
-              : "",
-          }
-        );
-        delay += 0.01;
-      });
+      location
+        .slice()
+        .reverse()
+        .forEach((loca, i) => {
+          tl.fromTo(
+            `#${loca.id}`,
+            { opacity: 1, y: 0 },
+            {
+              opacity: 0,
+              y: "-100%",
+              duration: 0.1,
+              delay: delay,
+              onComplete: !location[i - 1]
+                ? () => {
+                    setTimeout(() => {
+                      setShowSelect(false);
+                      setReady(true);
+                    }, 1000);
+                  }
+                : "",
+            }
+          );
+          delay += 0.01;
+        });
     }
   }
 
