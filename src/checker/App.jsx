@@ -147,6 +147,7 @@ const App = () => {
     };
   }, []);
 
+  //click outside of select when it is visible, we close it
   $(document).click(function (event) {
     var $target = $(event.target);
     if (
@@ -195,7 +196,6 @@ const App = () => {
           onClick={() => {
             showSelect ? optionSlideOut() : optionSlideIn1();
           }}
-          style={{ zIndex: 9 }}
         >
           <div className="select-contact2">
             {location.find((item) => item.id === selected.id)?.name ||
