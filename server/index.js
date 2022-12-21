@@ -3,7 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const parser = require("body-parser");
 const path = require("path");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const { createServer } = require("vite");
 
 app.use(morgan("dev"));

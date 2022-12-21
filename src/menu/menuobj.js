@@ -7,23 +7,20 @@ const menuobj = [
         id: 1,
         htmlid: "mangojasmine",
         name: "Mango Jasmine Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032484622849822740/unknown.png",
+        image: "../assets/Final/mango_small.jpg",
       },
 
       {
         id: 2,
         htmlid: "lycheefruittea",
         name: "Lychee Jasmine Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032489049283362877/unknown.png",
+        image: "../assets/Final/lychee_small.jpg",
       },
       {
         id: 3,
         htmlid: "passionfruittea",
         name: "Passionfruit Jasmine Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032497287550734336/unknown.png",
+        image: "../assets/Final/passion_small.jpg",
       },
     ],
   },
@@ -36,39 +33,34 @@ const menuobj = [
         id: 4,
         htmlid: "jasminemilktea",
         name: "Jasmine Milk Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032507744583958599/unknown.png",
+        image: "../assets/Final/jasmine_jelly_small.jpg",
       },
 
       {
         id: 5,
         htmlid: "oolongmilktea",
         name: "Roasted Oolong Milk Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032507903816503377/unknown.png",
+        image: "../assets/Final/oolong_jelly_small.jpg",
       },
       {
         id: 6,
         htmlid: "matchamilktea",
         name: "Matcha Milk Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032508025770082334/unknown.png",
+        image: "../assets/Final/matcha_small.jpg",
       },
 
       {
         id: 7,
         htmlid: "taromilktea",
         name: "Taro Milk Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032508240900137030/unknown.png",
+        image: "../assets/Final/taro_small.jpg",
       },
 
       {
         id: 8,
         htmlid: "coffeemilktea",
         name: "Coffee Milk Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032508527182360617/unknown.png",
+        image: "../assets/Final/coffee_mt_small.jpg",
       },
     ],
   },
@@ -81,23 +73,20 @@ const menuobj = [
         id: 9,
         htmlid: "thaiicedtea",
         name: "Thai Iced Tea",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032508684833665084/unknown.png",
+        image: "../assets/Final/thai_tea_small.jpg",
       },
 
       {
         id: 10,
         htmlid: "vietnamesecoffee",
         name: "Vietnamese Coffee",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032508887384993842/unknown.png",
+        image: "../assets/Final/coffee_small.jpg",
       },
       {
         id: 11,
         htmlid: "mangolassi",
         name: "Mango Lassi",
-        image:
-          "https://cdn.discordapp.com/attachments/779278654714675232/1032509056822280233/unknown.png",
+        image: "../assets/Final/lassi-removebg-preview.png",
       },
     ],
   },
@@ -108,8 +97,7 @@ const allItems = [
     id: 1,
     htmlid: "mangojasmine",
     name: "Mango Jasmine Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032484622849822740/unknown.png",
+    image: "../assets/Final/mango_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -146,8 +134,7 @@ const allItems = [
     id: 2,
     htmlid: "lycheefruittea",
     name: "Lychee Jasmine Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032489049283362877/unknown.png",
+    image: "../assets/Final/lychee_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -183,8 +170,7 @@ const allItems = [
     id: 3,
     htmlid: "passionfruittea",
     name: "Passionfruit Jasmine Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032497287550734336/unknown.png",
+    image: "../assets/Final/passion_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -220,8 +206,7 @@ const allItems = [
     id: 4,
     htmlid: "jasminemilktea",
     name: "Jasmine Milk Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032507744583958599/unknown.png",
+    image: "../assets/Final/jasmine_jelly_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -288,8 +273,7 @@ const allItems = [
     id: 5,
     htmlid: "oolongmilktea",
     name: "Roasted Oolong Milk Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032507903816503377/unknown.png",
+    image: "../assets/Final/oolong_jelly_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -325,8 +309,7 @@ const allItems = [
     id: 6,
     htmlid: "matchamilktea",
     name: "Matcha Milk Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032508025770082334/unknown.png",
+    image: "../assets/Final/matcha_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -363,8 +346,7 @@ const allItems = [
     id: 7,
     htmlid: "taromilktea",
     name: "Taro Milk Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032508240900137030/unknown.png",
+    image: "../assets/Final/taro_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -401,8 +383,7 @@ const allItems = [
     id: 8,
     htmlid: "coffeemilktea",
     name: "Coffee Milk Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032508527182360617/unknown.png",
+    image: "../assets/Final/coffee_mt_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -438,8 +419,7 @@ const allItems = [
     id: 9,
     htmlid: "thaiicedtea",
     name: "Thai Iced Tea",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032508684833665084/unknown.png",
+    image: "../assets/Final/thai_tea_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -476,8 +456,7 @@ const allItems = [
     id: 10,
     htmlid: "vietnamesecoffee",
     name: "Vietnamese Coffee",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032508887384993842/unknown.png",
+    image: "../assets/Final/coffee_small.jpg",
     nutrition: {
       //correct
       small: {
@@ -513,8 +492,7 @@ const allItems = [
     id: 11,
     htmlid: "mangolassi",
     name: "Mango Lassi",
-    image:
-      "https://cdn.discordapp.com/attachments/779278654714675232/1032509056822280233/unknown.png",
+    image: "../assets/Final/lassi-removebg-preview.png",
     nutrition: {
       //correct
       small: {

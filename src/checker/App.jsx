@@ -164,7 +164,7 @@ const App = () => {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
     return (
       <div
-        className="lds-ring"
+        className='lds-ring'
         style={{
           width: "100%",
           height: "60vh",
@@ -172,7 +172,7 @@ const App = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        id="spinner-form"
+        id='spinner-form'
       >
         <div></div>
         <div></div>
@@ -183,27 +183,27 @@ const App = () => {
   }
 
   return (
-    <div className="quantity-container">
-      <div className="quantity-locationcontainer">
-        <div className="location-name2">Mycha Location Stock Checker</div>
+    <div className='quantity-container'>
+      <div className='quantity-locationcontainer'>
+        <div className='location-name2'>Mycha Location Stock Checker</div>
         <Leaf />
-        <div className="location-name2" style={{ marginBottom: "15px" }}>
+        <div className='location-name2' style={{ marginBottom: "15px" }}>
           Choose a location below
         </div>
 
         <div
-          className="select-container3"
+          className='select-container3'
           onClick={() => {
             showSelect ? optionSlideOut() : optionSlideIn1();
           }}
         >
-          <div className="select-contact2">
+          <div className='select-contact2'>
             {location.find((item) => item.id === selected.id)?.name ||
               "Select a location"}
           </div>
           {location.map((location) => (
             <div
-              className="li-contact op0"
+              className='li-contact op0'
               onClick={() => handleChange(location.id)}
               id={location.id}
               style={{ display: showSelect ? "" : "none" }}
@@ -213,9 +213,9 @@ const App = () => {
             </div>
           ))}
         </div>
-        <div className="quantity-information">
-          <div className="location-name">{selected?.name}</div>
-          <div className="location-desc" style={{ marginBottom: "15px" }}>
+        <div className='quantity-information'>
+          <div className='location-name'>{selected?.name}</div>
+          <div className='location-desc' style={{ marginBottom: "15px" }}>
             {selected?.address}
           </div>
           <div>{selected?.hours}</div>
@@ -230,31 +230,31 @@ const App = () => {
             minWidth: "350px",
           }}
         >
-          <div className="quantity-slider" ref={qtyRef}>
-            <div className="machine-container ">
+          <div className='quantity-slider' ref={qtyRef}>
+            <div className='machine-container '>
               <div
                 style={{
                   width: "100%",
                   textAlign: "center",
                   fontStyle: "italic",
                 }}
-                className="hoverorclick"
+                className='hoverorclick'
               >
                 Hover or Click each drink to see stock!
               </div>
               <img
-                src="https://cdn.discordapp.com/attachments/779278654714675232/1030309176506855474/unknown.png"
-                className="machine-img"
-                alt="cup"
+                src='../assets/machinestuff/machineimage.png'
+                className='machine-img'
+                alt='cup'
               />
 
-              <div className="container-cups">
+              <div className='container-cups'>
                 {allItems.map((drink) => (
                   <div id={drink.id + "cupmap"} key={drink.id}>
                     <div
                       style={{ position: "relative", zIndex: 1 }}
                       id={drink.id}
-                      className="container-map"
+                      className='container-map'
                     >
                       <Boba drink={drink} />
                     </div>

@@ -87,12 +87,11 @@ const MainLocations = () => {
             { opacity: 1, x: 0, duration: 1.4 }
           );
 
-          //use this for new location
-          // gsap.fromTo(
-          //   "#bpapa",
-          //   { opacity: 0, x: "-10%" },
-          //   { opacity: 1, x: 0, duration: 1.4 }
-          // );
+          gsap.fromTo(
+            "#unionstation",
+            { opacity: 0, x: "-10%" },
+            { opacity: 1, x: 0, duration: 1.4 }
+          );
 
           observer3.unobserve(three);
         }
@@ -113,10 +112,10 @@ const MainLocations = () => {
   }, []);
 
   return (
-    <div className="location-actualparent">
-      <div className="outer-location" id="outerlocation">
-        <div className="parent-location"></div>
-        <div className="locations-header">
+    <div className='location-actualparent'>
+      <div className='outer-location' id='outerlocation'>
+        <div className='parent-location'></div>
+        <div className='locations-header'>
           <LocationWord />
         </div>
       </div>
@@ -126,10 +125,10 @@ const MainLocations = () => {
           width: "100%",
           height: "60vh",
         }}
-        className=" background-gif"
+        className=' background-gif'
       />
 
-      <div className="heightholder-locations" />
+      <div className='heightholder-locations' />
 
       <div
         style={{
@@ -140,44 +139,57 @@ const MainLocations = () => {
           paddingRight: "10%",
           paddingTop: "5vh",
         }}
-        className="container-locations"
+        className='container-locations'
       >
-        <div id="intersecting-locations1" />
-        <div id="intersecting-locations2" />
-        <div id="intersecting-locations3" />
+        <div id='intersecting-locations1' />
+        <div id='intersecting-locations2' />
+        <div id='intersecting-locations3' />
         {location.map((location, i) => (
           <div
             className={`container-info ${window.innerWidth > 700 ? "op0" : ""}`}
             id={location.id}
             key={location.id}
           >
-            <div style={{ width: "100%", height: "100%" }}>
+            <div style={{ width: "100%", height: "60%" }}>
               <img
                 src={location.image}
-                alt="uiceast"
-                className="img-location"
+                alt='uiceast'
+                className='img-location'
               />
             </div>
-            <div className="location-name ">{location.name}</div>
-            <div className="location-add location-desc">{location.address}</div>
-            <div className="location-hours location-desc">
-              {location.hours !== "" ? ` ${location.hours}` : ""}
-            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "40%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className='location-name '>{location.name}</div>
+              <div className='location-add location-desc'>
+                {location.address}
+              </div>
+              <div className='location-hours location-desc'>
+                {location.hours !== "" ? ` ${location.hours}` : ""}
+              </div>
 
-            <div className="location-checkqty">
-              <img
-                src="https://cdn.discordapp.com/attachments/779278654714675232/1031734843148615720/leafnobg.png"
-                style={{ height: "45px", width: "45px", userSelect: "none" }}
-              />
-              <div
-                className="check-stock location-desc"
-                onClick={() =>
-                  history(`/locations/check`, {
-                    state: { from: location.id },
-                  })
-                }
-              >
-                Check Location Stock
+              <div className='location-checkqty'>
+                <img
+                  src='../assets/leafdivider.png'
+                  style={{ height: "45px", width: "45px", userSelect: "none" }}
+                  alt='leafdivider'
+                />
+                <div
+                  className='check-stock location-desc'
+                  onClick={() =>
+                    history(`/locations/check`, {
+                      state: { from: location.id },
+                    })
+                  }
+                >
+                  Check Location Stock
+                </div>
               </div>
             </div>
           </div>

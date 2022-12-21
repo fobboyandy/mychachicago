@@ -62,6 +62,8 @@ th {
   gap: 10px;
   scroll-behavior: smooth;
   scroll-snap-type: inline mandatory;
+  cursor: grab;
+  user-select: none;
   @media only screen and (max-width: 700px) {
     width: 163%;
   }
