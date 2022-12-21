@@ -165,6 +165,9 @@ const Menu = () => {
             behavior: "smooth",
           });
           break;
+
+        default:
+          return;
       }
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -181,8 +184,8 @@ const Menu = () => {
   return (
     <div style={{ position: "relative" }}>
       <div
-        className="sliding-placeholder"
-        id="topmenu-container"
+        className='sliding-placeholder'
+        id='topmenu-container'
         style={{ zIndex: -2, position: "fixed" }}
       >
         <MenuCup1 />
@@ -203,10 +206,10 @@ const Menu = () => {
           paddingTop: "11vh",
           backgroundColor: "transparent",
         }}
-        id="covermenu"
+        id='covermenu'
       />
-      <div className="outercontainer-menu">
-        <div className="innercontainer-menu">
+      <div className='outercontainer-menu'>
+        <div className='innercontainer-menu'>
           {menuobj.map((section) => (
             <div
               style={{
@@ -221,7 +224,7 @@ const Menu = () => {
               key={section.id}
             >
               <div className={`intersecting-${section.id}`} />
-              <div className="menu-title">
+              <div className='menu-title'>
                 <Leaf />
                 {section.section}
               </div>
@@ -229,23 +232,25 @@ const Menu = () => {
                 style={{
                   backgroundColor: "rgb(109, 214, 49) ",
                 }}
-                className="menu-divider"
+                className='menu-divider'
               />
-              <div className="container-sectionmenu">
+              <div className='container-sectionmenu'>
                 {section.items.map((item) => (
-                  <div className="menu-half" id={item.htmlid} key={item.htmlid}>
-                    <div className="img-menucontainer">
+                  <div className='menu-half' id={item.htmlid} key={item.htmlid}>
+                    <div
+                      className='img-menucontainer'
+                      style={{
+                        border: "2px solid rgb(109, 214, 49) ",
+                      }}
+                    >
                       <div
-                        className="img-menu"
-                        style={{
-                          backgroundImage: `url(${item.image})`,
-                          border: "2px solid rgb(109, 214, 49) ",
-                        }}
+                        className='img-menu'
+                        style={{ backgroundImage: `url(${item.image})` }}
                       />
                     </div>
 
-                    <div className="menu-txtcontainer">
-                      <div className="name-menu">{item.name}</div>
+                    <div className='menu-txtcontainer'>
+                      <div className='name-menu'>{item.name}</div>
                       <div>
                         <span
                           style={{

@@ -103,7 +103,7 @@ const MainLocations = () => {
       observer2.observe(two);
       observer3.observe(three);
     }
-  }, [window.innerWidth]);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
