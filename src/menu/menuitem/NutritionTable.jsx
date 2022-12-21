@@ -2,7 +2,6 @@ import React from "react";
 
 const NutritionTable = ({ selectedItem, smallNutrition, largeNutrition }) => {
   if (!smallNutrition?.total_fat[0]) {
-    console.log("rann");
   }
   return (
     <table className='table-head'>

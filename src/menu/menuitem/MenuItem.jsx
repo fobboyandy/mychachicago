@@ -32,6 +32,7 @@ const MenuItem = () => {
 
   useEffect(() => {
     document.addEventListener("readystatechange", () => {
+      console.log("rann");
       let isDown = false;
       let startX;
       let scrollLeft;

@@ -252,16 +252,17 @@ const Menu = () => {
                     <div className='menu-txtcontainer'>
                       <div className='name-menu'>{item.name}</div>
                       <div>
-                        <span
+                        <a
+                          href={`/menu/${item.id}`}
                           style={{
                             cursor: "pointer",
                             marginTop: "8px",
                             textDecoration: "underline",
                           }}
-                          onClick={() => history(`/menu/${item.id}`)}
+                          // onClick={() => history(`/menu/${item.id}`)}
                         >
                           Learn More
-                        </span>
+                        </a>
                       </div>
                     </div>
                   </div>
