@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Background from "../Background";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./location.scss";
+
 import { location } from "./locationsobj";
 
 import LocationWord from "../longstuff/LocationsWord";
 
-import $ from "jquery";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
 
 const MainLocations = () => {
   const history = useNavigate();

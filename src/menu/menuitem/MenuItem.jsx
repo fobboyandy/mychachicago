@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./menuitem.scss";
 import { allItems } from "../menuobj";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import NutritionTable from "./NutritionTable";
 import NotFound from "../../NotFound";
 
 import $ from "jquery";
+import NutritionTableLarge from "./NutritionTableLarge";
 
 const MenuItem = () => {
   const [selectedItem, setSelectedItem] = useState({});
@@ -15,8 +16,11 @@ const MenuItem = () => {
 
   const [smallOrLarge, setSmallOrLarge] = useState("small");
 
+  const [v, setV] = useState("");
+
   const params = useParams();
   const history = useNavigate();
+  const location = useLocation();
 
   const containerRef = useRef(null);
 
@@ -31,57 +35,64 @@ const MenuItem = () => {
   }
 
   useEffect(() => {
-    document.addEventListener("readystatechange", () => {
-      console.log("rann");
-      let isDown = false;
-      let startX;
-      let scrollLeft;
+    $(document).ready(() => {
       const v = document.getElementById("tableparent");
-
-      function handleMouseDown(e) {
-        isDown = true;
-        startX = e.pageX - v.scrollLeft;
-        scrollLeft = v.scrollLeft;
-      }
-
-      v.addEventListener("mousedown", handleMouseDown);
-
-      function isDownFalse() {
-        isDown = false;
-      }
-
-      v.addEventListener("mouseup", isDownFalse);
-
-      v.addEventListener("mouseleave", isDownFalse);
-
-      function vMouseMove(e) {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - v.scrollLeft;
-
-        const walk = x - startX;
-
-        v.scrollLeft = scrollLeft - walk;
-
-        setTimeout(() => {
-          if (v.scrollLeft > v.offsetWidth / 2) {
-            setSmallOrLarge("large");
-          } else {
-            setSmallOrLarge("small");
-          }
-        }, 500);
-      }
-
-      v.addEventListener("mousemove", vMouseMove);
-
-      return () => {
-        v.removeEventListener("mousemove", vMouseMove);
-        v.removeEventListener("mouseup", isDownFalse);
-        v.removeEventListener("mouseleave", isDownFalse);
-        v.removeEventListener("mousedown", handleMouseDown);
-      };
+      setV(v);
     });
   }, []);
+
+  useEffect(() => {
+    if (v === "") return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    function vMouseMove(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - v.scrollLeft;
+
+      const walk = x - startX;
+
+      v.scrollLeft = scrollLeft - walk;
+
+      setTimeout(() => {
+        if (v.scrollLeft > v.offsetWidth / 2) {
+          setSmallOrLarge("large");
+        } else {
+          setSmallOrLarge("small");
+        }
+      }, 500);
+    }
+
+    function handleMouseDown(e) {
+      isDown = true;
+      startX = e.pageX - v.scrollLeft;
+      scrollLeft = v.scrollLeft;
+    }
+
+    function isDownFalse() {
+      isDown = false;
+    }
+
+    $(document).ready(() => {
+      v?.addEventListener("mousedown", handleMouseDown);
+
+      v?.addEventListener("mouseup", isDownFalse);
+
+      v?.addEventListener("mouseleave", isDownFalse);
+
+      v?.addEventListener("mousemove", vMouseMove);
+    });
+
+    return () => {
+      v?.removeEventListener("mousemove", vMouseMove);
+      v?.removeEventListener("mouseup", isDownFalse);
+      v?.removeEventListener("mouseleave", isDownFalse);
+      v?.removeEventListener("mousedown", handleMouseDown);
+    };
+  }, [v]);
 
   useEffect(() => {
     const id = params.id;
@@ -106,7 +117,7 @@ const MenuItem = () => {
         {/* <Background /> */}
         <div className='mitem-container'>
           <div className='mitem-imgcontainer'>
-            <img src={selectedItem.image} className='mitem-img' />
+            <img src={selectedItem.image} className='mitem-img' alt='cup' />
           </div>
           <div className='mitem-tableouter'>
             <div className='mitem-head'>{selectedItem.name}</div>
@@ -144,13 +155,11 @@ const MenuItem = () => {
               <NutritionTable
                 selectedItem={selectedItem}
                 smallNutrition={smallNutrition}
-                largeNutrition={largeNutrition}
                 isLoading={isLoading}
               />
 
-              <NutritionTable
+              <NutritionTableLarge
                 selectedItem={selectedItem}
-                smallNutrition={smallNutrition}
                 largeNutrition={largeNutrition}
                 isLoading={isLoading}
               />

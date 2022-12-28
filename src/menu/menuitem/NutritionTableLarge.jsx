@@ -1,14 +1,12 @@
 import React from "react";
 
-const NutritionTable = ({ selectedItem, smallNutrition }) => {
-  if (!smallNutrition?.total_fat[0]) {
-  }
+const NutritionTableLarge = ({ selectedItem, largeNutrition }) => {
   return (
     <table className='table-head'>
       <tr className='align-left px4-888'>
         <th className='tr-top f500'>Serving Size</th>
         <th className='align-right tr-top f500'>
-          <span>{selectedItem.nutrition?.small?.serving_size}g</span>
+          <span>{selectedItem.nutrition?.large?.serving_size}g</span>
         </th>
       </tr>
       <tr className='align-left px4-888'>
@@ -19,7 +17,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         </th>
         <th className='align-right tr-top'>
           <span style={{ fontSize: "27px" }}>
-            {selectedItem.nutrition?.small?.calories}
+            {selectedItem.nutrition?.large?.calories}
           </span>
         </th>
       </tr>
@@ -32,21 +30,21 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
       <tr className='align-left px1-888'>
         <th>
           Total Fat{" "}
-          <span className='f500'>&nbsp;{smallNutrition?.total_fat[0]}g</span>
+          <span className='f500'>&nbsp;{largeNutrition?.total_fat[0]}g</span>
         </th>
-        <th className='align-right tr-bot'>{smallNutrition?.total_fat[1]}%</th>
+        <th className='align-right tr-bot'>{largeNutrition?.total_fat[1]}%</th>
       </tr>
 
       <tr className='align-left px1-888'>
         <th>
           <span className='f500'>
             &nbsp; &nbsp;&nbsp;&nbsp;Saturated &nbsp;
-            {smallNutrition.saturated_fat[0]}g
+            {largeNutrition.saturated_fat[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.saturated_fat[1]}%
+          {largeNutrition?.saturated_fat[1]}%
         </th>
       </tr>
 
@@ -54,7 +52,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp;&nbsp;&nbsp;Trans &nbsp;
-            {smallNutrition.trans_fat}g
+            {largeNutrition.trans_fat}g
           </span>
         </th>
         <th className='align-right tr-bot'></th>
@@ -63,20 +61,20 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
       <tr className='align-left px1-888'>
         <th>
           Sodium{" "}
-          <span className='f500'>&nbsp;{smallNutrition?.sodium[0]}g</span>
+          <span className='f500'>&nbsp;{largeNutrition?.sodium[0]}g</span>
         </th>
-        <th className='align-right tr-bot'>{smallNutrition?.sodium[1]}%</th>
+        <th className='align-right tr-bot'>{largeNutrition?.sodium[1]}%</th>
       </tr>
 
       <tr className='align-left px1-888'>
         <th>
           Carbohydrates{" "}
           <span className='f500'>
-            &nbsp;{smallNutrition?.total_carbohydrate[0]}g
+            &nbsp;{largeNutrition?.total_carbohydrate[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
-          {smallNutrition?.total_carbohydrate[1]}%
+          {largeNutrition?.total_carbohydrate[1]}%
         </th>
       </tr>
 
@@ -84,12 +82,12 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Fiber &nbsp;
-            {smallNutrition?.dietary_fiber[0]}g
+            {largeNutrition?.dietary_fiber[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.dietary_fiber[1]}%
+          {largeNutrition?.dietary_fiber[1]}%
         </th>
       </tr>
 
@@ -97,7 +95,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Sugars &nbsp;
-            {smallNutrition?.total_sugars}g
+            {largeNutrition?.total_sugars}g
           </span>
         </th>
         <th className='align-right tr-bot'></th>
@@ -107,12 +105,12 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Includes &nbsp;
-            {smallNutrition?.added_sugars[0]}g Added
+            {largeNutrition?.added_sugars[0]}g Added
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.added_sugars[1]}%{" "}
+          {largeNutrition?.added_sugars[1]}%{" "}
         </th>
       </tr>
 
@@ -121,13 +119,13 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
           Protein
           <span className='f500'>
             &nbsp;
-            {smallNutrition?.protein[0]}g
+            {largeNutrition?.protein[0]}g
           </span>
         </th>
-        <th className='align-right tr-bot'> {smallNutrition?.protein[1]}%</th>
+        <th className='align-right tr-bot'> {largeNutrition?.protein[1]}%</th>
       </tr>
     </table>
   );
 };
 
-export default NutritionTable;
+export default NutritionTableLarge;

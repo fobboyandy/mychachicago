@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-import Background from "../Background";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./menu.scss";
-
 import gsap from "gsap";
 
-import Leaf from "../longstuff/Leaf";
 import { menuobj } from "./menuobj";
-import { useNavigate, useLocation } from "react-router-dom";
 
 import MenuCup1 from "./menucups/MenuCup1";
 import Oranges from "./menucups/Oranges";
@@ -16,6 +13,7 @@ import Mychamenu from "./menucups/Mychamenu";
 import Pfruit from "./menucups/Pfruit";
 import PockyMenu from "./menucups/PockyMenu";
 import Catering from "./Catering";
+import Leaf from "../longstuff/Leaf";
 
 const Menu = () => {
   const history = useNavigate();
@@ -167,7 +165,7 @@ const Menu = () => {
           break;
 
         default:
-          return;
+          break;
       }
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -252,17 +250,22 @@ const Menu = () => {
                     <div className='menu-txtcontainer'>
                       <div className='name-menu'>{item.name}</div>
                       <div>
-                        <a
-                          href={`/menu/${item.id}`}
+                        <div
+                          // href={`/menu/${item.id}`}
+                          // href='/menu/2'
                           style={{
                             cursor: "pointer",
                             marginTop: "8px",
                             textDecoration: "underline",
                           }}
-                          // onClick={() => history(`/menu/${item.id}`)}
+                          onClick={() =>
+                            // (window.location.href = `menu/${item.id}`)
+                            history(`/menu/${item.id}`)
+                          }
+                          className='menu-learnmore'
                         >
                           Learn More
-                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>

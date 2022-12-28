@@ -39,7 +39,7 @@ const Footer = () => {
   }, [window.location.href]);
 
   return (
-    <div className="footer-parent">
+    <div className='footer-parent'>
       <div
         style={{
           width: "100%",
@@ -48,58 +48,62 @@ const Footer = () => {
           alignItems: "center",
         }}
       >
-        <div className="icons-container">
+        <div className='icons-container'>
           <a
-            className="footer-icons"
-            href="https://www.facebook.com/mychamachine"
-            target="_blank"
-            rel="noopener noreferrer"
+            className='footer-icons'
+            href='https://www.facebook.com/mychamachine'
+            target='_blank'
+            rel='noopener noreferrer'
           >
             <Facebook />
           </a>
           <a
-            className="footer-icons"
-            href="https://www.instagram.com/mychachicago/?hl=en"
-            target="_blank"
-            rel="noopener noreferrer"
+            className='footer-icons'
+            href='https://www.instagram.com/mychachicago/?hl=en'
+            target='_blank'
+            rel='noopener noreferrer'
           >
             <Instagram />
           </a>
           <a
-            className="footer-icons"
-            href="https://www.yelp.com/biz/mycha-chicago-2"
-            target="_blank"
-            rel="noopener noreferrer"
+            className='footer-icons'
+            href='https://www.yelp.com/biz/mycha-chicago-2'
+            target='_blank'
+            rel='noopener noreferrer'
           >
             <Yelp />
           </a>
         </div>
 
-        <div className="contact-footercontainer">
+        <div className='contact-footercontainer'>
           <PhoneIcon />
           &nbsp; (847) 260-8387
         </div>
 
-        <div className="contact-footercontainer">
+        <div className='contact-footercontainer'>
           <Mail />
           &nbsp; mychamachine@gmail.com
         </div>
 
-        <div className="ul-footer">
+        <div className='ul-footer'>
           {loc.pathname === "/" ? (
             <div
-              className="li-nav"
+              className='li-footer'
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Home
             </div>
           ) : (
-            <a className="li-nav" href="/" style={{ textDecoration: "none" }}>
+            <a
+              className='li-footer'
+              href='/'
+              style={{ textDecoration: "none" }}
+            >
               Home
             </a>
           )}
           <div
-            className="li-footer"
+            className='li-footer'
             onClick={() => {
               current.slice(current.length - 4, current.length) === "menu"
                 ? scrollCatering()
@@ -109,7 +113,7 @@ const Footer = () => {
             Catering
           </div>
           <div
-            className="li-footer"
+            className='li-footer'
             onClick={() => {
               current.slice(current.length - 4, current.length) === "menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -118,11 +122,11 @@ const Footer = () => {
           >
             Menu
           </div>
-          <div className="li-footer" onClick={() => history("/locations")}>
+          <div className='li-footer' onClick={() => history("/locations")}>
             Locations
           </div>
           <div
-            className="li-footer"
+            className='li-footer'
             onClick={() => {
               loc.pathname === "/contact"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
