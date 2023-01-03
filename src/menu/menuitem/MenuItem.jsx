@@ -1,26 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./menuitem.scss";
 import { allItems } from "../menuobj";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import NutritionTable from "./NutritionTable";
+import NutritionTableLarge from "./NutritionTableLarge";
 import NotFound from "../../NotFound";
 
 import $ from "jquery";
-import NutritionTableLarge from "./NutritionTableLarge";
 
 const MenuItem = () => {
+  const params = useParams();
+  const history = useNavigate();
+
   const [selectedItem, setSelectedItem] = useState({});
   const [smallNutrition, setSmallNutrition] = useState({});
   const [largeNutrition, setLargeNutrition] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const [smallOrLarge, setSmallOrLarge] = useState("small");
+  const [smallOrLarge, setSmallOrLarge] = useState(
+    params.id === 8 ? "large" : "small"
+  );
 
   const [v, setV] = useState("");
-
-  const params = useParams();
-  const history = useNavigate();
-  const location = useLocation();
 
   const containerRef = useRef(null);
 
@@ -43,6 +45,8 @@ const MenuItem = () => {
 
   useEffect(() => {
     if (v === "") return;
+    //loosely eq because params.id is a string
+    if (params.id == 8 || params.id == 7 || params.id == 6) return;
 
     let isDown = false;
     let startX;
@@ -50,6 +54,7 @@ const MenuItem = () => {
 
     function vMouseMove(e) {
       if (!isDown) return;
+
       e.preventDefault();
       const x = e.pageX - v.scrollLeft;
 
@@ -92,10 +97,13 @@ const MenuItem = () => {
       v?.removeEventListener("mouseleave", isDownFalse);
       v?.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [v]);
+  }, [v, params.id]);
 
   useEffect(() => {
     const id = params.id;
+    if (params.id === "8") {
+      setSmallOrLarge("large");
+    }
 
     const item = allItems.find((item) => item.id === Number(id));
 
@@ -103,7 +111,7 @@ const MenuItem = () => {
     setSmallNutrition(item?.nutrition.small);
     setLargeNutrition(item?.nutrition.large);
     setIsLoading(false);
-  }, []);
+  }, [params.id]);
 
   if (isLoading) return "loading";
 
@@ -122,30 +130,34 @@ const MenuItem = () => {
           <div className='mitem-tableouter'>
             <div className='mitem-head'>{selectedItem.name}</div>
             <div className='mitem-select'>
-              <div
-                className='mitem-selectchild'
-                style={{
-                  borderBottom:
-                    smallOrLarge === "small" ? "2px solid #888" : "",
-                }}
-                onClick={() => {
-                  rightScroll();
-                }}
-              >
-                Small
-              </div>
-              <div
-                className='mitem-selectchild'
-                onClick={() => {
-                  leftScroll();
-                }}
-                style={{
-                  borderBottom:
-                    smallOrLarge === "large" ? "2px solid #888" : "",
-                }}
-              >
-                Large
-              </div>
+              {selectedItem.id !== 8 && (
+                <div
+                  className='mitem-selectchild'
+                  style={{
+                    borderBottom:
+                      smallOrLarge === "small" ? "2px solid #888" : "",
+                  }}
+                  onClick={() => {
+                    rightScroll();
+                  }}
+                >
+                  Small
+                </div>
+              )}
+              {selectedItem.id !== 7 && selectedItem.id !== 6 && (
+                <div
+                  className='mitem-selectchild'
+                  onClick={() => {
+                    leftScroll();
+                  }}
+                  style={{
+                    borderBottom:
+                      smallOrLarge === "large" ? "2px solid #888" : "",
+                  }}
+                >
+                  Large
+                </div>
+              )}
             </div>
             <div
               className='mitem-tableparent'
@@ -158,11 +170,15 @@ const MenuItem = () => {
                 isLoading={isLoading}
               />
 
-              <NutritionTableLarge
-                selectedItem={selectedItem}
-                largeNutrition={largeNutrition}
-                isLoading={isLoading}
-              />
+              {selectedItem.id !== 6 &&
+                selectedItem.id !== 7 &&
+                selectedItem.id !== 8 && (
+                  <NutritionTableLarge
+                    selectedItem={selectedItem}
+                    largeNutrition={largeNutrition}
+                    isLoading={isLoading}
+                  />
+                )}
             </div>
           </div>
         </div>

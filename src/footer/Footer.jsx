@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./footer.scss";
+
 import Facebook from "../longstuff/Facebook";
 import Instagram from "../longstuff/Instagram";
 import Yelp from "../longstuff/Yelp";
-import { useLocation, useNavigate } from "react-router-dom";
 import PhoneIcon from "../longstuff/PhoneIcon";
 import Mail from "../longstuff/Mail";
 
@@ -39,7 +40,7 @@ const Footer = () => {
   }, [window.location.href]);
 
   return (
-    <div className='footer-parent'>
+    <div className='footer-parent' id='footermain'>
       <div
         style={{
           width: "100%",

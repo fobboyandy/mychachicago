@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "./location.scss";
 
@@ -7,6 +7,7 @@ import { location } from "./locationsobj";
 import LocationWord from "../longstuff/LocationsWord";
 
 import gsap from "gsap";
+import $ from "jquery";
 
 const MainLocations = () => {
   const history = useNavigate();
@@ -110,6 +111,28 @@ const MainLocations = () => {
     gsap.fromTo("#outerlocation", { opacity: 0 }, { opacity: 1, duration: 3 });
   }, []);
 
+  const footerHandle = useCallback(() => {
+    const k = document
+      .getElementById("footermain")
+      .getBoundingClientRect().height;
+
+    $("#container-locations").css("padding-bottom", `${k + 30}px`);
+  }, []);
+
+  useEffect(() => {
+    const k = document
+      .getElementById("footermain")
+      .getBoundingClientRect().height;
+
+    $("#container-locations").css("padding-bottom", `${k + 30}px`);
+
+    window.addEventListener("resize", footerHandle);
+
+    return () => {
+      window.removeEventListener("resize", footerHandle);
+    };
+  });
+
   return (
     <div className='location-actualparent'>
       <div className='outer-location' id='outerlocation'>
@@ -134,11 +157,9 @@ const MainLocations = () => {
           width: "80%",
           backgroundColor: "white",
           zIndex: 4,
-          paddingLeft: "10%",
-          paddingRight: "10%",
-          paddingTop: "5vh",
         }}
         className='container-locations'
+        id='container-locations'
       >
         <div id='intersecting-locations1' />
         <div id='intersecting-locations2' />
@@ -149,22 +170,14 @@ const MainLocations = () => {
             id={location.id}
             key={location.id}
           >
-            <div style={{ width: "100%", height: "60%" }}>
+            <div className='location-imgcontainer'>
               <img
                 src={location.image}
                 alt='uiceast'
                 className='img-location'
               />
             </div>
-            <div
-              style={{
-                width: "100%",
-                height: "40%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
+            <div className='location-fdsr'>
               <div className='location-name '>{location.name}</div>
               <div className='location-add location-desc'>
                 {location.address}

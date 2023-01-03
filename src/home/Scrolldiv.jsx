@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import $ from "jquery";
 
 import gsap from "gsap";
 
@@ -217,9 +216,9 @@ const Scrolldiv = () => {
   }, []);
 
   return (
-    <div className="container-scroll" id="scrollcontainer">
+    <div className='container-scroll' id='scrollcontainer'>
       <div
-        id="container2"
+        id='container2'
         ref={containerRef}
         style={{
           scrollBehavior: smooth ? "smooth" : "auto",
@@ -228,62 +227,62 @@ const Scrolldiv = () => {
         }}
       >
         <div
-          className="child-scroll"
-          id="b37"
+          className='child-scroll'
+          id='b37'
           style={{ width: vpWidth + "px" }}
         >
-          <div className="container-titledesc op0" id="scroll-one">
-            <div className="scroll-title">The Milk Tea ATM</div>
-            <div className="scroll-desc">
+          <div className='container-titledesc op0' id='scroll-one'>
+            <div className='scroll-title'>The Milk Tea ATM</div>
+            <div className='scroll-desc'>
               Mycha is a self-service fridge with a variety of bubble tea, fruit
               tea, and coffee selections.
             </div>
           </div>
         </div>
         <div
-          className="child-scroll"
-          id="uic"
+          className='child-scroll'
+          id='uic'
           style={{ width: vpWidth + "px" }}
         >
-          <div className="container-titledesc op0" id="scroll-two">
-            <div className="scroll-title">Premium Ingredients Only</div>
-            <div className="scroll-desc">
+          <div className='container-titledesc op0' id='scroll-two'>
+            <div className='scroll-title'>Premium Ingredients Only</div>
+            <div className='scroll-desc'>
               Our drinks are made daily with premium tea leaves from the most
               authentic tea plantations.
             </div>
           </div>
         </div>
         <div
-          className="child-scroll"
-          id="ucmed"
+          className='child-scroll'
+          id='ucmed'
           style={{ width: vpWidth + "px" }}
         >
-          <div className="container-titledesc op0" id="scroll-three">
-            <div className="scroll-title">Drinks at Your Convenience</div>
-            <div className="scroll-desc">
+          <div className='container-titledesc op0' id='scroll-three'>
+            <div className='scroll-title'>Drinks at Your Convenience</div>
+            <div className='scroll-desc'>
               No more waiting. Grab and go at our machines in under a minute.
             </div>
           </div>
         </div>
         <div
-          className="child-scroll"
-          id="rush"
+          className='child-scroll'
+          id='rush'
           style={{ width: vpWidth + "px" }}
         >
-          <div className="container-titledesc op0" id="scroll-four">
-            <div className="scroll-title">Locations across Chicagoland</div>
-            <div className="scroll-desc">
+          <div className='container-titledesc op0' id='scroll-four'>
+            <div className='scroll-title'>Locations across Chicagoland</div>
+            <div className='scroll-desc'>
               We have many locations across Chicago and constantly adding more.
             </div>
-            <a className="our-locations-btn" href="/locations">
+            <a className='our-locations-btn' href='/locations'>
               Locations
             </a>
           </div>
         </div>
-        <div className="child-scroll" style={{ width: vpWidth + "px" }}>
-          <div className="container-titledesc op0" id="scroll-five">
-            <div className="scroll-title">The Milk Tea ATM</div>
-            <div className="scroll-desc">
+        <div className='child-scroll' style={{ width: vpWidth + "px" }}>
+          <div className='container-titledesc op0' id='scroll-five'>
+            <div className='scroll-title'>The Milk Tea ATM</div>
+            <div className='scroll-desc'>
               Mycha is a self-service fridge with a variety of bubble tea, fruit
               tea, and coffee selections.
             </div>
@@ -291,8 +290,8 @@ const Scrolldiv = () => {
         </div>
       </div>
 
-      <div className="backgroundimage-scrolldiv" />
-      <div className="scrolldivoverlay" />
+      <div className='backgroundimage-scrolldiv' />
+      <div className='scrolldivoverlay' />
     </div>
   );
 };

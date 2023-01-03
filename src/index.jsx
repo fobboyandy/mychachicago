@@ -37,13 +37,13 @@ root.render(
         <Nav openNav={openNav} />
         <Overlay closeNav={closeNav} />
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/locations" element={<MainLocations />} />
-          <Route exact path="/contact" element={<Contact />} />
-          <Route exact path="/menu" element={<Menu />} />
-          <Route exact path="/menu/:id" element={<MenuItem />} />
-          <Route exact path="/locations/check" element={<App />} />
-          <Route path="*" element={<NotFound />} />
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/locations' element={<MainLocations />} />
+          <Route exact path='/contact' element={<Contact />} />
+          <Route exact path='/menu' element={<Menu />} />
+          <Route exact path='/menu/:id' element={<MenuItem />} />
+          <Route exact path='/locations/check' element={<App />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>
