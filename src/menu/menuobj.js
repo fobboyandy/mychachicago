@@ -7,20 +7,20 @@ const menuobj = [
         id: 1,
         htmlid: "mangojasmine",
         name: "Mango Jasmine Tea",
-        image: "../assets/Final/mango_small.jpg",
+        image: "/assets/Final/mango_small.jpg",
       },
 
       {
         id: 2,
         htmlid: "lycheefruittea",
         name: "Lychee Jasmine Tea",
-        image: "../assets/Final/lychee_small.jpg",
+        image: "/assets/Final/lychee_small.jpg",
       },
       {
         id: 3,
         htmlid: "passionfruittea",
         name: "Passionfruit Jasmine Tea",
-        image: "../assets/Final/passion_small.jpg",
+        image: "/assets/Final/passion_small.jpg",
       },
     ],
   },
@@ -33,7 +33,7 @@ const menuobj = [
         id: 4,
         htmlid: "jasminemilktea",
         name: "Jasmine Milk Tea",
-        image: "../assets/Final/jasmine_jelly_small.jpg",
+        image: "/assets/Final/jasmine_jelly_small.jpg",
       },
 
       {
@@ -46,21 +46,21 @@ const menuobj = [
         id: 6,
         htmlid: "matchamilktea",
         name: "Matcha Milk Tea",
-        image: "../assets/Final/matcha_small.jpg",
+        image: "/assets/Final/matcha_small.jpg",
       },
 
       {
         id: 7,
         htmlid: "taromilktea",
         name: "Taro Milk Tea",
-        image: "../assets/Final/taro_small.jpg",
+        image: "/assets/Final/taro_small.jpg",
       },
 
       {
         id: 8,
         htmlid: "coffeemilktea",
         name: "Coffee Milk Tea",
-        image: "../assets/Final/coffee_mt_small.jpg",
+        image: "/assets/Final/coffee_mt_small.jpg",
       },
     ],
   },
@@ -73,20 +73,20 @@ const menuobj = [
         id: 9,
         htmlid: "thaiicedtea",
         name: "Thai Iced Tea",
-        image: "../assets/Final/thai_tea_small.jpg",
+        image: "/assets/Final/thai_tea_small.jpg",
       },
 
       {
         id: 10,
         htmlid: "vietnamesecoffee",
         name: "Vietnamese Coffee",
-        image: "../assets/Final/coffee_small.jpg",
+        image: "/assets/Final/coffee_small.jpg",
       },
       {
         id: 11,
         htmlid: "mangolassi",
         name: "Mango Lassi",
-        image: "../assets/Final/lassi-removebg-preview.png",
+        image: "/assets/Final/lassi-removebg-preview.png",
       },
     ],
   },

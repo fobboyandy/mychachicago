@@ -5,7 +5,9 @@ Instagram - https://www.instagram.com/mychachicago/?hl=en
 
 ## Deployed Project
 
-http://mychachicago.herokuapp.com/
+http://mychachicago.herokuapp.com/ </br>
+
+soon to be on http://mychachicago.com/
 
 ## Tech Stack :books:
 

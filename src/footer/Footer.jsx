@@ -138,8 +138,20 @@ const Footer = () => {
           </div>
         </div>
 
-        <div style={{ marginTop: "20px" }}>
-          <span style={{ fontSize: "22px" }}>© </span>2022 Mycha LLC
+        <div
+          style={{
+            marginTop: "20px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{ fontSize: "22px", marginTop: "5px", marginRight: "5px" }}
+          >
+            ©{" "}
+          </div>
+          2022 Mycha LLC
         </div>
         <div style={{ fontStyle: "italic" }}>
           Life is full of important choices

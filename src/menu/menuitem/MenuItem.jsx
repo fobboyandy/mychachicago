@@ -122,7 +122,6 @@ const MenuItem = () => {
   return (
     <div>
       <div style={{ width: "100%" }} className='mitem-parent'>
-        {/* <Background /> */}
         <div className='mitem-container'>
           <div className='mitem-imgcontainer'>
             <img src={selectedItem.image} className='mitem-img' alt='cup' />
