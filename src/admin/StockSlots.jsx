@@ -76,6 +76,7 @@ const StockSlots = ({
             selectedCoordinates[0] === index &&
             selectedCoordinates[1] === 6 &&
             "6px solid black",
+          marginRight: 0, //last index, no margin
         }}
       >
         {item[6] || "null"}

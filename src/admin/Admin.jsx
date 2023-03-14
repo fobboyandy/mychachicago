@@ -111,7 +111,11 @@ const Admin = () => {
           <div className='s-numpad-li' onClick={() => set(3)}>
             3
           </div>
-          <div className='s-numpad-li' onClick={() => set(4)}>
+          <div
+            className='s-numpad-li'
+            onClick={() => set(4)}
+            style={{ marginRight: 0 }}
+          >
             4
           </div>
         </div>
