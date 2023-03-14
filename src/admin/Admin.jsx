@@ -8,6 +8,7 @@ import StockSlots from "./StockSlots";
 import { allItems } from "../menu/menuobj";
 import { cups2 } from "../checker/CupsObj";
 import AdminCups from "./AdminCups";
+import { useCallback } from "react";
 
 //notes: columns goes from 1, 2, 3, 4, 5, 6
 //rows is 0 index, goes 0, 1, 2, 3, 4, 5, 6
@@ -49,6 +50,12 @@ const Admin = () => {
     }
   }
 
+  const setMarginTop = useCallback(() => {
+    const v = document.querySelector(".nav-home").getBoundingClientRect();
+
+    $(".stock-parent").css("margin-top", v.height + 30 + "px");
+  }, []);
+
   useEffect(() => {
     $(document).ready(() => {
       const a = document
@@ -58,6 +65,14 @@ const Admin = () => {
       $(".stock-locationoverlay").css("top", a.top + a.height + 5 + "px");
       $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
     });
+  }, []);
+
+  useEffect(() => {
+    setMarginTop();
+
+    window.addEventListener("resize", setMarginTop);
+
+    return () => window.removeEventListener("resize", setMarginTop);
   }, []);
 
   return (
