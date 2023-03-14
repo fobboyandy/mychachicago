@@ -251,17 +251,12 @@ const Menu = () => {
                       <div className='name-menu'>{item.name}</div>
                       <div>
                         <div
-                          // href={`/menu/${item.id}`}
-                          // href='/menu/2'
                           style={{
                             cursor: "pointer",
                             marginTop: "8px",
                             textDecoration: "underline",
                           }}
-                          onClick={() =>
-                            // (window.location.href = `menu/${item.id}`)
-                            history(`/menu/${item.id}`)
-                          }
+                          onClick={() => history(`/menu/${item.id}`)}
                           className='menu-learnmore'
                         >
                           Learn More

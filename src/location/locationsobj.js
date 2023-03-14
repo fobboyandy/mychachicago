@@ -72,6 +72,48 @@ const location = [
   },
 ];
 
+const location2 = [
+  {
+    id: "uice",
+    name: "UIC East",
+  },
+
+  {
+    id: "uicw",
+    name: "UIC West",
+  },
+
+  {
+    id: "b37ped",
+    name: "B37",
+  },
+
+  {
+    id: "uicbsb",
+    name: "UIC BSB",
+  },
+
+  {
+    id: "rushu",
+    name: "Rush",
+  },
+
+  {
+    id: "bpapa",
+    name: "Beard",
+  },
+
+  {
+    id: "uchimed",
+    name: "UCMED",
+  },
+
+  {
+    id: "unionstation",
+    name: "Union Station",
+  },
+];
+
 const stock = [
   {
     id: "uice",
@@ -237,4 +279,4 @@ const stock = [
   },
 ];
 
-export { location, stock };
+export { location, stock, location2 };

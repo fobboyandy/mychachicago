@@ -40,7 +40,11 @@ const Footer = () => {
   }, [window.location.href]);
 
   return (
-    <div className='footer-parent' id='footermain'>
+    <div
+      className='footer-parent'
+      id='footermain'
+      style={{ display: loc.pathname === "/admin" && "none" }}
+    >
       <div
         style={{
           width: "100%",

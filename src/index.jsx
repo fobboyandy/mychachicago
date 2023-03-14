@@ -13,6 +13,7 @@ import gsap from "gsap";
 import Footer from "./footer/Footer";
 import NotFound from "./NotFound";
 import Contact from "./home/Contact";
+import Admin from "./admin/Admin";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
@@ -43,6 +44,7 @@ root.render(
           <Route exact path='/menu' element={<Menu />} />
           <Route exact path='/menu/:id' element={<MenuItem />} />
           <Route exact path='/locations/check' element={<App />} />
+          <Route exact path='/admin' element={<Admin />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
         <Footer />
