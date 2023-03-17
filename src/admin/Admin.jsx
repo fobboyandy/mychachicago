@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./admin.scss";
 import { location2 as location } from "../location/locationsobj";
 
@@ -6,9 +6,7 @@ import $ from "jquery";
 
 import StockSlots from "./StockSlots";
 import { allItems } from "../menu/menuobj";
-import { cups2 } from "../checker/CupsObj";
 import AdminCups from "./AdminCups";
-import { useCallback } from "react";
 
 //notes: columns goes from 1, 2, 3, 4, 5, 6
 //rows is 0 index, goes 0, 1, 2, 3, 4, 5, 6
@@ -73,6 +71,17 @@ const Admin = () => {
     window.addEventListener("resize", setMarginTop);
 
     return () => window.removeEventListener("resize", setMarginTop);
+  }, []);
+
+  //testing purposes
+  useEffect(() => {
+    $.ajax({
+      type: "GET",
+      url: "/api/data",
+    }).then((res) => {
+      console.log(JSON.parse('{"result":true, "count":42}'));
+      console.log(JSON.parse(res));
+    });
   }, []);
 
   return (
