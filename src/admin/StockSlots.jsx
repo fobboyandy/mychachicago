@@ -18,7 +18,7 @@ const StockSlots = ({
             "6px solid black",
         }}
       >
-        {item[1] || "null"}
+        {item[1] === 0 ? 0 : item[1] || "null"}
       </div>
       <div
         className='ss-li'
@@ -30,7 +30,7 @@ const StockSlots = ({
             "6px solid black",
         }}
       >
-        {item[2] || "null"}
+        {item[2] === 0 ? 0 : item[2] || "null"}
       </div>
       <div
         className='ss-li'
@@ -42,7 +42,7 @@ const StockSlots = ({
             "6px solid black",
         }}
       >
-        {item[3] || "null"}
+        {item[3] === 0 ? 0 : item[3] || "null"}
       </div>
       <div
         className='ss-li'
@@ -54,7 +54,7 @@ const StockSlots = ({
             "6px solid black",
         }}
       >
-        {item[4] || "null"}
+        {item[4] === 0 ? 0 : item[4] || "null"}
       </div>
       <div
         className='ss-li'
@@ -66,7 +66,7 @@ const StockSlots = ({
             "6px solid black",
         }}
       >
-        {item[5] || "null"}
+        {item[5] === 0 ? 0 : item[5] || "null"}
       </div>
       <div
         className='ss-li'
@@ -76,10 +76,23 @@ const StockSlots = ({
             selectedCoordinates[0] === index &&
             selectedCoordinates[1] === 6 &&
             "6px solid black",
+        }}
+      >
+        {item[6] === 0 ? 0 : item[6] || "null"}
+      </div>
+
+      <div
+        className='ss-li'
+        onClick={() => setSelectedCoordinates([index, 7])}
+        style={{
+          border:
+            selectedCoordinates[0] === index &&
+            selectedCoordinates[1] === 7 &&
+            "6px solid black",
           marginRight: 0, //last index, no margin
         }}
       >
-        {item[6] || "null"}
+        {item[7] === 0 ? 0 : item[7] || "null"}
       </div>
     </div>
   );

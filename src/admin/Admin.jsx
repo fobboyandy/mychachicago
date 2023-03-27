@@ -12,7 +12,17 @@ import AdminCups from "./AdminCups";
 //rows is 0 index, goes 0, 1, 2, 3, 4, 5, 6
 
 const Admin = () => {
-  const [stock, setStock] = useState(Array(7).fill({}));
+  const [stock, setStock] = useState(
+    Array(6).fill({
+      1: null,
+      2: null,
+      3: null,
+      4: null,
+      5: null,
+      6: null,
+      7: null,
+    })
+  );
   const [selectedLocation, setSelectedLocation] = useState(location[0].id);
   //first number is row, second is column
   const [selectedCoordinates, setSelectedCoordinates] = useState([]);
@@ -22,9 +32,9 @@ const Admin = () => {
   const [locationActive, setLocationActive] = useState(false);
 
   function set(num) {
-    if (num === 0) {
-      num = "0";
-    }
+    // if (num === 0) {
+    //   num = "0";
+    // }
 
     //means nothing selected
     if (!selectedCoordinates.length) return;
@@ -37,11 +47,11 @@ const Admin = () => {
     setStock(copy);
 
     //end of the machine, dont go any further
-    if (c === 6 && r === 6) {
+    if (c === 7 && r === 5) {
       return;
     }
 
-    if (c === 6) {
+    if (c === 7) {
       setSelectedCoordinates([r + 1, 1]);
     } else {
       setSelectedCoordinates([r, c + 1]);
@@ -53,6 +63,11 @@ const Admin = () => {
 
     $(".stock-parent").css("margin-top", v.height + 30 + "px");
   }, []);
+
+  function handleSubmit() {
+    const s = stock.slice().map((v) => Object.values(v));
+    console.log(s);
+  }
 
   useEffect(() => {
     $(document).ready(() => {
@@ -84,6 +99,8 @@ const Admin = () => {
     });
   }, []);
 
+  console.log(stock);
+
   return (
     <div>
       <div className='stock-parent'>
@@ -109,12 +126,20 @@ const Admin = () => {
           className='stock-locationoverlay'
           style={{ display: !locationActive && "none" }}
         >
-          {location.map((item) => (
+          {location.map((item, i) => (
             <div
               className='stock-li'
               onClick={() => {
                 setSelectedLocation(item.id);
                 setLocationActive(false);
+              }}
+              style={{
+                borderRadius:
+                  i === 0
+                    ? "4px 4px 0 0"
+                    : i === location.length - 1
+                    ? "0 0 4px 4px"
+                    : "",
               }}
             >
               {item.name}
@@ -144,7 +169,7 @@ const Admin = () => {
           </div>
         </div>
 
-        <div className='stock-drinkselect'>
+        {/* <div className='stock-drinkselect'>
           {allItems.map((drink) => (
             <AdminCups
               drink={drink}
@@ -152,10 +177,14 @@ const Admin = () => {
               setSelectedDrink={setSelectedDrink}
             />
           ))}
-        </div>
+        </div> */}
       </div>
 
-      <div className='stock-submit'>Submit</div>
+      <div className='stock-n'>
+        <div className='stock-submit' onClick={() => handleSubmit()}>
+          Submit
+        </div>
+      </div>
     </div>
   );
 };
