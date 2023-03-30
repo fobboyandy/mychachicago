@@ -5,8 +5,6 @@ import { location2 as location } from "../location/locationsobj";
 import $ from "jquery";
 
 import StockSlots from "./StockSlots";
-import { allItems } from "../menu/menuobj";
-import AdminCups from "./AdminCups";
 
 //notes: columns goes from 1, 2, 3, 4, 5, 6
 //rows is 0 index, goes 0, 1, 2, 3, 4, 5, 6
@@ -14,20 +12,18 @@ import AdminCups from "./AdminCups";
 const Admin = () => {
   const [stock, setStock] = useState(
     Array(6).fill({
-      1: null,
-      2: null,
-      3: null,
-      4: null,
-      5: null,
-      6: null,
-      7: null,
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
     })
   );
   const [selectedLocation, setSelectedLocation] = useState(location[0].id);
   //first number is row, second is column
-  const [selectedCoordinates, setSelectedCoordinates] = useState([]);
-
-  const [selectedDrink, setSelectedDrink] = useState(null);
+  const [selectedCoordinates, setSelectedCoordinates] = useState([0, 1]);
 
   const [locationActive, setLocationActive] = useState(false);
 
