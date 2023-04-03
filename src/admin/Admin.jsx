@@ -60,9 +60,18 @@ const Admin = () => {
     $(".stock-parent").css("margin-top", v.height + 30 + "px");
   }, []);
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const s = stock.slice().map((v) => Object.values(v));
-    console.log(s);
+
+    $.ajax({
+      type: "POST",
+      url: "/api/data",
+      data: {
+        data: JSON.stringify(s),
+      },
+    }).then((res) => {
+      console.log(JSON.parse(res));
+    });
   }
 
   useEffect(() => {
@@ -84,18 +93,15 @@ const Admin = () => {
     return () => window.removeEventListener("resize", setMarginTop);
   }, []);
 
-  //testing purposes
-  useEffect(() => {
-    $.ajax({
-      type: "GET",
-      url: "/api/data",
-    }).then((res) => {
-      console.log(JSON.parse('{"result":true, "count":42}'));
-      console.log(JSON.parse(res));
-    });
-  }, []);
-
-  console.log(stock);
+  // //testing purposes
+  // useEffect(() => {
+  //   $.ajax({
+  //     type: "GET",
+  //     url: "/api/data",
+  //   }).then((res) => {
+  //     console.log(JSON.parse(res));
+  //   });
+  // }, []);
 
   return (
     <div>
