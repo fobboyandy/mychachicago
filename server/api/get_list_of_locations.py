@@ -8,7 +8,7 @@ from os.path import join, dirname
 
 from dotenv import load_dotenv
 
-path = join(dirname(__file__), '../../.env')
+path = ".env"
 values = load_dotenv(path)
 
 def download_file(filename):

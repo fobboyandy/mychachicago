@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from os.path import join, dirname
 import os
 
-dotenv_path = join(dirname(__file__), '../../.env')
+dotenv_path = ".env"
 values = load_dotenv(dotenv_path)
 
 
