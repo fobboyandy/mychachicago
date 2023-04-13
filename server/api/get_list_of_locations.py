@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 path = ".env"
 values = load_dotenv(path)
 
+print(os.environ.get("ACCESS_KEY"))
+
 def download_file(filename):
     #open up access to s3
     s3 = boto3.client('s3', 
