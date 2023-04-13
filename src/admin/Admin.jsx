@@ -21,9 +21,11 @@ const Admin = () => {
       7: 0,
     })
   );
-  const [selectedLocation, setSelectedLocation] = useState(location[0].id);
   //first number is row, second is column
   const [selectedCoordinates, setSelectedCoordinates] = useState([0, 1]);
+
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState();
 
   const [locationActive, setLocationActive] = useState(false);
 
@@ -68,9 +70,28 @@ const Admin = () => {
       url: "/api/data",
       data: {
         data: JSON.stringify(s),
+        location: JSON.stringify(selectedLocation),
       },
+    });
+  }
+
+  async function handleFetch() {
+    $.ajax({
+      type: "GET",
+      url: `/api/data/fetchstock/${selectedLocation}`,
     }).then((res) => {
-      console.log(JSON.parse(res));
+      const result = [];
+
+      JSON.parse(res).forEach((t) => {
+        const inner = {};
+        t.forEach((p, i) => {
+          inner[i + 1] = p;
+        });
+
+        result.push(inner);
+      });
+
+      setStock(result);
     });
   }
 
@@ -83,7 +104,7 @@ const Admin = () => {
       $(".stock-locationoverlay").css("top", a.top + a.height + 5 + "px");
       $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
     });
-  }, []);
+  }, [locations]);
 
   useEffect(() => {
     setMarginTop();
@@ -93,15 +114,21 @@ const Admin = () => {
     return () => window.removeEventListener("resize", setMarginTop);
   }, []);
 
-  // //testing purposes
-  // useEffect(() => {
-  //   $.ajax({
-  //     type: "GET",
-  //     url: "/api/data",
-  //   }).then((res) => {
-  //     console.log(JSON.parse(res));
-  //   });
-  // }, []);
+  useEffect(() => {
+    if (!locations?.length) return;
+    handleFetch();
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    $.ajax({
+      type: "GET",
+      url: `/api/data/fetchlocations`,
+    }).then((res) => {
+      const result = JSON.parse(res);
+      setLocations(result);
+      setSelectedLocation(result[0].replace(/ /g, "").replace(/[()]/g, ""));
+    });
+  }, []);
 
   return (
     <div>
@@ -111,7 +138,9 @@ const Admin = () => {
           onClick={() => setLocationActive((prev) => !prev)}
           style={{ marginBottom: "20px" }}
         >
-          {location.find((v) => v.id === selectedLocation).name}
+          {locations.find(
+            (v) => v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
+          )}
         </div>
         <div className='stock-slots'>
           {stock.map((item, i) => (
@@ -128,23 +157,25 @@ const Admin = () => {
           className='stock-locationoverlay'
           style={{ display: !locationActive && "none" }}
         >
-          {location.map((item, i) => (
+          {locations?.map((item, i) => (
             <div
               className='stock-li'
               onClick={() => {
-                setSelectedLocation(item.id);
+                setSelectedLocation(
+                  item.replace(/ /g, "").replace(/[()]/g, "")
+                );
                 setLocationActive(false);
               }}
               style={{
                 borderRadius:
                   i === 0
                     ? "4px 4px 0 0"
-                    : i === location.length - 1
+                    : i === locations.length - 1
                     ? "0 0 4px 4px"
                     : "",
               }}
             >
-              {item.name}
+              {item}
             </div>
           ))}
         </div>
