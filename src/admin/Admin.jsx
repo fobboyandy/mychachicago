@@ -72,6 +72,8 @@ const Admin = () => {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
       },
+    }).then((res) => {
+      console.log(res);
     });
   }
 
@@ -80,6 +82,7 @@ const Admin = () => {
       type: "GET",
       url: `/api/data/fetchstock/${selectedLocation}`,
     }).then((res) => {
+      console.log(res);
       const result = [];
 
       JSON.parse(res).forEach((t) => {
