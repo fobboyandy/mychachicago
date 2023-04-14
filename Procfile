@@ -1,1 +1,1 @@
-web: node server
+web: echo 'fs.inotify.max_user_watches=524288' && cat /proc/sys/fs/inotify/max_user_watches && node server
