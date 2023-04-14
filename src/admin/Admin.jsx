@@ -67,7 +67,7 @@ const Admin = () => {
 
     $.ajax({
       type: "POST",
-      url: "/api/data",
+      url: "https://pythonendpoint.herokuapp.com/api/data",
       data: {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
@@ -80,7 +80,7 @@ const Admin = () => {
   async function handleFetch() {
     $.ajax({
       type: "GET",
-      url: `/api/data/fetchstock/${selectedLocation}`,
+      url: `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${selectedLocation}`,
     }).then((res) => {
       console.log(res);
       const result = [];
@@ -125,8 +125,9 @@ const Admin = () => {
   useEffect(() => {
     $.ajax({
       type: "GET",
-      url: `/api/data/fetchlocations`,
+      url: `https://pythonendpoint.herokuapp.com/api/data/fetchlocations`,
     }).then((res) => {
+      console.log(res);
       const result = JSON.parse(res);
       setLocations(result);
       setSelectedLocation(result[0].replace(/ /g, "").replace(/[()]/g, ""));
