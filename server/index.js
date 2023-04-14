@@ -5,6 +5,9 @@ const parser = require("body-parser");
 const path = require("path");
 const port = process.env.PORT || 4000;
 const { createServer } = require("vite");
+require("dotenv").config();
+
+const axios = require("axios");
 
 app.use(morgan("dev"));
 app.use(parser.json());
@@ -22,6 +25,59 @@ const v = async function () {
 
   app.use(vite.middlewares);
 };
+
+app.get("/fetchlocations", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `https://pythonendpoint.herokuapp.com/api/data/fetchlocations/${process.env.SECRET_KEY}`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/fetchstock/:location", async (req, res, next) => {
+  try {
+    const loc = req.params.location;
+
+    const { data } = await axios.get(
+      `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/fetchlocations", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `https://pythonendpoint.herokuapp.com/api/data/fetchlocations/${process.env.SECRET_KEY}`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/sendstock", async (req, res, next) => {
+  try {
+    const body = req.body;
+
+    const { data } = await axios.post(
+      `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
+      body
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));

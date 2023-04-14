@@ -67,25 +67,22 @@ const Admin = () => {
 
     $.ajax({
       type: "POST",
-      url: "https://pythonendpoint.herokuapp.com/api/data",
+      url: "/sendstock",
       data: {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
       },
-    }).then((res) => {
-      console.log(res);
     });
   }
 
   async function handleFetch() {
     $.ajax({
       type: "GET",
-      url: `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${selectedLocation}`,
+      url: `/fetchstock/${selectedLocation}`,
     }).then((res) => {
-      console.log(res);
       const result = [];
 
-      JSON.parse(res).forEach((t) => {
+      res.forEach((t) => {
         const inner = {};
         t.forEach((p, i) => {
           inner[i + 1] = p;
@@ -125,12 +122,10 @@ const Admin = () => {
   useEffect(() => {
     $.ajax({
       type: "GET",
-      url: `https://pythonendpoint.herokuapp.com/api/data/fetchlocations`,
+      url: `/fetchlocations`,
     }).then((res) => {
-      console.log(res);
-      const result = JSON.parse(res);
-      setLocations(result);
-      setSelectedLocation(result[0].replace(/ /g, "").replace(/[()]/g, ""));
+      setLocations(res);
+      setSelectedLocation(res[0].replace(/ /g, "").replace(/[()]/g, ""));
     });
   }, []);
 
