@@ -13,6 +13,8 @@ soon to be on http://mychachicago.com/
 
 Below is a non-exhaustive list of technologies used throughout the project.
 
+Stock endpoint - https://github.com/yuiyuuuu/mycha-python-endpoint
+
 | Front End | Libraries/Frameworks | External Services | Compiler |
 | :-------: | :------------------: | :---------------: | :------: |
 |   React   |         GSAP         |     formspree     |   Vite   |

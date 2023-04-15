@@ -29,11 +29,9 @@ const Admin = () => {
 
   const [locationActive, setLocationActive] = useState(false);
 
-  function set(num) {
-    // if (num === 0) {
-    //   num = "0";
-    // }
+  const [loading, setLoading] = useState(false);
 
+  function set(num) {
     //means nothing selected
     if (!selectedCoordinates.length) return;
 
@@ -65,6 +63,8 @@ const Admin = () => {
   async function handleSubmit() {
     const s = stock.slice().map((v) => Object.values(v));
 
+    setLoading(true);
+
     $.ajax({
       type: "POST",
       url: "/sendstock",
@@ -72,6 +72,11 @@ const Admin = () => {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
       },
+    }).then((res) => {
+      if (res === "success") {
+        setLoading(false);
+        alert("successfully updated stock");
+      }
     });
   }
 
@@ -141,6 +146,7 @@ const Admin = () => {
             (v) => v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
           )}
         </div>
+
         <div className='stock-slots'>
           {stock.map((item, i) => (
             <StockSlots
@@ -215,6 +221,25 @@ const Admin = () => {
       <div className='stock-n'>
         <div className='stock-submit' onClick={() => handleSubmit()}>
           Submit
+        </div>
+      </div>
+
+      <div className='load-parent' style={{ display: !loading && "none" }}>
+        <div
+          className='lds-ring'
+          style={{
+            width: "100%",
+            height: "60vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          id='spinner-form'
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
     </div>
