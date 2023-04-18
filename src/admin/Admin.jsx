@@ -31,6 +31,8 @@ const Admin = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [lastUpdated, setLastUpdated] = useState("");
+
   function set(num) {
     //means nothing selected
     if (!selectedCoordinates.length) return;
@@ -73,7 +75,13 @@ const Admin = () => {
         location: JSON.stringify(selectedLocation),
       },
     }).then((res) => {
-      if (res === "success") {
+      console.log(res);
+      if (res.status === "success") {
+        const date = new Date(res.time * 1000).toLocaleString("en-US", {
+          timeZone: "America/Chicago",
+        });
+
+        setLastUpdated(date);
         setLoading(false);
         alert("successfully updated stock");
       }
@@ -87,28 +95,71 @@ const Admin = () => {
     }).then((res) => {
       const result = [];
 
-      res.forEach((t) => {
-        const inner = {};
-        t.forEach((p, i) => {
-          inner[i + 1] = p;
+      if (res.time) {
+        const date = new Date(res.time * 1000).toLocaleString("en-US", {
+          timeZone: "America/Chicago",
         });
 
-        result.push(inner);
-      });
+        setLastUpdated(date);
+      } else {
+        setLastUpdated("none");
+      }
 
-      setStock(result);
+      if (res.stock) {
+        res.stock.forEach((t) => {
+          const inner = {};
+          t.forEach((p, i) => {
+            inner[i + 1] = p;
+          });
+
+          result.push(inner);
+          setStock(result);
+        });
+      } else {
+        setStock(
+          Array(6).fill({
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+          })
+        );
+      }
     });
   }
 
+  const setOverlayLocation = useCallback(() => {
+    const a = document.querySelector(".stock-location").getBoundingClientRect();
+
+    $(".stock-locationoverlay").css("top", a.top + a.height + 5 + "px");
+    $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
+  }, []);
+
+  const clickout = useCallback(() => {
+    var $target = $(event.target);
+
+    if (
+      !$target.closest(".stock-location").length &&
+      !$target.closest(".stock-locationoverlay").length &&
+      $(".stock-locationoverlay").is(":visible")
+    ) {
+      setLocationActive(false);
+    }
+  }, []);
+
+  $(document).off("click", document, clickout).click(clickout);
+
   useEffect(() => {
     $(document).ready(() => {
-      const a = document
-        .querySelector(".stock-location")
-        .getBoundingClientRect();
-
-      $(".stock-locationoverlay").css("top", a.top + a.height + 5 + "px");
-      $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
+      setOverlayLocation();
     });
+
+    window.addEventListener("resize", setOverlayLocation);
+
+    return () => window.removeEventListener("resize", setOverlayLocation);
   }, [locations]);
 
   useEffect(() => {
@@ -146,6 +197,8 @@ const Admin = () => {
             (v) => v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
           )}
         </div>
+
+        <div className='last-set'>Last Updated: {lastUpdated}</div>
 
         <div className='stock-slots'>
           {stock.map((item, i) => (

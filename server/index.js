@@ -44,6 +44,7 @@ app.get("/fetchstock/:location", async (req, res, next) => {
 
     const { data } = await axios.get(
       `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
+      // `http://localhost:4001/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
     );
 
     res.send(data);
@@ -70,6 +71,7 @@ app.post("/sendstock", async (req, res, next) => {
 
     const { data } = await axios.post(
       `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
+      // `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
       body
     );
 
