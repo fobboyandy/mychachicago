@@ -88,6 +88,8 @@ const Admin = () => {
   }
 
   async function handleFetch() {
+    setLoading(true);
+
     $.ajax({
       type: "GET",
       url: `/fetchstock/${selectedLocation}`,
@@ -127,6 +129,8 @@ const Admin = () => {
           })
         );
       }
+
+      setLoading(false);
     });
   }
 

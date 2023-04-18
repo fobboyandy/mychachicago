@@ -25,7 +25,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "echo 'fs.inotify.max_user_watches=524288' && node server",
+    "start": "node server",
     "set": "set NODE_ENV=production",
     "start2": "vite ",
     "build": "vite build",
