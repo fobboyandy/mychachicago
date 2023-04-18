@@ -75,7 +75,6 @@ const Admin = () => {
         location: JSON.stringify(selectedLocation),
       },
     }).then((res) => {
-      console.log(res);
       if (res.status === "success") {
         const date = new Date(res.time * 1000).toLocaleString("en-US", {
           timeZone: "America/Chicago",
@@ -277,24 +276,26 @@ const Admin = () => {
         </div>
       </div>
 
-      <div className='load-parent' style={{ display: !loading && "none" }}>
-        <div
-          className='lds-ring'
-          style={{
-            width: "100%",
-            height: "60vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          id='spinner-form'
-        >
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+      {loading && (
+        <div className='load-parent' style={{ display: !loading && "none" }}>
+          <div
+            className='lds-ring'
+            style={{
+              width: "100%",
+              height: "60vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            id='spinner-form'
+          >
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
