@@ -178,7 +178,7 @@ body {
   font-size: 20px;
   width: 140px;
   height: 50px;
-  border-radius: 19px;
+  border-radius: 5px;
   background-color: rgb(109, 214, 49);
   text-decoration: none;
   margin-top: 10px;
@@ -508,7 +508,7 @@ body {
 }
 
 .input-contact {
-  border-radius: 7%;
+  border-radius: 5px;
   height: 30px;
   width: 100%;
   margin-bottom: 20px;
@@ -533,9 +533,9 @@ body {
 }
 
 .tarea-contact {
-  border-radius: 7%;
+  border-radius: 5px;
   width: 100%;
-  padding: 10px 10px 10px 10px;
+  padding: 10px;
 }
 
 .submitbut-contact {
@@ -546,7 +546,7 @@ body {
   cursor: pointer;
   align-self: center;
   margin-top: 20px;
-  border-radius: 10%;
+  border-radius: 5px;
   font-size: 16px;
   transition: all 0.2s ease;
 
@@ -635,10 +635,11 @@ body {
   width: 100%;
   cursor: pointer;
   border: 1px solid black;
-  border-radius: 7%;
-  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+  padding: 10px;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+
   &::after {
     content: "";
     width: 0;

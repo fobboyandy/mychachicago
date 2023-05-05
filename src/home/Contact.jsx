@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Leaf from "../longstuff/Leaf";
 import { useForm } from "@formspree/react";
 
@@ -17,6 +17,8 @@ const Contact = () => {
   const [last4, setLast4] = useState("");
 
   const [desc, setDesc] = useState("");
+
+  const [submitting, setSubmitting] = useState(false);
 
   const [state, handleSubmit] = useForm("xpznyjqd", {
     data: {
@@ -54,6 +56,7 @@ const Contact = () => {
   $("#textarea-container").find("textarea").keydown();
 
   const handleSubmit2 = () => {
+    setSubmitting(true);
     $("#form--contact").addClass("nodisplay");
     $("#spinner-form").removeClass("nodisplay");
   };
@@ -212,6 +215,8 @@ const Contact = () => {
         count += count;
       });
 
+      if (!document.getElementsByClassName("select-container2").length) return;
+
       const f =
         document.getElementsByClassName("select-container2")[0].offsetHeight;
       let count2 = f;
@@ -223,6 +228,33 @@ const Contact = () => {
     });
   }, [showSelect, showSelect2]);
 
+  const clickout1 = useCallback(() => {
+    var $target = $(event.target);
+
+    if (
+      !$target.closest(".select-contact2").length &&
+      !$target.closest(".li-contact").length &&
+      showSelect
+    ) {
+      setShowSelect(false);
+    }
+  }, [showSelect]);
+
+  const clickout2 = useCallback(() => {
+    var $target = $(event.target);
+
+    if (
+      !$target.closest("#second-contact").length &&
+      !$target.closest(".li-contact").length &&
+      showSelect2
+    ) {
+      setShowSelect2(false);
+    }
+  }, [showSelect2]);
+
+  $(document).off("click", document, clickout1).click(clickout1);
+  $(document).off("click", document, clickout2).click(clickout2);
+
   return (
     <div
       style={{
@@ -232,20 +264,20 @@ const Contact = () => {
         marginTop: "5vh",
         marginBottom: "5vh",
       }}
-      id="contactparent"
+      id='contactparent'
     >
       {" "}
-      <div className="contact-parent">
-        <div id="contact-intersectingobserver" />
-        <div className="head-section2">Contact Us</div>
+      <div className='contact-parent'>
+        <div id='contact-intersectingobserver' />
+        <div className='head-section2'>Contact Us</div>
         <Leaf />
 
-        <div className="desc-sectioncontact mbot">
+        <div className='desc-sectioncontact mbot'>
           From questions and suggestions to machine or transaction issues, we
           are here to help!
         </div>
 
-        <div className="desc-sectioncontact mbot">
+        <div className='desc-sectioncontact mbot'>
           If you see a $1.50 (or a $5.00) charge on your account but the machine
           did not dispense a drink, please note that the $1.50 (or $5.00) is a
           pending charge for each time you swipe the card but it will disappear
@@ -253,7 +285,7 @@ const Contact = () => {
           you still see it after a few business days, please let us know.
         </div>
 
-        <div className="desc-sectioncontact mbot">
+        <div className='desc-sectioncontact mbot'>
           If you experienced other issues at a Mycha machine, please submit the
           refund request below and we’ll get back to you within one business
           day. Please be reassured that we look and respond to all requests. We
@@ -262,11 +294,11 @@ const Contact = () => {
           at our number or submit the form again.
         </div>
 
-        <div className="desc-sectioncontact mbot">
+        <div className='desc-sectioncontact mbot'>
           If it’s an urgent matter, please text Mycha @ (847) 260-8387 or email
           us at{" "}
           <a
-            href="mailto:mychamachine@gmail.com"
+            href='mailto:mychamachine@gmail.com'
             style={{
               fontStyle: "italic",
               fontWeight: "600",
@@ -290,102 +322,103 @@ const Contact = () => {
             }}
           >
             <form
-              className="form-contact"
+              className='form-contact'
               onSubmit={(e) => {
                 e.preventDefault();
                 const shouldSubmit = checkValid();
                 if (shouldSubmit) {
                   handleSubmit(e);
                   handleSubmit2();
+                  setSubmitting(false);
                 } else return;
               }}
-              id="form--contact"
+              id='form--contact'
             >
-              <label htmlFor="name-contact" className="label-contact">
-                Name<span className="star">*</span>
+              <label htmlFor='name-contact' className='label-contact'>
+                Name<span className='star'>*</span>
               </label>
               <div
-                className="errormsg"
+                className='errormsg'
                 style={{ display: nameError ? "" : "none" }}
               >
                 Missing Name!
               </div>
               <input
-                id="name-contact"
-                className="input-contact"
+                id='name-contact'
+                className='input-contact'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                name="name"
-                type="text"
+                name='name'
+                type='text'
               />
 
-              <label htmlFor="email-contact" className="label-contact">
-                Your Email<span className="star">*</span>
+              <label htmlFor='email-contact' className='label-contact'>
+                Your Email<span className='star'>*</span>
               </label>
 
               <div
-                className="errormsg"
+                className='errormsg'
                 style={{ display: emailError ? "" : "none" }}
               >
                 Invalid Email!
               </div>
               <input
-                id="email-contact"
-                className="input-contact"
+                id='email-contact'
+                className='input-contact'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                name="email"
-                type="text"
+                name='email'
+                type='text'
               />
 
-              <label htmlFor="phone-contact" className="label-contact">
-                Phone Number<span className="star">*</span>
+              <label htmlFor='phone-contact' className='label-contact'>
+                Phone Number<span className='star'>*</span>
               </label>
               <div
-                className="errormsg"
+                className='errormsg'
                 style={{ display: phoneError ? "" : "none" }}
               >
                 Invalid Number!
               </div>
               <input
-                id="phone-contact"
-                className="input-contact"
+                id='phone-contact'
+                className='input-contact'
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                type="tel"
+                type='tel'
               />
 
-              <label htmlFor="reason-contact" className="label-contact">
-                Reason<span className="star">*</span>
+              <label htmlFor='reason-contact' className='label-contact'>
+                Reason<span className='star'>*</span>
               </label>
 
               <div
-                className="select-container"
+                className='select-container'
                 onClick={() => {
                   showSelect ? "" : optionSlideIn1();
                   setShowSelect((prev) => !prev);
                 }}
                 style={{ zIndex: 10 }}
               >
-                <div className="select-contact2">
+                <div className='select-contact2'>
                   {reason === "question/suggestion"
                     ? "Question/Suggestion"
                     : "Machine/Transaction Issue"}
                 </div>
 
                 <div
-                  className="li-contact"
+                  className='li-contact'
                   onClick={() => setReason("question/suggestion")}
-                  id="question-suggestion"
+                  id='question-suggestion'
                   style={{ display: showSelect ? "" : "none" }}
                 >
                   Question/Suggestion
                 </div>
 
                 <div
-                  className="li-contact"
+                  className='li-contact'
                   onClick={() => setReason("issue")}
-                  id="machine-transaction-issue"
+                  id='machine-transaction-issue'
                   style={{ display: showSelect ? "" : "none" }}
                 >
                   Machine/Transaction Issue
@@ -396,146 +429,147 @@ const Contact = () => {
                 ""
               ) : (
                 <div>
-                  <div className="label-contact">
-                    ATM Location<span className="star">*</span>
+                  <div className='label-contact'>
+                    ATM Location<span className='star'>*</span>
                   </div>
 
                   <div
-                    className="select-container2"
+                    className='select-container2'
+                    id='second-contact'
                     onClick={() => {
                       showSelect2 ? "" : optionSlideIn2();
                       setShowSelect2((prev) => !prev);
                     }}
                   >
-                    <div className="select-contact2">{loc[location]}</div>
+                    <div className='select-contact2'>{loc[location]}</div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("uiceast")}
-                      id="uiceast-option"
+                      id='uiceast-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       UIC East
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("uicwest")}
-                      id="uicwest-option"
+                      id='uicwest-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       UIC West
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("block37")}
-                      id="b37-option"
+                      id='b37-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       Block 37
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("uicbsb")}
-                      id="uicbsb-option"
+                      id='uicbsb-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       UIC Behavioral Science Building
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("rush")}
-                      id="rush-option"
+                      id='rush-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       Rush University
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("beardpapa")}
-                      id="beardpapa-option"
+                      id='beardpapa-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       Beard Papa
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("ucmed")}
-                      id="ucmed-option"
+                      id='ucmed-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       University of Chicago
                     </div>
 
                     <div
-                      className="li-contact2"
+                      className='li-contact2'
                       onClick={() => setLocation("submarine")}
-                      id="submarine-option"
+                      id='submarine-option'
                       style={{ display: showSelect2 ? "" : "none" }}
                     >
                       Submarine
                     </div>
                   </div>
 
-                  <div className="label-contact">
-                    Form of Payment<span className="star">*</span>
+                  <div className='label-contact'>
+                    Form of Payment<span className='star'>*</span>
                   </div>
                   <div
-                    className="errormsg"
+                    className='errormsg'
                     style={{ display: paymentTypeError ? "" : "none" }}
                   >
                     Please Select
                   </div>
-                  <div className="radio-container">
+                  <div className='radio-container'>
                     <input
-                      type="radio"
+                      type='radio'
                       onClick={() => setPaymentType("card")}
-                      name="paymenttype"
+                      name='paymenttype'
                     />
-                    <label className="mleft10">Card Swipe</label>
+                    <label className='mleft10'>Card Swipe</label>
                   </div>
 
-                  <div className="radio-container">
+                  <div className='radio-container'>
                     <input
-                      type="radio"
+                      type='radio'
                       onClick={() => setPaymentType("mobilewallet")}
-                      name="paymenttype"
+                      name='paymenttype'
                     />
-                    <label className="mleft10">
+                    <label className='mleft10'>
                       Mobile Wallet (Google Pay, Apple Pay, etc)
                     </label>
                   </div>
-                  <div className="radio-container">
+                  <div className='radio-container'>
                     <input
-                      type="radio"
+                      type='radio'
                       onClick={() => setPaymentType("cash")}
-                      name="paymenttype"
+                      name='paymenttype'
                     />
-                    <label className="mleft10">Cash</label>
+                    <label className='mleft10'>Cash</label>
                   </div>
 
                   {paymentType === "card" ? (
                     <div style={{ marginTop: "10px" }}>
-                      <label htmlFor="name-contact" className="label-contact">
-                        Last 4 Digits of Card<span className="star">*</span>
+                      <label htmlFor='name-contact' className='label-contact'>
+                        Last 4 Digits of Card<span className='star'>*</span>
                       </label>
                       <div
-                        className="errormsg"
+                        className='errormsg'
                         style={{ display: last4Error ? "" : "none" }}
                       >
                         Missing 4 digits!
                       </div>
                       <input
-                        className="input-contact"
+                        className='input-contact'
                         value={last4}
                         onChange={(e) => setLast4(e.target.value)}
                         maxLength={4}
-                        type="text"
+                        type='text'
                       />
                     </div>
                   ) : (
@@ -545,44 +579,46 @@ const Contact = () => {
               )}
 
               <div
-                id="textarea-container"
+                id='textarea-container'
                 style={{ marginTop: reason === "question" ? 0 : "15px" }}
               >
-                <label htmlFor="name-contact" className="label-contact">
+                <label htmlFor='name-contact' className='label-contact'>
                   {reason === "question/suggestion"
                     ? "Your Question/Suggestion Below"
                     : "Please describe the issue"}
-                  <span className="star">*</span>
+                  <span className='star'>*</span>
                 </label>
                 <div
-                  className="errormsg"
+                  className='errormsg'
                   style={{ display: descError ? "" : "none" }}
                 >
                   Missing description!
                 </div>
                 <textarea
-                  className="tarea-contact"
+                  className='tarea-contact'
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   style={{ marginTop: "5px" }}
-                  type="text"
+                  type='text'
                 />
               </div>
 
-              <button type="submit" className="submitbut-contact">
+              <button type='submit' className='submitbut-contact'>
                 Submit
               </button>
             </form>
 
-            <div className="lds-ring nodisplay" id="spinner-form">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+            {/* {submitting && (
+              <div className='lds-ring nodisplay' id='spinner-form'>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )} */}
           </div>
         ) : (
-          <div className="ty-message">
+          <div className='ty-message'>
             Thank you, your message has been received.
           </div>
         )}

@@ -94,6 +94,7 @@ const Admin = () => {
       type: "GET",
       url: `/fetchstock/${selectedLocation}`,
     }).then((res) => {
+      console.log(res, "response");
       const result = [];
 
       if (res.time) {
