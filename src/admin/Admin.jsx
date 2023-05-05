@@ -33,6 +33,8 @@ const Admin = () => {
 
   const [lastUpdated, setLastUpdated] = useState("");
 
+  const [editingTime, setEditingTime] = useState(false);
+
   function set(num) {
     //means nothing selected
     if (!selectedCoordinates.length) return;
@@ -94,7 +96,6 @@ const Admin = () => {
       type: "GET",
       url: `/fetchstock/${selectedLocation}`,
     }).then((res) => {
-      console.log(res, "response");
       const result = [];
 
       if (res.time) {
@@ -203,6 +204,26 @@ const Admin = () => {
         </div>
 
         <div className='last-set'>Last Updated: {lastUpdated}</div>
+        {!editingTime && (
+          <div className='stock-overwrite' onClick={() => setEditingTime(true)}>
+            Overwrite
+          </div>
+        )}
+
+        {editingTime && (
+          <div className='stock-sd'>
+            <input type='datetime-local' className='stock-overwriteinput' />
+            <div className='stock-con'>
+              <span className='stock-submittime stock-cancel'>Submit</span>
+              <span
+                className='stock-cancel'
+                onClick={() => setEditingTime(false)}
+              >
+                Cancel
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className='stock-slots'>
           {stock.map((item, i) => (
