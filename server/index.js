@@ -69,9 +69,11 @@ app.post("/sendstock", async (req, res, next) => {
   try {
     const body = req.body;
 
+    console.log(body, "body");
+
     const { data } = await axios.post(
-      `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
-      // `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
+      // `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
+      `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
       body
     );
 

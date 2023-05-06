@@ -35,7 +35,6 @@ const Admin = () => {
 
   const [editingTime, setEditingTime] = useState(false);
   const [overwriteTimeValue, setOverwriteTimeValue] = useState(null);
-  console.log(new Date(overwriteTimeValue).getTime());
 
   function set(num) {
     //means nothing selected
@@ -77,6 +76,7 @@ const Admin = () => {
       data: {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
+        time: overwriteTimeValue ? overwriteTimeValue / 1000 : null,
       },
     }).then((res) => {
       if (res.status === "success") {
@@ -86,6 +86,8 @@ const Admin = () => {
 
         setLastUpdated(date);
         setLoading(false);
+        setEditingTime(false);
+        setOverwriteTimeValue(null);
         alert("successfully updated stock");
       }
     });
@@ -217,10 +219,23 @@ const Admin = () => {
             <input
               type='datetime-local'
               className='stock-overwriteinput'
-              onChange={(e) => setOverwriteTimeValue(e.target.value)}
+              onChange={(e) =>
+                setOverwriteTimeValue(new Date(e.target.value).getTime())
+              }
             />
             <div className='stock-con'>
-              <span className='stock-submittime stock-cancel'>Submit</span>
+              <span
+                className='stock-submittime stock-cancel'
+                onClick={() => {
+                  if (overwriteTimeValue === 0) {
+                    return;
+                  }
+
+                  handleSubmit();
+                }}
+              >
+                Submit
+              </span>
               <span
                 className='stock-cancel'
                 onClick={() => setEditingTime(false)}
