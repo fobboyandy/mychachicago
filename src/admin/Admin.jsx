@@ -227,10 +227,6 @@ const Admin = () => {
               <span
                 className='stock-submittime stock-cancel'
                 onClick={() => {
-                  if (overwriteTimeValue === 0) {
-                    return;
-                  }
-
                   handleSubmit();
                 }}
               >
@@ -238,7 +234,10 @@ const Admin = () => {
               </span>
               <span
                 className='stock-cancel'
-                onClick={() => setEditingTime(false)}
+                onClick={() => {
+                  setEditingTime(false);
+                  setOverwriteTimeValue(null);
+                }}
               >
                 Cancel
               </span>
