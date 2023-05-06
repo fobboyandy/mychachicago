@@ -34,6 +34,8 @@ const Admin = () => {
   const [lastUpdated, setLastUpdated] = useState("");
 
   const [editingTime, setEditingTime] = useState(false);
+  const [overwriteTimeValue, setOverwriteTimeValue] = useState(null);
+  console.log(new Date(overwriteTimeValue).getTime());
 
   function set(num) {
     //means nothing selected
@@ -212,7 +214,11 @@ const Admin = () => {
 
         {editingTime && (
           <div className='stock-sd'>
-            <input type='datetime-local' className='stock-overwriteinput' />
+            <input
+              type='datetime-local'
+              className='stock-overwriteinput'
+              onChange={(e) => setOverwriteTimeValue(e.target.value)}
+            />
             <div className='stock-con'>
               <span className='stock-submittime stock-cancel'>Submit</span>
               <span
