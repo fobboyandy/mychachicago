@@ -225,14 +225,6 @@ const Admin = () => {
             />
             <div className='stock-con'>
               <span
-                className='stock-submittime stock-cancel'
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                Submit
-              </span>
-              <span
                 className='stock-cancel'
                 onClick={() => {
                   setEditingTime(false);
