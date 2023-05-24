@@ -8,6 +8,7 @@ const { createServer } = require("vite");
 require("dotenv").config();
 
 const axios = require("axios");
+const cron = require("node-cron");
 
 app.use(morgan("dev"));
 app.use(parser.json());
@@ -79,6 +80,10 @@ app.post("/sendstock", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+cron.schedule("*/10 * * * *", function () {
+  console.log(`running every 10 minutes ${new Date(new Date().getTime())}`);
 });
 
 app.get("*", (req, res) => {

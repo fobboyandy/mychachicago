@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap");
+
 ul {
   padding-inline-start: 0;
 }
@@ -17,7 +19,6 @@ textarea {
   top: 0;
   background-color: white;
   transition: all 0.3s ease;
-  border-bottom: 1px solid rgb(240, 240, 240);
 
   @media only screen and (max-width: 450px) {
     height: auto;
@@ -133,11 +134,12 @@ textarea {
 
 .scroll-title {
   color: rgb(105, 229, 33);
-  font-size: 65px;
-  font-weight: 600;
-  font-family: comic_sans_msitalic;
+  font-size: 90px;
+  font-weight: 700;
+  font-family: "Caveat", cursive;
+
   @media only screen and (max-width: 700px) {
-    font-size: 30px;
+    font-size: 50px;
     text-align: center;
   }
 }

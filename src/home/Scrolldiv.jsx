@@ -248,7 +248,7 @@ const Scrolldiv = () => {
             <div className='scroll-title'>Premium Ingredients Only</div>
             <div className='scroll-desc'>
               Our drinks are made daily with premium tea leaves from the most
-              authentic tea plantations.
+              authentic tea gardens .
             </div>
           </div>
         </div>

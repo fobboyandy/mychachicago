@@ -26,11 +26,17 @@ const Nav = ({ openNav }) => {
   }, [window.innerWidth]);
 
   useEffect(() => {
-    gsap.fromTo(
-      ".nav-home",
-      { opacity: 0, y: "-30%" },
-      { opacity: 1, y: 0, duration: 1 }
-    );
+    gsap
+      .fromTo(
+        ".nav-home",
+        { opacity: 0, y: "-30%" },
+        { opacity: 1, y: 0, duration: 1 }
+      )
+      .then(() => {
+        setTimeout(() => {
+          $(".nav-home").css("border-bottom", "1px solid rgb(240, 240, 240)");
+        }, 500);
+      });
   }, []);
 
   useEffect(() => {
@@ -81,14 +87,14 @@ const Nav = ({ openNav }) => {
   }, []);
 
   return (
-    <div className="nav-home" style={{ zIndex: 12, userSelect: "none" }}>
+    <div className='nav-home' style={{ zIndex: 12, userSelect: "none" }}>
       <Homelogo history={history} />
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (
-        <div className="li-container" style={{ marginRight: "5%" }}>
+        <div className='li-container' style={{ marginRight: "5%" }}>
           {loc.pathname === "/" ? (
             <div
-              className="li-nav"
+              className='li-nav'
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Home
@@ -96,13 +102,13 @@ const Nav = ({ openNav }) => {
           ) : (
             //note: home is an anchor because if history() is used, instagram bugs out and only loads like half of the iframe. if you resize it, it turns back to normal. honestly idk why it happens, but I have no solution so I decided to just use an anchor isntead.
             // you can also use dangerouslysethtml for instagram, but it is too risky.
-            <a className="li-nav" href="/" style={{ textDecoration: "none" }}>
+            <a className='li-nav' href='/' style={{ textDecoration: "none" }}>
               Home
             </a>
           )}
 
           <div
-            className="li-nav"
+            className='li-nav'
             onClick={() => {
               loc.pathname === "/menu"
                 ? scrollCatering()
@@ -112,7 +118,7 @@ const Nav = ({ openNav }) => {
             Catering
           </div>
           <div
-            className="li-nav"
+            className='li-nav'
             onClick={() => {
               loc.pathname === "/locations"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -122,7 +128,7 @@ const Nav = ({ openNav }) => {
             Locations
           </div>
           <div
-            className="li-nav"
+            className='li-nav'
             onClick={() => {
               loc.pathname === "/menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -132,7 +138,7 @@ const Nav = ({ openNav }) => {
             Menu
           </div>
           <div
-            className="li-nav"
+            className='li-nav'
             onClick={() => {
               loc.pathname === "/contact"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -143,8 +149,8 @@ const Nav = ({ openNav }) => {
           </div>
         </div>
       ) : (
-        <div className="li-container2" onClick={() => openNav()}>
-          <div className="hamburger-nav" />
+        <div className='li-container2' onClick={() => openNav()}>
+          <div className='hamburger-nav' />
         </div>
       )}
     </div>
