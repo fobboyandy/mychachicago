@@ -1,0 +1,3 @@
+store locator - asks for zip code, or gives user option to use their current location. If used current location, then fill in the zip based on the location input
+
+using google maps api

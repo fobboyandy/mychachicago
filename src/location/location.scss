@@ -5,13 +5,22 @@
   grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
   gap: 2% 5%;
   position: relative;
-  padding: 5vh 10% 25vh 10%;
+  width: 100%;
+  z-index: 4;
 
   @media only screen and (max-width: 900px) {
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     padding: 5vh 10% 0 10%;
     gap: 1%;
   }
+}
+
+.locations-e {
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 4;
+  padding: 5vh 10% 25vh 10%;
+  box-sizing: border-box;
 }
 
 .container-info {
