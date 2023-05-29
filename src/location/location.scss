@@ -18,12 +18,29 @@
   width: 100%;
   background-color: #ffffff;
   z-index: 4;
-  padding: 5vh 10% 25vh 10%;
+  padding: 5vh 10% 12vh 10%;
   box-sizing: border-box;
 
   @media only screen and (max-width: 750px) {
-    padding: 5vh 5% 25vh;
+    padding: 5vh 5% 12vh;
   }
+}
+
+.locations-b {
+  font-size: 26px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.locations-selectopt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.locations-bt {
+  cursor: pointer;
 }
 
 .locations-ep {

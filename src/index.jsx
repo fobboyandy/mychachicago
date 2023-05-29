@@ -39,11 +39,13 @@ root.render(
         <Overlay closeNav={closeNav} />
         <Routes>
           <Route exact path='/' element={<Home />} />
+          <Route exact path='/locations/check' element={<App />} />
           <Route exact path='/locations' element={<MainLocations />} />
+          <Route exact path='/locations/:section' element={<MainLocations />} />
+
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/menu' element={<Menu />} />
           <Route exact path='/menu/:id' element={<MenuItem />} />
-          <Route exact path='/locations/check' element={<App />} />
           <Route exact path='/admin' element={<Admin />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
