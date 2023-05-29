@@ -6,6 +6,7 @@ const location = [
     hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
     desc: "",
     image: "../assets/locations/image1.png",
+    coordinates: [41.8719144, -87.6479295],
   },
 
   {
@@ -15,6 +16,7 @@ const location = [
     hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
     desc: "",
     image: "../assets/locations/image.png",
+    coordinates: [41.8706724, -87.6744532],
   },
 
   {
@@ -24,6 +26,7 @@ const location = [
     hours: "Hours: Open 24/7",
     desc: "",
     image: "../assets/locations/image3.png",
+    coordinates: [41.8835163, -87.6282874],
   },
 
   {
@@ -33,6 +36,7 @@ const location = [
     hours: "Hours: Mon – Fri: 8:00am – 4pm. Sat - Sun : Closed",
     desc: "",
     image: "../assets/locations/image4.png",
+    coordinates: [41.8736761, -87.6528001],
   },
 
   {
@@ -42,6 +46,7 @@ const location = [
     hours: "Hours: Open 24/7",
     desc: "",
     image: "../assets/locations/image5.png",
+    coordinates: [41.8737665, -87.6694023],
   },
 
   {
@@ -51,6 +56,7 @@ const location = [
     hours: "Hours: Mon – Thu: 11am – 10pm. Fri – Sun: 11am – 10pm.",
     desc: "",
     image: "../assets/locations/image6.png",
+    coordinates: [41.9107392, -87.6711167],
   },
 
   {
@@ -60,6 +66,7 @@ const location = [
     hours: "Hours: Mon – Fri: 7:30am – 6pm. Sat: 8am – 12pm. Sun: Closed",
     desc: "",
     image: "../assets/locations/image7.png",
+    coordinates: [41.7902097, -87.6055022],
   },
 
   {
@@ -69,6 +76,7 @@ const location = [
     hours: "Hours: Open 24/7",
     desc: "",
     image: "../assets/locations/image8.png",
+    coordinates: [41.8786821, -87.6390661],
   },
 ];
 

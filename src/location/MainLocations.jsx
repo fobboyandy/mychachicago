@@ -31,13 +31,21 @@ const MainLocations = () => {
 
   const [resultCoordiates, setResultCoordinates] = useState([
     { address: "address1", lat: 18.52043, lng: 73.856743 },
-    { address: "address2", lat: 12.52043, lng: 73.856743 },
+    { address: "address2", lat: 17.52043, lng: 73.856743 },
     { address: "address3", lat: 18.52043, lng: 70.856743 },
   ]);
 
-  const handleMarkerClickOrHover = (id, lat, lng, address) => {
+  //options states
+  const [searchActive, setSearchActive] = useState(false);
+
+  const [zipCode, setZipCode] = useState("");
+  const [withinMiles, setWithinMiles] = useState(5);
+
+  const [showWithinOverlay, setShowWithinOverlay] = useState(false);
+
+  const handleMarkerClickOrHover = (id, lat, lng, address, name, hours) => {
     mapRef?.panTo({ lat, lng });
-    setInfoWindowData({ id, address });
+    setInfoWindowData({ id, address, name, hours, lat, lng });
     setInfoWindowOpen(true);
   };
 
@@ -69,7 +77,9 @@ const MainLocations = () => {
   const onLoad = (map) => {
     setMapRef(map);
     const bounds = new google.maps.LatLngBounds();
-    resultCoordiates?.forEach(({ lat, lng }) => bounds.extend({ lat, lng }));
+    location?.forEach(({ coordinates }) =>
+      bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+    );
     map.fitBounds(bounds);
   };
 
@@ -146,6 +156,37 @@ const MainLocations = () => {
     }
   }, []);
 
+  function handleSetWithinMiles(v) {
+    setWithinMiles(v);
+    setShowWithinOverlay(false);
+  }
+
+  const showWithin = useCallback(() => {
+    setTimeout(() => {
+      if ($(".location-inpsel").is(":hover")) {
+        setShowWithinOverlay(true);
+        //pseudo caret
+        $("#within").removeClass("location-rot1");
+        $("#within").addClass("location-rot2");
+      }
+    }, 300);
+  }, [$(".location-inpsel")]);
+
+  const showWithinMouseleave = useCallback(() => {
+    setShowWithinOverlay(false);
+    //pseduo caret
+    $("#within").addClass("location-rot1");
+    $("#within").removeClass("location-rot2");
+  });
+
+  useEffect(() => {
+    $(document).ready(() => {
+      $(".location-inpsel").hover(showWithin, showWithinMouseleave);
+    });
+
+    return () => $(".location-inpsel").off();
+  }, []);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -194,51 +235,204 @@ const MainLocations = () => {
       <div className='heightholder-locations' />
 
       <div className='locations-e'>
-        {isLoaded && (
-          <GoogleMap
-            mapContainerClassName='gmap-container'
-            center={{ lat: 18.52043, lng: 73.856743 }}
-            zoom={10}
-            onLoad={onLoad}
+        <div className='locations-fil'>
+          <input
+            className='location-inp locations-w50'
+            placeholder='Enter Zip Code'
+          />
+          <div
+            className='location-inpsel locations-w50 location-rot1 location-mle'
+            style={{
+              borderRadius: showWithinOverlay ? "4px 4px 0 0" : "4px",
+            }}
+            id='within'
           >
-            {resultCoordiates.length &&
-              resultCoordiates.map((v, i) => (
-                <Marker
-                  position={{ lat: v.lat, lng: v.lng }}
-                  onClick={() => {
-                    handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
-                  }}
-                  onMouseOver={() => {
-                    handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
-                  }}
-                  onMouseOut={() => {
-                    handleMarkerClickOrHoverOut();
-                  }}
+            Within {withinMiles} mi
+            {showWithinOverlay && (
+              <div className='location-optcontainer'>
+                <div
+                  className='location-opt'
+                  onClick={() => handleSetWithinMiles(5)}
                 >
-                  {infoWindowOpen && infoWindowData?.id === i && (
-                    <InfoWindow
-                      onCloseClick={() => {
-                        setInfoWindowOpen(false);
+                  Within 5 mi
+                </div>
+
+                <div
+                  className='location-opt'
+                  onClick={() => handleSetWithinMiles(10)}
+                >
+                  Within 10 mi
+                </div>
+
+                <div
+                  className='location-opt'
+                  onClick={() => handleSetWithinMiles(15)}
+                >
+                  Within 15 mi
+                </div>
+
+                <div
+                  className='location-opt'
+                  onClick={() => handleSetWithinMiles(20)}
+                >
+                  Within 20 mi
+                </div>
+
+                <div
+                  className='location-opt'
+                  onClick={() => handleSetWithinMiles(25)}
+                  style={{ borderRadius: "0 0 4px 4px", borderBottom: "none" }}
+                >
+                  Within 25 mi
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className='locations-ep'>
+          <div className='locations-querycontainer'>
+            {searchActive
+              ? ""
+              : location.map((v, i) => (
+                  <div
+                    className='locations-querymap'
+                    id={`querymap-${v.id}`}
+                    onClick={() => {
+                      handleMarkerClickOrHover(
+                        i,
+                        v.coordinates[0],
+                        v.coordinates[1],
+                        v.address,
+                        v.name,
+                        v.hours
+                      );
+                    }}
+                  >
+                    <div className='qre-title'>{v.name}</div>
+                    <div className='qre-desc'>{v.address}</div>
+                    <div className='qre-desc'>{v.hours}</div>
+                    <a
+                      className='qre-desc'
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Directions
+                    </a>
+                  </div>
+                ))}
+          </div>
+          {isLoaded && (
+            <GoogleMap
+              mapContainerClassName='gmap-container'
+              zoom={10}
+              onLoad={onLoad}
+              options={{ mapTypeControl: false }}
+            >
+              {searchActive
+                ? resultCoordiates.length &&
+                  resultCoordiates.map((v, i) => (
+                    <Marker
+                      position={{ lat: v.lat, lng: v.lng }}
+                      onClick={() => {
+                        handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
+                      }}
+                      onMouseOver={() => {
+                        handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
+                      }}
+                      onMouseOut={() => {
+                        handleMarkerClickOrHoverOut();
                       }}
                     >
-                      <h3>{infoWindowData.address}</h3>
-                    </InfoWindow>
-                  )}
-                </Marker>
-              ))}
-          </GoogleMap>
-        )}
+                      {infoWindowOpen && infoWindowData?.id === i && (
+                        <InfoWindow
+                          onCloseClick={() => {
+                            setInfoWindowOpen(false);
+                          }}
+                        >
+                          <h3>{infoWindowData.address}</h3>
+                        </InfoWindow>
+                      )}
+                    </Marker>
+                  ))
+                : location.map((v, i) => (
+                    <Marker
+                      position={{
+                        lat: v?.coordinates[0],
+                        lng: v?.coordinates[1],
+                      }}
+                      icon={{
+                        url: "/assets/machinenobg.jpeg",
+                        scaledSize: new google.maps.Size(50, 50),
+                      }}
+                      onClick={() => {
+                        handleMarkerClickOrHover(
+                          i,
+                          v.coordinates[0],
+                          v.coordinates[1],
+                          v.address,
+                          v.name,
+                          v.hours
+                        );
 
-        <div
-          onClick={() =>
-            setResultCoordinates([
-              { lat: 11.52043, lng: 50.856743 },
-              { lat: 12.52043, lng: 50.856743 },
-              { lat: 13.52043, lng: 50.856743 },
-            ])
-          }
-        >
-          change
+                        //function to calculate total height above our desired element
+                        function calculateTop() {
+                          let result = 0;
+                          location.forEach((t, i2) => {
+                            if (i2 >= i) return;
+
+                            const height = $(`#querymap-${t.id}`).outerHeight();
+                            console.log(t.id, height);
+                            result += height;
+                          });
+
+                          return result;
+                        }
+
+                        //get total height of all elements above the one we want
+                        const totalHeight = calculateTop();
+
+                        //use javascript to scroll to that element, so the selected location shows on top
+                        document
+                          .querySelector(".locations-querycontainer")
+                          .scrollTo({
+                            top: totalHeight,
+                          });
+                      }}
+                    >
+                      {infoWindowOpen && infoWindowData?.id === i && (
+                        <InfoWindow
+                          onCloseClick={() => {
+                            setInfoWindowOpen(false);
+                          }}
+                        >
+                          <div className='infow-parent'>
+                            <div className='infow-title'>
+                              {infoWindowData.name}
+                            </div>
+
+                            <div className='infow-desc'>
+                              {infoWindowData.address}
+                            </div>
+
+                            <div className='infow-desc'>
+                              {infoWindowData.hours}
+                            </div>
+                            <a
+                              className='infow-desc'
+                              href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                            >
+                              Directions
+                            </a>
+                          </div>
+                        </InfoWindow>
+                      )}
+                    </Marker>
+                  ))}
+            </GoogleMap>
+          )}
         </div>
 
         <div className='container-locations' id='container-locations'>

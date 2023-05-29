@@ -1,6 +1,28 @@
 .gmap-container {
   min-height: 300px;
   min-width: 300px;
-  width: 80%;
+  width: 50%;
   aspect-ratio: 1.4;
+
+  @media only screen and (max-width: 750px) {
+    width: 100%;
+    aspect-ratio: 0.8;
+  }
+}
+
+.infow-parent {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.infow-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.infow-desc {
+  font-size: 14px;
+  padding: 5px 0;
 }
