@@ -22,6 +22,8 @@ const MainLocations = () => {
   const history = useNavigate();
   const params = useParams();
 
+  const [allLocations, setAllLocations] = useState([]);
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAPS,
   });
@@ -42,10 +44,27 @@ const MainLocations = () => {
   //options states
   const [searchActive, setSearchActive] = useState(false);
 
+  const [selectedCity, setSelectedCity] = useState(
+    window.localStorage.getItem("city") || "Chicago"
+  );
+
+  const [selectedCityLocations, setSelectedCityLocations] = useState(
+    location[
+      selectedCity === "Chicago"
+        ? "chicago"
+        : selectedCity === "Los Angeles"
+        ? "la"
+        : ""
+    ]
+  );
+
   const [zipCode, setZipCode] = useState("");
   const [withinMiles, setWithinMiles] = useState(5);
 
   const [showWithinOverlay, setShowWithinOverlay] = useState(false);
+  const [showCityOverlay, setShowCityOverlay] = useState(false);
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const handleMarkerClickOrHover = (id, lat, lng, address, name, hours) => {
     mapRef?.panTo({ lat, lng });
@@ -82,14 +101,28 @@ const MainLocations = () => {
     );
   }, [selectedSection]);
 
-  const onLoad = (map) => {
-    setMapRef(map);
+  const onLoad = (map, locations) => {
+    if (map) setMapRef(map);
+
     const bounds = new google.maps.LatLngBounds();
-    location?.forEach(({ coordinates }) =>
-      bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
-    );
-    map.fitBounds(bounds);
+    locations
+      ? locations?.forEach(({ coordinates }) =>
+          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+        )
+      : selectedCityLocations?.forEach(({ coordinates }) =>
+          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+        );
+
+    map ? map.fitBounds(bounds) : mapRef.fitBounds(bounds);
   };
+
+  // useEffect(() => {
+  //   const bounds = new google.maps.LatLngBounds();
+  //   selectedCityLocations?.forEach(({ coordinates }) =>
+  //     bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+  //   );
+  //   mapRef.fitBounds(bounds);
+  // }, [selectedCity]);
 
   useEffect(() => {
     const section = params.section;
@@ -177,7 +210,6 @@ const MainLocations = () => {
   }
 
   const showWithin = useCallback(() => {
-    console.log("rannn");
     setTimeout(() => {
       if ($(".location-inpsel").is(":hover")) {
         setShowWithinOverlay(true);
@@ -193,15 +225,40 @@ const MainLocations = () => {
     //pseduo caret
     $("#within").addClass("location-rot1");
     $("#within").removeClass("location-rot2");
-  });
+  }, []);
+
+  const showCity = useCallback(() => {
+    setTimeout(() => {
+      if ($(".location-inpsel2").is(":hover")) {
+        setShowCityOverlay(true);
+        //pseudo caret
+        $("#select-city").removeClass("location-rot1");
+        $("#select-city").addClass("location-rot2");
+      }
+    }, 300);
+  }, [$(".location-inpsel2")]);
+
+  const showCityMouseLeave = useCallback(() => {
+    setShowCityOverlay(false);
+    //pseduo caret
+    $("#select-city").addClass("location-rot1");
+    $("#select-city").removeClass("location-rot2");
+  }, []);
+
+  const resize = useCallback(() => {
+    setScreenWidth(window.innerWidth);
+  }, []);
+
+  $(window).off("resize", window, resize).resize(resize);
 
   useEffect(() => {
-    if (!$(".location-inpsel").length) return;
+    if (!$(".location-inpsel").length || !$(".location-inpsel2").length) return;
 
     $(".location-inpsel").hover(showWithin, showWithinMouseleave);
+    $(".location-inpsel2").hover(showCity, showCityMouseLeave);
 
     return () => $(".location-inpsel").off();
-  }, [window.location.href, $(".location-inpsel")]);
+  }, [window.location.href, $(".location-inpsel"), $(".location-inpsel2")]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -231,6 +288,17 @@ const MainLocations = () => {
     };
   });
 
+  //all locations
+  useEffect(() => {
+    const result = [];
+
+    Object.keys(location).forEach((v) => {
+      result.push(...location[v]);
+    });
+
+    setAllLocations(result);
+  }, []);
+
   return (
     <div className='location-actualparent'>
       <div className='outer-location' id='outerlocation'>
@@ -253,13 +321,68 @@ const MainLocations = () => {
       <div className='locations-e'>
         {!selectedSection && (
           <div>
-            <div className='locations-b'>Select Region or Enter Zip Code!</div>
+            <div className='locations-b'>Select City or Enter Zip Code!</div>
 
             <div className='locations-fil'>
-              <input
-                className='location-inp locations-w50'
-                placeholder='Enter Zip Code'
-              />
+              <div className='locations-filq'>
+                <div
+                  className='location-inpsel2 locations-w502 location-rot1 location-mle'
+                  style={{
+                    borderRadius: showCityOverlay ? "4px 4px 0 0" : "4px",
+                    marginLeft: 0,
+                  }}
+                  id='select-city'
+                >
+                  {selectedCity}
+                  {showCityOverlay && (
+                    <div className='location-optcontainer'>
+                      <div
+                        className='location-opt'
+                        onClick={() => {
+                          setSelectedCity("Chicago");
+                          setSelectedCityLocations(location["chicago"]);
+                          window.localStorage.setItem("city", "Chicago");
+                          setShowCityOverlay(false);
+                          onLoad(null, location["chicago"]);
+                          setInfoWindowOpen(false);
+                        }}
+                      >
+                        Chicago
+                      </div>
+
+                      <div
+                        className='location-opt'
+                        onClick={() => {
+                          setSelectedCity("Los Angeles");
+                          setSelectedCityLocations(location["la"]);
+                          window.localStorage.setItem("city", "Los Angeles");
+                          setShowCityOverlay(false);
+                          onLoad(null, location["la"]);
+                          setInfoWindowOpen(false);
+                        }}
+                        style={{ borderRadius: "0 0 4px 4px" }}
+                      >
+                        Los Angeles
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className='locations-or'>OR</div>
+                <input
+                  className='location-inp locations-w502'
+                  placeholder='Enter Zip Code'
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                />
+              </div>
+
+              {window.innerWidth > 750 ? (
+                <div className='locations-divider' />
+              ) : (
+                <div className='locations-divider2' />
+              )}
+
               <div
                 className='location-inpsel locations-w50 location-rot1 location-mle'
                 style={{
@@ -319,7 +442,13 @@ const MainLocations = () => {
             <div className='locations-querycontainer'>
               {searchActive
                 ? ""
-                : location.map((v, i) => (
+                : location[
+                    selectedCity === "Chicago"
+                      ? "chicago"
+                      : selectedCity === "Los Angeles"
+                      ? "la"
+                      : ""
+                  ]?.map((v, i) => (
                     <div
                       className='locations-querymap'
                       id={`querymap-${v.id}`}
@@ -381,7 +510,7 @@ const MainLocations = () => {
                         )}
                       </Marker>
                     ))
-                  : location.map((v, i) => (
+                  : selectedCityLocations?.map((v, i) => (
                       <Marker
                         position={{
                           lat: v?.coordinates[0],
@@ -404,13 +533,12 @@ const MainLocations = () => {
                           //function to calculate total height above our desired element
                           function calculateTop() {
                             let result = 0;
-                            location.forEach((t, i2) => {
+                            selectedCityLocations?.forEach((t, i2) => {
                               if (i2 >= i) return;
 
                               const height = $(
                                 `#querymap-${t.id}`
                               ).outerHeight();
-                              console.log(t.id, height);
                               result += height;
                             });
 
@@ -472,7 +600,7 @@ const MainLocations = () => {
             <div id='intersecting-locations2' />
             <div id='intersecting-locations3' />
 
-            {location.map((location, i) => (
+            {allLocations?.map((location) => (
               <div
                 className={`container-info ${
                   window.innerWidth > 700 ? "op0" : ""

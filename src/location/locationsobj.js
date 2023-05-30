@@ -1,84 +1,119 @@
-const location = [
-  {
-    id: "uice",
-    name: "UIC Student Center East",
-    address: "750 S Halsted St Chicago, IL 60607",
-    hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
-    desc: "",
-    image: "../assets/locations/image1.png",
-    coordinates: [41.8719144, -87.6479295],
-  },
+const location = {
+  chicago: [
+    {
+      id: "uice",
+      name: "UIC Student Center East",
+      address: "750 S Halsted St Chicago, IL 60607",
+      hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
+      desc: "",
+      image: "../assets/locations/image1.png",
+      coordinates: [41.8719144, -87.6479295],
+    },
 
-  {
-    id: "uicw",
-    name: "UIC Student Center West",
-    address: "828 S Wolcott Ave Chicago, IL 60612",
-    hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
-    desc: "",
-    image: "../assets/locations/image.png",
-    coordinates: [41.8706724, -87.6744532],
-  },
+    {
+      id: "uicw",
+      name: "UIC Student Center West",
+      address: "828 S Wolcott Ave Chicago, IL 60612",
+      hours: "Hours: Mon – Fri: 6:30am – 10pm. Sat: - Sun 6:30am - 9PM",
+      desc: "",
+      image: "../assets/locations/image.png",
+      coordinates: [41.8706724, -87.6744532],
+    },
 
-  {
-    id: "b37ped",
-    name: "Block 37 Pedway (Chicago Downtown)",
-    address: "108 N State St Pedway Chicago, IL 60602",
-    hours: "Hours: Open 24/7",
-    desc: "",
-    image: "../assets/locations/image3.png",
-    coordinates: [41.8835163, -87.6282874],
-  },
+    {
+      id: "b37ped",
+      name: "Block 37 Pedway (Chicago Downtown)",
+      address: "108 N State St Pedway Chicago, IL 60602",
+      hours: "Hours: Open 24/7",
+      desc: "",
+      image: "../assets/locations/image3.png",
+      coordinates: [41.8835163, -87.6282874],
+    },
 
-  {
-    id: "uicbsb",
-    name: "UIC Behavioral Sciences Building",
-    address: "1007 W Harrison St Chicago, IL 60607",
-    hours: "Hours: Mon – Fri: 8:00am – 4pm. Sat - Sun : Closed",
-    desc: "",
-    image: "../assets/locations/image4.png",
-    coordinates: [41.8736761, -87.6528001],
-  },
+    {
+      id: "uicbsb",
+      name: "UIC Behavioral Sciences Building",
+      address: "1007 W Harrison St Chicago, IL 60607",
+      hours: "Hours: Mon – Fri: 8:00am – 4pm. Sat - Sun : Closed",
+      desc: "",
+      image: "../assets/locations/image4.png",
+      coordinates: [41.8736761, -87.6528001],
+    },
 
-  {
-    id: "rushu",
-    name: "Rush University",
-    address: "600 S Paulina St Chicago, IL 60612",
-    hours: "Hours: Open 24/7",
-    desc: "",
-    image: "../assets/locations/image5.png",
-    coordinates: [41.8737665, -87.6694023],
-  },
+    {
+      id: "rushu",
+      name: "Rush University",
+      address: "600 S Paulina St Chicago, IL 60612",
+      hours: "Hours: Open 24/7",
+      desc: "",
+      image: "../assets/locations/image5.png",
+      coordinates: [41.8737665, -87.6694023],
+    },
 
-  {
-    id: "bpapa",
-    name: "Beard Papa @ Wicker Park / SALT burgers + fries",
-    address: "924 West North Avenue Chicago, IL 60622",
-    hours: "Hours: Mon – Thu: 11am – 10pm. Fri – Sun: 11am – 10pm.",
-    desc: "",
-    image: "../assets/locations/image6.png",
-    coordinates: [41.9107392, -87.6711167],
-  },
+    {
+      id: "bpapa",
+      name: "Beard Papa @ Wicker Park / SALT burgers + fries",
+      address: "924 West North Avenue Chicago, IL 60622",
+      hours: "Hours: Mon – Thu: 11am – 10pm. Fri – Sun: 11am – 10pm.",
+      desc: "",
+      image: "../assets/locations/image6.png",
+      coordinates: [41.9107392, -87.6711167],
+    },
 
-  {
-    id: "uchimed",
-    name: "UChicago Medicine Duchossois Center (DCAM) – Hyde Park",
-    address: "5758 S Maryland Ave Chicago, IL 60637",
-    hours: "Hours: Mon – Fri: 7:30am – 6pm. Sat: 8am – 12pm. Sun: Closed",
-    desc: "",
-    image: "../assets/locations/image7.png",
-    coordinates: [41.7902097, -87.6055022],
-  },
+    {
+      id: "uchimed",
+      name: "UChicago Medicine Duchossois Center (DCAM) – Hyde Park",
+      address: "5758 S Maryland Ave Chicago, IL 60637",
+      hours: "Hours: Mon – Fri: 7:30am – 6pm. Sat: 8am – 12pm. Sun: Closed",
+      desc: "",
+      image: "../assets/locations/image7.png",
+      coordinates: [41.7902097, -87.6055022],
+    },
 
-  {
-    id: "unionstation",
-    name: "Chicago Union Station",
-    address: "225 S Canal St, Chicago, IL 60606",
-    hours: "Hours: Open 24/7",
-    desc: "",
-    image: "../assets/locations/image8.png",
-    coordinates: [41.8786821, -87.6390661],
-  },
-];
+    {
+      id: "unionstation",
+      name: "Chicago Union Station",
+      address: "225 S Canal St, Chicago, IL 60606",
+      hours: "Hours: Open 24/7",
+      desc: "",
+      image: "../assets/locations/image8.png",
+      coordinates: [41.8786821, -87.6390661],
+    },
+  ],
+
+  //la is a guesstimate, i will change coordinates and address later when i get them
+  la: [
+    {
+      id: "ucla",
+      name: "UCLA",
+      address: "405 Hilgard Ave, Los Angeles, CA 90095",
+      hours: "Hours: Open 24/7",
+      desc: "",
+      image: "",
+      coordinates: [34.0703897, -118.4441495],
+    },
+
+    {
+      id: "smc",
+      name: "Santa Monica College",
+      address: "1900 Pico Blvd, Santa Monica, CA 90405",
+      hours: "Hours: Open 24/7",
+      desc: "",
+      image: "",
+      coordinates: [34.0183815, -118.4701168],
+    },
+
+    // {
+    //   id: "csula",
+    // },
+    // {
+    //   id: "galleria",
+    // },
+    // {
+    //   id: "glendale",
+    // },
+  ],
+};
 
 const location2 = [
   {

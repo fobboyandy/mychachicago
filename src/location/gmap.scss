@@ -20,9 +20,17 @@
   font-size: 22px;
   font-weight: 500;
   margin-bottom: 5px;
+
+  @media only screen and (max-width: 750px) {
+    font-size: 18px;
+  }
 }
 
 .infow-desc {
   font-size: 14px;
   padding: 5px 0;
+
+  @media only screen and (max-width: 750px) {
+    font-size: 12px;
+  }
 }
