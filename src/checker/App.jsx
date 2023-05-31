@@ -108,7 +108,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    const obj = location.find((item) => item.id === states.state?.from);
+    const obj = location["chicago"].find(
+      (item) => item.id === states.state?.from
+    );
     setSelected(obj || {});
     setDrinkStock(stock.find((item) => item.id === states.state?.from) || {});
 
@@ -160,6 +162,16 @@ const App = () => {
     }
   });
 
+  useEffect(() => {
+    $.ajax({
+      type: "GET",
+      url: "/remainingstock",
+    }).then((res) => {
+      console.log(res);
+      console.log(JSON.parse(res));
+    });
+  }, []);
+
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
     return (
@@ -198,10 +210,10 @@ const App = () => {
           }}
         >
           <div className='select-contact2'>
-            {location.find((item) => item.id === selected.id)?.name ||
-              "Select a location"}
+            {location["chicago"].find((item) => item.id === selected.id)
+              ?.name || "Select a location"}
           </div>
-          {location.map((location) => (
+          {location["chicago"].map((location) => (
             <div
               className='li-contact op0'
               onClick={() => handleChange(location.id)}

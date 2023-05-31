@@ -44,8 +44,8 @@ app.get("/fetchstock/:location", async (req, res, next) => {
     const loc = req.params.location;
 
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
-      // `http://localhost:4001/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
+      // `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
+      `http://localhost:4001/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
     );
 
     res.send(data);
@@ -71,12 +71,46 @@ app.post("/sendstock", async (req, res, next) => {
     const body = req.body;
 
     const { data } = await axios.post(
-      `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
-      // `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
+      // `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
+      `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
       body
     );
 
     res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/remainingstock", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
+    );
+
+    console.log(data);
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
+  try {
+    const params = req.params;
+
+    const { data } = await axios.get(
+      `https://maps.googleapis.com/maps/api/distancematrix/json?key=${process.env.VITE_MAPS}&origins=${params.o1},${params.o2}&destinations=${params.d1},${params.d2}&mode=driving&language=pl-PL`
+    );
+
+    function getMiles(meters) {
+      return meters * 0.000621371192;
+    }
+
+    const miles = getMiles(data.rows[0].elements[0].distance.value);
+
+    res.send({ miles: Number(miles.toFixed(2)) }).status(200);
   } catch (error) {
     next(error);
   }

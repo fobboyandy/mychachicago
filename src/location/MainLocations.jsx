@@ -7,6 +7,7 @@ import {
   useLoadScript,
   InfoWindow,
 } from "@react-google-maps/api";
+import axios from "axios";
 
 import "./location.scss";
 import "./gmap.scss";
@@ -51,6 +52,12 @@ const MainLocations = () => {
   const [selectedCityLocations, setSelectedCityLocations] = useState(
     location[
       selectedCity === "Chicago"
+        ? "IL"
+        : selectedCity === "Los Angeles"
+        ? "CA"
+        : ""
+    ][
+      selectedCity === "Chicago"
         ? "chicago"
         : selectedCity === "Los Angeles"
         ? "la"
@@ -63,6 +70,9 @@ const MainLocations = () => {
 
   const [showWithinOverlay, setShowWithinOverlay] = useState(false);
   const [showCityOverlay, setShowCityOverlay] = useState(false);
+
+  //error states
+  const [invalidZipError, setInvalidZipError] = useState(false);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -116,13 +126,46 @@ const MainLocations = () => {
     map ? map.fitBounds(bounds) : mapRef.fitBounds(bounds);
   };
 
-  // useEffect(() => {
-  //   const bounds = new google.maps.LatLngBounds();
-  //   selectedCityLocations?.forEach(({ coordinates }) =>
-  //     bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
-  //   );
-  //   mapRef.fitBounds(bounds);
-  // }, [selectedCity]);
+  async function handleZipCodeSearch() {
+    setInvalidZipError(false);
+
+    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipCode);
+
+    if (!isValidZip) {
+      setInvalidZipError(true); //handle
+    }
+
+    const zipReq = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?key=${
+        import.meta.env.VITE_MAPS
+      }&components=postal_code:${"60616"}`
+    );
+
+    if (zipReq.data.status === "OK") {
+      const center = zipReq.data.results[0].geometry.location;
+      const state = zipReq.data.results[0].address_components[3].short_name;
+
+      if (!location[state]) return; //in a state we dont serve, handle this later
+
+      Object.keys(location[state]).forEach((v) => {
+        //get all cities in a state
+        const loc = location[state][v];
+
+        loc.forEach(async (t) => {
+          const distance = $.ajax({
+            type: "GET",
+            url: `/calculatedistance/${center.lat}/${center.lng}/${t.coordinates[0]}/${t.coordinates[1]}`,
+          }).then((res) => {
+            console.log(res);
+          });
+        });
+      });
+    }
+  }
+
+  useEffect(() => {
+    handleZipCodeSearch();
+  }, []);
 
   useEffect(() => {
     const section = params.section;
@@ -209,6 +252,15 @@ const MainLocations = () => {
     setShowWithinOverlay(false);
   }
 
+  function maxLengthCheck(object) {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(
+        0,
+        object.target.maxLength
+      );
+    }
+  }
+
   const showWithin = useCallback(() => {
     setTimeout(() => {
       if ($(".location-inpsel").is(":hover")) {
@@ -293,7 +345,9 @@ const MainLocations = () => {
     const result = [];
 
     Object.keys(location).forEach((v) => {
-      result.push(...location[v]);
+      Object.keys(location[v]).forEach((t) => {
+        result.push(...location[v][t]);
+      });
     });
 
     setAllLocations(result);
@@ -340,10 +394,10 @@ const MainLocations = () => {
                         className='location-opt'
                         onClick={() => {
                           setSelectedCity("Chicago");
-                          setSelectedCityLocations(location["chicago"]);
+                          setSelectedCityLocations(location["IL"]["chicago"]);
                           window.localStorage.setItem("city", "Chicago");
                           setShowCityOverlay(false);
-                          onLoad(null, location["chicago"]);
+                          onLoad(null, location["IL"]["chicago"]);
                           setInfoWindowOpen(false);
                         }}
                       >
@@ -354,10 +408,10 @@ const MainLocations = () => {
                         className='location-opt'
                         onClick={() => {
                           setSelectedCity("Los Angeles");
-                          setSelectedCityLocations(location["la"]);
+                          setSelectedCityLocations(location["CA"]["la"]);
                           window.localStorage.setItem("city", "Los Angeles");
                           setShowCityOverlay(false);
-                          onLoad(null, location["la"]);
+                          onLoad(null, location["CA"]["la"]);
                           setInfoWindowOpen(false);
                         }}
                         style={{ borderRadius: "0 0 4px 4px" }}
@@ -374,6 +428,9 @@ const MainLocations = () => {
                   placeholder='Enter Zip Code'
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
+                  type={"number"}
+                  onInput={maxLengthCheck}
+                  maxLength={5}
                 />
               </div>
 
@@ -443,6 +500,12 @@ const MainLocations = () => {
               {searchActive
                 ? ""
                 : location[
+                    selectedCity === "Chicago"
+                      ? "IL"
+                      : selectedCity === "Los Angeles"
+                      ? "CA"
+                      : ""
+                  ][
                     selectedCity === "Chicago"
                       ? "chicago"
                       : selectedCity === "Los Angeles"
