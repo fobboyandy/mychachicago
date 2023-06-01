@@ -449,3 +449,30 @@
   position: absolute;
   top: 80%;
 }
+
+.locations-ihref {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.locations-oos {
+  padding-top: 35px;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 27px;
+
+  @media only screen and (max-width: 750px) {
+    width: 80%;
+  }
+}
+
+.locations-reset {
+  margin-top: 40px;
+  color: #0079d3;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

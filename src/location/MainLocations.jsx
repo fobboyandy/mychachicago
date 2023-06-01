@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -6,7 +6,9 @@ import {
   Marker,
   useLoadScript,
   InfoWindow,
+  Autocomplete,
 } from "@react-google-maps/api";
+
 import axios from "axios";
 
 import "./location.scss";
@@ -19,14 +21,20 @@ import LocationWord from "../longstuff/LocationsWord";
 import gsap from "gsap";
 import $ from "jquery";
 
+const libraries = ["places"];
+
 const MainLocations = () => {
   const history = useNavigate();
   const params = useParams();
+
+  const autoCompleteRef = useRef(null);
+  const inputRef = useRef(null);
 
   const [allLocations, setAllLocations] = useState([]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_MAPS,
+    libraries: libraries,
   });
 
   //search = location search section, all = all locations section
@@ -36,11 +44,8 @@ const MainLocations = () => {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [infoWindowData, setInfoWindowData] = useState(null);
 
-  const [resultCoordiates, setResultCoordinates] = useState([
-    { address: "address1", lat: 18.52043, lng: 73.856743 },
-    { address: "address2", lat: 17.52043, lng: 73.856743 },
-    { address: "address3", lat: 18.52043, lng: 70.856743 },
-  ]);
+  const [unfilteredResults, setUnfilteredResults] = useState([]);
+  const [resultsFromQuery, setResultsFromQuery] = useState([]);
 
   //options states
   const [searchActive, setSearchActive] = useState(false);
@@ -70,9 +75,6 @@ const MainLocations = () => {
 
   const [showWithinOverlay, setShowWithinOverlay] = useState(false);
   const [showCityOverlay, setShowCityOverlay] = useState(false);
-
-  //error states
-  const [invalidZipError, setInvalidZipError] = useState(false);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -126,46 +128,135 @@ const MainLocations = () => {
     map ? map.fitBounds(bounds) : mapRef.fitBounds(bounds);
   };
 
-  async function handleZipCodeSearch() {
-    setInvalidZipError(false);
+  async function handlePlaceSearch() {
+    //empty the query result array
+    setResultsFromQuery([]);
+    setUnfilteredResults([]);
 
-    const isValidZip = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(zipCode);
+    const place = autoCompleteRef.current.getPlace();
 
-    if (!isValidZip) {
-      setInvalidZipError(true); //handle
-    }
+    let re = "";
 
+    place.address_components.forEach((v) => (re = re + " " + v.short_name));
+
+    if (!place) return;
+
+    //get the coordinates of the zipcode
     const zipReq = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?key=${
         import.meta.env.VITE_MAPS
-      }&components=postal_code:${"60616"}`
+      }&address=${re}}`
     );
 
-    if (zipReq.data.status === "OK") {
+    //if the query is good
+    if (zipReq.data.status === "OK" || zipReq.status === 200) {
       const center = zipReq.data.results[0].geometry.location;
-      const state = zipReq.data.results[0].address_components[3].short_name;
+      const state = zipReq.data.results[0].address_components.find(
+        (v) => v.types.includes("administrative_area_level_1") //admin area level 1 = state
+      ).short_name;
 
       if (!location[state]) return; //in a state we dont serve, handle this later
 
+      const results = [];
       Object.keys(location[state]).forEach((v) => {
         //get all cities in a state
         const loc = location[state][v];
 
-        loc.forEach(async (t) => {
-          const distance = $.ajax({
-            type: "GET",
-            url: `/calculatedistance/${center.lat}/${center.lng}/${t.coordinates[0]}/${t.coordinates[1]}`,
-          }).then((res) => {
-            console.log(res);
+        //for each city, get the driving distance between the zip code and each location's coordinates
+        const b = new Promise((resolve, reject) => {
+          loc.forEach(async (t, i) => {
+            $.ajax({
+              type: "GET",
+              url: `/calculatedistance/${center.lat}/${center.lng}/${t.coordinates[0]}/${t.coordinates[1]}`,
+            }).then((res) => {
+              results.push({ ...t, distance: res });
+
+              if (i === loc.length - 1) resolve();
+            });
           });
         });
+
+        b.then(() => unfilteredHandle(results));
       });
     }
   }
 
-  useEffect(() => {
-    handleZipCodeSearch();
-  }, []);
+  function unfilteredHandle(results) {
+    const final = [];
+    setUnfilteredResults(results);
+
+    const t = new Promise((resolve, reject) => {
+      results.forEach((v, i) => {
+        if (v.distance.miles <= withinMiles) {
+          final.push(v);
+        }
+
+        if (i === results.length - 1) resolve();
+      });
+    });
+
+    t.then(() => {
+      if (final.length >= 1) {
+        //if we have one or more results, move the map accordingly
+        const bounds = new google.maps.LatLngBounds();
+        final.forEach(({ coordinates }) =>
+          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+        );
+        mapRef.fitBounds(bounds);
+      }
+
+      setResultsFromQuery(
+        final.sort(function (a, b) {
+          if (a.distance.miles > b.distance.miles) {
+            return 1;
+          }
+          if (a.distance.miles < b.distance.miles) {
+            return -1;
+          }
+          return 0;
+        })
+      );
+
+      setSearchActive(true);
+    });
+  }
+
+  //this function will reduce the # of api calls we make when a user selects a different within miles range
+  function withinRecall(miles) {
+    if (unfilteredResults.length < 1) return; // nothing to run with
+    const result = [];
+
+    unfilteredResults.forEach((v, i) => {
+      if (v.distance.miles <= miles) {
+        result.push(v);
+      }
+
+      if (i === unfilteredResults.length - 1) {
+        if (result.length > 0) {
+          //if we have one or more results, move the map accordingly
+          const bounds = new google.maps.LatLngBounds();
+          result.forEach(({ coordinates }) =>
+            bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+          );
+          mapRef.fitBounds(bounds);
+        }
+
+        setResultsFromQuery(
+          result.sort(function (a, b) {
+            if (a.distance.miles > b.distance.miles) {
+              return 1;
+            }
+
+            if (a.distance.miles < b.distance.miles) {
+              return -1;
+            }
+
+            return 0;
+          })
+        );
+      }
+    });
+  }
 
   useEffect(() => {
     const section = params.section;
@@ -250,15 +341,6 @@ const MainLocations = () => {
   function handleSetWithinMiles(v) {
     setWithinMiles(v);
     setShowWithinOverlay(false);
-  }
-
-  function maxLengthCheck(object) {
-    if (object.target.value.length > object.target.maxLength) {
-      object.target.value = object.target.value.slice(
-        0,
-        object.target.maxLength
-      );
-    }
   }
 
   const showWithin = useCallback(() => {
@@ -399,6 +481,7 @@ const MainLocations = () => {
                           setShowCityOverlay(false);
                           onLoad(null, location["IL"]["chicago"]);
                           setInfoWindowOpen(false);
+                          setSearchActive(false);
                         }}
                       >
                         Chicago
@@ -413,6 +496,7 @@ const MainLocations = () => {
                           setShowCityOverlay(false);
                           onLoad(null, location["CA"]["la"]);
                           setInfoWindowOpen(false);
+                          setSearchActive(false);
                         }}
                         style={{ borderRadius: "0 0 4px 4px" }}
                       >
@@ -423,15 +507,22 @@ const MainLocations = () => {
                 </div>
 
                 <div className='locations-or'>OR</div>
-                <input
-                  className='location-inp locations-w502'
-                  placeholder='Enter Zip Code'
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  type={"number"}
-                  onInput={maxLengthCheck}
-                  maxLength={5}
-                />
+
+                {isLoaded && (
+                  <Autocomplete
+                    onPlaceChanged={handlePlaceSearch}
+                    options={{ fields: ["address_components"] }}
+                    onLoad={(ref) => (autoCompleteRef.current = ref)}
+                  >
+                    <input
+                      className='location-inp locations-w502'
+                      placeholder='Enter Zip Code'
+                      type={"text"}
+                      ref={inputRef}
+                      id='input-query'
+                    />
+                  </Autocomplete>
+                )}
               </div>
 
               {window.innerWidth > 750 ? (
@@ -452,35 +543,60 @@ const MainLocations = () => {
                   <div className='location-optcontainer'>
                     <div
                       className='location-opt'
-                      onClick={() => handleSetWithinMiles(5)}
+                      onClick={() => {
+                        handleSetWithinMiles(5);
+                        if (searchActive) {
+                          withinRecall(5);
+                        }
+                      }}
                     >
                       Within 5 mi
                     </div>
 
                     <div
                       className='location-opt'
-                      onClick={() => handleSetWithinMiles(10)}
+                      onClick={() => {
+                        handleSetWithinMiles(10);
+                        if (searchActive) {
+                          withinRecall(10);
+                        }
+                      }}
                     >
                       Within 10 mi
                     </div>
 
                     <div
                       className='location-opt'
-                      onClick={() => handleSetWithinMiles(15)}
+                      onClick={() => {
+                        handleSetWithinMiles(15);
+                        if (searchActive) {
+                          withinRecall(15);
+                        }
+                      }}
                     >
                       Within 15 mi
                     </div>
 
                     <div
                       className='location-opt'
-                      onClick={() => handleSetWithinMiles(20)}
+                      onClick={() => {
+                        handleSetWithinMiles(20);
+                        if (searchActive) {
+                          withinRecall(20);
+                        }
+                      }}
                     >
                       Within 20 mi
                     </div>
 
                     <div
                       className='location-opt'
-                      onClick={() => handleSetWithinMiles(25)}
+                      onClick={() => {
+                        handleSetWithinMiles(25);
+                        if (searchActive) {
+                          withinRecall(25);
+                        }
+                      }}
                       style={{
                         borderRadius: "0 0 4px 4px",
                         borderBottom: "none",
@@ -497,21 +613,9 @@ const MainLocations = () => {
         {!selectedSection && (
           <div className='locations-ep'>
             <div className='locations-querycontainer'>
-              {searchActive
-                ? ""
-                : location[
-                    selectedCity === "Chicago"
-                      ? "IL"
-                      : selectedCity === "Los Angeles"
-                      ? "CA"
-                      : ""
-                  ][
-                    selectedCity === "Chicago"
-                      ? "chicago"
-                      : selectedCity === "Los Angeles"
-                      ? "la"
-                      : ""
-                  ]?.map((v, i) => (
+              {searchActive ? (
+                resultsFromQuery.length ? (
+                  resultsFromQuery.map((v, i) => (
                     <div
                       className='locations-querymap'
                       id={`querymap-${v.id}`}
@@ -529,6 +633,10 @@ const MainLocations = () => {
                       <div className='qre-title'>{v.name}</div>
                       <div className='qre-desc'>{v.address}</div>
                       <div className='qre-desc'>{v.hours}</div>
+                      <div className='qre-desc'>
+                        Distance: {v.distance.miles} Miles
+                      </div>
+
                       <a
                         className='qre-desc'
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
@@ -538,7 +646,70 @@ const MainLocations = () => {
                         Directions
                       </a>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <div className='locations-oos'>
+                    Sorry, seems like we don't sell near you. Don't worry,
+                    follow us on{" "}
+                    <a
+                      href={"https://www.instagram.com/mychachicago/?hl=en"}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='locations-ihref'
+                    >
+                      Instagram
+                    </a>{" "}
+                    to be the first at our new locations!
+                    <div
+                      className='locations-reset'
+                      onClick={() => $("#input-query").val("").focus()}
+                    >
+                      Reset Search
+                    </div>
+                  </div>
+                )
+              ) : (
+                location[
+                  selectedCity === "Chicago"
+                    ? "IL"
+                    : selectedCity === "Los Angeles"
+                    ? "CA"
+                    : ""
+                ][
+                  selectedCity === "Chicago"
+                    ? "chicago"
+                    : selectedCity === "Los Angeles"
+                    ? "la"
+                    : ""
+                ]?.map((v, i) => (
+                  <div
+                    className='locations-querymap'
+                    id={`querymap-${v.id}`}
+                    onClick={() => {
+                      handleMarkerClickOrHover(
+                        i,
+                        v.coordinates[0],
+                        v.coordinates[1],
+                        v.address,
+                        v.name,
+                        v.hours
+                      );
+                    }}
+                  >
+                    <div className='qre-title'>{v.name}</div>
+                    <div className='qre-desc'>{v.address}</div>
+                    <div className='qre-desc'>{v.hours}</div>
+                    <a
+                      className='qre-desc'
+                      href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      Directions
+                    </a>
+                  </div>
+                ))
+              )}
             </div>
             {isLoaded && (
               <GoogleMap
@@ -548,18 +719,51 @@ const MainLocations = () => {
                 options={{ mapTypeControl: false }}
               >
                 {searchActive
-                  ? resultCoordiates.length &&
-                    resultCoordiates.map((v, i) => (
+                  ? resultsFromQuery.length &&
+                    resultsFromQuery.map((v, i) => (
                       <Marker
-                        position={{ lat: v.lat, lng: v.lng }}
+                        position={{
+                          lat: v?.coordinates[0],
+                          lng: v?.coordinates[1],
+                        }}
+                        icon={{
+                          url: "/assets/machinenobg.jpeg",
+                          scaledSize: new google.maps.Size(50, 50),
+                        }}
                         onClick={() => {
-                          handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
-                        }}
-                        onMouseOver={() => {
-                          handleMarkerClickOrHover(i, v.lat, v.lng, v.address);
-                        }}
-                        onMouseOut={() => {
-                          handleMarkerClickOrHoverOut();
+                          handleMarkerClickOrHover(
+                            i,
+                            v.coordinates[0],
+                            v.coordinates[1],
+                            v.address,
+                            v.name,
+                            v.hours
+                          );
+
+                          //function to calculate total height above our desired element
+                          function calculateTop() {
+                            let result = 0;
+                            resultsFromQuery?.forEach((t, i2) => {
+                              if (i2 >= i) return;
+
+                              const height = $(
+                                `#querymap-${t.id}`
+                              ).outerHeight();
+                              result += height;
+                            });
+
+                            return result;
+                          }
+
+                          //get total height of all elements above the one we want
+                          const totalHeight = calculateTop();
+
+                          //use javascript to scroll to that element, so the selected location shows on top
+                          document
+                            .querySelector(".locations-querycontainer")
+                            .scrollTo({
+                              top: totalHeight,
+                            });
                         }}
                       >
                         {infoWindowOpen && infoWindowData?.id === i && (
@@ -568,7 +772,27 @@ const MainLocations = () => {
                               setInfoWindowOpen(false);
                             }}
                           >
-                            <h3>{infoWindowData.address}</h3>
+                            <div className='infow-parent'>
+                              <div className='infow-title'>
+                                {infoWindowData.name}
+                              </div>
+
+                              <div className='infow-desc'>
+                                {infoWindowData.address}
+                              </div>
+
+                              <div className='infow-desc'>
+                                {infoWindowData.hours}
+                              </div>
+                              <a
+                                className='infow-desc'
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                              >
+                                Directions
+                              </a>
+                            </div>
                           </InfoWindow>
                         )}
                       </Marker>
