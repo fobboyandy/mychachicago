@@ -46,6 +46,7 @@ const MainLocations = () => {
 
   const [unfilteredResults, setUnfilteredResults] = useState([]);
   const [resultsFromQuery, setResultsFromQuery] = useState([]);
+  const [queryLoading, setQueryLoading] = useState(false);
 
   //options states
   const [searchActive, setSearchActive] = useState(false);
@@ -132,6 +133,7 @@ const MainLocations = () => {
     //empty the query result array
     setResultsFromQuery([]);
     setUnfilteredResults([]);
+    setQueryLoading(true);
 
     const place = autoCompleteRef.current.getPlace();
 
@@ -139,7 +141,10 @@ const MainLocations = () => {
 
     place.address_components.forEach((v) => (re = re + " " + v.short_name));
 
-    if (!place) return;
+    if (!place) {
+      setQueryLoading(false);
+      return;
+    }
 
     //get the coordinates of the zipcode
     const zipReq = await axios.get(
@@ -155,29 +160,40 @@ const MainLocations = () => {
         (v) => v.types.includes("administrative_area_level_1") //admin area level 1 = state
       ).short_name;
 
-      if (!location[state]) return; //in a state we dont serve, handle this later
+      if (!location[state]) {
+        setQueryLoading(false);
+        return;
+      } //in a state we dont serve, handle this later
 
       const results = [];
-      Object.keys(location[state]).forEach((v) => {
-        //get all cities in a state
-        const loc = location[state][v];
+      const t = new Promise((r) => {
+        Object.keys(location[state]).forEach((v) => {
+          //get all cities in a state
+          const loc = location[state][v];
 
-        //for each city, get the driving distance between the zip code and each location's coordinates
-        const b = new Promise((resolve, reject) => {
-          loc.forEach(async (t, i) => {
-            $.ajax({
-              type: "GET",
-              url: `/calculatedistance/${center.lat}/${center.lng}/${t.coordinates[0]}/${t.coordinates[1]}`,
-            }).then((res) => {
-              results.push({ ...t, distance: res });
+          //for each city, get the driving distance between the zip code and each location's coordinates
+          const b = new Promise(async (resolve, reject) => {
+            //need for loop, foreach gives inconsistient results with await.
+            //literally ran the same query 5 times, gave me 3 different results with foreach. Lesson learned
+            for (let i = 0; i < loc.length; i++) {
+              await $.ajax({
+                type: "GET",
+                url: `/calculatedistance/${center.lat}/${center.lng}/${loc[i].coordinates[0]}/${loc[i].coordinates[1]}`,
+              }).then((res) => {
+                results.push({ ...loc[i], distance: res });
+              });
+            }
 
-              if (i === loc.length - 1) resolve();
-            });
+            resolve();
+          });
+
+          b.then(() => {
+            r();
           });
         });
-
-        b.then(() => unfilteredHandle(results));
       });
+
+      t.then(() => unfilteredHandle(results));
     }
   }
 
@@ -186,12 +202,12 @@ const MainLocations = () => {
     setUnfilteredResults(results);
 
     const t = new Promise((resolve, reject) => {
-      results.forEach((v, i) => {
+      results.forEach((v, i, a) => {
         if (v.distance.miles <= withinMiles) {
           final.push(v);
         }
 
-        if (i === results.length - 1) resolve();
+        if (i === a.length - 1) resolve();
       });
     });
 
@@ -218,6 +234,10 @@ const MainLocations = () => {
       );
 
       setSearchActive(true);
+      setQueryLoading(false);
+    }).catch(() => {
+      setQueryLoading(false);
+      alert("Something went wrong, please try again");
     });
   }
 
@@ -482,6 +502,7 @@ const MainLocations = () => {
                           onLoad(null, location["IL"]["chicago"]);
                           setInfoWindowOpen(false);
                           setSearchActive(false);
+                          mapRef.setZoom(11);
                         }}
                       >
                         Chicago
@@ -497,6 +518,7 @@ const MainLocations = () => {
                           onLoad(null, location["CA"]["la"]);
                           setInfoWindowOpen(false);
                           setSearchActive(false);
+                          mapRef.setZoom(12);
                         }}
                         style={{ borderRadius: "0 0 4px 4px" }}
                       >
@@ -613,9 +635,74 @@ const MainLocations = () => {
         {!selectedSection && (
           <div className='locations-ep'>
             <div className='locations-querycontainer'>
-              {searchActive ? (
-                resultsFromQuery.length ? (
-                  resultsFromQuery.map((v, i) => (
+              {searchActive
+                ? resultsFromQuery.length
+                  ? resultsFromQuery.map((v, i) => (
+                      <div
+                        className='locations-querymap'
+                        id={`querymap-${v.id}`}
+                        onClick={() => {
+                          handleMarkerClickOrHover(
+                            i,
+                            v.coordinates[0],
+                            v.coordinates[1],
+                            v.address,
+                            v.name,
+                            v.hours
+                          );
+                        }}
+                      >
+                        <div className='qre-title'>{v.name}</div>
+                        <div className='qre-desc'>{v.address}</div>
+                        <div className='qre-desc'>{v.hours}</div>
+                        <div className='qre-desc'>
+                          Distance: {v.distance.miles} Miles
+                        </div>
+
+                        <a
+                          className='qre-desc'
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
+                          Directions
+                        </a>
+                      </div>
+                    ))
+                  : !queryLoading && (
+                      <div className='locations-oos'>
+                        Sorry, seems like we don't sell near you. Don't worry,
+                        follow us on{" "}
+                        <a
+                          href={"https://www.instagram.com/mychachicago/?hl=en"}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='locations-ihref'
+                        >
+                          Instagram
+                        </a>{" "}
+                        to be the first at our new locations!
+                        <div
+                          className='locations-reset'
+                          onClick={() => $("#input-query").val("").focus()}
+                        >
+                          Reset Search
+                        </div>
+                      </div>
+                    )
+                : location[
+                    selectedCity === "Chicago"
+                      ? "IL"
+                      : selectedCity === "Los Angeles"
+                      ? "CA"
+                      : ""
+                  ][
+                    selectedCity === "Chicago"
+                      ? "chicago"
+                      : selectedCity === "Los Angeles"
+                      ? "la"
+                      : ""
+                  ]?.map((v, i) => (
                     <div
                       className='locations-querymap'
                       id={`querymap-${v.id}`}
@@ -633,10 +720,6 @@ const MainLocations = () => {
                       <div className='qre-title'>{v.name}</div>
                       <div className='qre-desc'>{v.address}</div>
                       <div className='qre-desc'>{v.hours}</div>
-                      <div className='qre-desc'>
-                        Distance: {v.distance.miles} Miles
-                      </div>
-
                       <a
                         className='qre-desc'
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
@@ -646,70 +729,7 @@ const MainLocations = () => {
                         Directions
                       </a>
                     </div>
-                  ))
-                ) : (
-                  <div className='locations-oos'>
-                    Sorry, seems like we don't sell near you. Don't worry,
-                    follow us on{" "}
-                    <a
-                      href={"https://www.instagram.com/mychachicago/?hl=en"}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='locations-ihref'
-                    >
-                      Instagram
-                    </a>{" "}
-                    to be the first at our new locations!
-                    <div
-                      className='locations-reset'
-                      onClick={() => $("#input-query").val("").focus()}
-                    >
-                      Reset Search
-                    </div>
-                  </div>
-                )
-              ) : (
-                location[
-                  selectedCity === "Chicago"
-                    ? "IL"
-                    : selectedCity === "Los Angeles"
-                    ? "CA"
-                    : ""
-                ][
-                  selectedCity === "Chicago"
-                    ? "chicago"
-                    : selectedCity === "Los Angeles"
-                    ? "la"
-                    : ""
-                ]?.map((v, i) => (
-                  <div
-                    className='locations-querymap'
-                    id={`querymap-${v.id}`}
-                    onClick={() => {
-                      handleMarkerClickOrHover(
-                        i,
-                        v.coordinates[0],
-                        v.coordinates[1],
-                        v.address,
-                        v.name,
-                        v.hours
-                      );
-                    }}
-                  >
-                    <div className='qre-title'>{v.name}</div>
-                    <div className='qre-desc'>{v.address}</div>
-                    <div className='qre-desc'>{v.hours}</div>
-                    <a
-                      className='qre-desc'
-                      href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      Directions
-                    </a>
-                  </div>
-                ))
-              )}
+                  ))}
             </div>
             {isLoaded && (
               <GoogleMap
@@ -782,7 +802,7 @@ const MainLocations = () => {
                               </div>
 
                               <div className='infow-desc'>
-                                {infoWindowData.hours}
+                                Hours: {infoWindowData.hours}
                               </div>
                               <a
                                 className='infow-desc'
@@ -859,7 +879,7 @@ const MainLocations = () => {
                               </div>
 
                               <div className='infow-desc'>
-                                {infoWindowData.hours}
+                                Hours: {infoWindowData.hours}
                               </div>
                               <a
                                 className='infow-desc'
@@ -908,7 +928,7 @@ const MainLocations = () => {
                     {location.address}
                   </div>
                   <div className='location-hours location-desc'>
-                    {location.hours !== "" ? ` ${location.hours}` : ""}
+                    Hours: {location.hours !== "" ? ` ${location.hours}` : ""}
                   </div>
 
                   <div className='location-checkqty'>
@@ -939,6 +959,29 @@ const MainLocations = () => {
         )}
       </div>
       {/* <Background /> */}
+
+      {queryLoading && (
+        <div
+          className='lds-ring'
+          style={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,.3)",
+            zIndex: 11,
+            position: "fixed",
+            top: 0,
+          }}
+          id='spinner-form'
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )}
     </div>
   );
 };

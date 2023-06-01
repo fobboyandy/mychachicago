@@ -33,7 +33,7 @@ const App = () => {
   const tl2 = gsap.timeline();
 
   function handleChange(id) {
-    const v = location.find((loc) => loc.id === id);
+    const v = location["IL"]["chicago"].find((loc) => loc.id === id);
     const st = stock.find((item) => item.id === id);
     setSelected(v);
     setDrinkStock(st);
@@ -53,7 +53,7 @@ const App = () => {
     tl2.progress(1);
 
     if (!tl2.isActive()) {
-      location.forEach((loca) => {
+      location["IL"]["chicago"].forEach((loca) => {
         tl2.fromTo(
           `#${loca.id}`,
           { opacity: 0, y: "-100%" },
@@ -80,7 +80,7 @@ const App = () => {
 
     let delay = 0;
     if (!tl.isActive()) {
-      location
+      location["IL"]["chicago"]
         .slice()
         .reverse()
         .forEach((loca, i) => {
@@ -108,7 +108,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    const obj = location["chicago"].find(
+    const obj = location["IL"]["chicago"].find(
       (item) => item.id === states.state?.from
     );
     setSelected(obj || {});
@@ -210,10 +210,10 @@ const App = () => {
           }}
         >
           <div className='select-contact2'>
-            {location["chicago"].find((item) => item.id === selected.id)
+            {location["IL"]["chicago"].find((item) => item.id === selected.id)
               ?.name || "Select a location"}
           </div>
-          {location["chicago"].map((location) => (
+          {location["IL"]["chicago"].map((location) => (
             <div
               className='li-contact op0'
               onClick={() => handleChange(location.id)}

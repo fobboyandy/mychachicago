@@ -88,7 +88,7 @@ app.get("/remainingstock", async (req, res, next) => {
       `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
     );
 
-    console.log(data);
+    console.log(data.length);
 
     res.send(data);
   } catch (error) {
