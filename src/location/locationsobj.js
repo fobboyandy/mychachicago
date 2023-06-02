@@ -9,6 +9,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image1.png",
         coordinates: [41.8719144, -87.6479295],
+        fetchName: "UIC East",
       },
 
       {
@@ -19,6 +20,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image.png",
         coordinates: [41.8706724, -87.6744532],
+        fetchName: "UIC West",
       },
 
       {

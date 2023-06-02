@@ -32,11 +32,31 @@ const App = () => {
   const tl = gsap.timeline();
   const tl2 = gsap.timeline();
 
-  function handleChange(id) {
+  async function handleChange(id) {
     const v = location["IL"]["chicago"].find((loc) => loc.id === id);
-    const st = stock.find((item) => item.id === id);
-    setSelected(v);
-    setDrinkStock(st);
+
+    const stock = await $.ajax({
+      type: "GET",
+      url: `/getstockforalocation/${v?.fetchName}`,
+    }).then((res) => {
+      console.log(res); //reponse in json form here, finish tmr
+
+      const result = {};
+
+      res.forEach((v, p) => {
+        v.forEach((t, i) => {
+          console.log(res[p][i]);
+          result[res[p][i][0]] ||= 0;
+          result[res[p][i][0]] += res[p][i][1];
+        });
+      });
+
+      console.log(result, "reee");
+
+      setSelected(v);
+      setDrinkStock([]);
+    });
+    // const st = stock.find((item) => item.id === id);
   }
 
   function optionSlideIn1() {
@@ -161,16 +181,6 @@ const App = () => {
       }
     }
   });
-
-  useEffect(() => {
-    $.ajax({
-      type: "GET",
-      url: "/remainingstock",
-    }).then((res) => {
-      console.log(res);
-      console.log(JSON.parse(res));
-    });
-  }, []);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case

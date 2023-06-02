@@ -23,6 +23,8 @@ import $ from "jquery";
 
 const libraries = ["places"];
 
+//sklfhksdjfklsdjfklsd - inpsel2 fix mobile version where the borders are screwed up
+
 const MainLocations = () => {
   const history = useNavigate();
   const params = useParams();
@@ -134,17 +136,18 @@ const MainLocations = () => {
     setResultsFromQuery([]);
     setUnfilteredResults([]);
     setQueryLoading(true);
+    setSearchActive(true);
 
     const place = autoCompleteRef.current.getPlace();
+
+    if (!place.address_components) {
+      setQueryLoading(false);
+      return;
+    }
 
     let re = "";
 
     place.address_components.forEach((v) => (re = re + " " + v.short_name));
-
-    if (!place) {
-      setQueryLoading(false);
-      return;
-    }
 
     //get the coordinates of the zipcode
     const zipReq = await axios.get(
@@ -162,6 +165,9 @@ const MainLocations = () => {
 
       if (!location[state]) {
         setQueryLoading(false);
+        setResultsFromQuery([]);
+
+        console.log("rann");
         return;
       } //in a state we dont serve, handle this later
 
@@ -233,7 +239,6 @@ const MainLocations = () => {
         })
       );
 
-      setSearchActive(true);
       setQueryLoading(false);
     }).catch(() => {
       setQueryLoading(false);
@@ -277,6 +282,30 @@ const MainLocations = () => {
       }
     });
   }
+
+  const handleEnterAutoComplete = useCallback((e, t) => {
+    e.stopPropagation();
+    if (e.key === "Enter" && $("#input-query").is(":focus")) {
+      const n = new KeyboardEvent("keydown", {
+        key: "ArrowDown",
+        code: "ArrowDown",
+        keyCode: 40,
+      });
+
+      const r = new KeyboardEvent("keydown", {
+        key: "Enter",
+        code: "Enter",
+        keyCode: 13,
+      });
+
+      document.getElementById("input-query").dispatchEvent(n);
+      document.getElementById("input-query").dispatchEvent(r);
+    }
+  });
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleEnterAutoComplete);
+  }, []);
 
   useEffect(() => {
     const section = params.section;
@@ -534,7 +563,9 @@ const MainLocations = () => {
                   <Autocomplete
                     onPlaceChanged={handlePlaceSearch}
                     options={{ fields: ["address_components"] }}
-                    onLoad={(ref) => (autoCompleteRef.current = ref)}
+                    onLoad={(ref) => {
+                      autoCompleteRef.current = ref;
+                    }}
                   >
                     <input
                       className='location-inp locations-w502'
@@ -671,8 +702,8 @@ const MainLocations = () => {
                     ))
                   : !queryLoading && (
                       <div className='locations-oos'>
-                        Sorry, seems like we don't sell near you. Don't worry,
-                        follow us on{" "}
+                        Sorry, seems like we don't sell near you. Try increasing
+                        the within miles or follow us on{" "}
                         <a
                           href={"https://www.instagram.com/mychachicago/?hl=en"}
                           target='_blank'

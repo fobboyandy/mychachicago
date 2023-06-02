@@ -2,6 +2,9 @@ import React, { useCallback, useEffect } from "react";
 
 import $ from "jquery";
 
+//two edge cases:
+// drinks that only have one size and drinks that have 4 sizes (boba, nb)
+
 const QtyOverlay = ({ drink, stock }) => {
   useEffect(() => {
     const cupheight =

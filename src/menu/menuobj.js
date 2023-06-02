@@ -98,6 +98,8 @@ const allItems = [
     htmlid: "mangojasmine",
     name: "Mango Jasmine Tea",
     image: "../assets/Final/mango_small.jpg",
+    smallName: "Mango Jasmine Tea Small",
+    largeName: "Mango Jasmine Tea Large",
     nutrition: {
       //correct
       small: {
@@ -135,6 +137,8 @@ const allItems = [
     htmlid: "lycheefruittea",
     name: "Lychee Jasmine Tea",
     image: "../assets/Final/lychee_small.jpg",
+    smallName: "Lychee Jasmine Tea Small",
+    largeName: "Lychee Jasmine Tea Large",
     nutrition: {
       //correct
       small: {
@@ -171,6 +175,8 @@ const allItems = [
     htmlid: "passionfruittea",
     name: "Passionfruit Jasmine Tea",
     image: "../assets/Final/passion_small.jpg",
+    smallName: "Passion Fruit Jasmine Tea Small",
+    largeName: "Passion Fruit Jasmine Tea Large",
     nutrition: {
       //correct
       small: {
@@ -207,6 +213,10 @@ const allItems = [
     htmlid: "jasminemilktea",
     name: "Jasmine Milk Tea",
     image: "../assets/Final/jasmine_jelly_small.jpg",
+    smallName: "Jasmine Milk Tea Small",
+    largeName: "Jasmine Milk Tea Large",
+    smallNameNB: "Jasmine Milk Tea Non Boba Small",
+    largeNameNB: "Jasmine Milk Tea Non Boba Large",
     nutrition: {
       //correct
       small: {
@@ -244,6 +254,10 @@ const allItems = [
     htmlid: "oolongmilktea",
     name: "Roasted Oolong Milk Tea",
     image: "../assets/Final/oolong_jelly_small.jpg",
+    smallName: "Roast Oolong Milk Tea Small",
+    largeName: "Roast Oolong Milk Tea Large",
+    smallNameNB: "Roast Oolong Milk Tea Non Boba Small",
+    largeNameNB: "Roast Oolong Milk Tea Non Boba Large",
     nutrition: {
       //correct
       small: {
@@ -281,6 +295,8 @@ const allItems = [
     htmlid: "matchamilktea",
     name: "Matcha Milk Tea",
     image: "../assets/Final/matcha_small.jpg",
+    smallName: "Matcha Milk Tea Small",
+    largeName: "Matcha Milk Tea Large",
     nutrition: {
       //correct
       small: {
@@ -318,6 +334,8 @@ const allItems = [
     htmlid: "taromilktea",
     name: "Taro Milk Tea",
     image: "../assets/Final/taro_small.jpg",
+    smallName: "Taro Jasmine Milk Tea Small",
+    largeName: "Taro Jasmine Milk Tea Large",
     nutrition: {
       //correct
       small: {
@@ -337,11 +355,11 @@ const allItems = [
   },
 
   {
-    //missing
     id: 8,
     htmlid: "coffeemilktea",
     name: "Coffee Milk Tea",
     image: "../assets/Final/coffee_mt_small.jpg",
+    sizeName: "Coffee Milk Tea (Jasmine) Large",
     nutrition: {
       small: {
         serving_size: 546,
@@ -363,6 +381,8 @@ const allItems = [
     htmlid: "thaiicedtea",
     name: "Thai Iced Tea",
     image: "../assets/Final/thai_tea_small.jpg",
+    smallName: "Thai Iced Tea Small",
+    largeName: "Thai Iced Tea Large",
     nutrition: {
       small: {
         serving_size: 425,

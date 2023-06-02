@@ -96,6 +96,18 @@ app.get("/remainingstock", async (req, res, next) => {
   }
 });
 
+app.get("/getstockforalocation/:location", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `http://localhost:4001/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
   try {
     const params = req.params;
