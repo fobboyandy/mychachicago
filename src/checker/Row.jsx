@@ -1,12 +1,15 @@
 import React from "react";
 import Boba from "./Boba";
 
-import { cups2 } from "./CupsObj";
-
 const Row = ({ selected, col, row }) => {
-  if (selected[0].toLowerCase() === "snack") return;
   return (
-    <div className='drow-parent'>
+    <div
+      className='drow-parent'
+      style={{
+        filter: selected[1] === 0 && "grayscale(1)",
+        opacity: selected[1] === 0 && ".3",
+      }}
+    >
       <Boba drink={selected[0]} col={col} row={row} />
       <div className='drow-stock'>{selected[1]}</div>
     </div>

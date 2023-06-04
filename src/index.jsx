@@ -40,6 +40,8 @@ root.render(
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route exact path='/locations/check' element={<App />} />
+          <Route exact path='/locations/check/:location' element={<App />} />
+
           <Route exact path='/locations' element={<MainLocations />} />
           <Route exact path='/locations/:section' element={<MainLocations />} />
 

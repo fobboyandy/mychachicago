@@ -17,21 +17,30 @@
   user-select: none;
   position: relative;
   min-width: 400px;
-  margin-bottom: 5vh;
-  margin-top: 20px;
 
   @media only screen and (max-width: 1100px) {
     width: 70%;
   }
 
   @media only screen and (max-width: 500px) {
-    width: 110%;
+    display: flex;
+    justify-content: center;
   }
 }
 
 .machine-img {
   width: 100%;
   height: 100%;
+}
+
+.machine-imgmain {
+  width: 100%;
+  height: 100%;
+
+  @media only screen and (max-width: 500px) {
+    width: 80%;
+    height: 80%;
+  }
 }
 
 .hoverorclick {
@@ -62,6 +71,7 @@
   align-items: center;
   margin-right: 5%;
   margin-left: 5%;
+  padding-bottom: 4vh;
 
   @media only screen and (max-width: 450px) {
     margin-top: 50px;
@@ -105,6 +115,22 @@
   }
 }
 
+.li-contact {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid black;
+  border-top: none;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  box-sizing: border-box;
+  background: white;
+
+  &:hover {
+    background-color: rgb(51, 51, 51);
+    color: white;
+  }
+}
+
 .location-name2 {
   font-size: 24px;
   font-weight: 600;
@@ -123,6 +149,7 @@
   width: 100%;
   overflow: hidden;
   justify-content: center;
+  padding-bottom: 25px;
 }
 
 .select-qty {
@@ -177,7 +204,6 @@
   flex-direction: column;
   position: relative;
   user-select: none;
-  margin-bottom: 10px;
   z-index: 11;
 
   @media only screen and (max-width: 450px) {
@@ -185,15 +211,31 @@
   }
 }
 
+.select-mapparent {
+  position: absolute;
+  top: 44.5px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .container-cups {
   position: absolute;
-  width: 48%;
-  height: 58.3%;
-  top: 10.5%;
-  left: 13.9%;
+  width: 59%;
+  height: 62.3%;
+  top: 4.5%;
+  left: 5.5%;
   justify-content: space-evenly;
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 500px) {
+    width: 47%;
+    height: 50%;
+    left: 14.5%;
+    top: 4.5%;
+  }
 }
 
 .container-row {
@@ -221,4 +263,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 500px) {
+    width: 15px;
+    height: 15px;
+    font-size: 12px;
+  }
+}
+
+.app-divider {
+  width: 30%;
+  height: 2px;
+  background-color: #edeff1;
+  margin: 40px 0;
 }

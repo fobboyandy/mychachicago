@@ -87,7 +87,7 @@ const Nav = ({ openNav }) => {
   }, []);
 
   return (
-    <div className='nav-home' style={{ zIndex: 12, userSelect: "none" }}>
+    <div className='nav-home' style={{ zIndex: 15, userSelect: "none" }}>
       <Homelogo history={history} />
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (

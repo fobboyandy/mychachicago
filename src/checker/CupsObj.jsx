@@ -115,6 +115,16 @@ const cups2 = {
   "Mango Lassi Large": () => {
     return ReactDOMServer.renderToString(<MangoLassi />);
   },
+
+  Snack: () => {
+    return ReactDOMServer.renderToString(<MangoLassi />);
+    //find snack icon later
+  },
+
+  "Snack Small": () => {
+    return ReactDOMServer.renderToString(<MangoLassi />);
+    //find snack icon later
+  },
 };
 
 export { cups2 };
