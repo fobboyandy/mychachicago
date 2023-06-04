@@ -167,7 +167,6 @@ const MainLocations = () => {
         setQueryLoading(false);
         setResultsFromQuery([]);
 
-        console.log("rann");
         return;
       } //in a state we dont serve, handle this later
 
@@ -547,7 +546,6 @@ const MainLocations = () => {
                           onLoad(null, location["CA"]["la"]);
                           setInfoWindowOpen(false);
                           setSearchActive(false);
-                          mapRef.setZoom(12);
                         }}
                         style={{ borderRadius: "0 0 4px 4px" }}
                       >

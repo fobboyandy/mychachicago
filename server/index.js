@@ -85,10 +85,9 @@ app.post("/sendstock", async (req, res, next) => {
 app.get("/remainingstock", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
+      `https://pythonendpoint.herokuapp.com/api/data/remainingstock/${process.env.SECRET_KEY}`
+      // `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
     );
-
-    console.log(data.length);
 
     res.send(data);
   } catch (error) {
@@ -99,7 +98,9 @@ app.get("/remainingstock", async (req, res, next) => {
 app.get("/getstockforalocation/:location", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `http://localhost:4001/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
+      `https://pythonendpoint.herokuapp.com/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
+
+      // `http://localhost:4001/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
     );
 
     res.send(data);
@@ -128,9 +129,9 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
   }
 });
 
-cron.schedule("*/10 * * * *", function () {
-  console.log(`running every 10 minutes ${new Date(new Date().getTime())}`);
-});
+// cron.schedule("*/10 * * * *", function () {
+//   console.log(`running every 10 minutes ${new Date(new Date().getTime())}`);
+// });
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));

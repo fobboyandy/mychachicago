@@ -31,6 +31,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image3.png",
         coordinates: [41.8835163, -87.6282874],
+        fetchName: "Block 37",
       },
 
       {
@@ -41,6 +42,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image4.png",
         coordinates: [41.8736761, -87.6528001],
+        fetchName: "UIC BSB",
       },
 
       {
@@ -51,6 +53,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image5.png",
         coordinates: [41.8737665, -87.6694023],
+        fetchName: "Rush Hospital",
       },
 
       {
@@ -61,6 +64,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image6.png",
         coordinates: [41.9107392, -87.6711167],
+        fetchName: "Beard Papa",
       },
 
       {
@@ -71,6 +75,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image7.png",
         coordinates: [41.7902097, -87.6055022],
+        fetchName: "UC Library",
       },
 
       {
@@ -81,6 +86,7 @@ const location = {
         desc: "",
         image: "../assets/locations/image8.png",
         coordinates: [41.8786821, -87.6390661],
+        fetchName: "Union Station",
       },
     ],
   },

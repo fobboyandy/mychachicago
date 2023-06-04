@@ -42,18 +42,6 @@
   }
 }
 
-.container-cups {
-  position: absolute;
-  width: 48%;
-  height: 58.3%;
-  top: 10.5%;
-  left: 13.9%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(26%, 1fr));
-  justify-content: center;
-  align-items: center;
-}
-
 .container-map {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -195,4 +183,42 @@
   @media only screen and (max-width: 450px) {
     width: 90%;
   }
+}
+
+.container-cups {
+  position: absolute;
+  width: 48%;
+  height: 58.3%;
+  top: 10.5%;
+  left: 13.9%;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.drow-parent {
+  position: relative;
+}
+
+.drow-stock {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(36, 255, 36);
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

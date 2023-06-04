@@ -11,6 +11,8 @@ import { allItems } from "../menu/menuobj";
 
 import "./quantity.scss";
 
+import Row from "./Row";
+
 import Boba from "./Boba";
 import QtyOverlay from "./QtyOverlay";
 import Leaf from "../longstuff/Leaf";
@@ -29,6 +31,8 @@ const App = () => {
   const [lastClicked, setLastClicked] = useState("");
   const [lastClicked2, setLastClicked2] = useState("");
 
+  const [drinks, setDrinks] = useState([]);
+
   const tl = gsap.timeline();
   const tl2 = gsap.timeline();
 
@@ -39,13 +43,18 @@ const App = () => {
       type: "GET",
       url: `/getstockforalocation/${v?.fetchName}`,
     }).then((res) => {
-      console.log(res); //reponse in json form here, finish tmr
+      if (res === "not found" || !res) {
+        setDrinks([]);
+        return;
+      }
+      setDrinks(res);
+
+      console.log(res);
 
       const result = {};
 
       res.forEach((v, p) => {
         v.forEach((t, i) => {
-          console.log(res[p][i]);
           result[res[p][i][0]] ||= 0;
           result[res[p][i][0]] += res[p][i][1];
         });
@@ -162,6 +171,18 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    async function f() {
+      const loc = await $.ajax({
+        url: "/fetchlocations",
+      }).then((res) => {
+        console.log(res);
+      });
+    }
+
+    f();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", resize);
 
     return () => {
@@ -271,18 +292,14 @@ const App = () => {
               />
 
               <div className='container-cups'>
-                {allItems.map((drink) => (
-                  <div id={drink.id + "cupmap"} key={drink.id}>
-                    <div
-                      style={{ position: "relative", zIndex: 1 }}
-                      id={drink.id}
-                      className='container-map'
-                    >
-                      <Boba drink={drink} />
+                {drinks.length &&
+                  drinks.map((drink, i) => (
+                    <div className='container-row'>
+                      {drink.map((t, q) => (
+                        <Row selected={t} col={i} row={q} />
+                      ))}
                     </div>
-                    <QtyOverlay drink={drink} stock={drinkStock} />
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>

@@ -418,6 +418,8 @@ const allItems = [
     id: 10,
     htmlid: "vietnamesecoffee",
     name: "Vietnamese Coffee",
+    smallName: "Vietnamese Coffee Small",
+    largeName: "Vietnamese Coffee Large",
     image: "../assets/Final/coffee_small.jpg",
     nutrition: {
       small: {
@@ -453,6 +455,8 @@ const allItems = [
     id: 11,
     htmlid: "mangolassi",
     name: "Mango Lassi",
+    smallName: "Mango Lassi Small",
+    largeName: "Mango Lassi Large",
     image: "../assets/Final/lassi-removebg-preview.png",
     nutrition: {
       small: {
