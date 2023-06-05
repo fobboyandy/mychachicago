@@ -10,6 +10,8 @@ import Thai from "./checkerimages/Thai";
 import VietCoffee from "./checkerimages/VietCoffee";
 import MangoLassi from "./checkerimages/MangoLassi";
 import CoffeeMt from "./checkerimages/CoffeeMt";
+import JasmineMtNoAgar from "./checkerimages/JasmineMtNoAgar";
+import OolongNoAgar from "./checkerimages/OolongNoAgar";
 //the reason we use svgs here instead of images is because if we use images, it will take a long time to load. and it will mess up the qtyoverlay
 
 const cups2 = {
@@ -49,11 +51,11 @@ const cups2 = {
   },
 
   "Jasmine Milk Tea Non Boba Small": () => {
-    return ReactDOMServer.renderToString(<JasmineMt />);
+    return ReactDOMServer.renderToString(<JasmineMtNoAgar />);
   },
 
   "Jasmine Milk Tea Non Boba Large": () => {
-    return ReactDOMServer.renderToString(<JasmineMt />);
+    return ReactDOMServer.renderToString(<JasmineMtNoAgar />);
   },
 
   "Roast Oolong Milk Tea Small": () => {
@@ -65,11 +67,11 @@ const cups2 = {
   },
 
   "Roast Oolong Milk Tea Non Boba Small": () => {
-    return ReactDOMServer.renderToString(<Oolong />);
+    return ReactDOMServer.renderToString(<OolongNoAgar />);
   },
 
   "Roast Oolong Milk Tea Non Boba Large": () => {
-    return ReactDOMServer.renderToString(<Oolong />);
+    return ReactDOMServer.renderToString(<OolongNoAgar />);
   },
 
   "Matcha Milk Tea Small": () => {

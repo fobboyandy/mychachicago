@@ -55,99 +55,27 @@ const App = () => {
       type: "GET",
       url: `/getstockforalocation/${v?.fetchName}`,
     }).then((res) => {
-      if (res === "not found" || !res) {
+      console.log(res);
+      if (res === "not found" || !res || !res.length) {
         setDrinks([]);
         return;
       }
       setDrinks(res);
 
-      console.log(res);
+      // const result = {};
 
-      const result = {};
-
-      res.forEach((v, p) => {
-        v.forEach((t, i) => {
-          result[res[p][i][0]] ||= 0;
-          result[res[p][i][0]] += res[p][i][1];
-        });
-      });
-
-      console.log(result, "reee");
+      // res.forEach((v, p) => {
+      //   v.forEach((t, i) => {
+      //     result[res[p][i][0]] ||= 0;
+      //     result[res[p][i][0]] += res[p][i][1];
+      //   });
+      // });
 
       setSelected(v);
       setDrinkStock([]);
       setLoading(false);
     });
-    // const st = stock.find((item) => item.id === id);
   }
-
-  // function optionSlideIn1() {
-  //   //prevent spamming
-  //   if (new Date().getTime() - lastClicked < 700) {
-  //     setLastClicked(new Date().getTime());
-  //     return;
-  //   }
-  //   if (!ready) return;
-  //   setLastClicked(new Date().getTime());
-
-  //   setShowSelect(true);
-  //   let delay = 0;
-  //   tl2.progress(1);
-
-  //   if (!tl2.isActive()) {
-  //     location[selectedState][selectedRegion].forEach((loca) => {
-  //       tl2.fromTo(
-  //         `#${loca.id}`,
-  //         { opacity: 0, y: "-100%" },
-  //         { opacity: 1, y: 0, duration: 0.05, delay: delay }
-  //       );
-
-  //       delay += 0.009;
-  //     });
-  //   }
-
-  //   setTimeout(() => {}, location.length * 0.1 + 200);
-  // }
-
-  // function optionSlideOut() {
-  //   if (new Date().getTime() - lastClicked2 < 700) {
-  //     setLastClicked2(new Date().getTime());
-  //     return;
-  //   }
-
-  //   if (!ready) return;
-  //   setReady(false);
-  //   setLastClicked2(new Date().getTime());
-  //   tl.progress(1);
-
-  //   let delay = 0;
-  //   if (!tl.isActive()) {
-  //     location["IL"]["chicago"]
-  //       .slice()
-  //       .reverse()
-  //       .forEach((loca, i) => {
-  //         tl.fromTo(
-  //           `#${loca.id}`,
-  //           { opacity: 1, y: 0 },
-  //           {
-  //             opacity: 0,
-  //             y: "-100%",
-  //             duration: 0.1,
-  //             delay: delay,
-  //             onComplete: !location[i - 1]
-  //               ? () => {
-  //                   setTimeout(() => {
-  //                     setShowSelect(false);
-  //                     setReady(true);
-  //                   }, 1000);
-  //                 }
-  //               : "",
-  //           }
-  //         );
-  //         delay += 0.01;
-  //       });
-  //   }
-  // }
 
   // useEffect(() => {
   //   const obj = location["IL"]["chicago"].find(
@@ -159,34 +87,21 @@ const App = () => {
   //   window.scrollTo({ top: 0 });
   // }, [states.state?.from]);
 
-  useEffect(() => {
-    async function f() {
-      const loc = await $.ajax({
-        url: "/fetchlocations",
-      }).then((res) => {
-        console.log(res);
-      });
-    }
+  // useEffect(() => {
+  //   async function f() {
+  //     const loc = await $.ajax({
+  //       url: "/fetchlocations",
+  //     }).then((res) => {
+  //       console.log(res);
+  //     });
+  //   }
 
-    f();
-  }, []);
+  //   f();
+  // }, []);
 
   useEffect(() => {
     const loc = params.location;
-    console.log(loc);
   }, []);
-
-  // useEffect(() => {
-  //   const f =
-  //     document.getElementsByClassName("select-container3")[0]?.offsetHeight;
-  //   let count2 = f;
-
-  //   $(".li-contact").each((index, element) => {
-  //     element.style.top = count2 + "px";
-  //     element.style.opacity = 0;
-  //     count2 += element.offsetHeight;
-  //   });
-  // }, [showSelect]);
 
   //handle inspect element resizing
   const resize = useCallback(() => {
@@ -284,7 +199,7 @@ const App = () => {
           id='select-region'
           style={{ zIndex: 12 }}
         >
-          <div className='select-contact2'>
+          <div className='select-contact2' id='select-region'>
             {(selectedRegion &&
               Object.keys(locationWithoutState)
                 .find((v) => v === selectedRegion)
@@ -293,7 +208,10 @@ const App = () => {
           </div>
 
           {showSelectRegion && (
-            <div className='select-mapparent'>
+            <div
+              className='select-mapparent'
+              style={{ top: $("#select-region").outerHeight() }}
+            >
               {Object.keys(locationWithoutState).map((region, i, o) => (
                 <div
                   className='li-contact'
@@ -320,14 +238,17 @@ const App = () => {
             id='select-location'
             style={{ marginTop: "40px" }}
           >
-            <div className='select-contact2'>
+            <div className='select-contact2' id='select-location'>
               {locationWithoutState[selectedRegion].find(
                 (item) => item.id === selected.id
               )?.name || "Select a location"}
             </div>
             {showSelect && (
-              <div className='select-mapparent'>
-                {locationWithoutState[selectedRegion].map((location) => (
+              <div
+                className='select-mapparent'
+                style={{ top: $("#select-location").outerHeight() }}
+              >
+                {locationWithoutState[selectedRegion].map((location, i, o) => (
                   <div
                     className='li-contact'
                     onClick={() => {
@@ -335,7 +256,10 @@ const App = () => {
                       setShowSelect(false);
                     }}
                     id={location.id}
-                    style={{ display: showSelect ? "" : "none" }}
+                    style={{
+                      display: showSelect ? "" : "none",
+                      borderRadius: i === o.length - 1 && "0 0 4px 4px",
+                    }}
                     key={location.id}
                   >
                     {location.name}

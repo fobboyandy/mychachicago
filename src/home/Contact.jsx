@@ -5,6 +5,7 @@ import { useForm } from "@formspree/react";
 import $ from "jquery";
 import gsap from "gsap";
 import { loc } from "./loc";
+import { locationWithoutState } from "../location/locationsobj";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -12,9 +13,11 @@ const Contact = () => {
   const [phone, setPhone] = useState("");
 
   const [reason, setReason] = useState("question/suggestion"); //change to question whend oen
-  const [location, setLocation] = useState("uiceast");
+  const [location, setLocation] = useState(null);
   const [paymentType, setPaymentType] = useState("");
   const [last4, setLast4] = useState("");
+
+  const [region, setRegion] = useState(null);
 
   const [desc, setDesc] = useState("");
 
@@ -28,7 +31,7 @@ const Contact = () => {
       reason1: reason,
       location:
         reason === "issue"
-          ? loc[location]
+          ? location?.name
           : "N/A reason is question/suggestion",
       paymentType:
         reason === "issue" ? paymentType : "N/A reason is question/suggestion",
@@ -40,6 +43,7 @@ const Contact = () => {
 
   const [showSelect, setShowSelect] = useState(false);
   const [showSelect2, setShowSelect2] = useState(false);
+  const [showRegion, setShowRegion] = useState(false);
 
   //test for valid email
   const isValidEmail = (v) => {
@@ -207,6 +211,11 @@ const Contact = () => {
     $(document).ready(() => {
       $("#reason-c").css("top", $("#reason").outerHeight() + "px");
       $("#locationc").css("top", $("#location").outerHeight() + "px");
+      $("#region-c").css("top", $("#region").outerHeight() + "px");
+      $("#select-locationc").css(
+        "top",
+        $("#select-location").outerHeight() + "px"
+      );
     });
   }, [showSelect, showSelect2]);
 
@@ -226,13 +235,21 @@ const Contact = () => {
     var $target = $(event.target);
 
     if (
-      !$target.closest("#second-contact").length &&
+      !$target.closest("#selectlocation-container").length &&
       !$target.closest(".li-contact").length &&
       showSelect2
     ) {
       setShowSelect2(false);
     }
-  }, [showSelect2]);
+
+    if (
+      !$target.closest("#region-container").length &&
+      !$target.closest(".li-contact").length &&
+      showRegion
+    ) {
+      setShowRegion(false);
+    }
+  }, [showSelect2, showRegion]);
 
   $(document).off("click", document, clickout1).click(clickout1);
   $(document).off("click", document, clickout2).click(clickout2);
@@ -309,9 +326,14 @@ const Contact = () => {
                 e.preventDefault();
                 const shouldSubmit = checkValid();
                 if (shouldSubmit) {
-                  handleSubmit(e);
-                  handleSubmit2();
-                  setSubmitting(false);
+                  const t = new Promise((resolve, reject) => {
+                    handleSubmit(e);
+                    handleSubmit2();
+                    setSubmitting(false);
+                    resolve();
+                  }).catch(() => {
+                    alert("Something went wrong, please try again.");
+                  });
                 } else return;
               }}
               id='form--contact'
@@ -319,12 +341,14 @@ const Contact = () => {
               <label htmlFor='name-contact' className='label-contact'>
                 Name<span className='star'>*</span>
               </label>
-              <div
-                className='errormsg'
-                style={{ display: nameError ? "" : "none" }}
-              >
-                Missing Name!
-              </div>
+              {nameError && (
+                <div
+                  className='errormsg'
+                  style={{ display: nameError ? "" : "none" }}
+                >
+                  Missing Name!
+                </div>
+              )}
               <input
                 id='name-contact'
                 className='input-contact'
@@ -338,12 +362,14 @@ const Contact = () => {
                 Your Email<span className='star'>*</span>
               </label>
 
-              <div
-                className='errormsg'
-                style={{ display: emailError ? "" : "none" }}
-              >
-                Invalid Email!
-              </div>
+              {emailError && (
+                <div
+                  className='errormsg'
+                  style={{ display: emailError ? "" : "none" }}
+                >
+                  Invalid Email!
+                </div>
+              )}
               <input
                 id='email-contact'
                 className='input-contact'
@@ -356,12 +382,14 @@ const Contact = () => {
               <label htmlFor='phone-contact' className='label-contact'>
                 Phone Number<span className='star'>*</span>
               </label>
-              <div
-                className='errormsg'
-                style={{ display: phoneError ? "" : "none" }}
-              >
-                Invalid Number!
-              </div>
+              {phoneError && (
+                <div
+                  className='errormsg'
+                  style={{ display: phoneError ? "" : "none" }}
+                >
+                  Invalid Number!
+                </div>
+              )}
               <input
                 id='phone-contact'
                 className='input-contact'
@@ -402,7 +430,10 @@ const Contact = () => {
                     className='li-contact'
                     onClick={() => setReason("issue")}
                     id='machine-transaction-issue'
-                    style={{ display: showSelect ? "" : "none" }}
+                    style={{
+                      display: showSelect ? "" : "none",
+                      borderRadius: "0 0 4px 4px",
+                    }}
                   >
                     Machine/Transaction Issue
                   </div>
@@ -414,95 +445,67 @@ const Contact = () => {
               ) : (
                 <div>
                   <div className='label-contact'>
-                    ATM Location<span className='star'>*</span>
+                    Region<span className='star'>*</span>
                   </div>
 
                   <div
                     className='select-container2'
-                    id='second-contact'
+                    id='region-container'
                     onClick={() => {
-                      showSelect2 ? "" : optionSlideIn2();
-                      setShowSelect2((prev) => !prev);
+                      setShowRegion((prev) => !prev);
                     }}
                   >
-                    <div className='select-contact2' id='location'>
-                      {loc[location]}
+                    <div className='select-contact2' id='region'>
+                      {region?.toUpperCase() || "Select a region"}
                     </div>
-
-                    <div className='li-parent' id='locationc'>
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("uiceast")}
-                        id='uiceast-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        UIC East
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("uicwest")}
-                        id='uicwest-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        UIC West
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("block37")}
-                        id='b37-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        Block 37
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("uicbsb")}
-                        id='uicbsb-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        UIC Behavioral Science Building
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("rush")}
-                        id='rush-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        Rush University
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("beardpapa")}
-                        id='beardpapa-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        Beard Papa
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("ucmed")}
-                        id='ucmed-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        University of Chicago
-                      </div>
-
-                      <div
-                        className='li-contact2'
-                        onClick={() => setLocation("submarine")}
-                        id='submarine-option'
-                        style={{ display: showSelect2 ? "" : "none" }}
-                      >
-                        Submarine
-                      </div>
+                    <div className='li-parent' id='region-c'>
+                      {Object.keys(locationWithoutState).map((item) => (
+                        <div
+                          className='li-contact2'
+                          onClick={() => setRegion(item)}
+                          style={{
+                            display: !showRegion && "none",
+                            position: "relative",
+                            zIndex: 2,
+                          }}
+                        >
+                          {item?.toUpperCase()}
+                        </div>
+                      ))}
                     </div>
                   </div>
+
+                  {region && (
+                    <div>
+                      <div className='label-contact'>
+                        ATM Location<span className='star'>*</span>
+                      </div>
+
+                      <div
+                        className='select-container2'
+                        id='selectlocation-container'
+                        onClick={() => {
+                          setShowSelect2((prev) => !prev);
+                        }}
+                      >
+                        <div className='select-contact2' id='select-location'>
+                          {location?.name || "Select a location"}
+                        </div>
+                        <div className='li-parent' id='select-locationc'>
+                          {locationWithoutState[region].map((item) => (
+                            <div
+                              className='li-contact2'
+                              onClick={() => setLocation(item)}
+                              id={`${item.id}-option`}
+                              style={{ display: !showSelect2 && "none" }}
+                            >
+                              {item?.name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <div className='label-contact'>
                     Form of Payment<span className='star'>*</span>
@@ -546,12 +549,14 @@ const Contact = () => {
                       <label htmlFor='name-contact' className='label-contact'>
                         Last 4 Digits of Card<span className='star'>*</span>
                       </label>
-                      <div
-                        className='errormsg'
-                        style={{ display: last4Error ? "" : "none" }}
-                      >
-                        Missing 4 digits!
-                      </div>
+                      {last4Error && (
+                        <div
+                          className='errormsg'
+                          style={{ display: last4Error ? "" : "none" }}
+                        >
+                          Missing 4 digits!
+                        </div>
+                      )}
                       <input
                         className='input-contact'
                         value={last4}
@@ -576,12 +581,14 @@ const Contact = () => {
                     : "Please describe the issue"}
                   <span className='star'>*</span>
                 </label>
-                <div
-                  className='errormsg'
-                  style={{ display: descError ? "" : "none" }}
-                >
-                  Missing description!
-                </div>
+                {descError && (
+                  <div
+                    className='errormsg'
+                    style={{ display: descError ? "" : "none" }}
+                  >
+                    Missing description!
+                  </div>
+                )}
                 <textarea
                   className='tarea-contact'
                   value={desc}

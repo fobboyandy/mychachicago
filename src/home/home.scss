@@ -546,6 +546,12 @@ body {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+  border: 1px solid black !important;
+  transition: 0.3s ease border, 5000s ease background-color;
+
+  &:focus {
+    border: 1.5px solid rgb(40, 200, 40) !important;
+  }
 }
 
 .submitbut-contact {
