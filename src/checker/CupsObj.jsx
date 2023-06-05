@@ -92,6 +92,10 @@ const cups2 = {
     return ReactDOMServer.renderToString(<CoffeeMt />);
   },
 
+  "Coffee Milk Tea (Jasmine) Small": () => {
+    return ReactDOMServer.renderToString(<CoffeeMt />);
+  },
+
   "Thai Iced Tea Small": () => {
     return ReactDOMServer.renderToString(<Thai />);
   },

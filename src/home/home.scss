@@ -516,6 +516,12 @@ body {
   margin-bottom: 20px;
   padding: 6px;
   box-sizing: border-box;
+  border: 1px solid black;
+  transition: 0.3s ease border, 5000s ease background-color;
+
+  &:focus {
+    border: 1.5px solid rgb(40, 200, 40);
+  }
 }
 
 .star {
@@ -677,9 +683,8 @@ body {
   width: 100%;
   padding: 10px;
   border: 1px solid black;
-  margin-top: 3px;
-  position: absolute;
-  background-color: rgb(244, 244, 244);
+  border-top: none;
+  background-color: white;
   cursor: pointer;
   transition: all 0.5s ease;
   box-sizing: border-box;
@@ -688,4 +693,10 @@ body {
     background-color: rgb(51, 51, 51);
     color: white;
   }
+}
+
+.li-parent {
+  width: 100%;
+  position: absolute;
+  left: 0%;
 }

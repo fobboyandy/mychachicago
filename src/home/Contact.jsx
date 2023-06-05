@@ -205,26 +205,8 @@ const Contact = () => {
 
   useEffect(() => {
     $(document).ready(() => {
-      const v =
-        document.getElementsByClassName("select-container")[0].offsetHeight;
-      let count = v;
-
-      $(".li-contact").each((index, element) => {
-        element.style.top = count + "px";
-        element.style.opacity = 0;
-        count += count;
-      });
-
-      if (!document.getElementsByClassName("select-container2").length) return;
-
-      const f =
-        document.getElementsByClassName("select-container2")[0].offsetHeight;
-      let count2 = f;
-
-      $(".li-contact2").each((index, element) => {
-        element.style.top = count2 * (index + 1) + "px";
-        element.style.opacity = 0;
-      });
+      $("#reason-c").css("top", $("#reason").outerHeight() + "px");
+      $("#locationc").css("top", $("#location").outerHeight() + "px");
     });
   }, [showSelect, showSelect2]);
 
@@ -400,28 +382,30 @@ const Contact = () => {
                 }}
                 style={{ zIndex: 10 }}
               >
-                <div className='select-contact2'>
+                <div className='select-contact2' id='reason'>
                   {reason === "question/suggestion"
                     ? "Question/Suggestion"
                     : "Machine/Transaction Issue"}
                 </div>
 
-                <div
-                  className='li-contact'
-                  onClick={() => setReason("question/suggestion")}
-                  id='question-suggestion'
-                  style={{ display: showSelect ? "" : "none" }}
-                >
-                  Question/Suggestion
-                </div>
+                <div className='li-parent' id='reason-c'>
+                  <div
+                    className='li-contact'
+                    onClick={() => setReason("question/suggestion")}
+                    id='question-suggestion'
+                    style={{ display: showSelect ? "" : "none" }}
+                  >
+                    Question/Suggestion
+                  </div>
 
-                <div
-                  className='li-contact'
-                  onClick={() => setReason("issue")}
-                  id='machine-transaction-issue'
-                  style={{ display: showSelect ? "" : "none" }}
-                >
-                  Machine/Transaction Issue
+                  <div
+                    className='li-contact'
+                    onClick={() => setReason("issue")}
+                    id='machine-transaction-issue'
+                    style={{ display: showSelect ? "" : "none" }}
+                  >
+                    Machine/Transaction Issue
+                  </div>
                 </div>
               </div>
 
@@ -441,78 +425,82 @@ const Contact = () => {
                       setShowSelect2((prev) => !prev);
                     }}
                   >
-                    <div className='select-contact2'>{loc[location]}</div>
-
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("uiceast")}
-                      id='uiceast-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      UIC East
+                    <div className='select-contact2' id='location'>
+                      {loc[location]}
                     </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("uicwest")}
-                      id='uicwest-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      UIC West
-                    </div>
+                    <div className='li-parent' id='locationc'>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("uiceast")}
+                        id='uiceast-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        UIC East
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("block37")}
-                      id='b37-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      Block 37
-                    </div>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("uicwest")}
+                        id='uicwest-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        UIC West
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("uicbsb")}
-                      id='uicbsb-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      UIC Behavioral Science Building
-                    </div>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("block37")}
+                        id='b37-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        Block 37
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("rush")}
-                      id='rush-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      Rush University
-                    </div>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("uicbsb")}
+                        id='uicbsb-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        UIC Behavioral Science Building
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("beardpapa")}
-                      id='beardpapa-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      Beard Papa
-                    </div>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("rush")}
+                        id='rush-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        Rush University
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("ucmed")}
-                      id='ucmed-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      University of Chicago
-                    </div>
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("beardpapa")}
+                        id='beardpapa-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        Beard Papa
+                      </div>
 
-                    <div
-                      className='li-contact2'
-                      onClick={() => setLocation("submarine")}
-                      id='submarine-option'
-                      style={{ display: showSelect2 ? "" : "none" }}
-                    >
-                      Submarine
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("ucmed")}
+                        id='ucmed-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        University of Chicago
+                      </div>
+
+                      <div
+                        className='li-contact2'
+                        onClick={() => setLocation("submarine")}
+                        id='submarine-option'
+                        style={{ display: showSelect2 ? "" : "none" }}
+                      >
+                        Submarine
+                      </div>
                     </div>
                   </div>
 

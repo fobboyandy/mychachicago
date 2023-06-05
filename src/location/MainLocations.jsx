@@ -133,6 +133,8 @@ const MainLocations = () => {
 
   async function handlePlaceSearch() {
     //empty the query result array
+    setInfoWindowOpen(false);
+    setInfoWindowData(null);
     setResultsFromQuery([]);
     setUnfilteredResults([]);
     setQueryLoading(true);

@@ -325,22 +325,24 @@ const App = () => {
                 (item) => item.id === selected.id
               )?.name || "Select a location"}
             </div>
-            <div className='select-mapparent'>
-              {locationWithoutState[selectedRegion].map((location) => (
-                <div
-                  className='li-contact'
-                  onClick={() => {
-                    handleChange(location.id);
-                    setShowSelect(false);
-                  }}
-                  id={location.id}
-                  style={{ display: showSelect ? "" : "none" }}
-                  key={location.id}
-                >
-                  {location.name}
-                </div>
-              ))}
-            </div>
+            {showSelect && (
+              <div className='select-mapparent'>
+                {locationWithoutState[selectedRegion].map((location) => (
+                  <div
+                    className='li-contact'
+                    onClick={() => {
+                      handleChange(location.id);
+                      setShowSelect(false);
+                    }}
+                    id={location.id}
+                    style={{ display: showSelect ? "" : "none" }}
+                    key={location.id}
+                  >
+                    {location.name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
