@@ -50,7 +50,7 @@
 .locations-ep {
   display: flex;
   flex-direction: row;
-  margin-bottom: 50px;
+  margin-bottom: 35px;
 
   height: 450px;
 
@@ -329,10 +329,10 @@
 
 .location-fdsr {
   width: 100%;
-  // height: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 10px;
 }
 
 .location-imgcontainer {
@@ -360,7 +360,6 @@
 .check-stock {
   position: relative;
   overflow: hidden;
-  height: 25px;
   text-decoration: none;
   color: rgb(51, 51, 51);
   &::before {
@@ -474,4 +473,8 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.locations-war {
+  font-size: 24px;
 }

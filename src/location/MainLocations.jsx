@@ -81,9 +81,17 @@ const MainLocations = () => {
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  const handleMarkerClickOrHover = (id, lat, lng, address, name, hours) => {
+  const handleMarkerClickOrHover = (
+    id,
+    lat,
+    lng,
+    address,
+    name,
+    hours,
+    itemid
+  ) => {
     mapRef?.panTo({ lat, lng });
-    setInfoWindowData({ id, address, name, hours, lat, lng });
+    setInfoWindowData({ id, address, name, hours, lat, lng, itemid });
     setInfoWindowOpen(true);
   };
 
@@ -679,13 +687,14 @@ const MainLocations = () => {
                             v.coordinates[1],
                             v.address,
                             v.name,
-                            v.hours
+                            v.hours,
+                            v.id
                           );
                         }}
                       >
                         <div className='qre-title'>{v.name}</div>
                         <div className='qre-desc'>{v.address}</div>
-                        <div className='qre-desc'>{v.hours}</div>
+                        <div className='qre-desc'>Hours: {v.hours}</div>
                         <div className='qre-desc'>
                           Distance: {v.distance.miles} Miles
                         </div>
@@ -698,6 +707,27 @@ const MainLocations = () => {
                         >
                           Directions
                         </a>
+
+                        <div className='location-checkqty'>
+                          <img
+                            src='/assets/leafdivider.png'
+                            style={{
+                              height: "45px",
+                              width: "45px",
+                              userSelect: "none",
+                            }}
+                            alt='leafdivider'
+                          />
+                          <div
+                            className='check-stock location-desc'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              history(`/locations/check/${v.id}`);
+                            }}
+                          >
+                            Check Location Stock
+                          </div>
+                        </div>
                       </div>
                     ))
                   : !queryLoading && (
@@ -744,7 +774,8 @@ const MainLocations = () => {
                           v.coordinates[1],
                           v.address,
                           v.name,
-                          v.hours
+                          v.hours,
+                          v.id
                         );
                       }}
                     >
@@ -759,6 +790,27 @@ const MainLocations = () => {
                       >
                         Directions
                       </a>
+
+                      <div
+                        className='location-checkqty'
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          history(`/locations/check/${v.id}`);
+                        }}
+                      >
+                        <img
+                          src='/assets/leafdivider.png'
+                          style={{
+                            height: "45px",
+                            width: "45px",
+                            userSelect: "none",
+                          }}
+                          alt='leafdivider'
+                        />
+                        <div className='check-stock location-desc'>
+                          Check Location Stock
+                        </div>
+                      </div>
                     </div>
                   ))}
             </div>
@@ -788,7 +840,8 @@ const MainLocations = () => {
                             v.coordinates[1],
                             v.address,
                             v.name,
-                            v.hours
+                            v.hours,
+                            v.id
                           );
 
                           //function to calculate total height above our desired element
@@ -843,6 +896,28 @@ const MainLocations = () => {
                               >
                                 Directions
                               </a>
+
+                              <div className='location-checkqty'>
+                                <img
+                                  src='../assets/leafdivider.png'
+                                  style={{
+                                    height: "45px",
+                                    width: "45px",
+                                    userSelect: "none",
+                                  }}
+                                  alt='leafdivider'
+                                />
+                                <div
+                                  className='check-stock location-desc'
+                                  onClick={() =>
+                                    history(
+                                      `/locations/check/${infoWindowData.itemid}`
+                                    )
+                                  }
+                                >
+                                  Check Location Stock
+                                </div>
+                              </div>
                             </div>
                           </InfoWindow>
                         )}
@@ -865,7 +940,8 @@ const MainLocations = () => {
                             v.coordinates[1],
                             v.address,
                             v.name,
-                            v.hours
+                            v.hours,
+                            v.id
                           );
 
                           //function to calculate total height above our desired element
@@ -920,6 +996,28 @@ const MainLocations = () => {
                               >
                                 Directions
                               </a>
+
+                              <div className='location-checkqty'>
+                                <img
+                                  src='../assets/leafdivider.png'
+                                  style={{
+                                    height: "45px",
+                                    width: "45px",
+                                    userSelect: "none",
+                                  }}
+                                  alt='leafdivider'
+                                />
+                                <div
+                                  className='check-stock location-desc'
+                                  onClick={() =>
+                                    history(
+                                      `/locations/check/${infoWindowData.itemid}`
+                                    )
+                                  }
+                                >
+                                  Check Location Stock
+                                </div>
+                              </div>
                             </div>
                           </InfoWindow>
                         )}
@@ -930,7 +1028,10 @@ const MainLocations = () => {
           </div>
         )}
 
-        <div onClick={() => history("/locations/all")}>All Locations</div>
+        <div className='locations-war'>
+          *Be sure to check location's stock ahead of time. Some locations are
+          seasonal or out of stock
+        </div>
 
         {selectedSection === "all" && (
           <div className='container-locations' id='container-locations'>
@@ -961,7 +1062,7 @@ const MainLocations = () => {
                   <div className='location-hours location-desc'>
                     Hours: {location.hours !== "" ? ` ${location.hours}` : ""}
                   </div>
-
+                  {/* 
                   <div className='location-checkqty'>
                     <img
                       src='../assets/leafdivider.png'
@@ -982,7 +1083,7 @@ const MainLocations = () => {
                     >
                       Check Location Stock
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}

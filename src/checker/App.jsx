@@ -44,19 +44,19 @@ const App = () => {
 
   const [drinks, setDrinks] = useState([]);
 
-  const tl = gsap.timeline();
-  const tl2 = gsap.timeline();
-
-  async function handleChange(id) {
+  async function handleChange(id, region) {
     setLoading(true);
-    const v = locationWithoutState[selectedRegion].find((loc) => loc.id === id);
+    const v = locationWithoutState[region || selectedRegion].find(
+      (loc) => loc.id === id
+    );
 
     await $.ajax({
       type: "GET",
       url: `/getstockforalocation/${v?.fetchName}`,
     }).then((res) => {
       console.log(res);
-      if (res === "not found" || !res || !res.length) {
+      console.log(res === "");
+      if (res === "not found" || !res || !res.length || res === "") {
         setDrinks([]);
         return;
       }
@@ -101,6 +101,17 @@ const App = () => {
 
   useEffect(() => {
     const loc = params.location;
+    const regions = Object.keys(locationWithoutState);
+
+    for (let i = 0; i < regions.length; i++) {
+      const find = locationWithoutState[regions[i]]?.find((v) => v.id === loc);
+
+      if (find) {
+        setSelectedRegion(regions[i]);
+        handleChange(loc, regions[i]);
+        break;
+      }
+    }
   }, []);
 
   //handle inspect element resizing
