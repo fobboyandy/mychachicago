@@ -98,6 +98,7 @@ const allItems = [
     htmlid: "mangojasmine",
     name: "Mango Jasmine Tea",
     image: "../assets/Final/mango_small.jpg",
+    desc: "Indulge in the refreshing harmony of tropical bliss with our Mango Jasmine Tea. This exquisite blend combines the luscious sweetness of ripe mangoes with the delicate floral notes of jasmine, creating a tantalizing fusion of flavors. Sip on this aromatic infusion and let the vibrant mango essence transport you to sun-kissed tropical shores, while the soothing jasmine petals offer a serene and aromatic experience. Elevate your tea ritual with the exotic allure of Mango Jasmine Tea.",
     smallName: "Mango Jasmine Tea Small",
     largeName: "Mango Jasmine Tea Large",
     nutrition: {
@@ -137,6 +138,7 @@ const allItems = [
     htmlid: "lycheefruittea",
     name: "Lychee Jasmine Tea",
     image: "../assets/Final/lychee_small.jpg",
+    desc: "Embark on a delightful journey with our Lychee Jasmine Tea. This exquisite blend combines the succulent sweetness of lychee fruit with the enchanting fragrance of jasmine, resulting in a tea that is both refreshing and captivating. Immerse yourself in the harmonious fusion of tropical lychee and aromatic jasmine, and let this tea transport you to a serene oasis of taste and tranquility. Treat yourself to the irresistible charm of Lychee Jasmine Tea and discover a moment of pure bliss in every sip. ",
     smallName: "Lychee Jasmine Tea Small",
     largeName: "Lychee Jasmine Tea Large",
     nutrition: {
@@ -175,6 +177,7 @@ const allItems = [
     htmlid: "passionfruittea",
     name: "Passionfruit Jasmine Tea",
     image: "../assets/Final/passion_small.jpg",
+    desc: "Experience a burst of passion with our tantalizing Passionfruit Jasmine Tea. This enchanting blend combines the exotic tanginess of passionfruit with the delicate allure of jasmine, creating a harmonious symphony of flavors. Discover a captivating tea experience that will awaken your senses and leave you craving for more. Embrace the passion of our Passionfruit Jasmine Tea and let its vibrant flavors sweep you away.",
     smallName: "Passion Fruit Jasmine Tea Small",
     largeName: "Passion Fruit Jasmine Tea Large",
     nutrition: {
@@ -213,6 +216,7 @@ const allItems = [
     htmlid: "jasminemilktea",
     name: "Jasmine Milk Tea",
     image: "../assets/Final/jasmine_jelly_small.jpg",
+    desc: "Unwind with the enchanting embrace of Jasmine Milk Tea. This soothing beverage combines the delicate floral essence of jasmine tea with the creamy indulgence of milk. With each sip, you'll be captivated by the aromatic notes of jasmine, which infuse the tea with a sense of tranquility and relaxation.",
     smallName: "Jasmine Milk Tea Small",
     largeName: "Jasmine Milk Tea Large",
     smallNameNB: "Jasmine Milk Tea Non Boba Small",
@@ -254,6 +258,7 @@ const allItems = [
     htmlid: "oolongmilktea",
     name: "Roasted Oolong Milk Tea",
     image: "../assets/Final/oolong_jelly_small.jpg",
+    desc: "Experience the perfect harmony of flavors with our Roasted Oolong Milk Tea. This captivating beverage blends the robust and toasty notes of roasted oolong tea with the creamy indulgence of milk. With each sip, you'll be greeted by the rich and satisfying flavors of the roasted oolong, which deliver a warm and comforting sensation.",
     smallName: "Roast Oolong Milk Tea Small",
     largeName: "Roast Oolong Milk Tea Large",
     smallNameNB: "Roast Oolong Milk Tea Non Boba Small",
@@ -295,6 +300,7 @@ const allItems = [
     htmlid: "matchamilktea",
     name: "Matcha Milk Tea",
     image: "../assets/Final/matcha_small.jpg",
+    desc: `Elevate your tea experience with the exquisite Matcha Milk Tea. This delightful beverage combines the vibrant and earthy flavors of matcha green tea with the creamy smoothness of milk. With every sip, you'll be enveloped in the rich, vegetal notes of finely ground matcha, known for its energizing properties and antioxidant benefits. Whether you're a matcha lover or simply looking for a unique and satisfying drink, our Matcha Milk Tea offers a harmonious blend of tradition and modernity. Immerse yourself in the captivating essence of matcha and the creamy delight of milk, and discover a truly delightful tea experience that nourishes both body and soul.`,
     smallName: "Matcha Milk Tea Small",
     largeName: "Matcha Milk Tea Large",
     nutrition: {
@@ -334,6 +340,7 @@ const allItems = [
     htmlid: "taromilktea",
     name: "Taro Milk Tea",
     image: "../assets/Final/taro_small.jpg",
+    desc: `Delight in the unique and captivating flavors of Taro Milk Tea. This enchanting beverage combines the earthy sweetness of taro root with the creamy richness of milk. Each sip offers a delightful balance of flavors, with the subtle nuttiness of taro complemented by the velvety smoothness of milk. The result is a comforting and indulgent drink that will leave you craving for more. Whether you're a fan of taro or simply looking for a new and delicious treat, our Taro Milk Tea is a delightful journey for your taste buds. Immerse yourself in the distinct charm of taro and the creamy embrace of milk, and experience a truly unforgettable tea experience.`,
     smallName: "Taro Jasmine Milk Tea Small",
     largeName: "Taro Jasmine Milk Tea Large",
     nutrition: {
@@ -359,6 +366,7 @@ const allItems = [
     htmlid: "coffeemilktea",
     name: "Coffee Milk Tea",
     image: "../assets/Final/coffee_mt_small.jpg",
+    desc: `Discover the perfect fusion of two beloved beverages with our Coffee Milk Tea. This harmonious blend combines the rich and bold flavors of coffee with the creamy indulgence of milk tea. Each sip tantalizes your taste buds with the robust and aromatic notes of coffee, perfectly balanced by the smooth and velvety texture of milk tea. Indulge in the best of both worlds as you savor the energizing kick of coffee alongside the comforting creaminess of milk tea. Whether you're a coffee enthusiast or a tea lover, our Coffee Milk Tea offers a delightful union that will awaken your senses and leave you craving for more. Immerse yourself in this enticing blend and experience a truly exceptional beverage that satisfies your coffee and tea cravings in one sip.`,
     sizeName: "Coffee Milk Tea (Jasmine) Large",
     nutrition: {
       small: {
@@ -383,6 +391,8 @@ const allItems = [
     image: "../assets/Final/thai_tea_small.jpg",
     smallName: "Thai Iced Tea Small",
     largeName: "Thai Iced Tea Large",
+    desc: `
+    Immerse yourself in the vibrant flavors of Thailand with our tantalizing Thai Iced Tea. This iconic beverage combines the bold and aromatic black tea with a touch of sweetness from condensed milk, creating a harmonious balance of flavors. Served over ice, this refreshing drink offers a delightful combination of robust tea notes and creamy indulgence. The vibrant orange color adds to its visual appeal, making it an irresistible choice. Whether you're seeking a cooling respite on a sunny day or looking to savor a taste of Thai cuisine, our Thai Iced Tea is a true delight for your senses. Experience the exotic charm of Thailand in every sip and let the refreshing flavors transport you to the bustling streets of Bangkok.`,
     nutrition: {
       small: {
         serving_size: 425,
@@ -421,6 +431,7 @@ const allItems = [
     smallName: "Vietnamese Coffee Small",
     largeName: "Vietnamese Coffee Large",
     image: "../assets/Final/coffee_small.jpg",
+    desc: `Immerse yourself in the bold and captivating flavors of Vietnamese Coffee. This iconic drink captures the essence of Vietnam's vibrant coffee culture, delivering a rich and invigorating experience. Made with finely ground Vietnamese beans and brewed through a traditional drip filter, each sip unveils a robust and full-bodied coffee profile that is both aromatic and satisfying. Paired with a touch of sweetened condensed milk, this coffee achieves a perfect balance of bitterness and creaminess, creating a delightful treat for your taste buds. Indulge in the cultural heritage and unique character of Vietnamese Coffee, and let it transport you to the bustling streets of Vietnam, where savoring a cup of this coffee is an essential part of daily life.`,
     nutrition: {
       small: {
         serving_size: 420,
@@ -458,6 +469,7 @@ const allItems = [
     smallName: "Mango Lassi Small",
     largeName: "Mango Lassi Large",
     image: "../assets/Final/lassi-removebg-preview.png",
+    desc: `Escape to a tropical oasis with our refreshing Mango Lassi. This creamy and indulgent beverage is a delightful blend of ripe, succulent mangoes and creamy yogurt. With each sip, you'll be transported to sun-kissed orchards, as the sweet and tangy flavors of fresh mango dance on your palate. The smooth and velvety yogurt adds a luscious texture, creating a perfect balance of richness and fruity delight. Indulge in this exotic delight and let the vibrant flavors transport you to a state of pure bliss.`,
     nutrition: {
       small: {
         serving_size: 420,

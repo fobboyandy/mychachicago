@@ -18,6 +18,9 @@ const MenuItem = () => {
   const [largeNutrition, setLargeNutrition] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
+  const [showDesc, setShowDesc] = useState(true);
+  const [showNutrition, setShowNutrition] = useState(false);
+
   const [smallOrLarge, setSmallOrLarge] = useState(
     params.id === 8 ? "large" : "small"
   );
@@ -128,56 +131,115 @@ const MenuItem = () => {
           </div>
           <div className='mitem-tableouter'>
             <div className='mitem-head'>{selectedItem.name}</div>
-            <div className='mitem-select'>
-              {selectedItem.id !== 8 && (
+
+            <div className='mitem-f'>
+              <div
+                className='mitem-sel'
+                onClick={() => {
+                  setShowDesc((prev) => !prev);
+                }}
+                style={{ marginBottom: showDesc && 0 }}
+              >
+                Description
+                <div className='grow' />
                 <div
-                  className='mitem-selectchild'
-                  style={{
-                    borderBottom:
-                      smallOrLarge === "small" ? "2px solid #888" : "",
-                  }}
-                  onClick={() => {
-                    rightScroll();
-                  }}
-                >
-                  Small
-                </div>
-              )}
-              {selectedItem.id !== 7 && selectedItem.id !== 6 && (
-                <div
-                  className='mitem-selectchild'
-                  onClick={() => {
-                    leftScroll();
-                  }}
-                  style={{
-                    borderBottom:
-                      smallOrLarge === "large" ? "2px solid #888" : "",
-                  }}
-                >
-                  Large
-                </div>
-              )}
-            </div>
-            <div
-              className='mitem-tableparent'
-              ref={containerRef}
-              id='tableparent'
-            >
-              <NutritionTable
-                selectedItem={selectedItem}
-                smallNutrition={smallNutrition}
-                isLoading={isLoading}
+                  className='mitem-caret'
+                  style={{ transform: !showDesc && "rotate(-90deg)" }}
+                />
+              </div>
+
+              <div
+                style={{ marginBottom: showDesc ? "20px" : 0 }}
+                className='mitem-mar'
               />
 
-              {selectedItem.id !== 6 &&
-                selectedItem.id !== 7 &&
-                selectedItem.id !== 8 && (
-                  <NutritionTableLarge
+              <div
+                className='mitem-height mitem-desc'
+                style={{
+                  maxHeight: showDesc ? "400px" : 0,
+                }}
+              >
+                {selectedItem?.desc}
+              </div>
+
+              <div
+                style={{ marginBottom: showDesc ? "30px" : 0 }}
+                className='mitem-mar'
+              />
+
+              <div
+                className='mitem-sel'
+                onClick={() => {
+                  setShowNutrition((prev) => !prev);
+                }}
+              >
+                Nutrition Facts
+                <div className='grow' />
+                <div
+                  className='mitem-caret'
+                  style={{ transform: !showNutrition && "rotate(-90deg)" }}
+                />
+              </div>
+              <div
+                style={{
+                  // transform: showNutrition ? "scaleY(1)" : "scaleY(0)",
+                  // display: !showNutrition && "none",
+                  maxHeight: showNutrition ? "700px" : 0,
+                }}
+                className='mitem-height'
+              >
+                <div className='mitem-select'>
+                  {selectedItem.id !== 8 && (
+                    <div
+                      className='mitem-selectchild'
+                      style={{
+                        borderBottom:
+                          smallOrLarge === "small" ? "2px solid #888" : "",
+                      }}
+                      onClick={() => {
+                        rightScroll();
+                      }}
+                    >
+                      Small
+                    </div>
+                  )}
+                  {selectedItem.id !== 7 && selectedItem.id !== 6 && (
+                    <div
+                      className='mitem-selectchild'
+                      onClick={() => {
+                        leftScroll();
+                      }}
+                      style={{
+                        borderBottom:
+                          smallOrLarge === "large" ? "2px solid #888" : "",
+                      }}
+                    >
+                      Large
+                    </div>
+                  )}
+                </div>
+                <div
+                  className='mitem-tableparent'
+                  ref={containerRef}
+                  id='tableparent'
+                >
+                  <NutritionTable
                     selectedItem={selectedItem}
-                    largeNutrition={largeNutrition}
+                    smallNutrition={smallNutrition}
                     isLoading={isLoading}
                   />
-                )}
+
+                  {selectedItem.id !== 6 &&
+                    selectedItem.id !== 7 &&
+                    selectedItem.id !== 8 && (
+                      <NutritionTableLarge
+                        selectedItem={selectedItem}
+                        largeNutrition={largeNutrition}
+                        isLoading={isLoading}
+                      />
+                    )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

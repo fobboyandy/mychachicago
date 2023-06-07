@@ -53,28 +53,33 @@ const App = () => {
     await $.ajax({
       type: "GET",
       url: `/getstockforalocation/${v?.fetchName}`,
-    }).then((res) => {
-      console.log(res);
-      console.log(res === "");
-      if (res === "not found" || !res || !res.length || res === "") {
-        setDrinks([]);
-        return;
-      }
-      setDrinks(res);
+    })
+      .then((res) => {
+        console.log(res);
+        console.log(res === "");
+        console.log(!res, "exclaim res");
+        if (res === "not found" || !res || !res.length || res === "") {
+          setDrinks([]);
+          return;
+        }
+        setDrinks(res);
 
-      // const result = {};
+        // const result = {};
 
-      // res.forEach((v, p) => {
-      //   v.forEach((t, i) => {
-      //     result[res[p][i][0]] ||= 0;
-      //     result[res[p][i][0]] += res[p][i][1];
-      //   });
-      // });
+        // res.forEach((v, p) => {
+        //   v.forEach((t, i) => {
+        //     result[res[p][i][0]] ||= 0;
+        //     result[res[p][i][0]] += res[p][i][1];
+        //   });
+        // });
 
-      setSelected(v);
-      setDrinkStock([]);
-      setLoading(false);
-    });
+        setSelected(v);
+        setDrinkStock([]);
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Something went wrong, please try again");
+      });
   }
 
   // useEffect(() => {
