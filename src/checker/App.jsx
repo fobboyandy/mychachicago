@@ -4,21 +4,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import $ from "jquery";
-import gsap from "gsap";
 
-import {
-  location,
-  locationWithoutState,
-  stock,
-} from "../location/locationsobj";
-import { allItems } from "../menu/menuobj";
+import { locationWithoutState } from "../location/locationsobj";
 
 import "./quantity.scss";
 
 import Row from "./Row";
-
-import Boba from "./Boba";
-import QtyOverlay from "./QtyOverlay";
 import Leaf from "../longstuff/Leaf";
 
 const App = () => {
@@ -39,9 +30,6 @@ const App = () => {
 
   const [ready, setReady] = useState(true);
 
-  const [lastClicked, setLastClicked] = useState("");
-  const [lastClicked2, setLastClicked2] = useState("");
-
   const [drinks, setDrinks] = useState([]);
 
   async function handleChange(id, region) {
@@ -55,8 +43,8 @@ const App = () => {
       url: `/getstockforalocation/${v?.fetchName}`,
     })
       .then((res) => {
-        console.log(res);
-        console.log(res === "");
+        console.log(res, "response");
+        console.log(res === "", "res equals empty string");
         console.log(!res, "exclaim res");
         if (res === "not found" || !res || !res.length || res === "") {
           setDrinks([]);
@@ -264,7 +252,7 @@ const App = () => {
                 className='select-mapparent'
                 style={{ top: $("#select-location").outerHeight() }}
               >
-                {locationWithoutState[selectedRegion].map((location, i, o) => (
+                {locationWithoutState[selectedRegion]?.map((location, i, o) => (
                   <div
                     className='li-contact'
                     onClick={() => {
@@ -308,16 +296,6 @@ const App = () => {
         >
           <div className='quantity-slider' ref={qtyRef}>
             <div className='machine-container '>
-              {/* <div
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontStyle: "italic",
-                }}
-                className='hoverorclick'
-              >
-                Hover or Click each drink to see stock!
-              </div> */}
               <img
                 src='/assets/machinestuff/machineimage.jpeg'
                 className='machine-imgmain'
@@ -325,10 +303,10 @@ const App = () => {
               />
 
               <div className='container-cups'>
-                {drinks.length &&
-                  drinks.map((drink, i) => (
+                {drinks?.length &&
+                  drinks?.map((drink, i) => (
                     <div className='container-row'>
-                      {drink.map((t, q) => (
+                      {drink?.map((t, q) => (
                         <Row selected={t} col={i} row={q} />
                       ))}
                     </div>
