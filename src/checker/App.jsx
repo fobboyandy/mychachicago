@@ -46,6 +46,7 @@ const App = () => {
         console.log(res, "response");
         console.log(res === "", "res equals empty string");
         console.log(!res, "exclaim res");
+        console.log(typeof res, "typeof response");
         if (res === "not found" || !res || !res.length || res === "") {
           setDrinks([]);
           return;
