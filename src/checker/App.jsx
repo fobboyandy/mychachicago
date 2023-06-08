@@ -54,8 +54,14 @@ const App = () => {
           res === "" ||
           typeof res !== "object"
         ) {
-          console.log("not found rannn");
           setDrinks([]);
+          setLoading(false);
+          if (typeof res !== "object") {
+            //there is a bug in the python code
+            //returns nothing but an empty string
+            //idk how to fix yet, but will tell andy
+            alert("Something went wrong, please try again");
+          }
           return;
         }
         setDrinks(res);
