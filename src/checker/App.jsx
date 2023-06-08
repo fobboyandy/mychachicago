@@ -47,7 +47,14 @@ const App = () => {
         console.log(res === "", "res equals empty string");
         console.log(!res, "exclaim res");
         console.log(typeof res, "typeof response");
-        if (res === "not found" || !res || !res.length || res === "") {
+        if (
+          res === "not found" ||
+          !res ||
+          !res.length ||
+          res === "" ||
+          typeof res !== "object"
+        ) {
+          console.log("not found rannn");
           setDrinks([]);
           return;
         }
@@ -92,6 +99,8 @@ const App = () => {
 
   //   f();
   // }, []);
+
+  console.log(drinks, "drinkss");
 
   useEffect(() => {
     const loc = params.location;
