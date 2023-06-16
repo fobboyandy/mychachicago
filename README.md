@@ -1,6 +1,6 @@
 ## Notes
 
-For Mycha Chicago, a milk tea vending machine business in Chicago (soon LA!).</br>
+For Mycha Chicago, a milk tea vending machine business in Chicago and LA.</br>
 Instagram - https://www.instagram.com/mychachicago/?hl=en
 
 ## Deployed Project
