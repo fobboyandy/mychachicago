@@ -82,18 +82,18 @@ app.post("/sendstock", async (req, res, next) => {
   }
 });
 
-app.get("/remainingstock", async (req, res, next) => {
-  try {
-    const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/remainingstock/${process.env.SECRET_KEY}`
-      // `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
-    );
+// app.get("/remainingstock", async (req, res, next) => {
+//   try {
+//     const { data } = await axios.get(
+//       `https://pythonendpoint.herokuapp.com/api/data/remainingstock/${process.env.SECRET_KEY}`
+//       // `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
+//     );
 
-    res.send(data);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.send(data);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 app.get("/getstockforalocation/:location", async (req, res, next) => {
   try {

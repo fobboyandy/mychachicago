@@ -230,10 +230,10 @@ const Section2 = () => {
           <div className='desc-section2'>
             Mycha is dedicated to providing you the best quality drinks using
             the most convenient form of service. We select premium tea leaves
-            from the most authentic tea plantations to ensure a real tea
-            enjoyment. We prepare hand-crafted drinks daily in our health
-            department regulated kitchen and stock our machines with fresh
-            products every morning.
+            from the most authentic tea gardens to ensure a real tea enjoyment.
+            We prepare hand-crafted drinks daily in our health department
+            regulated kitchen and stock our machines with fresh products every
+            morning.
           </div>
 
           <div className='desc-section2' style={{ marginTop: "30px" }}>

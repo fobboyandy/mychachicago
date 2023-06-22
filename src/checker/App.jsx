@@ -44,9 +44,7 @@ const App = () => {
     })
       .then((res) => {
         console.log(res, "response");
-        console.log(res === "", "res equals empty string");
-        console.log(!res, "exclaim res");
-        console.log(typeof res, "typeof response");
+
         if (
           res === "not found" ||
           !res ||
@@ -105,8 +103,6 @@ const App = () => {
 
   //   f();
   // }, []);
-
-  console.log(drinks, "drinkss");
 
   useEffect(() => {
     const loc = params.location;

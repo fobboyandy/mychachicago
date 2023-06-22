@@ -8,7 +8,9 @@ const Boba = ({ drink, col, row }) => {
     let v = document.getElementById(`${drink}-cup-${col}-${row}`);
     const id = drink;
 
-    v.innerHTML = JSON.parse(JSON.stringify(cups2[id]())) || cups2.default;
+    v.innerHTML = cups2[id]
+      ? JSON.parse(JSON.stringify(cups2[id]()))
+      : cups2.default;
   }, [drink]);
 
   return <div className='drink-cups' id={`${drink}-cup-${col}-${row}`}></div>;
