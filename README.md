@@ -1,6 +1,6 @@
 ## Notes
 
-For Mycha Chicago, a milk tea vending machine business in Chicago (soon LA!).</br>
+For Mycha Chicago, a milk tea vending machine business in Chicago and LA.</br>
 Instagram - https://www.instagram.com/mychachicago/?hl=en
 
 ## Deployed Project
@@ -15,12 +15,12 @@ Below is a non-exhaustive list of technologies used throughout the project.
 
 Stock endpoint - https://github.com/yuiyuuuu/mycha-python-endpoint
 
-| Front End | Libraries/Frameworks | External Services | Compiler |
-| :-------: | :------------------: | :---------------: | :------: |
-|   React   |         GSAP         |     formspree     |   Vite   |
-|   HTML5   |        JQuery        |                   |          |
-|   SASS    |                      |                   |          |
-|           |                      |                   |          |
+| Front End | Libraries/Frameworks |  Backend  | External Services | Compiler |
+| :-------: | :------------------: | :-------: | :---------------: | :------: |
+|   React   |         GSAP         |  Express  |     formspree     |   Vite   |
+|   HTML5   |        JQuery        | Amazon S3 |  Google Maps API  |          |
+|   SASS    |                      |  Python   |                   |          |
+|           |                      | node-cron |                   |          |
 
 ## Setup :rocket:
 
