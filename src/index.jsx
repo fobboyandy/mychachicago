@@ -50,7 +50,7 @@ root.render(
           <Route exact path='/menu' element={<Menu />} />
           <Route exact path='/menu/:id' element={<MenuItem />} />
           <Route exact path='/admin' element={<Admin />} />
-          <Route exact path='/admin2' element={<AdminTwo />} />
+          <Route exact path='/admin/stock' element={<AdminTwo />} />
 
           <Route path='*' element={<NotFound />} />
         </Routes>
