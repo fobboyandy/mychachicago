@@ -115,6 +115,7 @@ const Admin = () => {
               7: 0,
             })
           );
+          setLastUpdated(null);
           setLoading(false);
           return;
         }
