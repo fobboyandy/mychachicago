@@ -59,8 +59,8 @@ app.get("/fetchstock2/:location", async (req, res, next) => {
     const loc = req.params.location;
 
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
-      // `http://localhost:4001/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
+      // `https://pythonendpoint.herokuapp.com/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
+      `http://localhost:4001/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
     );
 
     res.send(data);
@@ -102,8 +102,8 @@ app.post("/sendstock2", async (req, res, next) => {
     const body = req.body;
 
     const { data } = await axios.post(
-      `https://pythonendpoint.herokuapp.com/api/data/sendstock2/${process.env.SECRET_KEY}`,
-      // `http://localhost:4001/api/data/sendstock2/${process.env.SECRET_KEY}`,
+      // `https://pythonendpoint.herokuapp.com/api/data/sendstock2/${process.env.SECRET_KEY}`,
+      `http://localhost:4001/api/data/sendstock2/${process.env.SECRET_KEY}`,
       body
     );
 

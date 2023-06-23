@@ -31,10 +31,10 @@ const Admin = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const [lastUpdated, setLastUpdated] = useState("");
+  const [memo, setMemo] = useState("");
 
-  const [editingTime, setEditingTime] = useState(false);
-  const [overwriteTimeValue, setOverwriteTimeValue] = useState(null);
+  const [editingMemo, setEditingMemo] = useState(false);
+  const [memoInputValue, setMemoInputValue] = useState("");
 
   function set(num) {
     //means nothing selected
@@ -76,18 +76,13 @@ const Admin = () => {
       data: {
         data: JSON.stringify(s),
         location: JSON.stringify(selectedLocation),
-        time: overwriteTimeValue ? overwriteTimeValue / 1000 : null,
+        memo: JSON.stringify(memoInputValue.length > 0 ? memoInputValue : ""),
       },
     }).then((res) => {
       if (res.status === "success") {
-        const date = new Date(res.time * 1000).toLocaleString("en-US", {
-          timeZone: "America/Chicago",
-        });
-
-        setLastUpdated(date);
+        setMemo(res.memo);
         setLoading(false);
-        setEditingTime(false);
-        setOverwriteTimeValue(null);
+        setEditingMemo(false);
         alert("successfully updated stock");
       }
     });
@@ -115,19 +110,15 @@ const Admin = () => {
               7: 0,
             })
           );
-          setLastUpdated(null);
+          setMemo("");
           setLoading(false);
           return;
         }
 
-        if (res.time) {
-          const date = new Date(res.time * 1000).toLocaleString("en-US", {
-            timeZone: "America/Chicago",
-          });
-
-          setLastUpdated(date);
+        if (res.memo) {
+          setMemo(res.memo);
         } else {
-          setLastUpdated("none");
+          setMemo("");
         }
 
         if (res.stock) {
@@ -228,29 +219,26 @@ const Admin = () => {
             (v) => v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
           )}
         </div>
-
-        <div className='last-set'>Last Updated: {lastUpdated || "No Time"}</div>
-        {!editingTime && (
-          <div className='stock-overwrite' onClick={() => setEditingTime(true)}>
-            Overwrite
+        {memo.length !== 0 && <div className='last-set'>Memo: {memo}</div>}
+        {!editingMemo && (
+          <div className='stock-overwrite' onClick={() => setEditingMemo(true)}>
+            Set Memo
           </div>
         )}
 
-        {editingTime && (
+        {editingMemo && (
           <div className='stock-sd'>
+            <div style={{ fontSize: "12px" }}>Set Memo</div>
             <input
-              type='datetime-local'
-              className='stock-overwriteinput'
-              onChange={(e) =>
-                setOverwriteTimeValue(new Date(e.target.value).getTime())
-              }
+              className='stock-memoinput'
+              onChange={(e) => setMemoInputValue(e.target.value)}
             />
             <div className='stock-con'>
               <span
                 className='stock-cancel'
                 onClick={() => {
-                  setEditingTime(false);
-                  setOverwriteTimeValue(null);
+                  setEditingMemo(false);
+                  setMemoInputValue(null);
                 }}
               >
                 Cancel
