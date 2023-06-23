@@ -217,6 +217,7 @@ const Admin = () => {
   return (
     <div>
       <div className='stock-parent'>
+        <div className='stock-ei'>Admin Two</div>
         <div
           className='stock-location'
           onClick={() => setLocationActive((prev) => !prev)}
