@@ -43,8 +43,6 @@ const App = () => {
       url: `/getstockforalocation/${v?.fetchName}`,
     })
       .then((res) => {
-        console.log(res, "response");
-
         if (
           res === "not found" ||
           !res ||
