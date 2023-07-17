@@ -196,7 +196,7 @@
 
 .location-optcontainer {
   position: absolute;
-  top: 53.5px;
+  top: 51px;
   width: 100%;
   left: -1px;
   background-color: white;
@@ -204,6 +204,10 @@
   border: 1px solid #000;
   border-top: transparent;
   border-radius: 0 0 4px 4px;
+
+  @media only screen and (max-width: 750px) {
+    top: 48.5px;
+  }
 }
 
 .location-rot1 {

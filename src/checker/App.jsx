@@ -202,7 +202,9 @@ const App = () => {
   return (
     <div className='quantity-container'>
       <div className='quantity-locationcontainer'>
-        <div className='location-name2'>Mycha Location Stock Checker</div>
+        <div className='location-name2' style={{ marginBottom: 0 }}>
+          Mycha Location Stock Checker
+        </div>
         <Leaf />
         <div className='location-name2' style={{ marginBottom: "15px" }}>
           Choose a location below
