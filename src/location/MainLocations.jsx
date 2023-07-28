@@ -576,7 +576,7 @@ const MainLocations = () => {
                     }}
                   >
                     <input
-                      className='location-inp locations-w502'
+                      className='location-inp locations-w502 locations-nf'
                       placeholder='Enter Zip Code'
                       type={"text"}
                       ref={inputRef}
