@@ -78,7 +78,41 @@ const location = {
         desc: "",
         image: "../assets/locations/image7.png",
         coordinates: [41.7902097, -87.6055022],
+        fetchName: "UC Med",
+      },
+
+      {
+        id: "uchilibrary",
+        name: "UChicago Library (Joseph Regenstein Library)",
+        address: "1100 E 57th St, Chicago, IL 60637",
+        hours:
+          "Mon – Thurs: 8:00am – 10pm. Fri: 8am – 5pm. Sat - Sun: 9am - 5pm",
+        desc: "",
+        image: "../assets/locations/image7.png",
+        coordinates: [41.7922543, -87.5997913],
         fetchName: "UC Library",
+      },
+
+      {
+        id: "uchiccd",
+        name: "UChicago Medicine Center for Care and Discovery - Hyde Park",
+        address: "5700 S Maryland Ave, Chicago, IL 60637",
+        hours: "Open 24/7",
+        desc: "",
+        image: "../assets/locations/image7.png",
+        coordinates: [41.7904318, -87.6051112],
+        fetchName: "UC Med - CCD West",
+      },
+
+      {
+        id: "nulaw",
+        name: "Northwestern Law (Pritzker School of Law)",
+        address: "375 E Chicago Ave, Chicago, IL 60611",
+        hours: "Unknown",
+        desc: "",
+        image: "../assets/locations/image7.png",
+        coordinates: [41.8965094, -87.6173248],
+        fetchName: "Northwestern Law",
       },
 
       {
@@ -230,6 +264,39 @@ const locationWithoutState = {
       image: "../assets/locations/image7.png",
       coordinates: [41.7902097, -87.6055022],
       fetchName: "UC Library",
+    },
+
+    {
+      id: "uchilibrary",
+      name: "UChicago Library (Joseph Regenstein Library)",
+      address: "1100 E 57th St, Chicago, IL 60637",
+      hours: "Mon – Thurs: 8:00am – 10pm. Fri: 8am – 5pm. Sat - Sun: 9am - 5pm",
+      desc: "",
+      image: "../assets/locations/image7.png",
+      coordinates: [41.7922543, -87.5997913],
+      fetchName: "UC Library",
+    },
+
+    {
+      id: "uchiccd",
+      name: "UChicago Medicine Center for Care and Discovery - Hyde Park",
+      address: "5700 S Maryland Ave, Chicago, IL 60637",
+      hours: "Open 24/7",
+      desc: "",
+      image: "../assets/locations/image7.png",
+      coordinates: [41.7904318, -87.6051112],
+      fetchName: "UC Med - CCD West",
+    },
+
+    {
+      id: "nulaw",
+      name: "Northwestern Law (Pritzker School of Law)",
+      address: "375 E Chicago Ave, Chicago, IL 60611",
+      hours: "Unknown",
+      desc: "",
+      image: "../assets/locations/image7.png",
+      coordinates: [41.8965094, -87.6173248],
+      fetchName: "Northwestern Law",
     },
 
     {
