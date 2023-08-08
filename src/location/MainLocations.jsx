@@ -700,7 +700,7 @@ const MainLocations = () => {
                         </div>
 
                         <a
-                          className='qre-desc'
+                          className='qre-desc qre-directions'
                           href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
                           target='_blank'
                           rel='noopener noreferrer'
@@ -783,7 +783,7 @@ const MainLocations = () => {
                       <div className='qre-desc'>{v.address}</div>
                       <div className='qre-desc'>{v.hours}</div>
                       <a
-                        className='qre-desc'
+                        className='qre-desc qre-directions'
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
                         target='_blank'
                         rel='noopener noreferrer'
