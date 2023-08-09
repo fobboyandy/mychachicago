@@ -217,7 +217,7 @@ const Contact = () => {
         $("#select-location").outerHeight() + "px"
       );
     });
-  }, [showSelect, showSelect2]);
+  }, [showSelect, showSelect2, showRegion]);
 
   const clickout1 = useCallback(() => {
     var $target = $(event.target);
@@ -405,7 +405,6 @@ const Contact = () => {
               <div
                 className='select-container'
                 onClick={() => {
-                  showSelect ? "" : optionSlideIn1();
                   setShowSelect((prev) => !prev);
                 }}
                 style={{ zIndex: 10 }}
@@ -416,28 +415,31 @@ const Contact = () => {
                     : "Machine/Transaction Issue"}
                 </div>
 
-                <div className='li-parent' id='reason-c'>
-                  <div
-                    className='li-contact'
-                    onClick={() => setReason("question/suggestion")}
-                    id='question-suggestion'
-                    style={{ display: showSelect ? "" : "none" }}
-                  >
-                    Question/Suggestion
-                  </div>
+                {showSelect && (
+                  <div className='li-parent' id='reason-c'>
+                    <div
+                      className='li-contact'
+                      onClick={() => setReason("question/suggestion")}
+                      id='question-suggestion'
+                      style={{ display: showSelect ? "" : "none" }}
+                    >
+                      Question/Suggestion
+                    </div>
 
-                  <div
-                    className='li-contact'
-                    onClick={() => setReason("issue")}
-                    id='machine-transaction-issue'
-                    style={{
-                      display: showSelect ? "" : "none",
-                      borderRadius: "0 0 4px 4px",
-                    }}
-                  >
-                    Machine/Transaction Issue
+                    <div
+                      className='li-contact'
+                      onClick={() => setReason("issue")}
+                      id='machine-transaction-issue'
+                      style={{
+                        display: showSelect ? "" : "none",
+                        borderRadius: "0 0 4px 4px",
+                        borderBottom: "none",
+                      }}
+                    >
+                      Machine/Transaction Issue
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {reason === "question/suggestion" ? (
@@ -458,21 +460,24 @@ const Contact = () => {
                     <div className='select-contact2' id='region'>
                       {region?.toUpperCase() || "Select a region"}
                     </div>
-                    <div className='li-parent' id='region-c'>
-                      {Object.keys(locationWithoutState).map((item) => (
-                        <div
-                          className='li-contact2'
-                          onClick={() => setRegion(item)}
-                          style={{
-                            display: !showRegion && "none",
-                            position: "relative",
-                            zIndex: 2,
-                          }}
-                        >
-                          {item?.toUpperCase()}
-                        </div>
-                      ))}
-                    </div>
+                    {showRegion && (
+                      <div className='li-parent' id='region-c'>
+                        {Object.keys(locationWithoutState).map((item, i, a) => (
+                          <div
+                            className='li-contact2'
+                            onClick={() => setRegion(item)}
+                            style={{
+                              display: !showRegion && "none",
+                              position: "relative",
+                              zIndex: 2,
+                              borderBottom: i === a.length - 1 && "none",
+                            }}
+                          >
+                            {item?.toUpperCase()}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {region && (
@@ -491,18 +496,23 @@ const Contact = () => {
                         <div className='select-contact2' id='select-location'>
                           {location?.name || "Select a location"}
                         </div>
-                        <div className='li-parent' id='select-locationc'>
-                          {locationWithoutState[region].map((item) => (
-                            <div
-                              className='li-contact2'
-                              onClick={() => setLocation(item)}
-                              id={`${item.id}-option`}
-                              style={{ display: !showSelect2 && "none" }}
-                            >
-                              {item?.name}
-                            </div>
-                          ))}
-                        </div>
+                        {showSelect2 && (
+                          <div className='li-parent' id='select-locationc'>
+                            {locationWithoutState[region].map((item, i, a) => (
+                              <div
+                                className='li-contact2'
+                                onClick={() => setLocation(item)}
+                                id={`${item.id}-option`}
+                                style={{
+                                  display: !showSelect2 && "none",
+                                  borderBottom: i === a.length - 1 && "none",
+                                }}
+                              >
+                                {item?.name}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
