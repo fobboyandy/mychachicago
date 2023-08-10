@@ -129,70 +129,6 @@ const Contact = () => {
     return valid;
   }
 
-  function optionSlideIn1() {
-    gsap.fromTo(
-      "#question-suggestion",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2 }
-    );
-
-    gsap.fromTo(
-      "#machine-transaction-issue",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.2, delay: 0.1 }
-    );
-  }
-
-  function optionSlideIn2() {
-    gsap.fromTo(
-      "#uiceast-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05 }
-    );
-
-    gsap.fromTo(
-      "#uicwest-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.05 }
-    );
-
-    gsap.fromTo(
-      "#b37-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.1 }
-    );
-
-    gsap.fromTo(
-      "#uicbsb-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.15 }
-    );
-
-    gsap.fromTo(
-      "#rush-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.2 }
-    );
-
-    gsap.fromTo(
-      "#beardpapa-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.25 }
-    );
-
-    gsap.fromTo(
-      "#ucmed-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.3 }
-    );
-
-    gsap.fromTo(
-      "#submarine-option",
-      { opacity: 0, y: "-100%" },
-      { opacity: 1, y: 0, duration: 0.05, delay: 0.35 }
-    );
-  }
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     gsap.fromTo(
@@ -223,7 +159,7 @@ const Contact = () => {
     var $target = $(event.target);
 
     if (
-      !$target.closest(".select-contact2").length &&
+      !$target.closest("#reason").length &&
       !$target.closest(".li-contact").length &&
       showSelect
     ) {
@@ -531,8 +467,11 @@ const Contact = () => {
                       type='radio'
                       onClick={() => setPaymentType("card")}
                       name='paymenttype'
+                      id='card'
                     />
-                    <label className='mleft10'>Card Swipe</label>
+                    <label className='mleft10' htmlFor='card'>
+                      Card Swipe
+                    </label>
                   </div>
 
                   <div className='radio-container'>
@@ -540,8 +479,9 @@ const Contact = () => {
                       type='radio'
                       onClick={() => setPaymentType("mobilewallet")}
                       name='paymenttype'
+                      id='mobilewallet'
                     />
-                    <label className='mleft10'>
+                    <label className='mleft10' htmlFor='mobilewallet'>
                       Mobile Wallet (Google Pay, Apple Pay, etc)
                     </label>
                   </div>
@@ -550,8 +490,11 @@ const Contact = () => {
                       type='radio'
                       onClick={() => setPaymentType("cash")}
                       name='paymenttype'
+                      id='cash'
                     />
-                    <label className='mleft10'>Cash</label>
+                    <label className='mleft10' htmlFor='cash'>
+                      Cash
+                    </label>
                   </div>
 
                   {paymentType === "card" ? (
