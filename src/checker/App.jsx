@@ -226,7 +226,7 @@ const App = () => {
           {showSelectRegion && (
             <div
               className='select-mapparent'
-              style={{ top: $("#select-region").outerHeight() }}
+              style={{ top: $("#select-region").outerHeight() - 1.8 }}
             >
               {Object.keys(locationWithoutState).map((region, i, o) => (
                 <div
@@ -237,6 +237,7 @@ const App = () => {
                   }}
                   style={{
                     display: showSelectRegion ? "" : "none",
+                    borderBottom: i === o.length - 1 && "none",
                     borderRadius: i === o.length - 1 && "0 0 4px 4px",
                   }}
                   key={region}
@@ -252,7 +253,7 @@ const App = () => {
           <div
             className='select-container3'
             id='select-location'
-            style={{ marginTop: "40px" }}
+            style={{ marginTop: "35px" }}
           >
             <div className='select-contact2' id='select-location'>
               {locationWithoutState[selectedRegion].find(
@@ -262,7 +263,7 @@ const App = () => {
             {showSelect && (
               <div
                 className='select-mapparent'
-                style={{ top: $("#select-location").outerHeight() }}
+                style={{ top: $("#select-location").outerHeight() - 1.8 }}
               >
                 {locationWithoutState[selectedRegion]?.map((location, i, o) => (
                   <div
@@ -274,7 +275,8 @@ const App = () => {
                     id={location.id}
                     style={{
                       display: showSelect ? "" : "none",
-                      borderRadius: i === o.length - 1 && "0 0 4px 4px",
+                      borderBottom: i === o.length - 1 && "none",
+                      borderRadius: i === o.length - 1 && "0 0 4px 4px ",
                     }}
                     key={location.id}
                   >

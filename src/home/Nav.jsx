@@ -110,9 +110,10 @@ const Nav = ({ openNav }) => {
           <div
             className='li-nav'
             onClick={() => {
-              loc.pathname === "/menu"
-                ? scrollCatering()
-                : history("/menu", { state: { from: "catering" } });
+              // loc.pathname === "/menu"
+              //   ? scrollCatering()
+              // : history("/menu", { state: { from: "catering" } });
+              history("/catering");
             }}
           >
             Catering

@@ -1,22 +1,24 @@
 import React from "react";
 import Leaf from "../longstuff/Leaf";
 
+import gsap from "gsap";
+
 const Catering = () => {
   return (
-    <div className="catering-parent op0" id="catering-p">
-      <div id="catering-intersectingobserver" />
-      <div className="menu-title" style={{ textAlign: "center" }}>
+    <div className='catering-parent op0' id='catering-p'>
+      <div id='catering-intersectingobserver' />
+      <div className='menu-title' style={{ textAlign: "center" }}>
         Bring Mycha to You!
       </div>
       <Leaf />
-      <div className="catering-desc">
+      <div className='catering-desc'>
         Special moments calls for a grand celebration. Celebrate your big
         moments with all the things you love by your side, such as your favorite
         boba tea. Whether you have an upcoming birthday, wedding reception,
         corporate event, family parties, housewarming, or graduation parties,
         make your special day that much better with Mycha drinks!
       </div>
-      <div className="catering-desc">
+      <div className='catering-desc'>
         All drinks on our{" "}
         <span
           style={{ textDecoration: "underline", cursor: "pointer" }}
@@ -38,7 +40,7 @@ const Catering = () => {
           deliver your favorite drinks to any location!
         </span>
       </div>
-      <div className="catering-desc">
+      <div className='catering-desc'>
         Please fill out the{" "}
         <a
           style={{
@@ -47,9 +49,9 @@ const Catering = () => {
             cursor: "pointer",
             color: "black",
           }}
-          href="https://docs.google.com/forms/d/1JiVqiAvxgzsK34476zkhRa5DtzACCIoqK93hj4JL8lM/viewform?edit_requested=true"
-          target="_blank"
-          rel="noopener noreferrer"
+          href='https://docs.google.com/forms/d/1JiVqiAvxgzsK34476zkhRa5DtzACCIoqK93hj4JL8lM/viewform?edit_requested=true'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Catering Form
         </a>{" "}
@@ -60,12 +62,12 @@ const Catering = () => {
         the order on the day of the event.
       </div>
       <a
-        className="catering-form"
-        href="https://docs.google.com/forms/d/1JiVqiAvxgzsK34476zkhRa5DtzACCIoqK93hj4JL8lM/viewform?edit_requested=true"
-        target="_blank"
-        rel="noopener noreferrer"
+        className='catering-form'
+        href='https://docs.google.com/forms/d/1JiVqiAvxgzsK34476zkhRa5DtzACCIoqK93hj4JL8lM/viewform?edit_requested=true'
+        target='_blank'
+        rel='noopener noreferrer'
       >
-        <span className="catering-formchild">Catering Form</span>
+        <span className='catering-formchild'>Catering Form</span>
       </a>{" "}
     </div>
   );

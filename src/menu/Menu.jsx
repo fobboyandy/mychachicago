@@ -103,22 +103,22 @@ const Menu = () => {
       });
     });
 
-    const observer3 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#catering-p",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.2 }
-          );
-          observer3.unobserve(cater);
-        }
-      });
-    });
+    // const observer3 = new IntersectionObserver((entries, observer) => {
+    //   entries.forEach((entry) => {
+    //     if (entry.isIntersecting) {
+    //       gsap.fromTo(
+    //         "#catering-p",
+    //         { opacity: 0, x: "-10%" },
+    //         { opacity: 1, x: 0, duration: 1.2 }
+    //       );
+    //       observer3.unobserve(cater);
+    //     }
+    //   });
+    // });
 
     observer.observe(milktea);
     observer2.observe(special);
-    observer3.observe(cater);
+    // observer3.observe(cater);
   }, []);
 
   useEffect(() => {

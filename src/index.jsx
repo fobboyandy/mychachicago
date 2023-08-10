@@ -15,6 +15,7 @@ import NotFound from "./NotFound";
 import Contact from "./home/Contact";
 import Admin from "./admin/Admin";
 import AdminTwo from "./admin/AdminTwo";
+import CateringShop from "./catering/CateringShop";
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 
@@ -49,6 +50,8 @@ root.render(
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/menu' element={<Menu />} />
           <Route exact path='/menu/:id' element={<MenuItem />} />
+          <Route exact path='/catering' element={<CateringShop />} />
+
           <Route exact path='/admin' element={<Admin />} />
           <Route exact path='/admin/stock' element={<AdminTwo />} />
 
