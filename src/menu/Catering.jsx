@@ -40,7 +40,7 @@ const Catering = () => {
           deliver your favorite drinks to any location!
         </span>
       </div>
-      <div className='catering-desc'>
+      {/* <div className='catering-desc'>
         Please fill out the{" "}
         <a
           style={{
@@ -60,7 +60,8 @@ const Catering = () => {
         catering services. We kindly ask that for larger parties (200+) please
         give us a two week notice so that our baristas can prepare to fulfill
         the order on the day of the event.
-      </div>
+      </div> */}
+      <div></div>
       <a
         className='catering-form'
         href='https://docs.google.com/forms/d/1JiVqiAvxgzsK34476zkhRa5DtzACCIoqK93hj4JL8lM/viewform?edit_requested=true'

@@ -60,6 +60,17 @@ const location = {
       },
 
       {
+        id: "rushr",
+        name: "Rush University - Rubschlager",
+        address: "1520 W. Harrison St Chicago, IL 60607",
+        hours: "Mon - Fri: 7:30am - 5pm. Sat - Sun: Closed",
+        desc: "",
+        image: "../assets/locations/image5.png",
+        coordinates: [41.874494, -87.6651297],
+        fetchName: "Rush (Rubschlager)",
+      },
+
+      {
         id: "bpapa",
         name: "Beard Papa @ Wicker Park / SALT burgers + fries",
         address: "924 West North Avenue Chicago, IL 60622",
@@ -83,7 +94,7 @@ const location = {
 
       {
         id: "uchilibrary",
-        name: "UChicago Library (Joseph Regenstein Library)",
+        name: "UChicago Library (Joseph Regenstein Library) - Hyde Park",
         address: "1100 E 57th St, Chicago, IL 60637",
         hours:
           "Mon – Thurs: 8:00am – 10pm. Fri: 8am – 5pm. Sat - Sun: 9am - 5pm",
@@ -245,6 +256,17 @@ const locationWithoutState = {
     },
 
     {
+      id: "rushr",
+      name: "Rush University - Rubschlager",
+      address: "1520 W. Harrison St Chicago, IL 60607",
+      hours: "Mon - Fri: 7:30am - 5pm. Sat - Sun: Closed",
+      desc: "",
+      image: "../assets/locations/image5.png",
+      coordinates: [41.874494, -87.6651297],
+      fetchName: "Rush (Rubschlager)",
+    },
+
+    {
       id: "bpapa",
       name: "Beard Papa @ Wicker Park / SALT burgers + fries",
       address: "924 West North Avenue Chicago, IL 60622",
@@ -268,7 +290,7 @@ const locationWithoutState = {
 
     {
       id: "uchilibrary",
-      name: "UChicago Library (Joseph Regenstein Library)",
+      name: "UChicago Library (Joseph Regenstein Library) - Hyde Park",
       address: "1100 E 57th St, Chicago, IL 60637",
       hours: "Mon – Thurs: 8:00am – 10pm. Fri: 8am – 5pm. Sat - Sun: 9am - 5pm",
       desc: "",

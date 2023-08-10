@@ -268,7 +268,7 @@ const Menu = () => {
               </div>
             </div>
           ))}
-          <Catering />
+          {/* <Catering /> */}
         </div>
       </div>
 
