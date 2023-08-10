@@ -4,7 +4,6 @@ import { useForm } from "@formspree/react";
 
 import $ from "jquery";
 import gsap from "gsap";
-import { loc } from "./loc";
 import { locationWithoutState } from "../location/locationsobj";
 
 const Contact = () => {
@@ -142,18 +141,6 @@ const Contact = () => {
       }
     );
   }, []);
-
-  useEffect(() => {
-    $(document).ready(() => {
-      $("#reason-c").css("top", $("#reason").outerHeight() + "px");
-      $("#locationc").css("top", $("#location").outerHeight() + "px");
-      $("#region-c").css("top", $("#region").outerHeight() + "px");
-      $("#select-locationc").css(
-        "top",
-        $("#select-location").outerHeight() + "px"
-      );
-    });
-  }, [showSelect, showSelect2, showRegion]);
 
   const clickout1 = useCallback(() => {
     var $target = $(event.target);
@@ -401,7 +388,10 @@ const Contact = () => {
                         {Object.keys(locationWithoutState).map((item, i, a) => (
                           <div
                             className='li-contact2'
-                            onClick={() => setRegion(item)}
+                            onClick={() => {
+                              setRegion(item);
+                              setLocation(null);
+                            }}
                             style={{
                               display: !showRegion && "none",
                               position: "relative",
