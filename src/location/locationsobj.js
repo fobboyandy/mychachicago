@@ -296,7 +296,7 @@ const locationWithoutState = {
       desc: "",
       image: "../assets/locations/image7.png",
       coordinates: [41.7902097, -87.6055022],
-      fetchName: "UC Library",
+      fetchName: "UC Med",
     },
 
     {
