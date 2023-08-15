@@ -127,6 +127,17 @@ const location = {
       },
 
       {
+        id: "dupagecollege",
+        name: "College of DuPage Health Sciences Center",
+        address: "425 Fawell Blvd, Glen Ellyn, IL 60137",
+        hours: "Unknown",
+        desc: "",
+        image: "../assets/locations/image7.png",
+        coordinates: [41.84243, -88.07373],
+        fetchName: "College of Dupage",
+      },
+
+      {
         id: "unionstation",
         name: "Chicago Union Station",
         address: "225 S Canal St, Chicago, IL 60606",
@@ -319,6 +330,17 @@ const locationWithoutState = {
       image: "../assets/locations/image7.png",
       coordinates: [41.8965094, -87.6173248],
       fetchName: "Northwestern Law",
+    },
+
+    {
+      id: "dupagecollege",
+      name: "College of DuPage Health Sciences Center",
+      address: "425 Fawell Blvd, Glen Ellyn, IL 60137",
+      hours: "Unknown",
+      desc: "",
+      image: "../assets/locations/image7.png",
+      coordinates: [41.84243, -88.07373],
+      fetchName: "College of Dupage",
     },
 
     {
