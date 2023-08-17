@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 import gsap from "gsap";
 
@@ -7,6 +8,8 @@ import Leaf from "../longstuff/Leaf";
 import "./cs.scss";
 
 const CateringShop = () => {
+  const nav = useNavigate();
+
   useEffect(() => {
     $(document).ready(() => {
       gsap.fromTo(
@@ -36,7 +39,10 @@ const CateringShop = () => {
           </div>
           <div className='catering-desc'>
             All drinks on our{" "}
-            <span style={{ textDecoration: "underline", cursor: "pointer" }}>
+            <span
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() => nav("/menu")}
+            >
               menu
             </span>{" "}
             currently are available for catering! Different toppings? Less

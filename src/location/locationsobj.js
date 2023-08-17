@@ -130,7 +130,7 @@ const location = {
         id: "dupagecollege",
         name: "College of DuPage Health Sciences Center",
         address: "425 Fawell Blvd, Glen Ellyn, IL 60137",
-        hours: "Unknown",
+        hours: "Mon - Sun: 5am - 11pm",
         desc: "",
         image: "../assets/locations/image7.png",
         coordinates: [41.84243, -88.07373],
@@ -336,7 +336,8 @@ const locationWithoutState = {
       id: "dupagecollege",
       name: "College of DuPage Health Sciences Center",
       address: "425 Fawell Blvd, Glen Ellyn, IL 60137",
-      hours: "Unknown",
+      hours: "Mon - Sun: 5am - 11pm",
+
       desc: "",
       image: "../assets/locations/image7.png",
       coordinates: [41.84243, -88.07373],

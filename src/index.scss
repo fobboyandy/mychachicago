@@ -13,6 +13,10 @@ img {
   user-select: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 @font-face {
   font-family: "comic_sans_msitalic";
   src: url("../fonts/noitcomic/comic-webfont.eot");

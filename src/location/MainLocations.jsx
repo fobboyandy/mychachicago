@@ -540,7 +540,7 @@ const MainLocations = () => {
                           onLoad(null, location["IL"]["chicago"]);
                           setInfoWindowOpen(false);
                           setSearchActive(false);
-                          mapRef.setZoom(11);
+                          // mapRef.setZoom(11);
                         }}
                       >
                         Chicago

@@ -85,10 +85,14 @@ const Footer = () => {
           &nbsp; (847) 260-8387
         </div>
 
-        <div className='contact-footercontainer'>
+        <a
+          className='contact-footercontainer'
+          href='mailto:mychamachine@gmail.com'
+          style={{ cursor: "pointer" }}
+        >
           <Mail />
           &nbsp; mychamachine@gmail.com
-        </div>
+        </a>
 
         <div className='ul-footer'>
           {loc.pathname === "/" ? (

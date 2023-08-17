@@ -37,27 +37,33 @@ root.render(
   <>
     <React.StrictMode>
       <BrowserRouter>
-        <Nav openNav={openNav} />
-        <Overlay closeNav={closeNav} />
-        <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route exact path='/locations/check' element={<App />} />
-          <Route exact path='/locations/check/:location' element={<App />} />
+        <div style={{ minHeight: "100vh" }}>
+          <Nav openNav={openNav} />
+          <Overlay closeNav={closeNav} />
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route exact path='/locations/check' element={<App />} />
+            <Route exact path='/locations/check/:location' element={<App />} />
 
-          <Route exact path='/locations' element={<MainLocations />} />
-          <Route exact path='/locations/:section' element={<MainLocations />} />
+            <Route exact path='/locations' element={<MainLocations />} />
+            <Route
+              exact
+              path='/locations/:section'
+              element={<MainLocations />}
+            />
 
-          <Route exact path='/contact' element={<Contact />} />
-          <Route exact path='/menu' element={<Menu />} />
-          <Route exact path='/menu/:id' element={<MenuItem />} />
-          <Route exact path='/catering' element={<CateringShop />} />
+            <Route exact path='/contact' element={<Contact />} />
+            <Route exact path='/menu' element={<Menu />} />
+            <Route exact path='/menu/:id' element={<MenuItem />} />
+            <Route exact path='/catering' element={<CateringShop />} />
 
-          <Route exact path='/admin' element={<Admin />} />
-          <Route exact path='/admin/stock' element={<AdminTwo />} />
+            <Route exact path='/admin' element={<Admin />} />
+            <Route exact path='/admin/stock' element={<AdminTwo />} />
 
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-        <Footer />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </div>
       </BrowserRouter>
     </React.StrictMode>
   </>

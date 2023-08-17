@@ -127,6 +127,8 @@ app.post("/sendstock2", async (req, res, next) => {
 // });
 
 app.get("/getstockforalocation/:location", async (req, res, next) => {
+  console.log(req.params.location);
+
   try {
     const { data } = await axios.get(
       `https://pythonendpoint.herokuapp.com/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
