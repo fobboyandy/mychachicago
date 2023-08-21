@@ -142,6 +142,20 @@ app.get("/getstockforalocation/:location", async (req, res, next) => {
   }
 });
 
+app.get("/coordinates/:address", async (req, res, next) => {
+  try {
+    const zipReq = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.VITE_MAPS}&address=${req.params.address}}`
+    );
+
+    console.log(zipReq);
+
+    res.send(zipReq);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
   try {
     const params = req.params;
@@ -149,6 +163,8 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
     const { data } = await axios.get(
       `https://maps.googleapis.com/maps/api/distancematrix/json?key=${process.env.VITE_MAPS}&origins=${params.o1},${params.o2}&destinations=${params.d1},${params.d2}&mode=driving&language=pl-PL`
     );
+
+    console.log(data);
 
     function getMiles(meters) {
       return meters * 0.000621371192;

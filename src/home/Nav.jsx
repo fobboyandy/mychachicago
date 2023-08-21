@@ -91,7 +91,7 @@ const Nav = ({ openNav }) => {
       <Homelogo history={history} />
       <div style={{ flexGrow: 1 }} />
       {width > 750 ? (
-        <div className='li-container' style={{ marginRight: "5%" }}>
+        <div className='li-container'>
           {loc.pathname === "/" ? (
             <div
               className='li-nav'

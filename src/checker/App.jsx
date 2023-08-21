@@ -291,12 +291,17 @@ const App = () => {
         {selected?.id && <div className='app-divider' />}
         {selected?.id && (
           <div className='quantity-information'>
-            <div className='location-name'>{selected?.name}</div>
-            <div className='location-desc' style={{ marginBottom: "15px" }}>
+            <div className='location-name location-acen'>{selected?.name}</div>
+            <div
+              className='location-desc location-acen'
+              style={{ marginBottom: "15px" }}
+            >
               {selected?.address}
             </div>
-            <div>Hours: {selected?.hours}</div>
-            <div>{selected?.desc}</div>
+            <div className='location-acen'>Hours: {selected?.hours}</div>
+            {selected?.desc && (
+              <div className='location-acen'>{selected?.desc}</div>
+            )}
           </div>
         )}
       </div>

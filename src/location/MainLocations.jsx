@@ -160,56 +160,90 @@ const MainLocations = () => {
     place.address_components.forEach((v) => (re = re + " " + v.short_name));
 
     //get the coordinates of the zipcode
-    const zipReq = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?key=${
-        import.meta.env.VITE_MAPS
-      }&address=${re}}`
-    );
+    // const zipReq = await axios.get(`/coordinates/${re}`);
 
-    //if the query is good
-    if (zipReq.data.status === "OK" || zipReq.status === 200) {
-      const center = zipReq.data.results[0].geometry.location;
-      const state = zipReq.data.results[0].address_components.find(
-        (v) => v.types.includes("administrative_area_level_1") //admin area level 1 = state
-      ).short_name;
+    new google.maps.Geocoder().geocode({ address: re }, (result, status) => {
+      //if the query is good
+      if (status === "OK") {
+        const center = result[0].geometry.location;
+        const state = result[0].address_components.find(
+          (v) => v.types.includes("administrative_area_level_1") //admin area level 1 = state
+        ).short_name;
 
-      if (!location[state]) {
-        setQueryLoading(false);
-        setResultsFromQuery([]);
+        if (!location[state]) {
+          setQueryLoading(false);
+          setResultsFromQuery([]);
 
-        return;
-      } //in a state we dont serve, handle this later
+          return;
+        } //in a state we dont serve, handle this later
 
-      const results = [];
-      const t = new Promise((r) => {
-        Object.keys(location[state]).forEach((v) => {
-          //get all cities in a state
-          const loc = location[state][v];
+        const results = [];
+        const distanceMatrix = new google.maps.DistanceMatrixService();
 
-          //for each city, get the driving distance between the zip code and each location's coordinates
-          const b = new Promise(async (resolve, reject) => {
-            //need for loop, foreach gives inconsistient results with await.
-            //literally ran the same query 5 times, gave me 3 different results with foreach. Lesson learned
-            for (let i = 0; i < loc.length; i++) {
-              await $.ajax({
-                type: "GET",
-                url: `/calculatedistance/${center.lat}/${center.lng}/${loc[i].coordinates[0]}/${loc[i].coordinates[1]}`,
-              }).then((res) => {
-                results.push({ ...loc[i], distance: res });
-              });
-            }
+        const t = new Promise((r) => {
+          Object.keys(location[state]).forEach((v) => {
+            //get all cities in a state
+            const loc = location[state][v];
 
-            resolve();
-          });
+            //for each city, get the driving distance between the zip code and each location's coordinates
+            const b = new Promise(async (resolve, reject) => {
+              //need for loop, foreach gives inconsistient results with await.
+              //literally ran the same query 5 times, gave me 3 different results with foreach. Lesson learned
+              for (let i = 0; i < loc.length; i++) {
+                // await $.ajax({
+                //   type: "GET",
+                //   url: `/calculatedistance/${center.lat}/${center.lng}/${loc[i].coordinates[0]}/${loc[i].coordinates[1]}`,
+                // }).then((res) => {
+                //   results.push({ ...loc[i], distance: res });
+                // });
 
-          b.then(() => {
-            r();
+                const start = new google.maps.LatLng(
+                  center.lat(),
+                  center.lng()
+                );
+                const end = new google.maps.LatLng(
+                  loc[i].coordinates[0],
+                  loc[i].coordinates[1]
+                );
+                const re = await distanceMatrix
+                  .getDistanceMatrix({
+                    origins: [start],
+                    destinations: [end],
+                    avoidHighways: false,
+                    avoidTolls: false,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                  })
+                  .then((res) => {
+                    function getMiles(meters) {
+                      return meters * 0.000621371192;
+                    }
+
+                    const miles = getMiles(
+                      res.rows[0].elements[0].distance.value
+                    );
+
+                    results.push({
+                      ...loc[i],
+                      distance: Number(miles.toFixed(2)),
+                    });
+                  });
+              }
+
+              resolve();
+            });
+
+            b.then(() => {
+              r();
+            });
           });
         });
-      });
 
-      t.then(() => unfilteredHandle(results));
-    }
+        t.then(() => {
+          unfilteredHandle(results);
+        });
+      }
+    });
   }
 
   function unfilteredHandle(results) {
@@ -218,7 +252,7 @@ const MainLocations = () => {
 
     const t = new Promise((resolve, reject) => {
       results.forEach((v, i, a) => {
-        if (v.distance.miles <= withinMiles) {
+        if (v.distance <= withinMiles) {
           final.push(v);
         }
 
@@ -238,10 +272,10 @@ const MainLocations = () => {
 
       setResultsFromQuery(
         final.sort(function (a, b) {
-          if (a.distance.miles > b.distance.miles) {
+          if (a.distance > b.distance) {
             return 1;
           }
-          if (a.distance.miles < b.distance.miles) {
+          if (a.distance < b.distance) {
             return -1;
           }
           return 0;
@@ -261,7 +295,7 @@ const MainLocations = () => {
     const result = [];
 
     unfilteredResults.forEach((v, i) => {
-      if (v.distance.miles <= miles) {
+      if (v.distance <= miles) {
         result.push(v);
       }
 
@@ -277,11 +311,11 @@ const MainLocations = () => {
 
         setResultsFromQuery(
           result.sort(function (a, b) {
-            if (a.distance.miles > b.distance.miles) {
+            if (a.distance > b.distance) {
               return 1;
             }
 
-            if (a.distance.miles < b.distance.miles) {
+            if (a.distance < b.distance) {
               return -1;
             }
 
@@ -696,7 +730,7 @@ const MainLocations = () => {
                         <div className='qre-desc'>{v.address}</div>
                         <div className='qre-desc'>Hours: {v.hours}</div>
                         <div className='qre-desc'>
-                          Distance: {v.distance.miles} Miles
+                          Distance: {v.distance} Miles
                         </div>
 
                         <a
