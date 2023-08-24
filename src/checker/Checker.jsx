@@ -105,6 +105,7 @@ const Checker = () => {
       type: "GET",
     })
       .then((res) => {
+        console.log(res);
         dispatch(dispatchSetLocations(res));
         setLoading(false);
       })

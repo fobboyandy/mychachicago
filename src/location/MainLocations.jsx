@@ -528,6 +528,8 @@ const MainLocations = () => {
       type: "GET",
     })
       .then((res) => {
+        console.log(res, "all");
+
         dispatch(dispatchSetLocations(res));
         setLoading(false);
       })

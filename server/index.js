@@ -180,7 +180,7 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
 
 app.get("/fetchalldrinks", async (req, res, next) => {
   try {
-    const { data } = axios.get(
+    const { data } = await axios.get(
       `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/category/fetchall`
     );
 
@@ -192,9 +192,11 @@ app.get("/fetchalldrinks", async (req, res, next) => {
 
 app.get("/fetchallregions", async (req, res, next) => {
   try {
-    const { data } = axios.get(
+    const { data } = await axios.get(
       `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall`
     );
+
+    console.log(data, "data");
 
     res.send(data);
   } catch (error) {
@@ -204,7 +206,7 @@ app.get("/fetchallregions", async (req, res, next) => {
 
 app.get("/fetchdrink/:id", async (req, res, next) => {
   try {
-    const { data } = axios.get(
+    const { data } = await axios.get(
       `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/drink/fetch/${req.params.id}`
     );
 
