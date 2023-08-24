@@ -524,7 +524,7 @@ const MainLocations = () => {
 
   useEffect(() => {
     $.ajax({
-      url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall",
+      url: "/fetchallregions",
       type: "GET",
     })
       .then((res) => {

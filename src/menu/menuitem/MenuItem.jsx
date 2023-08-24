@@ -127,7 +127,7 @@ const MenuItem = () => {
     // setIsLoading(false);
 
     $.ajax({
-      url: `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/drink/fetch/${id}`,
+      url: `/fetchdrink/${id}`,
       type: "GET",
     })
       .then((res) => {

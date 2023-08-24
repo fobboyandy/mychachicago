@@ -157,7 +157,7 @@ const Menu = () => {
     async function f() {
       await $.ajax({
         type: "GET",
-        url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/category/fetchall",
+        url: "/fetchalldrinks",
       })
         .then((res) => {
           dispatch(dispatchSetDrinks(res));

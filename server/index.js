@@ -178,6 +178,42 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
   }
 });
 
+app.get("/fetchalldrinks", async (req, res, next) => {
+  try {
+    const { data } = axios.get(
+      `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/category/fetchall`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/fetchallregions", async (req, res, next) => {
+  try {
+    const { data } = axios.get(
+      `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/fetchdrink/:id", async (req, res, next) => {
+  try {
+    const { data } = axios.get(
+      `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/drink/fetch/${req.params.id}`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // cron.schedule("*/10 * * * *", function () {
 //   console.log(`running every 10 minutes ${new Date(new Date().getTime())}`);
 // });

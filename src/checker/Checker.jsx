@@ -101,7 +101,7 @@ const Checker = () => {
     window.scrollTo({ top: 0 }); //scroll to top, used if user is coming from locations page
 
     $.ajax({
-      url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall",
+      url: "/fetchallregions",
       type: "GET",
     })
       .then((res) => {
