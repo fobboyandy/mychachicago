@@ -12,6 +12,9 @@ import MangoLassi from "./checkerimages/MangoLassi";
 import CoffeeMt from "./checkerimages/CoffeeMt";
 import JasmineMtNoAgar from "./checkerimages/JasmineMtNoAgar";
 import OolongNoAgar from "./checkerimages/OolongNoAgar";
+import StrawberryYakult from "./checkerimages/StrawberryYakult";
+import StrawberryMilkTea from "./checkerimages/StrawberryMilkTea";
+
 import DefaultCup from "./checkerimages/DefaultCup";
 //the reason we use svgs here instead of images is because if we use images, it will take a long time to load. and it will mess up the qtyoverlay
 
@@ -131,6 +134,30 @@ const cups2 = {
 
   "Mango Lassi Large": () => {
     return ReactDOMServer.renderToString(<MangoLassi />);
+  },
+
+  "Strawberry Yakult Large": () => {
+    return ReactDOMServer.renderToString(<StrawberryYakult />);
+  },
+
+  "Strawberry Yakult Small": () => {
+    return ReactDOMServer.renderToString(<StrawberryYakult />);
+  },
+
+  "Strawberry Yakult Large": () => {
+    return ReactDOMServer.renderToString(<StrawberryYakult />);
+  },
+
+  "Strawberry Yakult Small": () => {
+    return ReactDOMServer.renderToString(<StrawberryYakult />);
+  },
+
+  "Strawberry Jasmine Milk Tea Small": () => {
+    return ReactDOMServer.renderToString(<StrawberryMilkTea />);
+  },
+
+  "Strawberry Jasmine Milk Tea Large": () => {
+    return ReactDOMServer.renderToString(<StrawberryMilkTea />);
   },
 
   Snack: () => {

@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { dispatchSetLocations } from "../store/locations";
 
 import $ from "jquery";
 
@@ -12,35 +14,34 @@ import "./quantity.scss";
 import Row from "./Row";
 import Leaf from "../longstuff/Leaf";
 
-const App = () => {
+const Checker = () => {
   const qtyRef = useRef(null);
   const states = useLocation();
   const params = useParams();
+  const dispatch = useDispatch();
+
+  const regionWithLocations = useSelector((state) => state.locations);
 
   const [loading, setLoading] = useState(false);
+  const [allLocations, setAllLocations] = useState([]);
 
   const [selectedRegion, setSelectedRegion] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
   const [selected, setSelected] = useState({});
-
   const [drinkStock, setDrinkStock] = useState({});
-
   const [showSelectRegion, setShowSelectRegion] = useState(false);
-
   const [showSelect, setShowSelect] = useState(false);
-
-  const [ready, setReady] = useState(true);
-
   const [drinks, setDrinks] = useState([]);
 
-  async function handleChange(id, region) {
+  async function handleChange(loc, region) {
     setLoading(true);
-    const v = locationWithoutState[region || selectedRegion].find(
-      (loc) => loc.id === id
-    );
-
+    // const v = locationWithoutState[region || selectedRegion].find(
+    //   (loc) => loc.id === id
+    // );
     await $.ajax({
       type: "GET",
-      url: `/getstockforalocation/${v?.fetchName}`,
+      url: `/getstockforalocation/${loc?.fetchName}`,
     })
       .then((res) => {
         if (
@@ -61,17 +62,14 @@ const App = () => {
           return;
         }
         setDrinks(res);
-
         // const result = {};
-
         // res.forEach((v, p) => {
         //   v.forEach((t, i) => {
         //     result[res[p][i][0]] ||= 0;
         //     result[res[p][i][0]] += res[p][i][1];
         //   });
         // });
-
-        setSelected(v);
+        setSelectedLocation(loc);
         setDrinkStock([]);
         setLoading(false);
       })
@@ -86,10 +84,8 @@ const App = () => {
   //   );
   //   setSelected(obj || {});
   //   setDrinkStock(stock.find((item) => item.id === states.state?.from) || {});
-
   //   window.scrollTo({ top: 0 });
   // }, [states.state?.from]);
-
   // useEffect(() => {
   //   async function f() {
   //     const loc = await $.ajax({
@@ -98,31 +94,59 @@ const App = () => {
   //       console.log(res);
   //     });
   //   }
-
   //   f();
   // }, []);
 
   useEffect(() => {
-    const loc = params.location;
-    const regions = Object.keys(locationWithoutState);
+    window.scrollTo({ top: 0 }); //scroll to top, used if user is coming from locations page
 
-    for (let i = 0; i < regions.length; i++) {
-      const find = locationWithoutState[regions[i]]?.find((v) => v.id === loc);
+    $.ajax({
+      url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall",
+      type: "GET",
+    })
+      .then((res) => {
+        dispatch(dispatchSetLocations(res));
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Something went wrong, please try again");
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!regionWithLocations.length) return;
+
+    const allLoc = regionWithLocations.map((v) => v.locations).flat(Infinity);
+    setAllLocations(allLoc);
+
+    const loc = params.location;
+    // const regions = Object.keys(locationWithoutState);
+    // for (let i = 0; i < regions.length; i++) {
+    //   const find = locationWithoutState[regions[i]]?.find((v) => v.id === loc);
+    //   if (find) {
+    //     setSelectedRegion(regions[i]);
+    //     handleChange(loc, regions[i]);
+    //     break;
+    //   }
+    // }
+
+    if (loc) {
+      const find = allLoc.find((v) => v.id === loc);
 
       if (find) {
-        setSelectedRegion(regions[i]);
-        handleChange(loc, regions[i]);
-        break;
+        setSelectedRegion(find.region.name);
+        handleChange(find);
+        setSelectedLocation(find);
       }
     }
-  }, []);
+  }, [regionWithLocations]);
 
   //handle inspect element resizing
   const resize = useCallback(() => {
     const f =
       document.getElementsByClassName("select-container3")[0]?.offsetHeight;
     let count2 = f;
-
     $(".li-contact").each((index, element) => {
       element.style.top = count2 + "px";
       count2 += element.offsetHeight;
@@ -131,7 +155,6 @@ const App = () => {
 
   useEffect(() => {
     window.addEventListener("resize", resize);
-
     return () => {
       window.removeEventListener("resize", resize);
     };
@@ -165,7 +188,6 @@ const App = () => {
     $(document).ready(() => {
       $("#select-region").hover(hoverRegion, hoverOutRegion);
     });
-
     return () => {
       //remove listeners
       $("#select-location").off();
@@ -176,6 +198,8 @@ const App = () => {
   useEffect(() => {
     $("#select-location").hover(hoverLocation, hoverOutLocation);
   }, [$("#select-location")]);
+
+  console.log(regionWithLocations);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
@@ -209,30 +233,24 @@ const App = () => {
         <div className='location-name2' style={{ marginBottom: "15px" }}>
           Choose a location below
         </div>
-
         <div
           className='select-container3'
           id='select-region'
           style={{ zIndex: 12 }}
         >
           <div className='select-contact2' id='select-region'>
-            {(selectedRegion &&
-              Object.keys(locationWithoutState)
-                .find((v) => v === selectedRegion)
-                .toUpperCase()) ||
-              "Select a Region"}
+            {(selectedRegion && selectedRegion) || "Select a Region"}
           </div>
-
           {showSelectRegion && (
             <div
               className='select-mapparent'
               style={{ top: $("#select-region").outerHeight() - 1.8 }}
             >
-              {Object.keys(locationWithoutState).map((region, i, o) => (
+              {regionWithLocations.map((region, i, o) => (
                 <div
                   className='li-contact'
                   onClick={() => {
-                    setSelectedRegion(region);
+                    setSelectedRegion(region.name);
                     setShowSelectRegion(false);
                   }}
                   style={{
@@ -240,15 +258,14 @@ const App = () => {
                     borderBottom: i === o.length - 1 && "none",
                     borderRadius: i === o.length - 1 && "0 0 4px 4px",
                   }}
-                  key={region}
+                  key={region.name}
                 >
-                  {region.toUpperCase()}
+                  {region?.name?.toUpperCase()}
                 </div>
               ))}
             </div>
           )}
         </div>
-
         {selectedRegion && (
           <div
             className='select-container3'
@@ -256,57 +273,61 @@ const App = () => {
             style={{ marginTop: "35px" }}
           >
             <div className='select-contact2' id='select-location'>
-              {locationWithoutState[selectedRegion].find(
-                (item) => item.id === selected.id
-              )?.name || "Select a location"}
+              {selectedLocation?.name || "Select a location"}
             </div>
             {showSelect && (
               <div
                 className='select-mapparent'
                 style={{ top: $("#select-location").outerHeight() - 1.8 }}
               >
-                {locationWithoutState[selectedRegion]?.map((location, i, o) => (
-                  <div
-                    className='li-contact'
-                    onClick={() => {
-                      handleChange(location.id);
-                      setShowSelect(false);
-                    }}
-                    id={location.id}
-                    style={{
-                      display: showSelect ? "" : "none",
-                      borderBottom: i === o.length - 1 && "none",
-                      borderRadius: i === o.length - 1 && "0 0 4px 4px ",
-                    }}
-                    key={location.id}
-                  >
-                    {location.name}
-                  </div>
-                ))}
+                {regionWithLocations
+                  ?.find(
+                    (v) => v.name.toLowerCase() === selectedRegion.toLowerCase()
+                  )
+                  .locations?.map((location, i, o) => (
+                    <div
+                      className='li-contact'
+                      onClick={() => {
+                        handleChange(location);
+                        setShowSelect(false);
+                      }}
+                      id={location.id}
+                      style={{
+                        display: showSelect ? "" : "none",
+                        borderBottom: i === o.length - 1 && "none",
+                        borderRadius: i === o.length - 1 && "0 0 4px 4px ",
+                      }}
+                      key={location.id}
+                    >
+                      {location.name}
+                    </div>
+                  ))}
               </div>
             )}
           </div>
         )}
-
-        {selected?.id && <div className='app-divider' />}
-        {selected?.id && (
+        {selectedLocation?.id && <div className='app-divider' />}
+        {selectedLocation?.id && (
           <div className='quantity-information'>
-            <div className='location-name location-acen'>{selected?.name}</div>
+            <div className='location-name location-acen'>
+              {selectedLocation?.name}
+            </div>
             <div
               className='location-desc location-acen'
               style={{ marginBottom: "15px" }}
             >
-              {selected?.address}
+              {selectedLocation?.address}
             </div>
-            <div className='location-acen'>Hours: {selected?.hours}</div>
-            {selected?.desc && (
-              <div className='location-acen'>{selected?.desc}</div>
+            <div className='location-acen'>
+              Hours: {selectedLocation?.hours}
+            </div>
+            {selectedLocation?.desc && (
+              <div className='location-acen'>{selectedLocation?.desc}</div>
             )}
           </div>
         )}
       </div>
-
-      {selected.id ? (
+      {selectedLocation?.id ? (
         <div
           style={{
             width: "100%",
@@ -320,7 +341,6 @@ const App = () => {
                 className='machine-imgmain'
                 alt='cup'
               />
-
               <div className='container-cups'>
                 {drinks?.length &&
                   drinks?.map((drink, i) => (
@@ -337,7 +357,6 @@ const App = () => {
       ) : (
         ""
       )}
-
       {loading && (
         <div
           className='lds-ring'
@@ -364,4 +383,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Checker;

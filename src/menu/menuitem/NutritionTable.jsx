@@ -1,14 +1,13 @@
 import React from "react";
 
-const NutritionTable = ({ selectedItem, smallNutrition }) => {
-  if (!smallNutrition?.total_fat[0]) {
-  }
+const NutritionTable = ({ nutrition, index }) => {
+  console.log($(`#tablehead-${index}`).position()?.left);
   return (
-    <table className='table-head'>
+    <table className='table-head' id={`tablehead-${index}`}>
       <tr className='align-left px4-888'>
         <th className='tr-top f500'>Serving Size</th>
         <th className='align-right tr-top f500'>
-          <span>{selectedItem.nutrition?.small?.serving_size}g</span>
+          <span>{nutrition.nutrition.serving_size}g</span>
         </th>
       </tr>
       <tr className='align-left px4-888'>
@@ -19,7 +18,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         </th>
         <th className='align-right tr-top'>
           <span style={{ fontSize: "27px" }}>
-            {selectedItem.nutrition?.small?.calories}
+            {nutrition.nutrition.calories}
           </span>
         </th>
       </tr>
@@ -32,21 +31,25 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
       <tr className='align-left px1-888'>
         <th>
           Total Fat{" "}
-          <span className='f500'>&nbsp;{smallNutrition?.total_fat[0]}g</span>
+          <span className='f500'>
+            &nbsp;{nutrition.nutrition.total_fat[0]}g
+          </span>
         </th>
-        <th className='align-right tr-bot'>{smallNutrition?.total_fat[1]}%</th>
+        <th className='align-right tr-bot'>
+          {nutrition.nutrition.total_fat[1]}%
+        </th>
       </tr>
 
       <tr className='align-left px1-888'>
         <th>
           <span className='f500'>
             &nbsp; &nbsp;&nbsp;&nbsp;Saturated &nbsp;
-            {smallNutrition.saturated_fat[0]}g
+            {nutrition.nutrition.saturated_fat[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.saturated_fat[1]}%
+          {nutrition.nutrition.saturated_fat[1]}%
         </th>
       </tr>
 
@@ -54,7 +57,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp;&nbsp;&nbsp;Trans &nbsp;
-            {smallNutrition.trans_fat}g
+            {nutrition.nutrition.trans_fat}g
           </span>
         </th>
         <th className='align-right tr-bot'></th>
@@ -63,20 +66,20 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
       <tr className='align-left px1-888'>
         <th>
           Sodium{" "}
-          <span className='f500'>&nbsp;{smallNutrition?.sodium[0]}g</span>
+          <span className='f500'>&nbsp;{nutrition.nutrition.sodium[0]}g</span>
         </th>
-        <th className='align-right tr-bot'>{smallNutrition?.sodium[1]}%</th>
+        <th className='align-right tr-bot'>{nutrition.nutrition.sodium[1]}%</th>
       </tr>
 
       <tr className='align-left px1-888'>
         <th>
           Carbohydrates{" "}
           <span className='f500'>
-            &nbsp;{smallNutrition?.total_carbohydrate[0]}g
+            &nbsp;{nutrition.nutrition.total_carbohydrates[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
-          {smallNutrition?.total_carbohydrate[1]}%
+          {nutrition.nutrition.total_carbohydrates[1]}%
         </th>
       </tr>
 
@@ -84,12 +87,12 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Fiber &nbsp;
-            {smallNutrition?.dietary_fiber[0]}g
+            {nutrition.nutrition.dietary_fiber[0]}g
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.dietary_fiber[1]}%
+          {nutrition.nutrition.dietary_fiber[1]}%
         </th>
       </tr>
 
@@ -97,7 +100,7 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Sugars &nbsp;
-            {smallNutrition?.total_sugars}g
+            {nutrition.nutrition.total_sugars}g
           </span>
         </th>
         <th className='align-right tr-bot'></th>
@@ -107,12 +110,12 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
         <th>
           <span className='f500'>
             &nbsp; &nbsp; &nbsp;&nbsp;Includes &nbsp;
-            {smallNutrition?.added_sugars[0]}g Added
+            {nutrition.nutrition.added_sugars[0]}g Added
           </span>
         </th>
         <th className='align-right tr-bot'>
           {" "}
-          {smallNutrition?.added_sugars[1]}%{" "}
+          {nutrition.nutrition.added_sugars[1]}%{" "}
         </th>
       </tr>
 
@@ -121,10 +124,13 @@ const NutritionTable = ({ selectedItem, smallNutrition }) => {
           Protein
           <span className='f500'>
             &nbsp;
-            {smallNutrition?.protein[0]}g
+            {nutrition.nutrition.protein[0]}g
           </span>
         </th>
-        <th className='align-right tr-bot'> {smallNutrition?.protein[1]}%</th>
+        <th className='align-right tr-bot'>
+          {" "}
+          {nutrition.nutrition.protein[1]}%
+        </th>
       </tr>
     </table>
   );

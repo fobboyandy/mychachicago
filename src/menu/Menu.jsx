@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./menu.scss";
 import gsap from "gsap";
 
-import { menuobj } from "./menuobj";
+import { dispatchSetDrinks } from "../store/drinks";
+
+import $ from "jquery";
 
 import MenuCup1 from "./menucups/MenuCup1";
 import Oranges from "./menucups/Oranges";
@@ -12,14 +16,21 @@ import Lime from "./menucups/Lime";
 import Mychamenu from "./menucups/Mychamenu";
 import Pfruit from "./menucups/Pfruit";
 import PockyMenu from "./menucups/PockyMenu";
-import Catering from "./Catering";
 import Leaf from "../longstuff/Leaf";
 
 const Menu = () => {
   const history = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const drinks = useSelector((state) => state.drinks);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (loading) return;
+    if (!drinks?.length) return;
+
     gsap.fromTo(
       "#pfruit",
       { opacity: 0, x: "50%" },
@@ -62,66 +73,30 @@ const Menu = () => {
       { opacity: 1, y: 0, duration: 1.2 }
     );
 
-    gsap.fromTo(
-      "#fruitteasection",
-      { opacity: 0, x: "-10%" },
-      { opacity: 1, x: 0, duration: 1.2 }
-    );
+    drinks.forEach((section) => {
+      const ele = document.getElementsByClassName(
+        `intersecting-${section.id}`
+      )[0];
 
-    const milktea = document.getElementsByClassName(
-      "intersecting-milkteasection"
-    )[0];
-    const special = document.getElementsByClassName(
-      "intersecting-specialsection"
-    )[0];
-
-    const cater = document.getElementById("catering-intersectingobserver");
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#milkteasection",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.2 }
-          );
-          observer.unobserve(milktea);
-        }
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            gsap.fromTo(
+              `#section-${section.id}`,
+              { opacity: 0, x: "-10%" },
+              { opacity: 1, x: 0, duration: 1.2 }
+            );
+            observer.unobserve(ele);
+          }
+        });
       });
+
+      observer.observe(ele);
     });
-
-    const observer2 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#specialsection",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.2 }
-          );
-          observer2.unobserve(special);
-        }
-      });
-    });
-
-    // const observer3 = new IntersectionObserver((entries, observer) => {
-    //   entries.forEach((entry) => {
-    //     if (entry.isIntersecting) {
-    //       gsap.fromTo(
-    //         "#catering-p",
-    //         { opacity: 0, x: "-10%" },
-    //         { opacity: 1, x: 0, duration: 1.2 }
-    //       );
-    //       observer3.unobserve(cater);
-    //     }
-    //   });
-    // });
-
-    observer.observe(milktea);
-    observer2.observe(special);
-    // observer3.observe(cater);
-  }, []);
+  }, [drinks, loading]);
 
   useEffect(() => {
+    if (loading) return;
     if (location.state) {
       switch (location.state.from) {
         case "fruit":
@@ -176,7 +151,38 @@ const Menu = () => {
       { opacity: 0 },
       { opacity: 1, duration: 1.5 }
     );
+  }, [loading]);
+
+  useEffect(() => {
+    async function f() {
+      await $.ajax({
+        type: "GET",
+        url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/category/fetchall",
+      })
+        .then((res) => {
+          dispatch(dispatchSetDrinks(res));
+          setLoading(false);
+        })
+        .catch((err) => {
+          alert("Something went wrong, please try again");
+          setLoading(false);
+        });
+    }
+
+    f();
   }, []);
+
+  if (loading)
+    return (
+      <div className='abs-loading'>
+        <div className='lds-ring' id='spinner-form'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
 
   //nested map so the same code isnt repeated 3 times for the 3 sections
   return (
@@ -198,7 +204,6 @@ const Menu = () => {
         style={{
           position: "",
           top: 0,
-          backgroundColor: "white",
           width: "100%",
           height: "50vh",
           paddingTop: "11vh",
@@ -208,23 +213,21 @@ const Menu = () => {
       />
       <div className='outercontainer-menu'>
         <div className='innercontainer-menu'>
-          {menuobj.map((section) => (
+          {drinks.map((section) => (
             <div
               style={{
                 width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                marginBottom: section.id === "milkteasection" ? "17vh" : "9vh",
+                marginBottom: "9vh",
                 position: "relative",
                 opacity: 0,
               }}
-              id={section.id}
+              id={"section-" + section.id}
               key={section.id}
             >
               <div className={`intersecting-${section.id}`} />
               <div className='menu-title'>
                 <Leaf />
-                {section.section}
+                {section.name}
               </div>
               <div
                 style={{
@@ -233,8 +236,13 @@ const Menu = () => {
                 className='menu-divider'
               />
               <div className='container-sectionmenu'>
-                {section.items.map((item) => (
-                  <div className='menu-half' id={item.htmlid} key={item.htmlid}>
+                {section.drinks.map((item) => (
+                  <div
+                    className='menu-half'
+                    id={item.htmlid}
+                    key={item.htmlid}
+                    style={{ marginBottom: "15px" }}
+                  >
                     <div
                       className='img-menucontainer'
                       style={{
@@ -243,7 +251,13 @@ const Menu = () => {
                     >
                       <div
                         className='img-menu'
-                        style={{ backgroundImage: `url(${item.image})` }}
+                        style={{
+                          backgroundImage: `url(${
+                            !item.img
+                              ? item.pathname
+                              : `data:image/png;base64,${item.img}`
+                          })`,
+                        }}
                       />
                     </div>
 

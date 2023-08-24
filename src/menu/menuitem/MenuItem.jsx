@@ -14,109 +14,150 @@ const MenuItem = () => {
   const history = useNavigate();
 
   const [selectedItem, setSelectedItem] = useState({});
-  const [smallNutrition, setSmallNutrition] = useState({});
-  const [largeNutrition, setLargeNutrition] = useState({});
+  // const [smallNutrition, setSmallNutrition] = useState({});
+  // const [largeNutrition, setLargeNutrition] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const [showDesc, setShowDesc] = useState(true);
   const [showNutrition, setShowNutrition] = useState(false);
 
-  const [smallOrLarge, setSmallOrLarge] = useState(
-    params.id === 8 ? "large" : "small"
-  );
+  // const [smallOrLarge, setSmallOrLarge] = useState(
+  //   params.id === 8 ? "large" : "small"
+  // );
 
-  const [v, setV] = useState("");
+  const [nutritionIndex, setNutritionIndex] = useState(0);
 
   const containerRef = useRef(null);
 
-  function leftScroll() {
-    containerRef.current.scrollLeft += 500;
-    setSmallOrLarge("large");
+  function handleScroll(index) {
+    $(".mitem-tableparent")
+      .stop()
+      .animate(
+        {
+          scrollLeft: $(`#tablehead-${index}`).position()?.left,
+        },
+        0
+      );
   }
 
-  function rightScroll() {
-    containerRef.current.scrollLeft -= 1000;
-    setSmallOrLarge("small");
-  }
+  // function leftScroll() {
+  //   containerRef.current.scrollLeft += 500;
+  //   setSmallOrLarge("large");
+  // }
 
-  useEffect(() => {
-    $(document).ready(() => {
-      const v = document.getElementById("tableparent");
-      setV(v);
-    });
-  }, []);
+  // function rightScroll() {
+  //   containerRef.current.scrollLeft -= 1000;
+  //   setSmallOrLarge("small");
+  // }
 
-  useEffect(() => {
-    if (v === "") return;
-    //loosely eq because params.id is a string
-    if (params.id == 8 || params.id == 7 || params.id == 6) return;
+  // useEffect(() => {
+  //   $(document).ready(() => {
+  //     const v = document.getElementById("tableparent");
+  //     setV(v);
+  //   });
+  // }, []);
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+  // useEffect(() => {
+  //   if (v === "") return;
+  //   //loosely eq because params.id is a string
+  //   // if (params.id == 8 || params.id == 7 || params.id == 6) return;
 
-    function vMouseMove(e) {
-      if (!isDown) return;
+  //   let isDown = false;
+  //   let startX;
+  //   let scrollLeft;
 
-      e.preventDefault();
-      const x = e.pageX - v.scrollLeft;
+  //   function vMouseMove(e) {
+  //     if (!isDown) return;
 
-      const walk = x - startX;
+  //     e.preventDefault();
+  //     const x = e.pageX - v.scrollLeft;
 
-      v.scrollLeft = scrollLeft - walk;
+  //     const walk = x - startX;
 
-      setTimeout(() => {
-        if (v.scrollLeft > v.offsetWidth / 2) {
-          setSmallOrLarge("large");
-        } else {
-          setSmallOrLarge("small");
-        }
-      }, 500);
-    }
+  //     v.scrollLeft = scrollLeft - walk;
 
-    function handleMouseDown(e) {
-      isDown = true;
-      startX = e.pageX - v.scrollLeft;
-      scrollLeft = v.scrollLeft;
-    }
+  //     setTimeout(() => {
+  //       if (v.scrollLeft > v.offsetWidth / 2) {
+  //         setSmallOrLarge("large");
+  //       } else {
+  //         setSmallOrLarge("small");
+  //       }
+  //     }, 500);
+  //   }
 
-    function isDownFalse() {
-      isDown = false;
-    }
+  //   function handleMouseDown(e) {
+  //     isDown = true;
+  //     startX = e.pageX - v.scrollLeft;
+  //     scrollLeft = v.scrollLeft;
+  //   }
 
-    $(document).ready(() => {
-      v?.addEventListener("mousedown", handleMouseDown);
+  //   function isDownFalse() {
+  //     isDown = false;
+  //   }
 
-      v?.addEventListener("mouseup", isDownFalse);
+  //   $(document).ready(() => {
+  //     v?.addEventListener("mousedown", handleMouseDown);
 
-      v?.addEventListener("mouseleave", isDownFalse);
+  //     v?.addEventListener("mouseup", isDownFalse);
 
-      v?.addEventListener("mousemove", vMouseMove);
-    });
+  //     v?.addEventListener("mouseleave", isDownFalse);
 
-    return () => {
-      v?.removeEventListener("mousemove", vMouseMove);
-      v?.removeEventListener("mouseup", isDownFalse);
-      v?.removeEventListener("mouseleave", isDownFalse);
-      v?.removeEventListener("mousedown", handleMouseDown);
-    };
-  }, [v, params.id]);
+  //     v?.addEventListener("mousemove", vMouseMove);
+  //   });
+
+  //   return () => {
+  //     v?.removeEventListener("mousemove", vMouseMove);
+  //     v?.removeEventListener("mouseup", isDownFalse);
+  //     v?.removeEventListener("mouseleave", isDownFalse);
+  //     v?.removeEventListener("mousedown", handleMouseDown);
+  //   };
+  // }, [v, params.id]);
 
   useEffect(() => {
     const id = params.id;
-    if (params.id === "8") {
-      setSmallOrLarge("large");
-    }
+    // if (params.id === "8") {
+    //   setSmallOrLarge("large");
+    // }
 
-    const item = allItems.find((item) => item.id === Number(id));
+    // const item = allItems.find((item) => item.id === Number(id));
 
-    setSelectedItem(item);
-    setSmallNutrition(item?.nutrition.small);
-    setLargeNutrition(item?.nutrition.large);
-    setIsLoading(false);
+    // setSelectedItem(item);
+    // setSmallNutrition(item?.nutrition.small);
+    // setLargeNutrition(item?.nutrition.large);
+    // setIsLoading(false);
+
+    $.ajax({
+      url: `https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/drink/fetch/${id}`,
+      type: "GET",
+    })
+      .then((res) => {
+        console.log(res);
+
+        setSelectedItem(res);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        alert("Something went wrong, please try again");
+        setIsLoading(false);
+      });
   }, [params.id]);
 
-  if (isLoading) return "loading";
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className='abs-loading'>
+        <div className='lds-ring' id='spinner-form'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
 
   if (!isLoading && !selectedItem?.id) {
     return <NotFound />;
@@ -127,7 +168,11 @@ const MenuItem = () => {
       <div style={{ width: "100%" }} className='mitem-parent'>
         <div className='mitem-container'>
           <div className='mitem-imgcontainer'>
-            <img src={selectedItem.image} className='mitem-img' alt='cup' />
+            <img
+              src={selectedItem.img ? selectedItem.img : selectedItem.pathname}
+              className='mitem-img'
+              alt='cup'
+            />
           </div>
           <div className='mitem-tableouter'>
             <div className='mitem-head'>{selectedItem.name}</div>
@@ -184,41 +229,29 @@ const MenuItem = () => {
                 style={{
                   // transform: showNutrition ? "scaleY(1)" : "scaleY(0)",
                   // display: !showNutrition && "none",
-                  maxHeight: showNutrition ? "700px" : 0,
+                  maxHeight: showNutrition ? "600px" : 0,
                 }}
                 className='mitem-height'
               >
                 <div className='mitem-select'>
-                  {selectedItem.id !== 8 && (
-                    <div
-                      className='mitem-selectchild'
-                      style={{
-                        borderBottom:
-                          smallOrLarge === "small" ? "2px solid #888" : "",
-                      }}
-                      onClick={() => {
-                        rightScroll();
-                      }}
-                    >
-                      Small
-                    </div>
-                  )}
-                  {selectedItem.id !== 7 && selectedItem.id !== 6 && (
+                  {selectedItem?.sizes?.map((size, i) => (
                     <div
                       className='mitem-selectchild'
                       onClick={() => {
-                        leftScroll();
+                        // leftScroll();
+                        handleScroll(i);
+                        setNutritionIndex(i);
                       }}
                       style={{
                         borderBottom:
-                          smallOrLarge === "large" ? "2px solid #888" : "",
+                          i === nutritionIndex && "1.5px solid black",
                       }}
                     >
-                      Large
+                      {size?.name[0].toUpperCase().concat(size?.name.slice(1))}
                     </div>
-                  )}
+                  ))}
                 </div>
-                <div
+                {/* <div
                   className='mitem-tableparent'
                   ref={containerRef}
                   id='tableparent'
@@ -238,6 +271,16 @@ const MenuItem = () => {
                         isLoading={isLoading}
                       />
                     )}
+                </div> */}
+
+                <div
+                  className='mitem-tableparent'
+                  ref={containerRef}
+                  id='tableparent'
+                >
+                  {selectedItem?.sizes?.map((size, i) => (
+                    <NutritionTable nutrition={size} index={i} />
+                  ))}
                 </div>
               </div>
             </div>

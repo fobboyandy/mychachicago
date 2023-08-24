@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   GoogleMap,
@@ -20,17 +21,20 @@ import LocationWord from "../longstuff/LocationsWord";
 
 import gsap from "gsap";
 import $ from "jquery";
+import { dispatchSetLocations } from "../store/locations";
 
 const libraries = ["places"];
-
-//sklfhksdjfklsdjfklsd - inpsel2 fix mobile version where the borders are screwed up
 
 const MainLocations = () => {
   const history = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
 
   const autoCompleteRef = useRef(null);
   const inputRef = useRef(null);
+
+  const regionsWithLocations = useSelector((state) => state.locations);
+  const [loading, setLoading] = useState(true);
 
   const [allLocations, setAllLocations] = useState([]);
 
@@ -57,21 +61,28 @@ const MainLocations = () => {
     window.localStorage.getItem("city") || "Chicago"
   );
 
-  const [selectedCityLocations, setSelectedCityLocations] = useState(
-    location[
-      selectedCity === "Chicago"
-        ? "IL"
-        : selectedCity === "Los Angeles"
-        ? "CA"
-        : ""
-    ][
-      selectedCity === "Chicago"
-        ? "chicago"
-        : selectedCity === "Los Angeles"
-        ? "la"
-        : ""
-    ]
-  );
+  const [selectedCityLocations, setSelectedCityLocations] = useState();
+
+  useEffect(() => {
+    if (!regionsWithLocations?.length) return;
+
+    setSelectedCityLocations(
+      regionsWithLocations?.find((v) =>
+        window.localStorage.getItem("city")
+          ? v.name === window.localStorage.getItem("city")
+          : v.name === "Chicago"
+      )?.locations
+    );
+  }, [regionsWithLocations]);
+
+  // console.log(
+  //   regionsWithLocations?.find(
+  //     (v) => v.name === window.localStorage.getItem("city"),
+  //     "find"
+  //   )
+  // );
+
+  console.log(selectedCityLocations, "selected");
 
   const [zipCode, setZipCode] = useState("");
   const [withinMiles, setWithinMiles] = useState(5);
@@ -101,39 +112,42 @@ const MainLocations = () => {
   };
 
   useEffect(() => {
+    if (loading) return;
+
     gsap.fromTo(
       "#locationword",
       { opacity: 0, y: "-70%" },
       { opacity: 1, y: 0, duration: 1.2 }
     );
-  }, []);
+  }, [loading]);
 
-  useEffect(() => {
-    if (!$("#uice").length || !$("#uicw".length)) return;
+  // useEffect(() => {
+  //   if (loading) return;
+  //   if (!$("#uice").length || !$("#uicw".length)) return;
 
-    gsap.fromTo(
-      "#uice",
-      { opacity: 0, x: "-10%" },
-      { opacity: 1, x: 0, duration: 1.4 }
-    );
+  //   gsap.fromTo(
+  //     "#uice",
+  //     { opacity: 0, x: "-10%" },
+  //     { opacity: 1, x: 0, duration: 1.4 }
+  //   );
 
-    gsap.fromTo(
-      "#uicw",
-      { opacity: 0, x: "-10%" },
-      { opacity: 1, x: 0, duration: 1.4 }
-    );
-  }, [selectedSection]);
+  //   gsap.fromTo(
+  //     "#uicw",
+  //     { opacity: 0, x: "-10%" },
+  //     { opacity: 1, x: 0, duration: 1.4 }
+  //   );
+  // }, [selectedSection, loading]);
 
   const onLoad = (map, locations) => {
     if (map) setMapRef(map);
 
     const bounds = new google.maps.LatLngBounds();
     locations
-      ? locations?.forEach(({ coordinates }) =>
-          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+      ? locations?.forEach((v) =>
+          bounds.extend({ lat: v.coordinatesLat, lng: v.coordinatesLong })
         )
-      : selectedCityLocations?.forEach(({ coordinates }) =>
-          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+      : selectedCityLocations?.forEach((v) =>
+          bounds.extend({ lat: v.coordinatesLat, lng: v.coordinatesLong })
         );
 
     map ? map.fitBounds(bounds) : mapRef.fitBounds(bounds);
@@ -180,63 +194,55 @@ const MainLocations = () => {
         const results = [];
         const distanceMatrix = new google.maps.DistanceMatrixService();
 
+        const loc = regionsWithLocations.map((v) => v.locations).flat(Infinity);
+
         const t = new Promise((r) => {
-          Object.keys(location[state]).forEach((v) => {
-            //get all cities in a state
-            const loc = location[state][v];
+          // loc.forEach((v) => {
+          //get all cities in a state
+          // const loc = location[state][v];
 
-            //for each city, get the driving distance between the zip code and each location's coordinates
-            const b = new Promise(async (resolve, reject) => {
-              //need for loop, foreach gives inconsistient results with await.
-              //literally ran the same query 5 times, gave me 3 different results with foreach. Lesson learned
-              for (let i = 0; i < loc.length; i++) {
-                // await $.ajax({
-                //   type: "GET",
-                //   url: `/calculatedistance/${center.lat}/${center.lng}/${loc[i].coordinates[0]}/${loc[i].coordinates[1]}`,
-                // }).then((res) => {
-                //   results.push({ ...loc[i], distance: res });
-                // });
+          //for each city, get the driving distance between the zip code and each location's coordinates
+          const b = new Promise(async (resolve, reject) => {
+            for (let i = 0; i < loc.length; i++) {
+              if (loc[i].state !== state) continue;
 
-                const start = new google.maps.LatLng(
-                  center.lat(),
-                  center.lng()
-                );
-                const end = new google.maps.LatLng(
-                  loc[i].coordinates[0],
-                  loc[i].coordinates[1]
-                );
-                const re = await distanceMatrix
-                  .getDistanceMatrix({
-                    origins: [start],
-                    destinations: [end],
-                    avoidHighways: false,
-                    avoidTolls: false,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                    unitSystem: google.maps.UnitSystem.METRIC,
-                  })
-                  .then((res) => {
-                    function getMiles(meters) {
-                      return meters * 0.000621371192;
-                    }
+              const start = new google.maps.LatLng(center.lat(), center.lng());
+              const end = new google.maps.LatLng(
+                loc[i].coordinatesLat,
+                loc[i].coordinatesLong
+              );
+              const re = await distanceMatrix
+                .getDistanceMatrix({
+                  origins: [start],
+                  destinations: [end],
+                  avoidHighways: false,
+                  avoidTolls: false,
+                  travelMode: google.maps.TravelMode.DRIVING,
+                  unitSystem: google.maps.UnitSystem.METRIC,
+                })
+                .then((res) => {
+                  function getMiles(meters) {
+                    return meters * 0.000621371192;
+                  }
 
-                    const miles = getMiles(
-                      res.rows[0].elements[0].distance.value
-                    );
+                  const miles = getMiles(
+                    res.rows[0].elements[0].distance.value
+                  );
 
-                    results.push({
-                      ...loc[i],
-                      distance: Number(miles.toFixed(2)),
-                    });
+                  results.push({
+                    ...loc[i],
+                    distance: Number(miles.toFixed(2)),
                   });
-              }
+                });
+            }
 
-              resolve();
-            });
-
-            b.then(() => {
-              r();
-            });
+            resolve();
           });
+
+          b.then(() => {
+            r();
+          });
+          // });
         });
 
         t.then(() => {
@@ -247,6 +253,7 @@ const MainLocations = () => {
   }
 
   function unfilteredHandle(results) {
+    console.log("rannn");
     const final = [];
     setUnfilteredResults(results);
 
@@ -264,8 +271,8 @@ const MainLocations = () => {
       if (final.length >= 1) {
         //if we have one or more results, move the map accordingly
         const bounds = new google.maps.LatLngBounds();
-        final.forEach(({ coordinates }) =>
-          bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+        final.forEach((loc) =>
+          bounds.extend({ lat: loc.coordinatesLat, lng: loc.coordinatesLong })
         );
         mapRef.fitBounds(bounds);
       }
@@ -303,8 +310,8 @@ const MainLocations = () => {
         if (result.length > 0) {
           //if we have one or more results, move the map accordingly
           const bounds = new google.maps.LatLngBounds();
-          result.forEach(({ coordinates }) =>
-            bounds.extend({ lat: coordinates[0], lng: coordinates[1] })
+          result.forEach((loc) =>
+            bounds.extend({ lat: loc.coordinatesLat, lng: loc.coordinatesLong })
           );
           mapRef.fitBounds(bounds);
         }
@@ -347,88 +354,89 @@ const MainLocations = () => {
   });
 
   useEffect(() => {
+    if (loading) return;
     window.addEventListener("keydown", handleEnterAutoComplete);
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     const section = params.section;
     setSelectedSection(section || null);
   }, [window.location.href]);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0 });
+  // useEffect(() => {
+  //   window.scrollTo({ top: 0 });
 
-    const one = document.getElementById("intersecting-locations1");
-    const two = document.getElementById("intersecting-locations2");
-    const three = document.getElementById("intersecting-locations3");
+  //   const one = document.getElementById("intersecting-locations1");
+  //   const two = document.getElementById("intersecting-locations2");
+  //   const three = document.getElementById("intersecting-locations3");
 
-    if (!one) return;
-    const observer1 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#b37ped",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //   if (!one) return;
+  //   const observer1 = new IntersectionObserver((entries, observer) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         gsap.fromTo(
+  //           "#b37ped",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          gsap.fromTo(
-            "#uicbsb",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //         gsap.fromTo(
+  //           "#uicbsb",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          observer1.unobserve(one);
-        }
-      });
-    });
+  //         observer1.unobserve(one);
+  //       }
+  //     });
+  //   });
 
-    const observer2 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#rushu",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //   const observer2 = new IntersectionObserver((entries, observer) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         gsap.fromTo(
+  //           "#rushu",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          gsap.fromTo(
-            "#bpapa",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //         gsap.fromTo(
+  //           "#bpapa",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          observer2.unobserve(two);
-        }
-      });
-    });
+  //         observer2.unobserve(two);
+  //       }
+  //     });
+  //   });
 
-    const observer3 = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          gsap.fromTo(
-            "#uchimed",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //   const observer3 = new IntersectionObserver((entries, observer) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         gsap.fromTo(
+  //           "#uchimed",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          gsap.fromTo(
-            "#unionstation",
-            { opacity: 0, x: "-10%" },
-            { opacity: 1, x: 0, duration: 1.4 }
-          );
+  //         gsap.fromTo(
+  //           "#unionstation",
+  //           { opacity: 0, x: "-10%" },
+  //           { opacity: 1, x: 0, duration: 1.4 }
+  //         );
 
-          observer3.unobserve(three);
-        }
-      });
-    });
+  //         observer3.unobserve(three);
+  //       }
+  //     });
+  //   });
 
-    if (window.innerWidth > 700) {
-      observer1.observe(one);
-      observer2.observe(two);
-      observer3.observe(three);
-    }
-  }, [selectedSection]);
+  //   if (window.innerWidth > 700) {
+  //     observer1.observe(one);
+  //     observer2.observe(two);
+  //     observer3.observe(three);
+  //   }
+  // }, [selectedSection]);
 
   function handleSetWithinMiles(v) {
     setWithinMiles(v);
@@ -514,6 +522,21 @@ const MainLocations = () => {
     };
   });
 
+  useEffect(() => {
+    $.ajax({
+      url: "https://mycha-editor-9e9b191d6aa5.herokuapp.com/api/region/fetchall",
+      type: "GET",
+    })
+      .then((res) => {
+        dispatch(dispatchSetLocations(res));
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Something went wrong, please try again");
+        setLoading(false);
+      });
+  }, []);
+
   //all locations
   useEffect(() => {
     const result = [];
@@ -526,6 +549,18 @@ const MainLocations = () => {
 
     setAllLocations(result);
   }, []);
+
+  if (loading)
+    return (
+      <div className='abs-loading'>
+        <div className='lds-ring' id='spinner-form'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
 
   return (
     <div className='location-actualparent'>
@@ -564,37 +599,22 @@ const MainLocations = () => {
                   {selectedCity}
                   {showCityOverlay && (
                     <div className='location-optcontainer'>
-                      <div
-                        className='location-opt'
-                        onClick={() => {
-                          setSelectedCity("Chicago");
-                          setSelectedCityLocations(location["IL"]["chicago"]);
-                          window.localStorage.setItem("city", "Chicago");
-                          setShowCityOverlay(false);
-                          onLoad(null, location["IL"]["chicago"]);
-                          setInfoWindowOpen(false);
-                          setSearchActive(false);
-                          // mapRef.setZoom(11);
-                        }}
-                      >
-                        Chicago
-                      </div>
-
-                      <div
-                        className='location-opt'
-                        onClick={() => {
-                          setSelectedCity("Los Angeles");
-                          setSelectedCityLocations(location["CA"]["la"]);
-                          window.localStorage.setItem("city", "Los Angeles");
-                          setShowCityOverlay(false);
-                          onLoad(null, location["CA"]["la"]);
-                          setInfoWindowOpen(false);
-                          setSearchActive(false);
-                        }}
-                        style={{ borderRadius: "0 0 4px 4px" }}
-                      >
-                        Los Angeles
-                      </div>
+                      {regionsWithLocations?.map((region) => (
+                        <div
+                          className='location-opt'
+                          onClick={() => {
+                            setSelectedCity(region.name);
+                            setSelectedCityLocations(region.locations);
+                            window.localStorage.setItem("city", region.name);
+                            setShowCityOverlay(false);
+                            onLoad(null, region.locations);
+                            setInfoWindowOpen(false);
+                            setSearchActive(false);
+                          }}
+                        >
+                          {region?.name}
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -717,8 +737,8 @@ const MainLocations = () => {
                         onClick={() => {
                           handleMarkerClickOrHover(
                             i,
-                            v.coordinates[0],
-                            v.coordinates[1],
+                            v.coordinatesLat,
+                            v.coordinatesLong,
                             v.address,
                             v.name,
                             v.hours,
@@ -738,6 +758,11 @@ const MainLocations = () => {
                           href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
                           target='_blank'
                           rel='noopener noreferrer'
+                          style={{
+                            paddingBottom: 0,
+                            paddingTop: "5px",
+                            display: "inline-block",
+                          }}
                         >
                           Directions
                         </a>
@@ -785,27 +810,15 @@ const MainLocations = () => {
                         </div>
                       </div>
                     )
-                : location[
-                    selectedCity === "Chicago"
-                      ? "IL"
-                      : selectedCity === "Los Angeles"
-                      ? "CA"
-                      : ""
-                  ][
-                    selectedCity === "Chicago"
-                      ? "chicago"
-                      : selectedCity === "Los Angeles"
-                      ? "la"
-                      : ""
-                  ]?.map((v, i) => (
+                : selectedCityLocations?.map((v, i) => (
                     <div
                       className='locations-querymap'
                       id={`querymap-${v.id}`}
                       onClick={() => {
                         handleMarkerClickOrHover(
                           i,
-                          v.coordinates[0],
-                          v.coordinates[1],
+                          v.coorindatesLat,
+                          v.coordinatesLong,
                           v.address,
                           v.name,
                           v.hours,
@@ -821,6 +834,9 @@ const MainLocations = () => {
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
                         target='_blank'
                         rel='noopener noreferrer'
+                        style={{
+                          paddingBottom: 0,
+                        }}
                       >
                         Directions
                       </a>
@@ -848,20 +864,20 @@ const MainLocations = () => {
                     </div>
                   ))}
             </div>
-            {isLoaded && (
+            {isLoaded && selectedCityLocations && (
               <GoogleMap
                 mapContainerClassName='gmap-container'
                 zoom={10}
                 onLoad={onLoad}
-                options={{ mapTypeControl: false }}
+                options={{ mapTypeControl: false, streetViewControl: false }}
               >
                 {searchActive
                   ? resultsFromQuery.length &&
                     resultsFromQuery.map((v, i) => (
                       <Marker
                         position={{
-                          lat: v?.coordinates[0],
-                          lng: v?.coordinates[1],
+                          lat: v?.coordinatesLat,
+                          lng: v?.coordinatesLong,
                         }}
                         icon={{
                           url: "/assets/machinenobg.jpeg",
@@ -870,8 +886,8 @@ const MainLocations = () => {
                         onClick={() => {
                           handleMarkerClickOrHover(
                             i,
-                            v.coordinates[0],
-                            v.coordinates[1],
+                            v.coordinatesLat,
+                            v.coordinatesLong,
                             v.address,
                             v.name,
                             v.hours,
@@ -923,10 +939,13 @@ const MainLocations = () => {
                                 Hours: {infoWindowData.hours}
                               </div>
                               <a
-                                className='infow-desc'
+                                className='infow-desc qre-directions'
                                 href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
                                 target='_blank'
                                 rel='noopener noreferrer'
+                                style={{
+                                  paddingBottom: 0,
+                                }}
                               >
                                 Directions
                               </a>
@@ -960,8 +979,8 @@ const MainLocations = () => {
                   : selectedCityLocations?.map((v, i) => (
                       <Marker
                         position={{
-                          lat: v?.coordinates[0],
-                          lng: v?.coordinates[1],
+                          lat: v?.coordinatesLat,
+                          lng: v?.coordinatesLong,
                         }}
                         icon={{
                           url: "/assets/machinenobg.jpeg",
@@ -970,8 +989,8 @@ const MainLocations = () => {
                         onClick={() => {
                           handleMarkerClickOrHover(
                             i,
-                            v.coordinates[0],
-                            v.coordinates[1],
+                            v.coordinatesLat,
+                            v.coordinatesLong,
                             v.address,
                             v.name,
                             v.hours,
@@ -1023,10 +1042,15 @@ const MainLocations = () => {
                                 Hours: {infoWindowData.hours}
                               </div>
                               <a
-                                className='infow-desc'
+                                className='infow-desc qre-directions'
                                 href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
                                 target='_blank'
                                 rel='noopener noreferrer'
+                                style={{
+                                  paddingBottom: 0,
+                                  paddingTop: "5px",
+                                  display: "inline-block",
+                                }}
                               >
                                 Directions
                               </a>
