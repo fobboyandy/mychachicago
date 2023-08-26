@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import "./home.scss";
 import $ from "jquery";
 
@@ -9,6 +11,8 @@ import gsap from "gsap";
 
 const Section2 = () => {
   const history = useNavigate();
+
+  const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
     setTimeout(() => {

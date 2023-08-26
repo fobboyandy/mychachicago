@@ -97,30 +97,36 @@ const Menu = () => {
 
   useEffect(() => {
     if (loading) return;
+    if (!drinks?.length) return;
+
     if (location.state) {
       switch (location.state.from) {
         case "fruit":
-          const fruittea = document
-            .getElementById("fruitteasection")
-            .getBoundingClientRect();
+          const fruittea = $(
+            `.intersecting-${drinks.find((v) => v.name === "Fruit Teas").id}`
+          )[0].getBoundingClientRect();
           window.scrollTo({
             top: fruittea.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
           break;
         case "milktea":
-          const milktea = document
-            .getElementById("milkteasection")
-            .getBoundingClientRect();
+          const milktea = $(
+            `.intersecting-${drinks.find((v) => v.name === "Milk Teas").id}`
+          )[0].getBoundingClientRect();
+
           window.scrollTo({
             top: milktea.top + window.pageYOffset - 100,
             behavior: "smooth",
           });
           break;
         case "special":
-          const speciality = document
-            .getElementById("specialsection")
-            .getBoundingClientRect();
+          const speciality = $(
+            `.intersecting-${
+              drinks.find((v) => v.name === "Specialty Drinks").id
+            }`
+          )[0].getBoundingClientRect();
+
           window.scrollTo({
             top: speciality.top + window.pageYOffset - 100,
             behavior: "smooth",
@@ -151,7 +157,7 @@ const Menu = () => {
       { opacity: 0 },
       { opacity: 1, duration: 1.5 }
     );
-  }, [loading]);
+  }, [loading, drinks]);
 
   useEffect(() => {
     async function f() {
