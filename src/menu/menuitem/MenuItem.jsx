@@ -230,6 +230,7 @@ const MenuItem = () => {
                   // transform: showNutrition ? "scaleY(1)" : "scaleY(0)",
                   // display: !showNutrition && "none",
                   maxHeight: showNutrition ? "600px" : 0,
+                  transition: ".6s ease all",
                 }}
                 className='mitem-height'
               >
