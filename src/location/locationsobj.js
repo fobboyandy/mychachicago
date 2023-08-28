@@ -73,7 +73,7 @@ const location = {
       {
         id: "bpapa",
         name: "Beard Papa @ Wicker Park / SALT burgers + fries",
-        address: "924 West North Avenue Chicago, IL 60622",
+        address: "1924 West North Avenue Chicago, IL 60622",
         hours: "Mon – Thu: 11am – 10pm. Fri – Sun: 11am – 10pm.",
         desc: "",
         image: "../assets/locations/image6.png",

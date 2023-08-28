@@ -75,15 +75,6 @@ const MainLocations = () => {
     );
   }, [regionsWithLocations]);
 
-  // console.log(
-  //   regionsWithLocations?.find(
-  //     (v) => v.name === window.localStorage.getItem("city"),
-  //     "find"
-  //   )
-  // );
-
-  console.log(selectedCityLocations, "selected");
-
   const [zipCode, setZipCode] = useState("");
   const [withinMiles, setWithinMiles] = useState(5);
 
@@ -140,6 +131,10 @@ const MainLocations = () => {
 
   const onLoad = (map, locations) => {
     if (map) setMapRef(map);
+
+    console.log(locations);
+
+    if (!map && !locations?.length) return; // if a new region is added and no locations
 
     const bounds = new google.maps.LatLngBounds();
     locations
@@ -253,7 +248,6 @@ const MainLocations = () => {
   }
 
   function unfilteredHandle(results) {
-    console.log("rannn");
     const final = [];
     setUnfilteredResults(results);
 
