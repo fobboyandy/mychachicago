@@ -91,7 +91,6 @@ const Checker = () => {
   //     const loc = await $.ajax({
   //       url: "/fetchlocations",
   //     }).then((res) => {
-  //       console.log(res);
   //     });
   //   }
   //   f();
@@ -105,7 +104,6 @@ const Checker = () => {
       type: "GET",
     })
       .then((res) => {
-        console.log(res);
         dispatch(dispatchSetLocations(res));
         setLoading(false);
       })
@@ -199,8 +197,6 @@ const Checker = () => {
   useEffect(() => {
     $("#select-location").hover(hoverLocation, hoverOutLocation);
   }, [$("#select-location")]);
-
-  console.log(regionWithLocations);
 
   if (!drinkStock?.id && states.state?.from) {
     //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case

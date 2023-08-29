@@ -132,8 +132,6 @@ const MainLocations = () => {
   const onLoad = (map, locations) => {
     if (map) setMapRef(map);
 
-    console.log(locations);
-
     if (!map && !locations?.length) return; // if a new region is added and no locations
 
     const bounds = new google.maps.LatLngBounds();
@@ -522,8 +520,6 @@ const MainLocations = () => {
       type: "GET",
     })
       .then((res) => {
-        console.log(res, "all");
-
         dispatch(dispatchSetLocations(res));
         setLoading(false);
       })

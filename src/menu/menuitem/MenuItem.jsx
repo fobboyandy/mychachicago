@@ -131,8 +131,6 @@ const MenuItem = () => {
       type: "GET",
     })
       .then((res) => {
-        console.log(res);
-
         setSelectedItem(res);
         setIsLoading(false);
       })
@@ -169,7 +167,11 @@ const MenuItem = () => {
         <div className='mitem-container'>
           <div className='mitem-imgcontainer'>
             <img
-              src={selectedItem.img ? selectedItem.img : selectedItem.pathname}
+              src={
+                selectedItem.img
+                  ? `data:image/jpeg;base64,${selectedItem.img}`
+                  : selectedItem.pathname
+              }
               className='mitem-img'
               alt='cup'
             />

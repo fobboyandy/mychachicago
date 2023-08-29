@@ -1,7 +1,6 @@
 import React from "react";
 
 const NutritionTable = ({ nutrition, index }) => {
-  console.log($(`#tablehead-${index}`).position()?.left);
   return (
     <table className='table-head' id={`tablehead-${index}`}>
       <tr className='align-left px4-888'>
