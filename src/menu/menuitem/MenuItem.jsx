@@ -34,7 +34,7 @@ const MenuItem = () => {
       .stop()
       .animate(
         {
-          scrollLeft: $(`#tablehead-${index}`).position()?.left,
+          scrollLeft: "+=" + $(`#tablehead-${index}`).position()?.left,
         },
         0
       );
