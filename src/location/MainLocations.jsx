@@ -177,12 +177,12 @@ const MainLocations = () => {
           (v) => v.types.includes("administrative_area_level_1") //admin area level 1 = state
         ).short_name;
 
-        if (!location[state]) {
-          setQueryLoading(false);
-          setResultsFromQuery([]);
+        // if (!location[state]) {
+        //   setQueryLoading(false);
+        //   setResultsFromQuery([]);
 
-          return;
-        } //in a state we dont serve, handle this later
+        //   return;
+        // } //in a state we dont serve, handle this later
 
         const results = [];
         const distanceMatrix = new google.maps.DistanceMatrixService();
@@ -197,7 +197,7 @@ const MainLocations = () => {
           //for each city, get the driving distance between the zip code and each location's coordinates
           const b = new Promise(async (resolve, reject) => {
             for (let i = 0; i < loc.length; i++) {
-              if (loc[i].state !== state) continue;
+              if (loc[i].region.state !== state) continue;
 
               const start = new google.maps.LatLng(center.lat(), center.lng());
               const end = new google.maps.LatLng(
@@ -809,7 +809,7 @@ const MainLocations = () => {
                       onClick={() => {
                         handleMarkerClickOrHover(
                           i,
-                          v.coorindatesLat,
+                          v.coordinatesLat,
                           v.coordinatesLong,
                           v.address,
                           v.name,
@@ -833,13 +833,7 @@ const MainLocations = () => {
                         Directions
                       </a>
 
-                      <div
-                        className='location-checkqty'
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          history(`/locations/check/${v.id}`);
-                        }}
-                      >
+                      <div className='location-checkqty'>
                         <img
                           src='/assets/leafdivider.png'
                           style={{
@@ -849,7 +843,13 @@ const MainLocations = () => {
                           }}
                           alt='leafdivider'
                         />
-                        <div className='check-stock location-desc'>
+                        <div
+                          className='check-stock location-desc'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            history(`/locations/check/${v.id}`);
+                          }}
+                        >
                           Check Location Stock
                         </div>
                       </div>
