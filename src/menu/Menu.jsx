@@ -242,49 +242,51 @@ const Menu = () => {
                 className='menu-divider'
               />
               <div className='container-sectionmenu'>
-                {section.drinks.map((item) => (
-                  <div
-                    className='menu-half'
-                    id={item.htmlid}
-                    key={item.htmlid}
-                    style={{ marginBottom: "15px" }}
-                  >
+                {section.drinks
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((item) => (
                     <div
-                      className='img-menucontainer'
-                      style={{
-                        border: "2px solid rgb(109, 214, 49) ",
-                      }}
+                      className='menu-half'
+                      id={item.htmlid}
+                      key={item.htmlid}
+                      style={{ marginBottom: "15px" }}
                     >
                       <div
-                        className='img-menu'
+                        className='img-menucontainer'
                         style={{
-                          backgroundImage: `url(${
-                            !item.img
-                              ? item.pathname
-                              : `data:image/png;base64,${item.img}`
-                          })`,
+                          border: "2px solid rgb(109, 214, 49) ",
                         }}
-                      />
-                    </div>
-
-                    <div className='menu-txtcontainer'>
-                      <div className='name-menu'>{item.name}</div>
-                      <div>
+                      >
                         <div
+                          className='img-menu'
                           style={{
-                            cursor: "pointer",
-                            marginTop: "8px",
-                            textDecoration: "underline",
+                            backgroundImage: `url(${
+                              !item.img
+                                ? item.pathname
+                                : `data:image/png;base64,${item.img}`
+                            })`,
                           }}
-                          onClick={() => history(`/menu/${item.id}`)}
-                          className='menu-learnmore'
-                        >
-                          Learn More
+                        />
+                      </div>
+
+                      <div className='menu-txtcontainer'>
+                        <div className='name-menu'>{item.name}</div>
+                        <div>
+                          <div
+                            style={{
+                              cursor: "pointer",
+                              marginTop: "8px",
+                              textDecoration: "underline",
+                            }}
+                            onClick={() => history(`/menu/${item.id}`)}
+                            className='menu-learnmore'
+                          >
+                            Learn More
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           ))}
