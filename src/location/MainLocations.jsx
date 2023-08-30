@@ -143,7 +143,19 @@ const MainLocations = () => {
           bounds.extend({ lat: v.coordinatesLat, lng: v.coordinatesLong })
         );
 
-    map ? map.fitBounds(bounds) : mapRef.fitBounds(bounds);
+    map
+      ? map.fitBounds(bounds, {
+          top: 50,
+          left: 50,
+          right: 50,
+          bottom: 50,
+        })
+      : mapRef.fitBounds(bounds, {
+          top: 50,
+          left: 50,
+          right: 50,
+          bottom: 50,
+        });
   };
 
   async function handlePlaceSearch() {
@@ -266,7 +278,12 @@ const MainLocations = () => {
         final.forEach((loc) =>
           bounds.extend({ lat: loc.coordinatesLat, lng: loc.coordinatesLong })
         );
-        mapRef.fitBounds(bounds);
+        mapRef.fitBounds(bounds, {
+          top: 50,
+          left: 50,
+          right: 50,
+          bottom: 50,
+        });
       }
 
       setResultsFromQuery(
@@ -305,7 +322,12 @@ const MainLocations = () => {
           result.forEach((loc) =>
             bounds.extend({ lat: loc.coordinatesLat, lng: loc.coordinatesLong })
           );
-          mapRef.fitBounds(bounds);
+          mapRef.fitBounds(bounds, {
+            top: 50,
+            left: 50,
+            right: 50,
+            bottom: 50,
+          });
         }
 
         setResultsFromQuery(
