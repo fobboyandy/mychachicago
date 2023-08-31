@@ -990,111 +990,113 @@ const MainLocations = () => {
                         )}
                       </Marker>
                     ))
-                  : selectedCityLocations?.map((v, i) => (
-                      <Marker
-                        position={{
-                          lat: v?.coordinatesLat,
-                          lng: v?.coordinatesLong,
-                        }}
-                        icon={{
-                          url: "/assets/machinenobg.jpeg",
-                          scaledSize: new google.maps.Size(50, 50),
-                        }}
-                        onClick={() => {
-                          handleMarkerClickOrHover(
-                            i,
-                            v.coordinatesLat,
-                            v.coordinatesLong,
-                            v.address,
-                            v.name,
-                            v.hours,
-                            v.id
-                          );
+                  : selectedCityLocations
+                      ?.sort((a, b) => a?.name?.localeCompare(b?.name))
+                      ?.map((v, i) => (
+                        <Marker
+                          position={{
+                            lat: v?.coordinatesLat,
+                            lng: v?.coordinatesLong,
+                          }}
+                          icon={{
+                            url: "/assets/machinenobg.jpeg",
+                            scaledSize: new google.maps.Size(50, 50),
+                          }}
+                          onClick={() => {
+                            handleMarkerClickOrHover(
+                              i,
+                              v.coordinatesLat,
+                              v.coordinatesLong,
+                              v.address,
+                              v.name,
+                              v.hours,
+                              v.id
+                            );
 
-                          //function to calculate total height above our desired element
-                          function calculateTop() {
-                            let result = 0;
-                            selectedCityLocations?.forEach((t, i2) => {
-                              if (i2 >= i) return;
+                            //function to calculate total height above our desired element
+                            function calculateTop() {
+                              let result = 0;
+                              selectedCityLocations?.forEach((t, i2) => {
+                                if (i2 >= i) return;
 
-                              const height = $(
-                                `#querymap-${t.id}`
-                              ).outerHeight();
-                              result += height;
-                            });
+                                const height = $(
+                                  `#querymap-${t.id}`
+                                ).outerHeight();
+                                result += height;
+                              });
 
-                            return result;
-                          }
+                              return result;
+                            }
 
-                          //get total height of all elements above the one we want
-                          const totalHeight = calculateTop();
+                            //get total height of all elements above the one we want
+                            const totalHeight = calculateTop();
 
-                          //use javascript to scroll to that element, so the selected location shows on top
-                          document
-                            .querySelector(".locations-querycontainer")
-                            .scrollTo({
-                              top: totalHeight,
-                            });
-                        }}
-                      >
-                        {infoWindowOpen && infoWindowData?.id === i && (
-                          <InfoWindow
-                            onCloseClick={() => {
-                              setInfoWindowOpen(false);
-                            }}
-                          >
-                            <div className='infow-parent'>
-                              <div className='infow-title'>
-                                {infoWindowData.name}
-                              </div>
+                            //use javascript to scroll to that element, so the selected location shows on top
+                            document
+                              .querySelector(".locations-querycontainer")
+                              .scrollTo({
+                                top: totalHeight,
+                              });
+                          }}
+                        >
+                          {infoWindowOpen && infoWindowData?.id === i && (
+                            <InfoWindow
+                              onCloseClick={() => {
+                                setInfoWindowOpen(false);
+                              }}
+                            >
+                              <div className='infow-parent'>
+                                <div className='infow-title'>
+                                  {infoWindowData.name}
+                                </div>
 
-                              <div className='infow-desc'>
-                                {infoWindowData.address}
-                              </div>
+                                <div className='infow-desc'>
+                                  {infoWindowData.address}
+                                </div>
 
-                              <div className='infow-desc'>
-                                Hours: {infoWindowData.hours}
-                              </div>
-                              <a
-                                className='infow-desc qre-directions'
-                                href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                style={{
-                                  paddingBottom: 0,
-                                  paddingTop: "5px",
-                                  display: "inline-block",
-                                }}
-                              >
-                                Directions
-                              </a>
-
-                              <div className='location-checkqty'>
-                                <img
-                                  src='../assets/leafdivider.png'
+                                <div className='infow-desc'>
+                                  Hours: {infoWindowData.hours}
+                                </div>
+                                <a
+                                  className='infow-desc qre-directions'
+                                  href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
+                                  target='_blank'
+                                  rel='noopener noreferrer'
                                   style={{
-                                    height: "45px",
-                                    width: "45px",
-                                    userSelect: "none",
+                                    paddingBottom: 0,
+                                    paddingTop: "5px",
+                                    display: "inline-block",
                                   }}
-                                  alt='leafdivider'
-                                />
-                                <div
-                                  className='check-stock location-desc'
-                                  onClick={() =>
-                                    history(
-                                      `/locations/check/${infoWindowData.itemid}`
-                                    )
-                                  }
                                 >
-                                  Check Location Stock
+                                  Directions
+                                </a>
+
+                                <div className='location-checkqty'>
+                                  <img
+                                    src='../assets/leafdivider.png'
+                                    style={{
+                                      height: "45px",
+                                      width: "45px",
+                                      userSelect: "none",
+                                    }}
+                                    alt='leafdivider'
+                                  />
+                                  <div
+                                    className='check-stock location-desc'
+                                    onClick={() =>
+                                      history(
+                                        `/locations/check/${infoWindowData.itemid}`
+                                      )
+                                    }
+                                  >
+                                    Check Location Stock
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </InfoWindow>
-                        )}
-                      </Marker>
-                    ))}
+                            </InfoWindow>
+                          )}
+                        </Marker>
+                      ))}
               </GoogleMap>
             )}
           </div>
