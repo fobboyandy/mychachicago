@@ -181,7 +181,8 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
 app.get("/fetchalldrinks", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `${process.env.EDITOR_LINK}/api/category/fetchall`
+      // `${process.env.EDITOR_LINK}/api/category/fetchall`
+      `http://localhost:3005/api/category/fetchall`
     );
 
     res.send(data);

@@ -1,7 +1,7 @@
 //stock checker main component
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dispatchSetLocations } from "../store/locations";
 
@@ -13,14 +13,17 @@ import "./quantity.scss";
 
 import Row from "./Row";
 import Leaf from "../longstuff/Leaf";
+import { dispatchSetDrinks } from "../store/drinks";
 
 const Checker = () => {
   const qtyRef = useRef(null);
   const states = useLocation();
   const params = useParams();
   const dispatch = useDispatch();
+  const nav = useNavigate();
 
   const regionWithLocations = useSelector((state) => state.locations);
+  const drinkState = useSelector((state) => state.drinks); //menu drinks
 
   const [loading, setLoading] = useState(false);
   const [allLocations, setAllLocations] = useState([]);
@@ -32,7 +35,9 @@ const Checker = () => {
   const [drinkStock, setDrinkStock] = useState({});
   const [showSelectRegion, setShowSelectRegion] = useState(false);
   const [showSelect, setShowSelect] = useState(false);
+
   const [drinks, setDrinks] = useState([]);
+  const [drinkImgObj, setDrinkImgObj] = useState({});
 
   async function handleChange(loc, region) {
     setLoading(true);
@@ -99,18 +104,50 @@ const Checker = () => {
   useEffect(() => {
     window.scrollTo({ top: 0 }); //scroll to top, used if user is coming from locations page
 
-    $.ajax({
-      url: "/fetchallregions",
-      type: "GET",
-    })
-      .then((res) => {
-        dispatch(dispatchSetLocations(res));
-        setLoading(false);
+    async function f() {
+      await $.ajax({
+        url: "/fetchallregions",
+        type: "GET",
       })
-      .catch(() => {
-        alert("Something went wrong, please try again");
-        setLoading(false);
-      });
+        .then((res) => {
+          dispatch(dispatchSetLocations(res));
+        })
+        .catch(() => {
+          alert("Something went wrong, please try again");
+        });
+
+      await $.ajax({
+        type: "GET",
+        url: "/fetchalldrinks",
+      })
+        .then((res) => {
+          dispatch(dispatchSetDrinks(res));
+
+          const obj = {};
+          const all = [];
+
+          res.forEach((v) => all.push(...v.drinks));
+
+          all.forEach((drink) => {
+            if (drink.fetchNames) {
+              const t = drink.fetchNames.split(",").map((v) => v.trim());
+
+              t.forEach((name) => {
+                obj[name] ||= drink.img;
+              });
+            }
+          });
+
+          setDrinkImgObj(obj);
+        })
+        .catch((err) => {
+          alert("Something went wrong, please try again");
+        });
+
+      setLoading(false);
+    }
+
+    f();
   }, []);
 
   useEffect(() => {
@@ -139,7 +176,7 @@ const Checker = () => {
         setSelectedLocation(find);
       }
     }
-  }, [regionWithLocations]);
+  }, [regionWithLocations, window.location.href]);
 
   //handle inspect element resizing
   const resize = useCallback(() => {
@@ -285,7 +322,8 @@ const Checker = () => {
                     <div
                       className='li-contact'
                       onClick={() => {
-                        handleChange(location);
+                        // handleChange(location);
+                        nav(`/locations/check/${location.id}`);
                         setShowSelect(false);
                       }}
                       id={location.id}
@@ -343,7 +381,12 @@ const Checker = () => {
                   drinks?.map((drink, i) => (
                     <div className='container-row'>
                       {drink?.map((t, q) => (
-                        <Row selected={t} col={i} row={q} />
+                        <Row
+                          selected={t}
+                          col={i}
+                          row={q}
+                          drinkImgObj={drinkImgObj}
+                        />
                       ))}
                     </div>
                   ))}

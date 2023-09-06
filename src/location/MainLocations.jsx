@@ -842,7 +842,7 @@ const MainLocations = () => {
                     >
                       <div className='qre-title'>{v.name}</div>
                       <div className='qre-desc'>{v.address}</div>
-                      <div className='qre-desc'>{v.hours}</div>
+                      <div className='qre-desc'>Hours: {v.hours}</div>
                       <a
                         className='qre-desc qre-directions'
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}

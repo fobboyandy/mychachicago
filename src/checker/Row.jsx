@@ -1,7 +1,7 @@
 import React from "react";
 import Boba from "./Boba";
 
-const Row = ({ selected, col, row }) => {
+const Row = ({ selected, col, row, drinkImgObj }) => {
   return (
     <div
       className='drow-parent'
@@ -10,7 +10,7 @@ const Row = ({ selected, col, row }) => {
         opacity: selected[1] === 0 && ".3",
       }}
     >
-      <Boba drink={selected[0]} col={col} row={row} />
+      <Boba drink={selected[0]} col={col} row={row} drinkImgObj={drinkImgObj} />
       <div className='drow-stock'>{selected[1]}</div>
     </div>
   );
