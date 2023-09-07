@@ -98,3 +98,49 @@
   height: 3vh;
   margin-top: 12px;
 }
+
+.footer-hov {
+  transition: 0.3s ease all;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 1.5px;
+    opacity: 0;
+    bottom: -1.5px;
+    background-color: black;
+    position: absolute;
+    transition: 0.3s ease all;
+  }
+
+  &:hover {
+    color: black;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.footer-hov-mail {
+  transition: 0.3s ease all;
+  position: relative;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 1.5px;
+    opacity: 0;
+    bottom: -1.5px;
+    background-color: black;
+    position: absolute;
+    transition: 0.3s ease all;
+  }
+}
+
+.footer-hov-mailpa {
+  &:hover > span::before {
+    opacity: 1;
+  }
+}

@@ -86,25 +86,25 @@ const Footer = () => {
         </div>
 
         <a
-          className='contact-footercontainer'
+          className='contact-footercontainer footer-hov-mailpa'
           href='mailto:mychamachine@gmail.com'
           style={{ cursor: "pointer" }}
         >
           <Mail />
-          &nbsp; mychamachine@gmail.com
+          &nbsp; <span className='footer-hov-mail'>mychamachine@gmail.com</span>
         </a>
 
         <div className='ul-footer'>
           {loc.pathname === "/" ? (
             <div
-              className='li-footer'
+              className='li-footer footer-hov'
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Home
             </div>
           ) : (
             <a
-              className='li-footer'
+              className='li-footer footer-hov'
               href='/'
               style={{ textDecoration: "none" }}
             >
@@ -112,7 +112,7 @@ const Footer = () => {
             </a>
           )}
           <div
-            className='li-footer'
+            className='li-footer footer-hov'
             onClick={() => {
               current.slice(current.length - 4, current.length) === "menu"
                 ? scrollCatering()
@@ -122,7 +122,7 @@ const Footer = () => {
             Catering
           </div>
           <div
-            className='li-footer'
+            className='li-footer footer-hov'
             onClick={() => {
               current.slice(current.length - 4, current.length) === "menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -131,11 +131,14 @@ const Footer = () => {
           >
             Menu
           </div>
-          <div className='li-footer' onClick={() => history("/locations")}>
+          <div
+            className='li-footer footer-hov'
+            onClick={() => history("/locations")}
+          >
             Locations
           </div>
           <div
-            className='li-footer'
+            className='li-footer footer-hov'
             onClick={() => {
               loc.pathname === "/contact"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
