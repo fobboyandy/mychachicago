@@ -622,7 +622,12 @@ const MainLocations = () => {
                             setSelectedCityLocations(region.locations);
                             window.localStorage.setItem("city", region.name);
                             setShowCityOverlay(false);
-                            onLoad(null, region.locations);
+                            onLoad(
+                              null,
+                              region.locations.sort(function (a, b) {
+                                return a.name.localeCompare(b.name);
+                              })
+                            );
                             setInfoWindowOpen(false);
                             setSearchActive(false);
                           }}

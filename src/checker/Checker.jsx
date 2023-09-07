@@ -327,7 +327,10 @@ const Checker = () => {
                   ?.find(
                     (v) => v.name.toLowerCase() === selectedRegion.toLowerCase()
                   )
-                  .locations?.map((location, i, o) => (
+                  .locations?.sort(function (a, b) {
+                    return a.name.localeCompare(b.name);
+                  })
+                  ?.map((location, i, o) => (
                     <div
                       className='li-contact'
                       onClick={() => {
