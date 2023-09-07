@@ -22,6 +22,7 @@ import LocationWord from "../longstuff/LocationsWord";
 import gsap from "gsap";
 import $ from "jquery";
 import { dispatchSetLocations } from "../store/locations";
+import { findURLInString } from "../helperfunctions";
 
 const libraries = ["places"];
 
@@ -842,7 +843,30 @@ const MainLocations = () => {
                     >
                       <div className='qre-title'>{v.name}</div>
                       <div className='qre-desc'>{v.address}</div>
-                      <div className='qre-desc'>Hours: {v.hours}</div>
+                      <div className='qre-desc'>
+                        Hours:{" "}
+                        {findURLInString(v.hours)?.length > 0
+                          ? (function () {
+                              const find = findURLInString(v.hours)[0]; //find the link
+                              const index = v.hours.indexOf(find); //get index of link
+                              return (
+                                <div>
+                                  {v.hours.slice(0, index)}{" "}
+                                  <a
+                                    href={find}
+                                    className='qre-directions'
+                                    target='_blank'
+                                    rel='noreferrer'
+                                    onClick={(e) => e.stopPropagation()}
+                                  >
+                                    {find}
+                                  </a>
+                                  {v.hours.slice(index + find.length)}
+                                </div>
+                              );
+                            })()
+                          : v.hours}
+                      </div>
                       <a
                         className='qre-desc qre-directions'
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}

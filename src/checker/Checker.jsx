@@ -129,11 +129,19 @@ const Checker = () => {
           res.forEach((v) => all.push(...v.drinks));
 
           all.forEach((drink) => {
-            if (drink.fetchNames) {
-              const t = drink.fetchNames.split(",").map((v) => v.trim());
+            if (drink.machineImg.length > 0) {
+              // const t = drink.fetchNames.split(",").map((v) => v.trim());
 
-              t.forEach((name) => {
-                obj[name] ||= drink.img;
+              // t.forEach((name) => {
+              //   obj[name] ||= drink.img;
+              // });
+
+              drink.machineImg.forEach((mci) => {
+                const t = mci.fetchNames.split(",").map((v) => v.trim());
+
+                t.forEach((name) => {
+                  obj[name] ||= mci;
+                });
               });
             }
           });

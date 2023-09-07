@@ -9,14 +9,18 @@ import ImagetoSvg from "./checkerimages/ImgtoSvg";
 const Boba = ({ drink, col, row, drinkImgObj }) => {
   useEffect(() => {
     let v = document.getElementById(`${drink}-cup-${col}-${row}`);
-    const id = drink;
 
     // v.innerHTML = cups2[id]
     //   ? JSON.parse(JSON.stringify(cups2[id]()))
     //   : cups2.default;
 
     v.innerHTML = drinkImgObj[drink]
-      ? ReactDOMServer.renderToString(<ImagetoSvg image={drinkImgObj[drink]} />)
+      ? ReactDOMServer.renderToString(
+          <ImagetoSvg
+            image={drinkImgObj[drink]?.img}
+            idv={drinkImgObj[drink]?.id}
+          />
+        )
       : cups2.default;
   }, [drink]);
 

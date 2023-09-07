@@ -195,6 +195,7 @@ app.get("/fetchallregions", async (req, res, next) => {
   try {
     const { data } = await axios.get(
       `${process.env.EDITOR_LINK}/api/region/fetchall`
+      // "http://localhost:3005/api/region/fetchall"
     );
 
     console.log(data, "data");
