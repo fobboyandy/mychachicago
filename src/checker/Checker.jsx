@@ -138,17 +138,21 @@ const Checker = () => {
               // t.forEach((name) => {
               //   obj[name] ||= drink.img;
               // });
+              console.log(drink, "drink");
 
               drink.machineImg.forEach((mci) => {
                 const t = mci.fetchNames.split(",").map((v) => v.trim());
-
+                console.log(mci, "mci");
                 t.forEach((name) => {
+                  console.log(name, "name");
+
                   obj[name] ||= mci;
                 });
               });
             }
           });
 
+          console.log(obj, "obj");
           setDrinkImgObj(obj);
         })
         .catch((err) => {
