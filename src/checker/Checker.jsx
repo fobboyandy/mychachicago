@@ -38,6 +38,7 @@ const Checker = () => {
 
   const [drinks, setDrinks] = useState([]);
   const [drinkImgObj, setDrinkImgObj] = useState({});
+  const [imgReady, setImgReady] = useState(false);
 
   async function handleChange(loc, region) {
     setLoading(true);
@@ -76,7 +77,6 @@ const Checker = () => {
         // });
         setSelectedLocation(loc);
         setDrinkStock([]);
-        setLoading(false);
       })
       .catch(() => {
         alert("Something went wrong, please try again");
@@ -127,9 +127,6 @@ const Checker = () => {
           const all = [];
 
           res.forEach((v) => all.push(...v.drinks));
-          console.log(all, "all");
-
-          console.log(res, "resp0onse");
 
           all.forEach((drink) => {
             if (drink.machineImg.length > 0) {
@@ -138,28 +135,23 @@ const Checker = () => {
               // t.forEach((name) => {
               //   obj[name] ||= drink.img;
               // });
-              console.log(drink, "drink");
 
               drink.machineImg.forEach((mci) => {
                 const t = mci.fetchNames.split(",").map((v) => v.trim());
-                console.log(mci, "mci");
                 t.forEach((name) => {
-                  console.log(name, "name");
-
                   obj[name] ||= mci;
                 });
               });
             }
           });
 
-          console.log(obj, "obj");
           setDrinkImgObj(obj);
+          setImgReady(true);
+          setLoading(false);
         })
         .catch((err) => {
           alert("Something went wrong, please try again");
         });
-
-      setLoading(false);
     }
 
     f();
@@ -392,7 +384,8 @@ const Checker = () => {
                 alt='cup'
               />
               <div className='container-cups'>
-                {drinks?.length &&
+                {imgReady &&
+                  drinks?.length &&
                   drinks?.map((drink, i) => (
                     <div className='container-row'>
                       {drink?.map((t, q) => (
