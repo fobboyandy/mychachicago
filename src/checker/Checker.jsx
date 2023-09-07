@@ -127,6 +127,9 @@ const Checker = () => {
           const all = [];
 
           res.forEach((v) => all.push(...v.drinks));
+          console.log(all, "all");
+
+          console.log(res, "resp0onse");
 
           all.forEach((drink) => {
             if (drink.machineImg.length > 0) {
