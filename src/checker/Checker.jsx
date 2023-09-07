@@ -40,7 +40,7 @@ const Checker = () => {
   const [drinkImgObj, setDrinkImgObj] = useState({});
   const [imgReady, setImgReady] = useState(false);
 
-  async function handleChange(loc, region) {
+  async function handleChange(loc) {
     setLoading(true);
     // const v = locationWithoutState[region || selectedRegion].find(
     //   (loc) => loc.id === id
@@ -77,6 +77,8 @@ const Checker = () => {
         // });
         setSelectedLocation(loc);
         setDrinkStock([]);
+
+        setLoading(false);
       })
       .catch(() => {
         alert("Something went wrong, please try again");
@@ -405,7 +407,7 @@ const Checker = () => {
       ) : (
         ""
       )}
-      {loading && (
+      {(!imgReady || loading) && (
         <div
           className='lds-ring'
           style={{
