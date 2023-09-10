@@ -1,8 +1,6 @@
 import React from "react";
 import Leaf from "../longstuff/Leaf";
 
-import gsap from "gsap";
-
 const Catering = () => {
   return (
     <div className='catering-parent op0' id='catering-p'>

@@ -19,6 +19,7 @@ import AdminTwo from "./admin/AdminTwo";
 import CateringShop from "./catering/CateringShop";
 
 import Checker from "./checker/Checker";
+import axios from "axios";
 
 export default function App() {
   function openNav() {
@@ -32,6 +33,18 @@ export default function App() {
   // window.onbeforeunload = function () {
   //   window.scrollTo(0, 0);
   // };
+
+  useEffect(() => {
+    async function f() {
+      await axios.get("/traffic").then(async (res) => {
+        const { data } = res;
+
+        await axios.put("/t", { id: data[0].id });
+      });
+    }
+
+    f();
+  }, []);
 
   return (
     <div>

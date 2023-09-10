@@ -9,6 +9,8 @@ import { dispatchSetDrinks } from "../store/drinks";
 
 import $ from "jquery";
 
+import Catering from "./Catering";
+
 import MenuCup1 from "./menucups/MenuCup1";
 import Oranges from "./menucups/Oranges";
 import Grapefruit from "./menucups/Grapefruit";
@@ -93,6 +95,25 @@ const Menu = () => {
 
       observer.observe(ele);
     });
+
+    const cateringele = document.getElementById(
+      "catering-intersectingobserver"
+    );
+
+    const cateringobserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          gsap.fromTo(
+            `#catering-p`,
+            { opacity: 0, x: "-10%" },
+            { opacity: 1, x: 0, duration: 1.2 }
+          );
+          observer.unobserve(cateringele);
+        }
+      });
+    });
+
+    cateringobserver.observe(cateringele);
   }, [drinks, loading]);
 
   useEffect(() => {
@@ -181,8 +202,6 @@ const Menu = () => {
       f();
     }
   }, [drinks]);
-
-  console.log(drinks);
 
   if (loading)
     return (
@@ -296,7 +315,7 @@ const Menu = () => {
               </div>
             </div>
           ))}
-          {/* <Catering /> */}
+          <Catering />
         </div>
       </div>
 

@@ -127,8 +127,6 @@ app.post("/sendstock2", async (req, res, next) => {
 // });
 
 app.get("/getstockforalocation/:location", async (req, res, next) => {
-  console.log(req.params.location);
-
   try {
     const { data } = await axios.get(
       `https://pythonendpoint.herokuapp.com/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
@@ -148,8 +146,6 @@ app.get("/coordinates/:address", async (req, res, next) => {
       `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.VITE_MAPS}&address=${req.params.address}}`
     );
 
-    console.log(zipReq);
-
     res.send(zipReq);
   } catch (error) {
     next(error);
@@ -163,8 +159,6 @@ app.get("/calculatedistance/:o1/:o2/:d1/:d2", async (req, res, next) => {
     const { data } = await axios.get(
       `https://maps.googleapis.com/maps/api/distancematrix/json?key=${process.env.VITE_MAPS}&origins=${params.o1},${params.o2}&destinations=${params.d1},${params.d2}&mode=driving&language=pl-PL`
     );
-
-    console.log(data);
 
     function getMiles(meters) {
       return meters * 0.000621371192;
@@ -198,8 +192,6 @@ app.get("/fetchallregions", async (req, res, next) => {
       // "http://localhost:3005/api/region/fetchall"
     );
 
-    console.log(data, "data");
-
     res.send(data);
   } catch (error) {
     next(error);
@@ -218,9 +210,32 @@ app.get("/fetchdrink/:id", async (req, res, next) => {
   }
 });
 
-// cron.schedule("*/10 * * * *", function () {
-//   console.log(`running every 10 minutes ${new Date(new Date().getTime())}`);
-// });
+app.get("/traffic", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.EDITOR_LINK}/api/traffic/fetchall`
+      // `http://localhost:3005/api/traffic/fetchall`
+    );
+
+    res.send(data).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.put("/t", async (req, res, next) => {
+  try {
+    const { data } = await axios.put(
+      `${process.env.EDITOR_LINK}/api/traffic/addone`,
+      // `http://localhost:3005/api/traffic/addone`,
+      { id: req.body.id }
+    );
+
+    res.send("~~~!!!!!BEST MILK TEA EVER!!!!!~~~");
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
