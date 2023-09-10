@@ -111,7 +111,7 @@ const Footer = () => {
               Home
             </a>
           )}
-          <div
+          {/* <div
             className='li-footer footer-hov'
             onClick={() => {
               current.slice(current.length - 4, current.length) === "menu"
@@ -120,11 +120,11 @@ const Footer = () => {
             }}
           >
             Catering
-          </div>
+          </div> */}
           <div
             className='li-footer footer-hov'
             onClick={() => {
-              current.slice(current.length - 4, current.length) === "menu"
+              loc.pathname === "/menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
                 : history("/menu");
             }}
@@ -137,6 +137,18 @@ const Footer = () => {
           >
             Locations
           </div>
+
+          <div
+            className='li-footer footer-hov'
+            onClick={() => {
+              loc.pathname === "/locations/check"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/locations/check");
+            }}
+          >
+            Stock Checker
+          </div>
+
           <div
             className='li-footer footer-hov'
             onClick={() => {

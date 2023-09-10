@@ -230,31 +230,31 @@ const Checker = () => {
   }, []);
 
   useEffect(() => {
-    $(document).ready(() => {
-      $("#select-region").hover(hoverRegion, hoverOutRegion);
-    });
+    if (!imgReady) return;
+    $("#select-region").hover(hoverRegion, hoverOutRegion);
     return () => {
       //remove listeners
       $("#select-location").off();
       $("#select-region").off();
     };
-  }, []);
+  }, [imgReady]);
 
   useEffect(() => {
+    if (!imgReady) return;
     $("#select-location").hover(hoverLocation, hoverOutLocation);
-  }, [$("#select-location")]);
+  }, [$("#select-location"), imgReady]);
 
-  if (!drinkStock?.id && states.state?.from) {
-    //drinkstock.id without ? threw an error once, i couldnt reproduce. I will keep the ? just in case
+  if (!imgReady) {
     return (
       <div
         className='lds-ring'
         style={{
           width: "100%",
-          height: "60vh",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          zIndex: 11,
         }}
         id='spinner-form'
       >
@@ -410,7 +410,8 @@ const Checker = () => {
       ) : (
         ""
       )}
-      {(!imgReady || loading) && (
+
+      {loading && (
         <div
           className='lds-ring'
           style={{
