@@ -1,0 +1,61 @@
+.ct-parent {
+  margin: 50px 0;
+  width: 100%;
+}
+
+.ct-table {
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 70%;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 750px) {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: 95%;
+  }
+
+  & thead tr {
+    background-color: rgb(109, 214, 49);
+    color: #ffffff;
+  }
+
+  & tbody tr td,
+  thead tr th {
+    padding: 12px 15px;
+    text-align: center;
+  }
+
+  & tbody tr td:nth-child(1) {
+    height: 130px;
+    box-sizing: border-box;
+
+    @media only screen and (max-width: 500px) {
+      height: 100px;
+    }
+
+    @media only screen and (max-width: 400px) {
+      height: 90px;
+    }
+  }
+
+  & tbody tr {
+    border-bottom: 1px solid #dddddd;
+    cursor: pointer;
+    transition: 0.3s ease all;
+
+    &:last-of-type {
+      border-bottom: 2px solid rgb(109, 214, 49);
+    }
+
+    &:hover {
+      background-color: rgba(109, 214, 49, 0.3);
+    }
+  }
+}

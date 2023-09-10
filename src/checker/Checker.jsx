@@ -14,6 +14,7 @@ import "./quantity.scss";
 import Row from "./Row";
 import Leaf from "../longstuff/Leaf";
 import { dispatchSetDrinks } from "../store/drinks";
+import CheckerTable from "./checkertable/CheckerTable";
 
 const Checker = () => {
   const qtyRef = useRef(null);
@@ -32,12 +33,12 @@ const Checker = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const [selected, setSelected] = useState({});
-  const [drinkStock, setDrinkStock] = useState({});
   const [showSelectRegion, setShowSelectRegion] = useState(false);
   const [showSelect, setShowSelect] = useState(false);
 
   const [drinks, setDrinks] = useState([]);
-  const [drinkImgObj, setDrinkImgObj] = useState({});
+  const [drinkImgObj, setDrinkImgObj] = useState(null);
+  const [tableInfo, setTableInfo] = useState(null);
   const [imgReady, setImgReady] = useState(false);
 
   async function handleChange(loc) {
@@ -56,20 +57,21 @@ const Checker = () => {
             res === "" ||
             typeof res !== "object"
           ) {
-            if (count < 6) {
-              //less than 6 requests, keep running
+            //wont prevent all errors, but will decrease by alot for sure
+            if (count < 9) {
+              //less than 9 requests, keep running
               f(count + 1); //if return is nothing, meaning error, just rerun and eventually it will work
               return;
             } else {
-              alert("Something went wrong, please refresh page"); //if doesnt work after 5 times, throw error
+              alert("Something went wrong, please refresh page"); //if doesnt work after 8 times, throw error
               setLoading(false);
               setDrinks([]);
             }
           }
+
           setDrinks(res);
 
           setSelectedLocation(loc);
-          setDrinkStock([]);
 
           setLoading(false);
         })
@@ -81,23 +83,30 @@ const Checker = () => {
     f(0);
   }
 
-  // useEffect(() => {
-  //   const obj = location["IL"]["chicago"].find(
-  //     (item) => item.id === states.state?.from
-  //   );
-  //   setSelected(obj || {});
-  //   setDrinkStock(stock.find((item) => item.id === states.state?.from) || {});
-  //   window.scrollTo({ top: 0 });
-  // }, [states.state?.from]);
-  // useEffect(() => {
-  //   async function f() {
-  //     const loc = await $.ajax({
-  //       url: "/fetchlocations",
-  //     }).then((res) => {
-  //     });
-  //   }
-  //   f();
-  // }, []);
+  useEffect(() => {
+    if (!drinkImgObj) return;
+    if (!drinks.length) return;
+
+    const obj = {};
+
+    Object.keys(drinkImgObj).forEach(
+      (v) => (obj[v] ||= { quantity: 0, v: drinkImgObj[v] })
+    );
+
+    drinks.forEach((v) => {
+      v.forEach((vi) => {
+        if (
+          vi[0] === "Snack Small" ||
+          vi[0] === "Snack" ||
+          vi[0] === "Snack Large"
+        )
+          return;
+        obj[vi[0]].quantity += Number(vi[1]);
+      });
+    });
+
+    setTableInfo(obj);
+  }, [drinkImgObj, drinks]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 }); //scroll to top, used if user is coming from locations page
@@ -361,9 +370,19 @@ const Checker = () => {
             >
               {selectedLocation?.address}
             </div>
-            <div className='location-acen'>
+            <div className='location-acen location-desc'>
               Hours: {selectedLocation?.hours}
             </div>
+
+            <a
+              className='location-acen qre-directions location-desc'
+              target='_blank'
+              rel='noreferrer'
+              href={`https://www.google.com/maps/dir/?api=1&destination=${selectedLocation.address}`}
+              style={{ marginTop: "15px" }}
+            >
+              Directions
+            </a>
             {selectedLocation?.desc && (
               <div className='location-acen'>{selectedLocation?.desc}</div>
             )}
@@ -402,6 +421,8 @@ const Checker = () => {
               </div>
             </div>
           </div>
+
+          {tableInfo && <CheckerTable info={tableInfo} />}
         </div>
       ) : (
         ""
