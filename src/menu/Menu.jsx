@@ -175,8 +175,14 @@ const Menu = () => {
         });
     }
 
-    f();
-  }, []);
+    if (drinks.length > 0) {
+      setLoading(false);
+    } else {
+      f();
+    }
+  }, [drinks]);
+
+  console.log(drinks);
 
   if (loading)
     return (

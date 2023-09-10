@@ -63,42 +63,55 @@ const Overlay = ({ closeNav }) => {
     }, 800);
   }
 
+  function goChecker() {
+    closeNav();
+    setTimeout(() => {
+      loc.pathname === "/locations/check"
+        ? window.scrollTo({ top: 0, behavior: "smooth" })
+        : history("/locations/check");
+    }, 800);
+  }
+
   useEffect(() => {
     setCurrent(window.location.href);
   }, [window.location.href]);
 
   return (
-    <div className="overlay-nav">
-      <div className="x-container" onClick={() => closeNav()}>
-        <div id="x" />
+    <div className='overlay-nav'>
+      <div className='x-container' onClick={() => closeNav()}>
+        <div id='x' />
       </div>
       {loc.pathname === "/" ? (
-        <div onClick={() => goHome()} className="overlay-child">
+        <div onClick={() => goHome()} className='overlay-child'>
           Home
         </div>
       ) : (
         <a
-          className="overlay-child"
-          href="/"
+          className='overlay-child'
+          href='/'
           style={{ textDecoration: "none", color: "rgb(51,51,51)" }}
         >
           Home
         </a>
       )}
 
-      <div className="overlay-child" onClick={() => goCatering()}>
+      {/* <div className="overlay-child" onClick={() => goCatering()}>
         Catering
-      </div>
+      </div> */}
 
-      <div className="overlay-child" onClick={() => goMenu()}>
+      <div className='overlay-child' onClick={() => goMenu()}>
         Menu
       </div>
 
-      <div className="overlay-child" onClick={() => goLocations()}>
+      <div className='overlay-child' onClick={() => goLocations()}>
         Locations
       </div>
 
-      <div className="overlay-child" onClick={() => goContact()}>
+      <div className='overlay-child' onClick={() => goChecker()}>
+        Stock Checker
+      </div>
+
+      <div className='overlay-child' onClick={() => goContact()}>
         Contact
       </div>
     </div>

@@ -107,7 +107,7 @@ const Nav = ({ openNav }) => {
             </a>
           )}
 
-          <div
+          {/* <div
             className='li-nav'
             onClick={() => {
               // loc.pathname === "/menu"
@@ -117,7 +117,7 @@ const Nav = ({ openNav }) => {
             }}
           >
             Catering
-          </div>
+          </div> */}
           <div
             className='li-nav'
             onClick={() => {
@@ -138,6 +138,18 @@ const Nav = ({ openNav }) => {
           >
             Menu
           </div>
+
+          <div
+            className='li-nav'
+            onClick={() => {
+              loc.pathname === "/locations/check"
+                ? window.scrollTo({ top: 0, behavior: "smooth" })
+                : history("/locations/check");
+            }}
+          >
+            Stock Checker
+          </div>
+
           <div
             className='li-nav'
             onClick={() => {
