@@ -8,6 +8,7 @@ import NutritionTableLarge from "./NutritionTableLarge";
 import NotFound from "../../NotFound";
 
 import $ from "jquery";
+import { useCallback } from "react";
 
 const MenuItem = () => {
   const params = useParams();
@@ -17,6 +18,19 @@ const MenuItem = () => {
   // const [smallNutrition, setSmallNutrition] = useState({});
   // const [largeNutrition, setLargeNutrition] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [ready, setReady] = useState(false);
+
+  const [height, setHeight] = useState(0);
+
+  const h = useCallback(() => {
+    setHeight($("#mitem-height-ch").outerHeight());
+  }, []);
+
+  useEffect(() => {
+    setHeight($("#mitem-height-ch").outerHeight());
+  }, [$("#mitem-height-ch")]);
+
+  $(window).off("resize", window, h).resize(h);
 
   const [showDesc, setShowDesc] = useState(true);
   const [showNutrition, setShowNutrition] = useState(false);
@@ -144,7 +158,7 @@ const MenuItem = () => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  if (isLoading) {
+  if ((isLoading || !ready) && !selectedItem?.id) {
     return (
       <div className='abs-loading'>
         <div className='lds-ring' id='spinner-form'>
@@ -203,10 +217,10 @@ const MenuItem = () => {
               <div
                 className='mitem-height mitem-desc'
                 style={{
-                  maxHeight: showDesc ? "400px" : 0,
+                  maxHeight: showDesc ? height : 0,
                 }}
               >
-                {selectedItem?.desc}
+                <div id='mitem-height-ch'>{selectedItem?.desc}</div>
               </div>
 
               <div
