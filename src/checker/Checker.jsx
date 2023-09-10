@@ -42,47 +42,43 @@ const Checker = () => {
 
   async function handleChange(loc) {
     setLoading(true);
-    // const v = locationWithoutState[region || selectedRegion].find(
-    //   (loc) => loc.id === id
-    // );
-    await $.ajax({
-      type: "GET",
-      url: `/getstockforalocation/${loc?.fetchName}`,
-    })
-      .then((res) => {
-        if (
-          res === "not found" ||
-          !res ||
-          !res.length ||
-          res === "" ||
-          typeof res !== "object"
-        ) {
-          setDrinks([]);
-          setLoading(false);
-          if (typeof res !== "object") {
-            //there is a bug in the python code
-            //returns nothing but an empty string
-            //idk how to fix yet, but will tell andy
-            alert("Something went wrong, please try again");
-          }
-          return;
-        }
-        setDrinks(res);
-        // const result = {};
-        // res.forEach((v, p) => {
-        //   v.forEach((t, i) => {
-        //     result[res[p][i][0]] ||= 0;
-        //     result[res[p][i][0]] += res[p][i][1];
-        //   });
-        // });
-        setSelectedLocation(loc);
-        setDrinkStock([]);
 
-        setLoading(false);
+    async function f(count) {
+      await $.ajax({
+        type: "GET",
+        url: `/getstockforalocation/${loc?.fetchName}`,
       })
-      .catch(() => {
-        alert("Something went wrong, please try again");
-      });
+        .then((res) => {
+          if (
+            res === "not found" ||
+            !res ||
+            !res.length ||
+            res === "" ||
+            typeof res !== "object"
+          ) {
+            if (count < 6) {
+              //less than 6 requests, keep running
+              f(count + 1); //if return is nothing, meaning error, just rerun and eventually it will work
+              return;
+            } else {
+              alert("Something went wrong, please refresh page"); //if doesnt work after 5 times, throw error
+              setLoading(false);
+              setDrinks([]);
+            }
+          }
+          setDrinks(res);
+
+          setSelectedLocation(loc);
+          setDrinkStock([]);
+
+          setLoading(false);
+        })
+        .catch(() => {
+          alert("Something went wrong, please try again");
+        });
+    }
+
+    f(0);
   }
 
   // useEffect(() => {
