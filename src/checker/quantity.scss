@@ -293,3 +293,16 @@
   display: flex;
   justify-content: center;
 }
+
+.checker-hours {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -1.5px;
+    height: 1.5px;
+    width: 100%;
+    background-color: black;
+  }
+}

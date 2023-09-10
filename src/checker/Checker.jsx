@@ -15,6 +15,7 @@ import Row from "./Row";
 import Leaf from "../longstuff/Leaf";
 import { dispatchSetDrinks } from "../store/drinks";
 import CheckerTable from "./checkertable/CheckerTable";
+import { findURLInString } from "../helperfunctions";
 
 const Checker = () => {
   const qtyRef = useRef(null);
@@ -123,42 +124,70 @@ const Checker = () => {
           alert("Something went wrong, please try again");
         });
 
-      await $.ajax({
-        type: "GET",
-        url: "/fetchalldrinks",
-      })
-        .then((res) => {
-          dispatch(dispatchSetDrinks(res));
-
-          const obj = {};
-          const all = [];
-
-          res.forEach((v) => all.push(...v.drinks));
-
-          all.forEach((drink) => {
-            if (drink.machineImg.length > 0) {
-              // const t = drink.fetchNames.split(",").map((v) => v.trim());
-
-              // t.forEach((name) => {
-              //   obj[name] ||= drink.img;
-              // });
-
-              drink.machineImg.forEach((mci) => {
-                const t = mci.fetchNames.split(",").map((v) => v.trim());
-                t.forEach((name) => {
-                  obj[name] ||= mci;
-                });
-              });
-            }
-          });
-
-          setDrinkImgObj(obj);
-          setImgReady(true);
-          setLoading(false);
+      if (!drinkState?.length) {
+        await $.ajax({
+          type: "GET",
+          url: "/fetchalldrinks",
         })
-        .catch((err) => {
-          alert("Something went wrong, please try again");
+          .then((res) => {
+            dispatch(dispatchSetDrinks(res));
+
+            const obj = {};
+            const all = [];
+
+            res.forEach((v) => all.push(...v.drinks));
+
+            all.forEach((drink) => {
+              if (drink.machineImg.length > 0) {
+                // const t = drink.fetchNames.split(",").map((v) => v.trim());
+
+                // t.forEach((name) => {
+                //   obj[name] ||= drink.img;
+                // });
+
+                drink.machineImg.forEach((mci) => {
+                  const t = mci.fetchNames.split(",").map((v) => v.trim());
+                  t.forEach((name) => {
+                    obj[name] ||= mci;
+                  });
+                });
+              }
+            });
+
+            setDrinkImgObj(obj);
+            setImgReady(true);
+            setLoading(false);
+          })
+          .catch((err) => {
+            alert("Something went wrong, please try again");
+          });
+      } else {
+        const obj = {};
+        const all = [];
+
+        drinkState.forEach((v) => all.push(...v.drinks));
+
+        all.forEach((drink) => {
+          if (drink.machineImg.length > 0) {
+            // const t = drink.fetchNames.split(",").map((v) => v.trim());
+
+            // t.forEach((name) => {
+            //   obj[name] ||= drink.img;
+            // });
+
+            drink.machineImg.forEach((mci) => {
+              const t = mci.fetchNames.split(",").map((v) => v.trim());
+              t.forEach((name) => {
+                obj[name] ||= mci;
+              });
+            });
+          }
         });
+
+        setDrinkImgObj(obj);
+        setImgReady(true);
+        setLoading(false);
+      }
     }
 
     f();
@@ -371,7 +400,28 @@ const Checker = () => {
               {selectedLocation?.address}
             </div>
             <div className='location-acen location-desc'>
-              Hours: {selectedLocation?.hours}
+              Hours:{" "}
+              {findURLInString(selectedLocation.hours)?.length > 0
+                ? (function () {
+                    const find = findURLInString(selectedLocation.hours)[0]; //find the link
+                    const index = selectedLocation.hours.indexOf(find); //get index of link
+                    return (
+                      <div style={{ display: "inline" }}>
+                        {selectedLocation.hours.slice(0, index)}{" "}
+                        <a
+                          href={find}
+                          className='checker-hours'
+                          target='_blank'
+                          rel='noreferrer'
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Link
+                        </a>
+                        {selectedLocation.hours.slice(index + find.length)}
+                      </div>
+                    );
+                  })()
+                : selectedLocation.hours}
             </div>
 
             <a
