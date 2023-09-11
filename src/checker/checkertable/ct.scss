@@ -54,9 +54,25 @@
     &:last-of-type {
       border-bottom: 2px solid rgb(109, 214, 49);
     }
+  }
+}
 
-    &:hover {
-      background-color: rgba(109, 214, 49, 0.3);
+.tr-hov {
+  &:hover {
+    background-color: rgba(109, 214, 49, 0.3);
+  }
+}
+
+.tr-active {
+  animation: fadein 1s ease;
+
+  @keyframes fadein {
+    50% {
+      background-color: rgb(109, 214, 49);
+    }
+
+    100% {
+      background-color: unset;
     }
   }
 }

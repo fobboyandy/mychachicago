@@ -20,7 +20,11 @@ const CheckerTable = ({ info }) => {
 
         <tbody>
           {Object.keys(info).map((v) => (
-            <tr onClick={() => nav(`/menu/${info[v].v.drink.id}`)}>
+            <tr
+              onClick={() => nav(`/menu/${info[v].v.drink.id}`)}
+              id={`tr-${v.replace(/ /g, "-")}`}
+              className='tr-hov tr-q'
+            >
               <td>
                 <ImagetoSvg image={info[v].v.img} idv={info[v].v.id} />
               </td>
