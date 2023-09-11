@@ -426,6 +426,15 @@ const Checker = () => {
                 : selectedLocation.hours}
             </div>
 
+            {selectedLocation?.memo && (
+              <div
+                className='location-acen location-desc'
+                style={{ marginTop: "15px" }}
+              >
+                {selectedLocation?.memo}
+              </div>
+            )}
+
             <a
               className='location-acen qre-directions location-desc'
               target='_blank'
