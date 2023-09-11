@@ -19,20 +19,24 @@ const CheckerTable = ({ info }) => {
         </thead>
 
         <tbody>
-          {Object.keys(info).map((v) => (
-            <tr
-              onClick={() => nav(`/menu/${info[v].v.drink.id}`)}
-              id={`tr-${v.replace(/ /g, "-")}`}
-              className='tr-hov tr-q'
-            >
-              <td>
-                <ImagetoSvg image={info[v].v.img} idv={info[v].v.id} />
-              </td>
-              <td>{v}</td>
+          {Object.keys(info)
+            .sort(function (a, b) {
+              return a.localeCompare(b);
+            })
+            .map((v) => (
+              <tr
+                onClick={() => nav(`/menu/${info[v].v.drink.id}`)}
+                id={`tr-${v.replace(/ /g, "-")}`}
+                className='tr-hov tr-q'
+              >
+                <td>
+                  <ImagetoSvg image={info[v].v.img} idv={info[v].v.id} />
+                </td>
+                <td>{v}</td>
 
-              <td>{info[v].quantity}</td>
-            </tr>
-          ))}
+                <td>{info[v].quantity}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

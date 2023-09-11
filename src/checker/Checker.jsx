@@ -90,9 +90,9 @@ const Checker = () => {
 
     const obj = {};
 
-    Object.keys(drinkImgObj).forEach(
-      (v) => (obj[v] ||= { quantity: 0, v: drinkImgObj[v] })
-    );
+    // Object.keys(drinkImgObj).forEach(
+    //   (v) => (obj[v] ||= { quantity: 0, v: drinkImgObj[v] })
+    // );
 
     drinks.forEach((v) => {
       v.forEach((vi) => {
@@ -102,6 +102,8 @@ const Checker = () => {
           vi[0] === "Snack Large"
         )
           return;
+
+        obj[vi[0]] ||= { quantity: 0, v: drinkImgObj[vi[0]] };
         obj[vi[0]].quantity += Number(vi[1]);
       });
     });
