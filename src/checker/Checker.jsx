@@ -466,7 +466,7 @@ const Checker = () => {
               />
               <div className='container-cups'>
                 {imgReady &&
-                  drinks?.length &&
+                  drinks?.length > 0 &&
                   drinks?.map((drink, i) => (
                     <div className='container-row'>
                       {drink?.map((t, q) => (
