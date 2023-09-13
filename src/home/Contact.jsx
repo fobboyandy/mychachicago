@@ -470,7 +470,10 @@ const Contact = () => {
                                   v.name.toLowerCase() ===
                                   region?.name.toLowerCase()
                               )
-                              .locations.map((item, i, a) => (
+                              .locations?.sort(function (a, b) {
+                                return a.name.localeCompare(b.name);
+                              })
+                              .map((item, i, a) => (
                                 <div
                                   className='li-contact2'
                                   onClick={() => setLocation(item)}
