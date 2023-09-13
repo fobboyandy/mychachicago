@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
-const Blank = () => {
+const BlankContact = () => {
   const nav = useNavigate();
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const Blank = () => {
   );
 };
 
-export default Blank;
+export default BlankContact;

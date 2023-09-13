@@ -17,10 +17,12 @@ import Contact from "./home/Contact";
 import Admin from "./admin/Admin";
 import AdminTwo from "./admin/AdminTwo";
 import CateringShop from "./catering/CateringShop";
-import Blank from "./Blank";
+import BlankContact from "./blankredirects/BlankContact";
+import BlankMenu from "./blankredirects/BlankMenus";
 
 import Checker from "./checker/Checker";
 import axios from "axios";
+import BlankLocations from "./blankredirects/BlankLocations";
 
 export default function App() {
   function openNav() {
@@ -72,7 +74,11 @@ export default function App() {
 
             <Route exact path='/admin' element={<Admin />} />
             <Route exact path='/admin/stock' element={<AdminTwo />} />
-            <Route exact path='/contactcontact' element={<Blank />} />
+
+            <Route exact path='/contactcontact' element={<BlankContact />} />
+            <Route exact path='/contactrefund' element={<BlankContact />} />
+            <Route exact path='/contactmenu' element={<BlankMenu />} />
+            <Route exact path='/contactlocation' element={<BlankLocations />} />
 
             <Route path='*' element={<NotFound />} />
           </Routes>
