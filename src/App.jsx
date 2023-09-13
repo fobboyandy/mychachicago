@@ -18,7 +18,7 @@ import Admin from "./admin/Admin";
 import AdminTwo from "./admin/AdminTwo";
 import CateringShop from "./catering/CateringShop";
 import BlankContact from "./blankredirects/BlankContact";
-import BlankMenu from "./blankredirects/BlankMenus";
+import BlankMenu from "./blankredirects/BlankMenu";
 
 import Checker from "./checker/Checker";
 import axios from "axios";
