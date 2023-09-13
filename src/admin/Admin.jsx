@@ -99,48 +99,62 @@ const Admin = () => {
   async function handleFetch() {
     setLoading(true);
 
-    $.ajax({
-      type: "GET",
-      url: `/fetchstock/${selectedLocation}`,
-    }).then((res) => {
-      const result = [];
+    async function f(count) {
+      $.ajax({
+        type: "GET",
+        url: `/fetchstock/${selectedLocation}`,
+      }).then((res) => {
+        if (typeof res !== "object") {
+          if (count > 8) {
+            alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
+            return;
+          }
 
-      if (res.time) {
-        const date = new Date(res.time * 1000).toLocaleString("en-US", {
-          timeZone: "America/Chicago",
-        });
+          f(count + 1);
+          return;
+        }
 
-        setLastUpdated(date);
-      } else {
-        setLastUpdated("none");
-      }
+        const result = [];
 
-      if (res.stock) {
-        res.stock.forEach((t) => {
-          const inner = {};
-          t.forEach((p, i) => {
-            inner[i + 1] = p;
+        if (res.time) {
+          const date = new Date(res.time * 1000).toLocaleString("en-US", {
+            timeZone: "America/Chicago",
           });
 
-          result.push(inner);
-          setStock(result);
-        });
-      } else {
-        setStock(
-          Array(6).fill({
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0,
-            7: 0,
-          })
-        );
-      }
+          setLastUpdated(date);
+        } else {
+          setLastUpdated("none");
+        }
 
-      setLoading(false);
-    });
+        if (res.stock) {
+          res.stock.forEach((t) => {
+            const inner = {};
+            t.forEach((p, i) => {
+              inner[i + 1] = p;
+            });
+
+            result.push(inner);
+            setStock(result);
+          });
+        } else {
+          setStock(
+            Array(6).fill({
+              1: 0,
+              2: 0,
+              3: 0,
+              4: 0,
+              5: 0,
+              6: 0,
+              7: 0,
+            })
+          );
+        }
+
+        setLoading(false);
+      });
+    }
+
+    f(0);
   }
 
   useEffect(() => {
