@@ -5,8 +5,34 @@ import { useForm } from "@formspree/react";
 import $ from "jquery";
 import gsap from "gsap";
 import { locationWithoutState } from "../location/locationsobj";
+import { useDispatch, useSelector } from "react-redux";
+import { dispatchSetLocations } from "../store/locations";
 
 const Contact = () => {
+  const dispatch = useDispatch();
+
+  const alllocations = useSelector((state) => state.locations);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!alllocations.length) {
+      $.ajax({
+        url: "/fetchallregions",
+        type: "GET",
+      })
+        .then((res) => {
+          dispatch(dispatchSetLocations(res));
+          setLoading(false);
+        })
+        .catch(() => {
+          alert("Something went wrong, please try again");
+          setLoading(false);
+        }, []);
+    } else {
+      setLoading(false);
+    }
+  }, [alllocations]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,7 +56,7 @@ const Contact = () => {
       reason1: reason,
       location:
         reason === "issue"
-          ? location?.name
+          ? region?.name + " - " + location?.name
           : "N/A reason is question/suggestion",
       paymentType:
         reason === "issue" ? paymentType : "N/A reason is question/suggestion",
@@ -129,6 +155,7 @@ const Contact = () => {
   }
 
   useEffect(() => {
+    if (loading) return;
     window.scrollTo({ top: 0, behavior: "smooth" });
     gsap.fromTo(
       "#contactparent",
@@ -140,7 +167,7 @@ const Contact = () => {
         duration: 1.4,
       }
     );
-  }, []);
+  }, [loading]);
 
   const clickout1 = useCallback(() => {
     var $target = $(event.target);
@@ -176,6 +203,19 @@ const Contact = () => {
 
   $(document).off("click", document, clickout1).click(clickout1);
   $(document).off("click", document, clickout2).click(clickout2);
+
+  if (loading) {
+    return (
+      <div className='abs-loading'>
+        <div className='lds-ring' id='spinner-form'>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -381,11 +421,11 @@ const Contact = () => {
                     }}
                   >
                     <div className='select-contact2' id='region'>
-                      {region?.toUpperCase() || "Select a region"}
+                      {region?.name?.toUpperCase() || "Select a region"}
                     </div>
                     {showRegion && (
                       <div className='li-parent' id='region-c'>
-                        {Object.keys(locationWithoutState).map((item, i, a) => (
+                        {alllocations.map((item, i, a) => (
                           <div
                             className='li-contact2'
                             onClick={() => {
@@ -399,7 +439,7 @@ const Contact = () => {
                               borderBottom: i === a.length - 1 && "none",
                             }}
                           >
-                            {item?.toUpperCase()}
+                            {item?.name?.toUpperCase()}
                           </div>
                         ))}
                       </div>
@@ -424,19 +464,25 @@ const Contact = () => {
                         </div>
                         {showSelect2 && (
                           <div className='li-parent' id='select-locationc'>
-                            {locationWithoutState[region].map((item, i, a) => (
-                              <div
-                                className='li-contact2'
-                                onClick={() => setLocation(item)}
-                                id={`${item.id}-option`}
-                                style={{
-                                  display: !showSelect2 && "none",
-                                  borderBottom: i === a.length - 1 && "none",
-                                }}
-                              >
-                                {item?.name}
-                              </div>
-                            ))}
+                            {alllocations
+                              .find(
+                                (v) =>
+                                  v.name.toLowerCase() ===
+                                  region?.name.toLowerCase()
+                              )
+                              .locations.map((item, i, a) => (
+                                <div
+                                  className='li-contact2'
+                                  onClick={() => setLocation(item)}
+                                  id={`${item.id}-option`}
+                                  style={{
+                                    display: !showSelect2 && "none",
+                                    borderBottom: i === a.length - 1 && "none",
+                                  }}
+                                >
+                                  {item?.name}
+                                </div>
+                              ))}
                           </div>
                         )}
                       </div>
