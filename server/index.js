@@ -30,7 +30,7 @@ const v = async function () {
 app.get("/fetchlocations", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchlocations/${process.env.SECRET_KEY}`
+      `${process.env.EDITOR_LINK}/api/data/fetchlocations`
     );
 
     res.send(data);
@@ -44,8 +44,8 @@ app.get("/fetchstock/:location", async (req, res, next) => {
     const loc = req.params.location;
 
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
-      // `http://localhost:4001/api/data/fetchstock/${loc}/${process.env.SECRET_KEY}`
+      `${process.env.EDITOR_LINK}/api/data/fetchstock/${loc}`
+      // `http://localhost:4001/api/data/fetchstock/${loc}`
     );
 
     res.send(data);
@@ -59,8 +59,8 @@ app.get("/fetchstock2/:location", async (req, res, next) => {
     const loc = req.params.location;
 
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
-      // `http://localhost:4001/api/data/fetchstock2/${loc}/${process.env.SECRET_KEY}`
+      `${process.env.EDITOR_LINK}/api/data/fetchstock2/${loc}`
+      // `http://localhost:4001/api/data/fetchstock2/${loc}`
     );
 
     res.send(data);
@@ -72,7 +72,20 @@ app.get("/fetchstock2/:location", async (req, res, next) => {
 app.get("/fetchlocations", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/fetchlocations/${process.env.SECRET_KEY}`
+      `${process.env.EDITOR_LINK}/api/data/fetchlocations`
+    );
+
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/fetchlocationsbyregions", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      // `${process.env.EDITOR_LINK}/api/data/fetchlocationsbyregions`
+      `http://localhost:4001/api/data/fetchlocationsbyregions`
     );
 
     res.send(data);
@@ -86,8 +99,8 @@ app.post("/sendstock", async (req, res, next) => {
     const body = req.body;
 
     const { data } = await axios.post(
-      `https://pythonendpoint.herokuapp.com/api/data/sendstock/${process.env.SECRET_KEY}`,
-      // `http://localhost:4001/api/data/sendstock/${process.env.SECRET_KEY}`,
+      `${process.env.EDITOR_LINK}/api/data/sendstock`,
+      // `http://localhost:4001/api/data/sendstock`,
       body
     );
 
@@ -102,8 +115,8 @@ app.post("/sendstock2", async (req, res, next) => {
     const body = req.body;
 
     const { data } = await axios.post(
-      `https://pythonendpoint.herokuapp.com/api/data/sendstock2/${process.env.SECRET_KEY}`,
-      // `http://localhost:4001/api/data/sendstock2/${process.env.SECRET_KEY}`,
+      `${process.env.EDITOR_LINK}/api/data/sendstock2`,
+      // `http://localhost:4001/api/data/sendstock2`,
       body
     );
 
@@ -116,8 +129,8 @@ app.post("/sendstock2", async (req, res, next) => {
 // app.get("/remainingstock", async (req, res, next) => {
 //   try {
 //     const { data } = await axios.get(
-//       `https://pythonendpoint.herokuapp.com/api/data/remainingstock/${process.env.SECRET_KEY}`
-//       // `http://localhost:4001/api/data/remainingstock/${process.env.SECRET_KEY}`
+//       `${process.env.EDITOR_LINK}/api/data/remainingstock`
+//       // `http://localhost:4001/api/data/remainingstock`
 //     );
 
 //     res.send(data);
@@ -129,9 +142,9 @@ app.post("/sendstock2", async (req, res, next) => {
 app.get("/getstockforalocation/:location", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `https://pythonendpoint.herokuapp.com/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
+      `${process.env.EDITOR_LINK}/api/data/getstockforalocation/${req.params.location}`
 
-      // `http://localhost:4001/api/data/getstockforalocation/${req.params.location}/${process.env.SECRET_KEY}`
+      // `http://localhost:4001/api/data/getstockforalocation/${req.params.location}`
     );
 
     res.send(data);
