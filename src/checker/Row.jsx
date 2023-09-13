@@ -13,9 +13,11 @@ const Row = ({ selected, col, row, drinkImgObj }) => {
       onClick={() => {
         const find = $(
           `#tr-${selected[0].replace(/ /g, "-")}`
-        )[0].getBoundingClientRect().top;
+        )[0]?.getBoundingClientRect().top;
 
-        const navheight = $(".nav-home")[0].getBoundingClientRect().height;
+        if (!find) return;
+
+        const navheight = $(".nav-home")[0]?.getBoundingClientRect().height;
 
         window.scrollTo({
           top: find + window.scrollY - navheight - 20,

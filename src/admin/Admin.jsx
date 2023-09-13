@@ -107,6 +107,7 @@ const Admin = () => {
         if (typeof res !== "object") {
           if (count > 8) {
             alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
+            setLoading(false);
             return;
           }
 
