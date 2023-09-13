@@ -25,8 +25,11 @@ const Admin = () => {
   const [selectedCoordinates, setSelectedCoordinates] = useState([0, 1]);
 
   const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState();
 
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  const [regionActive, setRegionActive] = useState(false);
+
+  const [selectedLocation, setSelectedLocation] = useState();
   const [locationActive, setLocationActive] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -140,12 +143,26 @@ const Admin = () => {
     });
   }
 
-  const setOverlayLocation = useCallback(() => {
-    const a = document.querySelector(".stock-location").getBoundingClientRect();
+  useEffect(() => {
+    if (!regionActive) return;
 
-    $(".stock-locationoverlay").css("top", a.top + a.height + 5 + "px");
+    const b = document.querySelector(".stock-region")?.getBoundingClientRect();
+    $(".stock-regionoverlay").css("top", b.top + b.height + 10 + "px");
+    $(".stock-regionoverlay").css("left", b.left - $(this).width / 2);
+  }, [regionActive]);
+
+  useEffect(() => {
+    if (!locationActive) return;
+
+    const a = document
+      .querySelector(".stock-location")
+      ?.getBoundingClientRect();
+
+    $(".stock-locationoverlay").css("top", a.top + a.height + 10 + "px");
     $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
-  }, []);
+  }, [locationActive]);
+
+  const setOverlayLocation = useCallback(() => {}, []);
 
   const clickout = useCallback(() => {
     var $target = $(event.target);
@@ -156,6 +173,14 @@ const Admin = () => {
       $(".stock-locationoverlay").is(":visible")
     ) {
       setLocationActive(false);
+    }
+
+    if (
+      !$target.closest(".stock-region").length &&
+      !$target.closest(".stock-regionoverlay").length &&
+      $(".stock-regionoverlay").is(":visible")
+    ) {
+      setRegionActive(false);
     }
   }, []);
 
@@ -169,7 +194,7 @@ const Admin = () => {
     window.addEventListener("resize", setOverlayLocation);
 
     return () => window.removeEventListener("resize", setOverlayLocation);
-  }, [locations]);
+  }, [locations, locationActive, regionActive]);
 
   useEffect(() => {
     setMarginTop();
@@ -180,18 +205,38 @@ const Admin = () => {
   }, []);
 
   useEffect(() => {
-    if (!locations?.length) return;
+    if (!Object.keys(locations).length) return;
     handleFetch();
   }, [selectedLocation]);
 
   useEffect(() => {
+    setLoading(true);
+
     $.ajax({
       type: "GET",
-      url: `/fetchlocations`,
-    }).then((res) => {
-      setLocations(res);
-      setSelectedLocation(res[0].replace(/ /g, "").replace(/[()]/g, ""));
-    });
+      url: `/fetchlocationsbyregion`,
+    })
+      .then((res) => {
+        function swap(json) {
+          var ret = {};
+          for (var key in json) {
+            ret[json[key]] ||= [];
+            ret[json[key]].push(key);
+          }
+
+          return ret;
+        }
+
+        // const re = {};
+        const s = swap(res);
+
+        setLocations(s);
+        setLoading(false);
+      })
+      .catch(() => {
+        alert("Something went wrong, refresh");
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -200,14 +245,25 @@ const Admin = () => {
         <div className='stock-ei'>Admin One</div>
 
         <div
-          className='stock-location'
-          onClick={() => setLocationActive((prev) => !prev)}
+          className='stock-region'
+          onClick={() => setRegionActive((prev) => !prev)}
           style={{ marginBottom: "20px" }}
         >
-          {locations.find(
-            (v) => v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
-          )}
+          {selectedRegion || "Select a region"}
         </div>
+
+        {selectedRegion && (
+          <div
+            className='stock-location'
+            onClick={() => setLocationActive((prev) => !prev)}
+            style={{ marginBottom: "20px" }}
+          >
+            {locations[selectedRegion].find(
+              (v) =>
+                v.replace(/ /g, "").replace(/[()]/g, "") === selectedLocation
+            ) || "Select a location"}
+          </div>
+        )}
 
         <div className='last-set'>Last Updated: {lastUpdated}</div>
         {!editingTime && (
@@ -250,32 +306,61 @@ const Admin = () => {
           ))}
         </div>
 
-        <div
-          className='stock-locationoverlay'
-          style={{ display: !locationActive && "none" }}
-        >
-          {locations?.map((item, i) => (
-            <div
-              className='stock-li'
-              onClick={() => {
-                setSelectedLocation(
-                  item.replace(/ /g, "").replace(/[()]/g, "")
-                );
-                setLocationActive(false);
-              }}
-              style={{
-                borderRadius:
-                  i === 0
-                    ? "4px 4px 0 0"
-                    : i === locations.length - 1
-                    ? "0 0 4px 4px"
-                    : "",
-              }}
-            >
-              {item}
-            </div>
-          ))}
-        </div>
+        {regionActive && (
+          <div
+            className='stock-regionoverlay'
+            style={{ display: !regionActive && "none" }}
+          >
+            {Object.keys(locations)?.map((item, i) => (
+              <div
+                className='stock-li'
+                onClick={() => {
+                  setSelectedRegion(item);
+                  setRegionActive(false);
+                }}
+                style={{
+                  borderRadius:
+                    i === 0
+                      ? "4px 4px 0 0"
+                      : i === locations.length - 1
+                      ? "0 0 4px 4px"
+                      : "",
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {locationActive && selectedRegion && (
+          <div
+            className='stock-locationoverlay'
+            style={{ display: !locationActive && "none" }}
+          >
+            {locations[selectedRegion]?.map((item, i) => (
+              <div
+                className='stock-li'
+                onClick={() => {
+                  setSelectedLocation(
+                    item.replace(/ /g, "").replace(/[()]/g, "")
+                  );
+                  setLocationActive(false);
+                }}
+                style={{
+                  borderRadius:
+                    i === 0
+                      ? "4px 4px 0 0"
+                      : i === locations.length - 1
+                      ? "0 0 4px 4px"
+                      : "",
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className='stock-numpad'>
           <div className='s-numpad-li' onClick={() => set(0)}>

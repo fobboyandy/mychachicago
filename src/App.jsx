@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "./index.scss";
 
 import Home from "./home/Home";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, useNavigate } from "react-router-dom";
 import MainLocations from "./location/MainLocations";
 import Nav from "./home/Nav";
 import Menu from "./menu/Menu";
@@ -17,6 +17,7 @@ import Contact from "./home/Contact";
 import Admin from "./admin/Admin";
 import AdminTwo from "./admin/AdminTwo";
 import CateringShop from "./catering/CateringShop";
+import Blank from "./Blank";
 
 import Checker from "./checker/Checker";
 import axios from "axios";
@@ -29,10 +30,6 @@ export default function App() {
   function closeNav() {
     gsap.to(".overlay-nav", { y: "-100%", duration: 0.8, opacity: 0 });
   }
-
-  // window.onbeforeunload = function () {
-  //   window.scrollTo(0, 0);
-  // };
 
   useEffect(() => {
     async function f() {
@@ -75,6 +72,7 @@ export default function App() {
 
             <Route exact path='/admin' element={<Admin />} />
             <Route exact path='/admin/stock' element={<AdminTwo />} />
+            <Route exact path='/contactcontact' element={<Blank />} />
 
             <Route path='*' element={<NotFound />} />
           </Routes>

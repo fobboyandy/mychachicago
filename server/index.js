@@ -81,11 +81,11 @@ app.get("/fetchlocations", async (req, res, next) => {
   }
 });
 
-app.get("/fetchlocationsbyregions", async (req, res, next) => {
+app.get("/fetchlocationsbyregion", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      // `${process.env.EDITOR_LINK}/api/data/fetchlocationsbyregions`
-      `http://localhost:4001/api/data/fetchlocationsbyregions`
+      `${process.env.EDITOR_LINK}/api/data/fetchlocationsbyregions`
+      // `http://localhost:3005/api/data/fetchlocationsbyregion`
     );
 
     res.send(data);
