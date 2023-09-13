@@ -5,11 +5,15 @@ import { location2 as location } from "../location/locationsobj";
 import $ from "jquery";
 
 import StockSlots from "./StockSlots";
+import { useDispatch, useSelector } from "react-redux";
+import { dispatchSetDrinks } from "../store/drinks";
 
 //notes: columns goes from 1, 2, 3, 4, 5, 6
 //rows is 0 index, goes 0, 1, 2, 3, 4, 5, 6
 
 const Admin = () => {
+  const dispatch = useDispatch();
+
   const [stock, setStock] = useState(
     Array(6).fill({
       1: 0,
@@ -30,6 +34,7 @@ const Admin = () => {
   const [regionActive, setRegionActive] = useState(false);
 
   const [selectedLocation, setSelectedLocation] = useState();
+  const [selectedLocation2, setSelectedLocation2] = useState(); //used to fetch actual stock
   const [locationActive, setLocationActive] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -38,6 +43,11 @@ const Admin = () => {
 
   const [editingTime, setEditingTime] = useState(false);
   const [overwriteTimeValue, setOverwriteTimeValue] = useState(null);
+
+  const drinks = useSelector((state) => state.drinks);
+  const [drinkImgObj, setDrinkImgObj] = useState(null);
+  const [imgReady, setImgReady] = useState(false);
+  const [layout, setLayout] = useState(null);
 
   function set(num) {
     //means nothing selected
@@ -103,56 +113,68 @@ const Admin = () => {
       $.ajax({
         type: "GET",
         url: `/fetchstock/${selectedLocation}`,
-      }).then((res) => {
-        if (typeof res !== "object") {
-          if (count > 8) {
-            alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
-            setLoading(false);
+      })
+        .then((res) => {
+          if (typeof res !== "object") {
+            if (count > 8) {
+              alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
+              setLoading(false);
+              return;
+            }
+
+            f(count + 1);
             return;
           }
 
-          f(count + 1);
-          return;
-        }
+          const result = [];
 
-        const result = [];
-
-        if (res.time) {
-          const date = new Date(res.time * 1000).toLocaleString("en-US", {
-            timeZone: "America/Chicago",
-          });
-
-          setLastUpdated(date);
-        } else {
-          setLastUpdated("none");
-        }
-
-        if (res.stock) {
-          res.stock.forEach((t) => {
-            const inner = {};
-            t.forEach((p, i) => {
-              inner[i + 1] = p;
+          if (res.time) {
+            const date = new Date(res.time * 1000).toLocaleString("en-US", {
+              timeZone: "America/Chicago",
             });
 
-            result.push(inner);
-            setStock(result);
-          });
-        } else {
-          setStock(
-            Array(6).fill({
-              1: 0,
-              2: 0,
-              3: 0,
-              4: 0,
-              5: 0,
-              6: 0,
-              7: 0,
-            })
-          );
-        }
+            setLastUpdated(date);
+          } else {
+            setLastUpdated("none");
+          }
 
-        setLoading(false);
-      });
+          if (res.stock) {
+            res.stock.forEach((t) => {
+              const inner = {};
+              t.forEach((p, i) => {
+                inner[i + 1] = p;
+              });
+
+              result.push(inner);
+              setStock(result);
+            });
+          } else {
+            setStock(
+              Array(6).fill({
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+              })
+            );
+          }
+        })
+        .then(async () => {
+          await $.ajax({
+            type: "GET",
+            url: `/getstockforalocation/${selectedLocation2}`,
+          }).then((res) => {
+            setLayout(res);
+            setLoading(false);
+          });
+        })
+        .catch(() => {
+          alert("Something went wrong, please try again");
+          setLoading(false);
+        });
     }
 
     f(0);
@@ -162,7 +184,10 @@ const Admin = () => {
     if (!regionActive) return;
 
     const b = document.querySelector(".stock-region")?.getBoundingClientRect();
-    $(".stock-regionoverlay").css("top", b.top + b.height + 10 + "px");
+    $(".stock-regionoverlay").css(
+      "top",
+      window.scrollY + b.top + b.height + 5 + "px"
+    );
     $(".stock-regionoverlay").css("left", b.left - $(this).width / 2);
   }, [regionActive]);
 
@@ -173,7 +198,10 @@ const Admin = () => {
       .querySelector(".stock-location")
       ?.getBoundingClientRect();
 
-    $(".stock-locationoverlay").css("top", a.top + a.height + 10 + "px");
+    $(".stock-locationoverlay").css(
+      "top",
+      window.scrollY + a.top + a.height + 5 + "px"
+    );
     $(".stock-locationoverlay").css("left", a.left - $(this).width / 2);
   }, [locationActive]);
 
@@ -227,38 +255,99 @@ const Admin = () => {
   useEffect(() => {
     setLoading(true);
 
-    $.ajax({
-      type: "GET",
-      url: `/fetchlocationsbyregion`,
-    })
-      .then((res) => {
-        function swap(json) {
-          var ret = {};
-          for (var key in json) {
-            ret[json[key]] ||= [];
-            ret[json[key]].push(key);
+    async function f() {
+      await $.ajax({
+        type: "GET",
+        url: `/fetchlocationsbyregion`,
+      })
+        .then((res) => {
+          function swap(json) {
+            var ret = {};
+            for (var key in json) {
+              ret[json[key]] ||= [];
+              ret[json[key]].push(key);
+            }
+
+            return ret;
           }
 
-          return ret;
-        }
+          // const re = {};
+          const s = swap(res);
 
-        // const re = {};
-        const s = swap(res);
+          setLocations(s);
+        })
+        .catch(() => {
+          alert("Something went wrong, refresh");
+        });
 
-        setLocations(s);
-        setLoading(false);
-      })
-      .catch(() => {
-        alert("Something went wrong, refresh");
-        setLoading(false);
-      });
+      if (!drinks?.length) {
+        await $.ajax({ type: "GET", url: "/fetchalldrinks" }).then((res) => {
+          dispatch(dispatchSetDrinks(res));
+
+          const obj = {};
+          const all = [];
+
+          res.forEach((v) => all.push(...v.drinks));
+
+          all.forEach((drink) => {
+            if (drink.machineImg.length > 0) {
+              // const t = drink.fetchNames.split(",").map((v) => v.trim());
+
+              // t.forEach((name) => {
+              //   obj[name] ||= drink.img;
+              // });
+
+              drink.machineImg.forEach((mci) => {
+                const t = mci.fetchNames.split(",").map((v) => v.trim());
+                t.forEach((name) => {
+                  obj[name] ||= mci;
+                });
+              });
+            }
+          });
+
+          setDrinkImgObj(obj);
+          setImgReady(true);
+          setLoading(false);
+        });
+      }
+
+      setLoading(false);
+    }
+
+    f();
+  }, [drinks]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  // if (loading || !imgReady) {
+  //   return (
+  //     <div
+  //       className='lds-ring'
+  //       style={{
+  //         width: "100%",
+  //         height: "100vh",
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         zIndex: 11,
+  //       }}
+  //       id='spinner-form'
+  //     >
+  //       <div></div>
+  //       <div></div>
+  //       <div></div>
+  //       <div></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
       <div className='stock-parent'>
         <div className='stock-ei'>Admin One</div>
-
         <div
           className='stock-region'
           onClick={() => setRegionActive((prev) => !prev)}
@@ -266,7 +355,6 @@ const Admin = () => {
         >
           {selectedRegion || "Select a region"}
         </div>
-
         {selectedRegion && (
           <div
             className='stock-location'
@@ -279,14 +367,15 @@ const Admin = () => {
             ) || "Select a location"}
           </div>
         )}
+        {selectedLocation && (
+          <div className='last-set'>Last Updated: {lastUpdated}</div>
+        )}
 
-        <div className='last-set'>Last Updated: {lastUpdated}</div>
-        {!editingTime && (
+        {selectedLocation && !editingTime && (
           <div className='stock-overwrite' onClick={() => setEditingTime(true)}>
             Overwrite
           </div>
         )}
-
         {editingTime && (
           <div className='stock-sd'>
             <input
@@ -309,18 +398,20 @@ const Admin = () => {
             </div>
           </div>
         )}
-
-        <div className='stock-slots'>
-          {stock.map((item, i) => (
-            <StockSlots
-              item={item}
-              index={i}
-              setSelectedCoordinates={setSelectedCoordinates}
-              selectedCoordinates={selectedCoordinates}
-            />
-          ))}
-        </div>
-
+        {selectedLocation && layout && (
+          <div className='stock-slots'>
+            {stock.map((item, i) => (
+              <StockSlots
+                item={item}
+                index={i}
+                setSelectedCoordinates={setSelectedCoordinates}
+                selectedCoordinates={selectedCoordinates}
+                stock={layout[i]}
+                imgObj={drinkImgObj}
+              />
+            ))}
+          </div>
+        )}
         {regionActive && (
           <div
             className='stock-regionoverlay'
@@ -347,7 +438,6 @@ const Admin = () => {
             ))}
           </div>
         )}
-
         {locationActive && selectedRegion && (
           <div
             className='stock-locationoverlay'
@@ -360,6 +450,7 @@ const Admin = () => {
                   setSelectedLocation(
                     item.replace(/ /g, "").replace(/[()]/g, "")
                   );
+                  setSelectedLocation2(item);
                   setLocationActive(false);
                 }}
                 style={{
@@ -376,29 +467,29 @@ const Admin = () => {
             ))}
           </div>
         )}
-
-        <div className='stock-numpad'>
-          <div className='s-numpad-li' onClick={() => set(0)}>
-            0
+        {selectedLocation && (
+          <div className='stock-numpad'>
+            <div className='s-numpad-li' onClick={() => set(0)}>
+              0
+            </div>
+            <div className='s-numpad-li' onClick={() => set(1)}>
+              1
+            </div>
+            <div className='s-numpad-li' onClick={() => set(2)}>
+              2
+            </div>
+            <div className='s-numpad-li' onClick={() => set(3)}>
+              3
+            </div>
+            <div
+              className='s-numpad-li'
+              onClick={() => set(4)}
+              style={{ marginRight: 0 }}
+            >
+              4
+            </div>
           </div>
-          <div className='s-numpad-li' onClick={() => set(1)}>
-            1
-          </div>
-          <div className='s-numpad-li' onClick={() => set(2)}>
-            2
-          </div>
-          <div className='s-numpad-li' onClick={() => set(3)}>
-            3
-          </div>
-          <div
-            className='s-numpad-li'
-            onClick={() => set(4)}
-            style={{ marginRight: 0 }}
-          >
-            4
-          </div>
-        </div>
-
+        )}
         {/* <div className='stock-drinkselect'>
           {allItems.map((drink) => (
             <AdminCups
@@ -410,13 +501,15 @@ const Admin = () => {
         </div> */}
       </div>
 
-      <div className='stock-n'>
-        <div className='stock-submit' onClick={() => handleSubmit()}>
-          Submit
+      {selectedLocation && (
+        <div className='stock-n'>
+          <div className='stock-submit' onClick={() => handleSubmit()}>
+            Submit
+          </div>
         </div>
-      </div>
+      )}
 
-      {loading && (
+      {(loading || !imgReady) && (
         <div className='load-parent' style={{ display: !loading && "none" }}>
           <div
             className='lds-ring'

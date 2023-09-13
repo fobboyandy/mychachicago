@@ -1,14 +1,17 @@
 import React from "react";
+import ImagetoSvg from "../checker/checkerimages/ImgtoSvg";
 
 const StockSlots = ({
   item,
   index,
   setSelectedCoordinates,
   selectedCoordinates,
+  stock,
+  imgObj,
 }) => {
   return (
     <div className='ss-ul' id={`s-${index + 1}`}>
-      <div
+      {/* <div
         className='ss-li'
         onClick={() => setSelectedCoordinates([index, 1])}
         style={{
@@ -19,6 +22,10 @@ const StockSlots = ({
         }}
       >
         {item[1] === 0 ? 0 : item[1] || "null"}
+        <ImagetoSvg
+          idv={`simg-${index + 1}-1`}
+          img={imgObj[stock[0][0]]?.img}
+        />
       </div>
       <div
         className='ss-li'
@@ -93,7 +100,40 @@ const StockSlots = ({
         }}
       >
         {item[7] === 0 ? 0 : item[7] || "null"}
-      </div>
+      </div> */}
+
+      {Array(7)
+        .fill(0)
+        .map((o, i) => (
+          <div
+            className='ss-li'
+            onClick={() => setSelectedCoordinates([index, i + 1])}
+            style={{
+              outline:
+                selectedCoordinates[0] === index &&
+                selectedCoordinates[1] === i + 1 &&
+                "5px solid black",
+              marginRight: i + 1 === 7 && 0, //last index, no margin
+            }}
+          >
+            {item[i + 1] === 0 ? 0 : item[i + 1] || "null"}
+            {!(
+              stock[i][0] === "Snack" ||
+              stock[i][0] === "Snack Large" ||
+              stock[i][0] === "Snack Small"
+            ) && (
+              <div
+                className='ss-img'
+                onClick={() => console.log(stock[i]?.[0] !== "Snack")}
+              >
+                <ImagetoSvg
+                  idv={`simg-${index}-${i}`}
+                  image={imgObj[stock[i]?.[0]]?.img}
+                />
+              </div>
+            )}
+          </div>
+        ))}
     </div>
   );
 };
