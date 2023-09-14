@@ -56,12 +56,10 @@ const MenuItem = () => {
 
   // function leftScroll() {
   //   containerRef.current.scrollLeft += 500;
-  //   setSmallOrLarge("large");
   // }
 
   // function rightScroll() {
   //   containerRef.current.scrollLeft -= 1000;
-  //   setSmallOrLarge("small");
   // }
 
   // useEffect(() => {
@@ -251,22 +249,32 @@ const MenuItem = () => {
                 className='mitem-height'
               >
                 <div className='mitem-select'>
-                  {selectedItem?.sizes?.map((size, i) => (
-                    <div
-                      className='mitem-selectchild'
-                      onClick={() => {
-                        // leftScroll();
-                        handleScroll(i);
-                        setNutritionIndex(i);
-                      }}
-                      style={{
-                        borderBottom:
-                          i === nutritionIndex && "1.5px solid black",
-                      }}
-                    >
-                      {size?.name[0].toUpperCase().concat(size?.name.slice(1))}
-                    </div>
-                  ))}
+                  {selectedItem?.sizes
+                    ?.sort(function (a, b) {
+                      if (a.name === "small" && b.name === "large") {
+                        return -1;
+                      }
+
+                      return 0;
+                    })
+                    ?.map((size, i) => (
+                      <div
+                        className='mitem-selectchild'
+                        onClick={() => {
+                          // leftScroll();
+                          handleScroll(i);
+                          setNutritionIndex(i);
+                        }}
+                        style={{
+                          borderBottom:
+                            i === nutritionIndex && "1.5px solid black",
+                        }}
+                      >
+                        {size?.name[0]
+                          .toUpperCase()
+                          .concat(size?.name.slice(1))}
+                      </div>
+                    ))}
                 </div>
                 {/* <div
                   className='mitem-tableparent'
