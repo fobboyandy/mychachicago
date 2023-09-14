@@ -299,6 +299,17 @@ const MenuItem = () => {
                     <NutritionTable nutrition={size} index={i} />
                   ))}
                 </div>
+
+                <div style={{ fontSize: "12px", marginTop: "8px" }}>
+                  Nutrition facts are based on estimates. If you need
+                  assistance, please contact us at{" "}
+                  <a
+                    href='mailto:mychamachine@gmail.com'
+                    style={{ fontSize: "12px", fontWeight: "bold" }}
+                  >
+                    mychamachine@gmail.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>
