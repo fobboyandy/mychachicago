@@ -26,7 +26,7 @@ const CheckerTable = ({ info }) => {
             .map((v) => (
               <tr
                 onClick={() => nav(`/menu/${info[v].v.drink.id}`)}
-                id={`tr-${v.replace(/ /g, "-")}`}
+                id={`tr-${v.replace(/ /g, "-").replace(/[()]/g, "")}`}
                 className='tr-hov tr-q'
               >
                 {info[v]?.v?.img ? (

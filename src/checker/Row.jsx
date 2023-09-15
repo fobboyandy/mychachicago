@@ -12,7 +12,7 @@ const Row = ({ selected, col, row, drinkImgObj }) => {
       }}
       onClick={() => {
         const find = $(
-          `#tr-${selected[0].replace(/ /g, "-")}`
+          `#tr-${selected[0].replace(/ /g, "-").replace(/[()]/g, "")}`
         )[0]?.getBoundingClientRect().top;
 
         if (!find) return;
@@ -27,10 +27,14 @@ const Row = ({ selected, col, row, drinkImgObj }) => {
         $(".tr-q").removeClass("tr-hov"); //remove hover class
 
         setTimeout(() => {
-          $(`#tr-${selected[0].replace(/ /g, "-")}`).addClass("tr-active");
+          $(
+            `#tr-${selected[0].replace(/ /g, "-").replace(/[()]/g, "")}`
+          ).addClass("tr-active");
 
           setTimeout(() => {
-            $(`#tr-${selected[0].replace(/ /g, "-")}`).removeClass("tr-active");
+            $(
+              `#tr-${selected[0].replace(/ /g, "-").replace(/[()]/g, "")}`
+            ).removeClass("tr-active");
             $(".tr-q").addClass("tr-hov");
           }, 1000);
         }, 1000);
