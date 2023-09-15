@@ -59,6 +59,7 @@
 .stock-numpad {
   display: flex;
   flex-direction: row;
+  margin-top: 35px;
 }
 
 .s-numpad-li {
@@ -138,7 +139,7 @@
 .ss-ul {
   display: flex;
   flex-direction: row;
-  margin-bottom: 45px;
+  margin-top: 45px;
 }
 
 .ss-li {
@@ -165,7 +166,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -35px;
+  top: -37.5px;
   height: 30px;
   width: 30px;
 }
