@@ -49,7 +49,7 @@ const Admin = () => {
   const [imgReady, setImgReady] = useState(false);
   const [layout, setLayout] = useState(null);
 
-  const [memo, setMemo] = useState("");
+  const [memo, setMemo] = useState(null);
 
   const [editingMemo, setEditingMemo] = useState(false);
   const [memoInputValue, setMemoInputValue] = useState("");
@@ -96,18 +96,25 @@ const Admin = () => {
         location: JSON.stringify(selectedLocation),
         memo: JSON.stringify(memoInputValue.length > 0 ? memoInputValue : ""),
       },
-    }).then((res) => {
-      if (res.status === "success") {
-        const date = new Date(res.time * 1000).toLocaleString("en-US", {
-          timeZone: "America/Chicago",
-        });
+    })
+      .then((res) => {
+        if (res.status === "success") {
+          const date = new Date(res.time * 1000).toLocaleString("en-US", {
+            timeZone: "America/Chicago",
+          });
 
-        setLastUpdated(date);
+          setLastUpdated(date);
+          setMemoInputValue(null);
+          setEditingMemo(false);
+
+          alert("successfully updated");
+          handleFetch();
+        }
+      })
+      .catch(() => {
+        alert("Something went wrong, please try again");
         setLoading(false);
-
-        alert("successfully updated stock");
-      }
-    });
+      });
   }
 
   async function handleFetch() {
@@ -128,6 +135,10 @@ const Admin = () => {
 
             f(count + 1);
             return;
+          }
+
+          if (res?.memo) {
+            setMemo(res.memo);
           }
 
           const result = [];
@@ -165,6 +176,7 @@ const Admin = () => {
               })
             );
           }
+
           await $.ajax({
             type: "GET",
             url: `/getstockforalocation/${selectedLocation2}`,
@@ -370,7 +382,7 @@ const Admin = () => {
           </div>
         )}
 
-        {memo.length !== 0 && <div className='last-set'>Memo: {memo}</div>}
+        {memo && <div className='last-set'>Memo: {memo}</div>}
 
         {!editingMemo && selectedLocation && (
           <div className='stock-overwrite' onClick={() => setEditingMemo(true)}>
