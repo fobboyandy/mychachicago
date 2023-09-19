@@ -511,8 +511,6 @@ const MainLocations = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    gsap.fromTo("#outerlocation", { opacity: 0 }, { opacity: 1, duration: 3 });
   }, []);
 
   const footerHandle = useCallback(() => {

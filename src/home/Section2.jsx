@@ -272,12 +272,13 @@ const Section2 = () => {
             id='instacontainer'
           >
             <iframe
-              src='https://www.instagram.com/p/CHcMnOxld6Q/embed/captioned/'
+              src='https://www.instagram.com/p/CxYgiHkrrf_/embed/captioned'
               frameBorder='0'
               scrolling='no'
               allowtransparency='true'
               id='insta-animation'
-              loading='eager'
+              loading='lazy'
+              title='Recent Instagram Post'
             ></iframe>
           </div>
           <div id='intersecting-observer3' />

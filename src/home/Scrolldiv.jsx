@@ -248,7 +248,7 @@ const Scrolldiv = () => {
             <div className='scroll-title'>Premium Ingredients Only</div>
             <div className='scroll-desc'>
               Our drinks are made daily with premium tea leaves from the most
-              authentic tea gardens .
+              authentic tea gardens.
             </div>
           </div>
         </div>
@@ -270,9 +270,10 @@ const Scrolldiv = () => {
           style={{ width: vpWidth + "px" }}
         >
           <div className='container-titledesc op0' id='scroll-four'>
-            <div className='scroll-title'>Locations across Chicagoland</div>
+            <div className='scroll-title'>Locations across Chicago and LA</div>
             <div className='scroll-desc'>
-              We have many locations across Chicago and constantly adding more.
+              We have many locations across Chicago and LA and constantly adding
+              more.
             </div>
             <a className='our-locations-btn' href='/locations'>
               Locations
