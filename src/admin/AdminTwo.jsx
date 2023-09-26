@@ -155,6 +155,8 @@ const Admin = () => {
 
           if (res?.memo) {
             setMemo(res.memo);
+          } else {
+            setMemo(null);
           }
 
           const result = [];
