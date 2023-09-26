@@ -112,7 +112,7 @@ const Admin = () => {
     async function f(count) {
       $.ajax({
         type: "GET",
-        url: `/fetchstock/${selectedLocation}12`,
+        url: `/fetchstock/${selectedLocation}`,
       })
         .then(async (res) => {
           let nostock = false;
