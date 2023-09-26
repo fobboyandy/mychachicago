@@ -300,8 +300,10 @@ const Admin = () => {
 
             //sort here, if LA needs, add another sort below
             ret.Chicago.sort(customSortChicago);
+            ret.LA.sort(function (a, b) {
+              return a.localeCompare(b);
+            });
 
-            console.log(ret);
             return ret;
           }
 
