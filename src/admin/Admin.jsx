@@ -112,19 +112,33 @@ const Admin = () => {
     async function f(count) {
       $.ajax({
         type: "GET",
-        url: `/fetchstock/${selectedLocation}`,
+        url: `/fetchstock/${selectedLocation}12`,
       })
-        .then((res) => {
+        .then(async (res) => {
+          let nostock = false;
           if (typeof res !== "object") {
-            if (count > 8) {
-              //change something here. s3 should return "not found" or something. need a test location without a stock file to see what it is.
-              alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
-              setLoading(false);
+            if (count > 6) {
+              //over 6 times, files most likely doesnt exist
+              // //change something here. s3 should return "not found" or something. need a test location without a stock file to see what it is.
+              // alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
+              // setLoading(false);
+              setStock(
+                Array(6).fill({
+                  1: 0,
+                  2: 0,
+                  3: 0,
+                  4: 0,
+                  5: 0,
+                  6: 0,
+                  7: 0,
+                })
+              );
+
+              nostock = true;
+            } else {
+              f(count + 1); //run again to see if its network or s3 error
               return;
             }
-
-            f(count + 1);
-            return;
           }
 
           const result = [];
@@ -139,6 +153,15 @@ const Admin = () => {
             setLastUpdated("none");
           }
 
+          await $.ajax({
+            type: "GET",
+            url: `/getstockforalocation/${selectedLocation2}`,
+          }).then((res) => {
+            setLayout(res);
+            setLoading(false);
+          });
+
+          if (nostock) return; //nostock flag above triggered
           if (res.stock) {
             res.stock.forEach((t) => {
               const inner = {};
@@ -163,15 +186,9 @@ const Admin = () => {
             );
           }
         })
-        .then(async () => {
-          await $.ajax({
-            type: "GET",
-            url: `/getstockforalocation/${selectedLocation2}`,
-          }).then((res) => {
-            setLayout(res);
-            setLoading(false);
-          });
-        })
+        // .then(async () => {
+
+        // })
         .catch(() => {
           alert("Something went wrong, please try again");
           setLoading(false);
@@ -285,11 +302,8 @@ const Admin = () => {
             ordering[chicagoOrder[i]] = i;
 
           function customSortChicago(a, b) {
-            console.log(a, ordering[a]);
             return ordering[a] - ordering[b] || 1; //not tested. may need to do more conditionals
           }
-
-          console.log(ordering, "order");
 
           function swap(json) {
             var ret = {};
@@ -354,11 +368,9 @@ const Admin = () => {
     f();
   }, [drinks]);
 
-  useEffect(() => {
-    $.ajax("fetchlocations", { type: "GET" }).then((res) => {
-      console.log(res, "response");
-    });
-  }, []);
+  // useEffect(() => {
+  //   $.ajax("fetchlocations", { type: "GET" }).then((res) => {});
+  // }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
