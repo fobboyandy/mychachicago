@@ -117,6 +117,7 @@ const Admin = () => {
         .then((res) => {
           if (typeof res !== "object") {
             if (count > 8) {
+              //change something here. s3 should return "not found" or something. need a test location without a stock file to see what it is.
               alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
               setLoading(false);
               return;
@@ -261,6 +262,35 @@ const Admin = () => {
         url: `/fetchlocationsbyregion`,
       })
         .then((res) => {
+          const ordering = {};
+          const chicagoOrder = [
+            //to add a chicago order, simply add it to the list in the order you want.
+            "UC Med",
+            "UC Med - CCD West",
+            "UC Library",
+            "Northwestern Law",
+            "Northwestern Feinberg",
+            "UIC East",
+            "UIC BSB",
+            "Rush Hospital",
+            "Rush (Rubschlager)",
+            "UIC West",
+            "College of Dupage",
+            "Block 37",
+            "Union Station",
+            "Beard Papa",
+          ];
+
+          for (var i = 0; i < chicagoOrder.length; i++)
+            ordering[chicagoOrder[i]] = i;
+
+          function customSortChicago(a, b) {
+            console.log(a, ordering[a]);
+            return ordering[a] - ordering[b] || 1; //not tested. may need to do more conditionals
+          }
+
+          console.log(ordering, "order");
+
           function swap(json) {
             var ret = {};
             for (var key in json) {
@@ -268,6 +298,10 @@ const Admin = () => {
               ret[json[key]].push(key);
             }
 
+            //sort here, if LA needs, add another sort below
+            ret.Chicago.sort(customSortChicago);
+
+            console.log(ret);
             return ret;
           }
 
@@ -317,6 +351,12 @@ const Admin = () => {
 
     f();
   }, [drinks]);
+
+  useEffect(() => {
+    $.ajax("fetchlocations", { type: "GET" }).then((res) => {
+      console.log(res, "response");
+    });
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
