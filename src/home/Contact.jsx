@@ -552,7 +552,7 @@ const Contact = () => {
                     </label>
                   </div>
 
-                  {paymentType === "card" ? (
+                  {paymentType === "card" && (
                     <div style={{ marginTop: "10px" }}>
                       <label htmlFor='name-contact' className='label-contact'>
                         Last 4 Digits of Card<span className='star'>*</span>
@@ -573,8 +573,6 @@ const Contact = () => {
                         type='text'
                       />
                     </div>
-                  ) : (
-                    ""
                   )}
                 </div>
               )}

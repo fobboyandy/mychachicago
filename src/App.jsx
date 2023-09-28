@@ -35,6 +35,18 @@ export default function App() {
   }
 
   useEffect(() => {
+    if (!window.location.hostname.includes("localhost")) {
+      if (window.location.protocol !== "https:") {
+        window.location.replace(
+          `https:${window.location.href.substring(
+            window.location.protocol.length
+          )}`
+        );
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     async function f() {
       await axios.get("/traffic").then(async (res) => {
         const { data } = res;
