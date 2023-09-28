@@ -97,6 +97,7 @@ const Contact = () => {
   const [paymentTypeError, setPaymentTypeError] = useState(false);
   const [last4Error, setLast4Error] = useState(false);
   const [descError, setDescError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
 
   function checkValid() {
     let valid = true;
@@ -146,8 +147,17 @@ const Contact = () => {
         } else {
           setLast4Error(false);
         }
+
+        setPaymentTypeError(false);
       } else {
         setPaymentTypeError(false);
+      }
+
+      if (!location) {
+        valid = false;
+        setLocationError(true);
+      } else {
+        setLocationError(false);
       }
     }
 
@@ -409,6 +419,10 @@ const Contact = () => {
                 ""
               ) : (
                 <div>
+                  {locationError && (
+                    <div className='errormsg'>Select a location!</div>
+                  )}
+
                   <div className='label-contact'>
                     Region<span className='star'>*</span>
                   </div>
@@ -495,12 +509,14 @@ const Contact = () => {
                   <div className='label-contact'>
                     Form of Payment<span className='star'>*</span>
                   </div>
-                  <div
-                    className='errormsg'
-                    style={{ display: paymentTypeError ? "" : "none" }}
-                  >
-                    Please Select
-                  </div>
+                  {paymentTypeError && (
+                    <div
+                      className='errormsg'
+                      style={{ display: paymentTypeError ? "" : "none" }}
+                    >
+                      Please Select
+                    </div>
+                  )}
                   <div className='radio-container'>
                     <input
                       type='radio'
