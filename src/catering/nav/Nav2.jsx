@@ -93,13 +93,25 @@ const Nav2 = ({ openNav }) => {
         <div
           className='li-nav'
           onClick={() => {
-            loc.pathname === "/about"
+            loc.pathname === "/events"
               ? window.scrollTo({ top: 0, behavior: "smooth" })
-              : history("/contact");
+              : history("/events");
           }}
         >
-          About
+          Events
         </div>
+
+        <div
+          className='li-nav'
+          onClick={() => {
+            loc.pathname === "/shop"
+              ? window.scrollTo({ top: 0, behavior: "smooth" })
+              : history("/shop");
+          }}
+        >
+          Shop
+        </div>
+
         <div
           className='li-nav'
           onClick={() => {

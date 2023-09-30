@@ -24,6 +24,7 @@ import Checker from "./checker/Checker";
 import axios from "axios";
 import BlankLocations from "./blankredirects/BlankLocations";
 import Nav2 from "./catering/nav/Nav2";
+import Events from "./catering/events/Events";
 
 export default function App() {
   function openNav() {
@@ -76,6 +77,7 @@ export default function App() {
             <Routes>
               <Route exact path='/' element={<CateringShop />} />
               <Route path='*' element={<NotFound />} />
+              <Route exact path='/events' element={<Events />} />
             </Routes>
           ) : (
             <Routes>
