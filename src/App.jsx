@@ -91,7 +91,9 @@ export default function App() {
             <Overlay closeNav={closeNav} />
           )}
 
-          {window.location.host.split(".")[0] === "catering" ? (
+          {(window.location.host.split(".")[0] === "www" &&
+            window.location.hostname.split(".")[1] === "catering") ||
+          window.location.hostname.split(".")[0] === "catering" ? (
             <Routes>
               <Route exact path="/" element={<CateringShop />} />
               <Route path="*" element={<NotFound />} />
