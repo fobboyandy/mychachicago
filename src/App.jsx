@@ -2,15 +2,22 @@ import React, { useEffect } from "react";
 
 import "./index.scss";
 
-import Home from "./home/Home";
+import { useDispatch } from "react-redux";
+
+import { dispatchSetNavHeight } from "./store/navheight";
+
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+
+import gsap from "gsap";
+
+import axios from "axios";
+
+import Home from "./home/Home";
 import MainLocations from "./location/MainLocations";
 import Nav from "./home/Nav";
 import Menu from "./menu/Menu";
 import MenuItem from "./menu/menuitem/MenuItem";
 import Overlay from "./home/Overlay";
-
-import gsap from "gsap";
 import Footer from "./footer/Footer";
 import NotFound from "./NotFound";
 import Contact from "./home/Contact";
@@ -19,14 +26,18 @@ import AdminTwo from "./admin/AdminTwo";
 import CateringShop from "./catering/CateringShop";
 import BlankContact from "./blankredirects/BlankContact";
 import BlankMenu from "./blankredirects/BlankMenu";
-
 import Checker from "./checker/Checker";
-import axios from "axios";
 import BlankLocations from "./blankredirects/BlankLocations";
+
+//catering
 import Nav2 from "./catering/nav/Nav2";
 import Events from "./catering/events/Events";
+import Shop from "./catering/shop/Shop";
+import CateringContact from "./catering/contact/CateringContact";
 
 export default function App() {
+  const dispatch = useDispatch();
+
   function openNav() {
     gsap.to(".overlay-nav", { y: 0, duration: 0.8, opacity: 1 });
   }
@@ -59,6 +70,12 @@ export default function App() {
     f();
   }, []);
 
+  useEffect(() => {
+    $(document).ready(() => {
+      dispatch(dispatchSetNavHeight($(".nav-home").outerHeight()));
+    });
+  });
+
   return (
     <div>
       <BrowserRouter>
@@ -75,45 +92,47 @@ export default function App() {
 
           {window.location.host.split(".")[0] === "catering" ? (
             <Routes>
-              <Route exact path='/' element={<CateringShop />} />
-              <Route path='*' element={<NotFound />} />
-              <Route exact path='/events' element={<Events />} />
+              <Route exact path="/" element={<CateringShop />} />
+              <Route path="*" element={<NotFound />} />
+              <Route exact path="/events" element={<Events />} />
+              <Route exact path="/shop" element={<Shop />} />
+              <Route exact path="/contact" element={<CateringContact />} />
             </Routes>
           ) : (
             <Routes>
-              <Route exact path='/' element={<Home />} />
-              <Route exact path='/locations/check' element={<Checker />} />
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/locations/check" element={<Checker />} />
               <Route
                 exact
-                path='/locations/check/:location'
+                path="/locations/check/:location"
                 element={<Checker />}
               />
 
-              <Route exact path='/locations' element={<MainLocations />} />
+              <Route exact path="/locations" element={<MainLocations />} />
               <Route
                 exact
-                path='/locations/:section'
+                path="/locations/:section"
                 element={<MainLocations />}
               />
 
-              <Route exact path='/contact' element={<Contact />} />
-              <Route exact path='/menu' element={<Menu />} />
-              <Route exact path='/menu/:id' element={<MenuItem />} />
-              <Route exact path='/catering' element={<CateringShop />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/menu" element={<Menu />} />
+              <Route exact path="/menu/:id" element={<MenuItem />} />
+              <Route exact path="/catering" element={<CateringShop />} />
 
-              <Route exact path='/admin' element={<Admin />} />
-              <Route exact path='/admin/stock' element={<AdminTwo />} />
+              <Route exact path="/admin" element={<Admin />} />
+              <Route exact path="/admin/stock" element={<AdminTwo />} />
 
-              <Route exact path='/contactcontact' element={<BlankContact />} />
-              <Route exact path='/contactrefund' element={<BlankContact />} />
-              <Route exact path='/contactmenu' element={<BlankMenu />} />
+              <Route exact path="/contactcontact" element={<BlankContact />} />
+              <Route exact path="/contactrefund" element={<BlankContact />} />
+              <Route exact path="/contactmenu" element={<BlankMenu />} />
               <Route
                 exact
-                path='/contactlocation'
+                path="/contactlocation"
                 element={<BlankLocations />}
               />
 
-              <Route path='*' element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           )}
           <Footer />

@@ -1,0 +1,58 @@
+.shop-parent {
+  min-height: 100vh;
+}
+
+.sr-parent {
+  position: relative;
+}
+
+.sr-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sr-f {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 80%;
+  margin-top: 4vh;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 17px;
+  }
+}
+
+.sr-regioncon {
+  border: 1px solid black;
+  margin: -1px;
+  box-sizing: border-box;
+  width: 100%;
+
+  & > div:last-child {
+    border-bottom: none !important;
+  }
+}
+
+.sr-regionsel {
+  padding: 10px;
+  border-bottom: 1px solid black;
+  transition: 0.3s ease all;
+  cursor: pointer;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}
+
+.sr-confirm {
+  padding: 10px 16px;
+  background-color: #6dd631;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 20px auto;
+  color: white;
+  cursor: pointer;
+}

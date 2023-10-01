@@ -4,10 +4,12 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import drinks from "./drinks";
 import locations from "./locations";
+import navheight from "./navheight";
 
 const reducer = combineReducers({
   drinks,
   locations,
+  navheight,
 });
 
 let middleware = "";
