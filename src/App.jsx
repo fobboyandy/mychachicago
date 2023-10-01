@@ -81,15 +81,19 @@ export default function App() {
     <div>
       <BrowserRouter>
         <div style={{ minHeight: "100vh" }}>
-          {window.location.host.split(".")[0] === "catering" ? (
+          {(window.location.host.split(".")[0] === "www" &&
+            window.location.hostname.split(".")[1] === "catering") ||
+          window.location.hostname.split(".")[0] === "catering" ? (
             <Nav2 />
           ) : (
             <Nav openNav={openNav} />
           )}
 
-          {window.location.host.split(".")[0] !== "catering" && (
-            <Overlay closeNav={closeNav} />
-          )}
+          {(window.location.host.split(".")[0] === "www" &&
+            window.location.hostname.split(".")[1] === "catering") ||
+            (window.location.hostname.split(".")[0] === "catering" && (
+              <Overlay closeNav={closeNav} />
+            ))}
 
           {(window.location.host.split(".")[0] === "www" &&
             window.location.hostname.split(".")[1] === "catering") ||
