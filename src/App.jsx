@@ -36,6 +36,7 @@ import Shop from "./catering/shop/Shop";
 import CateringContact from "./catering/contact/CateringContact";
 
 export default function App() {
+  console.log(window.location.hostname);
   const dispatch = useDispatch();
 
   function openNav() {
