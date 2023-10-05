@@ -36,7 +36,7 @@ import Shop from "./catering/shop/Shop";
 import CateringContact from "./catering/contact/CateringContact";
 
 export default function App() {
-  console.log(window.location.hostname);
+  console.log(window.location.host);
   const dispatch = useDispatch();
 
   function openNav() {
@@ -81,23 +81,17 @@ export default function App() {
     <div>
       <BrowserRouter>
         <div style={{ minHeight: "100vh" }}>
-          {(window.location.host.split(".")[0] === "www" &&
-            window.location.hostname.split(".")[1] === "catering") ||
-          window.location.hostname.split(".")[0] === "catering" ? (
+          {window.location.host.includes("catering") ? (
             <Nav2 />
           ) : (
             <Nav openNav={openNav} />
           )}
 
-          {(window.location.host.split(".")[0] === "www" &&
-            window.location.hostname.split(".")[1] !== "catering") ||
-            (window.location.hostname.split(".")[0] !== "catering" && (
-              <Overlay closeNav={closeNav} />
-            ))}
+          {!window.location.host.includes("catering") && (
+            <Overlay closeNav={closeNav} />
+          )}
 
-          {(window.location.host.split(".")[0] === "www" &&
-            window.location.hostname.split(".")[1] === "catering") ||
-          window.location.hostname.split(".")[0] === "catering" ? (
+          {window.location.host.includes("catering") ? (
             <Routes>
               <Route exact path='/' element={<CateringShop />} />
               <Route path='*' element={<NotFound />} />
