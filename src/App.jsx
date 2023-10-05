@@ -59,6 +59,8 @@ export default function App() {
     f();
   }, []);
 
+  console.log(window.location.host.split("."));
+
   return (
     <div>
       <BrowserRouter>
