@@ -1,0 +1,27 @@
+.nav2-ob {
+  padding: 14px 30px;
+  background-color: rgb(109, 214, 49);
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+
+  @media only screen and (max-width: 500px) {
+    padding: 10px 24px;
+  }
+}
+
+.nav2-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 36%;
+
+  @media only screen and (max-width: 1000px) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 800px) {
+    width: 60%;
+  }
+}

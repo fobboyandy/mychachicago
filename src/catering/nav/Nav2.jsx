@@ -5,6 +5,8 @@ import Homelogo from "../../longstuff/Homelogo";
 import gsap from "gsap";
 import $ from "jquery";
 
+import "./nav2.scss";
+
 const Nav2 = ({ openNav }) => {
   const history = useNavigate();
   const loc = useLocation();
@@ -86,12 +88,12 @@ const Nav2 = ({ openNav }) => {
   }, []);
 
   return (
-    <div className='nav-home' style={{ zIndex: 15, userSelect: "none" }}>
+    <div className="nav-home" style={{ zIndex: 15, userSelect: "none" }}>
       <Homelogo history={history} />
       <div style={{ flexGrow: 1 }} />
-      <div className='li-container'>
+      <div className="nav2-container">
         <div
-          className='li-nav'
+          className="li-nav"
           onClick={() => {
             loc.pathname === "/events"
               ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -101,7 +103,7 @@ const Nav2 = ({ openNav }) => {
           Events
         </div>
 
-        <div
+        {/* <div
           className='li-nav'
           onClick={() => {
             loc.pathname === "/shop"
@@ -110,10 +112,10 @@ const Nav2 = ({ openNav }) => {
           }}
         >
           Shop
-        </div>
+        </div> */}
 
         <div
-          className='li-nav'
+          className="li-nav"
           onClick={() => {
             loc.pathname === "/contact"
               ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -121,6 +123,15 @@ const Nav2 = ({ openNav }) => {
           }}
         >
           Contact
+        </div>
+
+        <div
+          className="nav2-ob"
+          onClick={() => {
+            history("/shop");
+          }}
+        >
+          Order Now
         </div>
       </div>
     </div>

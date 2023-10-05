@@ -163,3 +163,13 @@ a {
   z-index: 100;
   overflow: hidden;
 }
+
+.leaf {
+  height: "85px";
+  width: "85px";
+
+  @media only screen and (max-width: 500px) {
+    width: 60px;
+    height: 60px;
+  }
+}

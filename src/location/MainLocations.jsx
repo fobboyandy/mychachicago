@@ -563,10 +563,20 @@ const MainLocations = () => {
     setAllLocations(result);
   }, []);
 
+  const scroll = useCallback(() => {
+    const y = window.scrollY;
+
+    if (y > $("#outerlocation").outerHeight() + 100) return;
+
+    $("#outerlocation").css("transform", `translate3d(0, -${y / 2.2}px, 0)`);
+  }, []);
+
+  $(window).off(window, "scroll", scroll).scroll(scroll);
+
   if (loading)
     return (
-      <div className='abs-loading'>
-        <div className='lds-ring' id='spinner-form'>
+      <div className="abs-loading">
+        <div className="lds-ring" id="spinner-form">
           <div></div>
           <div></div>
           <div></div>
@@ -576,10 +586,10 @@ const MainLocations = () => {
     );
 
   return (
-    <div className='location-actualparent'>
-      <div className='outer-location' id='outerlocation'>
-        <div className='parent-location'></div>
-        <div className='locations-header'>
+    <div className="location-actualparent">
+      <div className="outer-location" id="outerlocation">
+        <div className="parent-location"></div>
+        <div className="locations-header">
           <LocationWord />
         </div>
       </div>
@@ -589,32 +599,32 @@ const MainLocations = () => {
           width: "100%",
           height: "60vh",
         }}
-        className=' background-gif'
+        className=" background-gif"
       />
 
-      <div className='heightholder-locations' />
+      <div className="heightholder-locations" />
 
-      <div className='locations-e'>
+      <div className="locations-e">
         {!selectedSection && (
           <div>
-            <div className='locations-b'>Select City or Enter Zip Code!</div>
+            <div className="locations-b">Select City or Enter Zip Code!</div>
 
-            <div className='locations-fil'>
-              <div className='locations-filq'>
+            <div className="locations-fil">
+              <div className="locations-filq">
                 <div
-                  className='location-inpsel2 locations-w502 location-rot1 location-mle'
+                  className="location-inpsel2 locations-w502 location-rot1 location-mle"
                   style={{
                     borderRadius: showCityOverlay ? "4px 4px 0 0" : "4px",
                     marginLeft: 0,
                   }}
-                  id='select-city'
+                  id="select-city"
                 >
                   {selectedCity}
                   {showCityOverlay && (
-                    <div className='location-optcontainer'>
+                    <div className="location-optcontainer">
                       {regionsWithLocations?.map((region) => (
                         <div
-                          className='location-opt'
+                          className="location-opt"
                           onClick={() => {
                             setSelectedCity(region.name);
                             setSelectedCityLocations(region.locations);
@@ -637,7 +647,7 @@ const MainLocations = () => {
                   )}
                 </div>
 
-                <div className='locations-or'>OR</div>
+                <div className="locations-or">OR</div>
 
                 {isLoaded && (
                   <Autocomplete
@@ -648,34 +658,34 @@ const MainLocations = () => {
                     }}
                   >
                     <input
-                      className='location-inp locations-w502 locations-nf'
-                      placeholder='Enter Zip Code'
+                      className="location-inp locations-w502 locations-nf"
+                      placeholder="Enter Zip Code"
                       type={"text"}
                       ref={inputRef}
-                      id='input-query'
+                      id="input-query"
                     />
                   </Autocomplete>
                 )}
               </div>
 
               {window.innerWidth > 750 ? (
-                <div className='locations-divider' />
+                <div className="locations-divider" />
               ) : (
-                <div className='locations-divider2' />
+                <div className="locations-divider2" />
               )}
 
               <div
-                className='location-inpsel locations-w50 location-rot1 location-mle'
+                className="location-inpsel locations-w50 location-rot1 location-mle"
                 style={{
                   borderRadius: showWithinOverlay ? "4px 4px 0 0" : "4px",
                 }}
-                id='within'
+                id="within"
               >
                 Within {withinMiles} mi
                 {showWithinOverlay && (
-                  <div className='location-optcontainer'>
+                  <div className="location-optcontainer">
                     <div
-                      className='location-opt'
+                      className="location-opt"
                       onClick={() => {
                         handleSetWithinMiles(5);
                         if (searchActive) {
@@ -687,7 +697,7 @@ const MainLocations = () => {
                     </div>
 
                     <div
-                      className='location-opt'
+                      className="location-opt"
                       onClick={() => {
                         handleSetWithinMiles(10);
                         if (searchActive) {
@@ -699,7 +709,7 @@ const MainLocations = () => {
                     </div>
 
                     <div
-                      className='location-opt'
+                      className="location-opt"
                       onClick={() => {
                         handleSetWithinMiles(15);
                         if (searchActive) {
@@ -711,7 +721,7 @@ const MainLocations = () => {
                     </div>
 
                     <div
-                      className='location-opt'
+                      className="location-opt"
                       onClick={() => {
                         handleSetWithinMiles(20);
                         if (searchActive) {
@@ -723,7 +733,7 @@ const MainLocations = () => {
                     </div>
 
                     <div
-                      className='location-opt'
+                      className="location-opt"
                       onClick={() => {
                         handleSetWithinMiles(25);
                         if (searchActive) {
@@ -744,13 +754,13 @@ const MainLocations = () => {
           </div>
         )}
         {!selectedSection && (
-          <div className='locations-ep'>
-            <div className='locations-querycontainer'>
+          <div className="locations-ep">
+            <div className="locations-querycontainer">
               {searchActive
                 ? resultsFromQuery.length
                   ? resultsFromQuery.map((v, i) => (
                       <div
-                        className='locations-querymap'
+                        className="locations-querymap"
                         id={`querymap-${v.id}`}
                         onClick={() => {
                           handleMarkerClickOrHover(
@@ -764,9 +774,9 @@ const MainLocations = () => {
                           );
                         }}
                       >
-                        <div className='qre-title'>{v.name}</div>
-                        <div className='qre-desc'>{v.address}</div>
-                        <div className='qre-desc'>
+                        <div className="qre-title">{v.name}</div>
+                        <div className="qre-desc">{v.address}</div>
+                        <div className="qre-desc">
                           Hours:{" "}
                           {findURLInString(v.hours)?.length > 0
                             ? (function () {
@@ -777,9 +787,9 @@ const MainLocations = () => {
                                     {v.hours.slice(0, index)}{" "}
                                     <a
                                       href={find}
-                                      className='qre-directions'
-                                      target='_blank'
-                                      rel='noreferrer'
+                                      className="qre-directions"
+                                      target="_blank"
+                                      rel="noreferrer"
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       {find}
@@ -790,15 +800,15 @@ const MainLocations = () => {
                               })()
                             : v.hours}
                         </div>
-                        <div className='qre-desc'>
+                        <div className="qre-desc">
                           Distance: {v.distance} Miles
                         </div>
 
                         <a
-                          className='qre-desc qre-directions'
+                          className="qre-desc qre-directions"
                           href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
-                          target='_blank'
-                          rel='noopener noreferrer'
+                          target="_blank"
+                          rel="noopener noreferrer"
                           style={{
                             paddingBottom: 0,
                             paddingTop: "5px",
@@ -808,18 +818,18 @@ const MainLocations = () => {
                           Directions
                         </a>
 
-                        <div className='location-checkqty'>
+                        <div className="location-checkqty">
                           <img
-                            src='/assets/leafdivider.png'
+                            src="/assets/leafdivider.png"
                             style={{
                               height: "45px",
                               width: "45px",
                               userSelect: "none",
                             }}
-                            alt='leafdivider'
+                            alt="leafdivider"
                           />
                           <div
-                            className='check-stock location-desc'
+                            className="check-stock location-desc"
                             onClick={(e) => {
                               e.stopPropagation();
                               history(`/locations/check/${v.id}`);
@@ -831,20 +841,20 @@ const MainLocations = () => {
                       </div>
                     ))
                   : !queryLoading && (
-                      <div className='locations-oos'>
+                      <div className="locations-oos">
                         Sorry, seems like we don't sell near you. Try increasing
                         the within miles or follow us on{" "}
                         <a
                           href={"https://www.instagram.com/mychachicago/?hl=en"}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='locations-ihref'
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="locations-ihref"
                         >
                           Instagram
                         </a>{" "}
                         to be the first at our new locations!
                         <div
-                          className='locations-reset'
+                          className="locations-reset"
                           onClick={() => $("#input-query").val("").focus()}
                         >
                           Reset Search
@@ -853,7 +863,7 @@ const MainLocations = () => {
                     )
                 : selectedCityLocations?.map((v, i) => (
                     <div
-                      className='locations-querymap'
+                      className="locations-querymap"
                       id={`querymap-${v.id}`}
                       onClick={() => {
                         handleMarkerClickOrHover(
@@ -867,9 +877,9 @@ const MainLocations = () => {
                         );
                       }}
                     >
-                      <div className='qre-title'>{v.name}</div>
-                      <div className='qre-desc'>{v.address}</div>
-                      <div className='qre-desc'>
+                      <div className="qre-title">{v.name}</div>
+                      <div className="qre-desc">{v.address}</div>
+                      <div className="qre-desc">
                         Hours:{" "}
                         {findURLInString(v.hours)?.length > 0
                           ? (function () {
@@ -880,9 +890,9 @@ const MainLocations = () => {
                                   {v.hours.slice(0, index)}{" "}
                                   <a
                                     href={find}
-                                    className='qre-directions'
-                                    target='_blank'
-                                    rel='noreferrer'
+                                    className="qre-directions"
+                                    target="_blank"
+                                    rel="noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     {find}
@@ -894,10 +904,10 @@ const MainLocations = () => {
                           : v.hours}
                       </div>
                       <a
-                        className='qre-desc qre-directions'
+                        className="qre-desc qre-directions"
                         href={`https://www.google.com/maps/dir/?api=1&destination=${v.address}`}
-                        target='_blank'
-                        rel='noopener noreferrer'
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={{
                           paddingBottom: 0,
                         }}
@@ -905,18 +915,18 @@ const MainLocations = () => {
                         Directions
                       </a>
 
-                      <div className='location-checkqty'>
+                      <div className="location-checkqty">
                         <img
-                          src='/assets/leafdivider.png'
+                          src="/assets/leafdivider.png"
                           style={{
                             height: "45px",
                             width: "45px",
                             userSelect: "none",
                           }}
-                          alt='leafdivider'
+                          alt="leafdivider"
                         />
                         <div
-                          className='check-stock location-desc'
+                          className="check-stock location-desc"
                           onClick={(e) => {
                             e.stopPropagation();
                             history(`/locations/check/${v.id}`);
@@ -930,7 +940,7 @@ const MainLocations = () => {
             </div>
             {isLoaded && selectedCityLocations && (
               <GoogleMap
-                mapContainerClassName='gmap-container'
+                mapContainerClassName="gmap-container"
                 zoom={10}
                 onLoad={onLoad}
                 options={{ mapTypeControl: false, streetViewControl: false }}
@@ -990,16 +1000,16 @@ const MainLocations = () => {
                               setInfoWindowOpen(false);
                             }}
                           >
-                            <div className='infow-parent'>
-                              <div className='infow-title'>
+                            <div className="infow-parent">
+                              <div className="infow-title">
                                 {infoWindowData.name}
                               </div>
 
-                              <div className='infow-desc'>
+                              <div className="infow-desc">
                                 {infoWindowData.address}
                               </div>
 
-                              <div className='infow-desc'>
+                              <div className="infow-desc">
                                 Hours:{" "}
                                 {findURLInString(infoWindowData.hours)?.length >
                                 0
@@ -1013,9 +1023,9 @@ const MainLocations = () => {
                                           {infoWindowData.hours.slice(0, index)}{" "}
                                           <a
                                             href={find}
-                                            className='qre-directions'
-                                            target='_blank'
-                                            rel='noreferrer'
+                                            className="qre-directions"
+                                            target="_blank"
+                                            rel="noreferrer"
                                             onClick={(e) => e.stopPropagation()}
                                           >
                                             {find}
@@ -1029,10 +1039,10 @@ const MainLocations = () => {
                                   : infoWindowData.hours}
                               </div>
                               <a
-                                className='infow-desc qre-directions'
+                                className="infow-desc qre-directions"
                                 href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
-                                target='_blank'
-                                rel='noopener noreferrer'
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 style={{
                                   paddingBottom: 0,
                                 }}
@@ -1040,18 +1050,18 @@ const MainLocations = () => {
                                 Directions
                               </a>
 
-                              <div className='location-checkqty'>
+                              <div className="location-checkqty">
                                 <img
-                                  src='../assets/leafdivider.png'
+                                  src="../assets/leafdivider.png"
                                   style={{
                                     height: "45px",
                                     width: "45px",
                                     userSelect: "none",
                                   }}
-                                  alt='leafdivider'
+                                  alt="leafdivider"
                                 />
                                 <div
-                                  className='check-stock location-desc'
+                                  className="check-stock location-desc"
                                   onClick={() =>
                                     history(
                                       `/locations/check/${infoWindowData.itemid}`
@@ -1121,16 +1131,16 @@ const MainLocations = () => {
                                 setInfoWindowOpen(false);
                               }}
                             >
-                              <div className='infow-parent'>
-                                <div className='infow-title'>
+                              <div className="infow-parent">
+                                <div className="infow-title">
                                   {infoWindowData.name}
                                 </div>
 
-                                <div className='infow-desc'>
+                                <div className="infow-desc">
                                   {infoWindowData.address}
                                 </div>
 
-                                <div className='infow-desc'>
+                                <div className="infow-desc">
                                   Hours:{" "}
                                   {findURLInString(infoWindowData.hours)
                                     ?.length > 0
@@ -1147,9 +1157,9 @@ const MainLocations = () => {
                                             )}{" "}
                                             <a
                                               href={find}
-                                              className='qre-directions'
-                                              target='_blank'
-                                              rel='noreferrer'
+                                              className="qre-directions"
+                                              target="_blank"
+                                              rel="noreferrer"
                                               onClick={(e) =>
                                                 e.stopPropagation()
                                               }
@@ -1165,10 +1175,10 @@ const MainLocations = () => {
                                     : infoWindowData.hours}
                                 </div>
                                 <a
-                                  className='infow-desc qre-directions'
+                                  className="infow-desc qre-directions"
                                   href={`https://www.google.com/maps/dir/?api=1&destination=${infoWindowData.address}`}
-                                  target='_blank'
-                                  rel='noopener noreferrer'
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                   style={{
                                     paddingBottom: 0,
                                     paddingTop: "5px",
@@ -1178,18 +1188,18 @@ const MainLocations = () => {
                                   Directions
                                 </a>
 
-                                <div className='location-checkqty'>
+                                <div className="location-checkqty">
                                   <img
-                                    src='../assets/leafdivider.png'
+                                    src="../assets/leafdivider.png"
                                     style={{
                                       height: "45px",
                                       width: "45px",
                                       userSelect: "none",
                                     }}
-                                    alt='leafdivider'
+                                    alt="leafdivider"
                                   />
                                   <div
-                                    className='check-stock location-desc'
+                                    className="check-stock location-desc"
                                     onClick={() =>
                                       history(
                                         `/locations/check/${infoWindowData.itemid}`
@@ -1209,16 +1219,16 @@ const MainLocations = () => {
           </div>
         )}
 
-        <div className='locations-war'>
+        <div className="locations-war">
           *Be sure to check location's stock ahead of time. Some locations are
           seasonal or out of stock
         </div>
 
         {selectedSection === "all" && (
-          <div className='container-locations' id='container-locations'>
-            <div id='intersecting-locations1' />
-            <div id='intersecting-locations2' />
-            <div id='intersecting-locations3' />
+          <div className="container-locations" id="container-locations">
+            <div id="intersecting-locations1" />
+            <div id="intersecting-locations2" />
+            <div id="intersecting-locations3" />
 
             {allLocations?.map((location) => (
               <div
@@ -1228,19 +1238,19 @@ const MainLocations = () => {
                 id={location.id}
                 key={location.id}
               >
-                <div className='location-imgcontainer'>
+                <div className="location-imgcontainer">
                   <img
                     src={location.image}
-                    alt='uiceast'
-                    className='img-location'
+                    alt="uiceast"
+                    className="img-location"
                   />
                 </div>
-                <div className='location-fdsr'>
-                  <div className='location-name '>{location.name}</div>
-                  <div className='location-add location-desc'>
+                <div className="location-fdsr">
+                  <div className="location-name ">{location.name}</div>
+                  <div className="location-add location-desc">
                     {location.address}
                   </div>
-                  <div className='location-hours location-desc'>
+                  <div className="location-hours location-desc">
                     Hours: {location.hours !== "" ? ` ${location.hours}` : ""}
                   </div>
                   {/* 
@@ -1275,7 +1285,7 @@ const MainLocations = () => {
 
       {queryLoading && (
         <div
-          className='lds-ring'
+          className="lds-ring"
           style={{
             width: "100%",
             height: "100vh",
@@ -1287,7 +1297,7 @@ const MainLocations = () => {
             position: "fixed",
             top: 0,
           }}
-          id='spinner-form'
+          id="spinner-form"
         >
           <div></div>
           <div></div>

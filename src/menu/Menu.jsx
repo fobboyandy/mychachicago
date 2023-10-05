@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -203,10 +203,20 @@ const Menu = () => {
     }
   }, [drinks]);
 
+  const scroll = useCallback(() => {
+    const y = window.scrollY;
+
+    if (y > $(".menu-parallax").outerHeight() + 100) return;
+
+    $(".menu-parallax").css("transform", `translate3d(0, -${y / 2}px, 0)`);
+  }, []);
+
+  $(window).off(window, "scroll", scroll).scroll(scroll);
+
   if (loading)
     return (
-      <div className='abs-loading'>
-        <div className='lds-ring' id='spinner-form'>
+      <div className="abs-loading">
+        <div className="lds-ring" id="spinner-form">
           <div></div>
           <div></div>
           <div></div>
@@ -218,8 +228,8 @@ const Menu = () => {
   return (
     <div style={{ position: "relative" }}>
       <div
-        className='sliding-placeholder'
-        id='topmenu-container'
+        className="sliding-placeholder menu-parallax"
+        id="topmenu-container"
         style={{ zIndex: -2, position: "fixed" }}
       >
         <MenuCup1 />
@@ -235,14 +245,14 @@ const Menu = () => {
           position: "",
           top: 0,
           width: "100%",
-          height: "50vh",
+          height: "61vh",
           paddingTop: "11vh",
           backgroundColor: "transparent",
         }}
-        id='covermenu'
+        id="covermenu"
       />
-      <div className='outercontainer-menu'>
-        <div className='innercontainer-menu'>
+      <div className="outercontainer-menu">
+        <div className="innercontainer-menu">
           {drinks.map((section) => (
             <div
               style={{
@@ -255,7 +265,7 @@ const Menu = () => {
               key={section.id}
             >
               <div className={`intersecting-${section.id}`} />
-              <div className='menu-title'>
+              <div className="menu-title">
                 <Leaf />
                 {section.name}
               </div>
@@ -263,26 +273,26 @@ const Menu = () => {
                 style={{
                   backgroundColor: "rgb(109, 214, 49) ",
                 }}
-                className='menu-divider'
+                className="menu-divider"
               />
-              <div className='container-sectionmenu'>
+              <div className="container-sectionmenu">
                 {section.drinks
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((item) => (
                     <div
-                      className='menu-half'
+                      className="menu-half"
                       id={item.htmlid}
                       key={item.htmlid}
                       style={{ marginBottom: "15px" }}
                     >
                       <div
-                        className='img-menucontainer'
+                        className="img-menucontainer"
                         style={{
                           border: "2px solid rgb(109, 214, 49) ",
                         }}
                       >
                         <div
-                          className='img-menu'
+                          className="img-menu"
                           style={{
                             backgroundImage: `url(${
                               !item.img
@@ -293,8 +303,8 @@ const Menu = () => {
                         />
                       </div>
 
-                      <div className='menu-txtcontainer'>
-                        <div className='name-menu'>{item.name}</div>
+                      <div className="menu-txtcontainer">
+                        <div className="name-menu">{item.name}</div>
                         <div>
                           <div
                             style={{
@@ -303,7 +313,7 @@ const Menu = () => {
                               textDecoration: "underline",
                             }}
                             onClick={() => history(`/menu/${item.id}`)}
-                            className='menu-learnmore'
+                            className="menu-learnmore"
                           >
                             Learn More
                           </div>
