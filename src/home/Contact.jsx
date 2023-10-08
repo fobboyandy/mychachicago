@@ -14,6 +14,8 @@ const Contact = () => {
   const alllocations = useSelector((state) => state.locations);
   const [loading, setLoading] = useState(true);
 
+  const [showTutorial, setShowTutorial] = useState(false);
+
   useEffect(() => {
     if (!alllocations.length) {
       $.ajax({
@@ -140,7 +142,7 @@ const Contact = () => {
       if (paymentType === "") {
         valid = false;
         setPaymentTypeError(true);
-      } else if (paymentType === "card") {
+      } else if (paymentType === "card" || paymentType === "mobilewallet") {
         if (last4.length !== 4) {
           valid = false;
           setLast4Error(true);
@@ -216,8 +218,8 @@ const Contact = () => {
 
   if (loading) {
     return (
-      <div className='abs-loading'>
-        <div className='lds-ring' id='spinner-form'>
+      <div className="abs-loading">
+        <div className="lds-ring" id="spinner-form">
           <div></div>
           <div></div>
           <div></div>
@@ -236,20 +238,20 @@ const Contact = () => {
         marginTop: "5vh",
         marginBottom: "5vh",
       }}
-      id='contactparent'
+      id="contactparent"
     >
       {" "}
-      <div className='contact-parent'>
-        <div id='contact-intersectingobserver' />
-        <div className='head-section2'>Contact Us</div>
+      <div className="contact-parent">
+        <div id="contact-intersectingobserver" />
+        <div className="head-section2">Contact Us</div>
         <Leaf />
 
-        <div className='desc-sectioncontact mbot'>
+        <div className="desc-sectioncontact mbot">
           From questions and suggestions to machine or transaction issues, we
           are here to help!
         </div>
 
-        <div className='desc-sectioncontact mbot'>
+        <div className="desc-sectioncontact mbot">
           If you see a $1.50 (or a $5.00) charge on your account but the machine
           did not dispense a drink, please note that the $1.50 (or $5.00) is a
           pending charge for each time you swipe the card but it will disappear
@@ -257,7 +259,7 @@ const Contact = () => {
           you still see it after a few business days, please let us know.
         </div>
 
-        <div className='desc-sectioncontact mbot'>
+        <div className="desc-sectioncontact mbot">
           If you experienced other issues at a Mycha machine, please submit the
           refund request below and we’ll get back to you within one business
           day. Please be reassured that we look and respond to all requests. We
@@ -266,11 +268,11 @@ const Contact = () => {
           at our number or submit the form again.
         </div>
 
-        <div className='desc-sectioncontact mbot'>
+        <div className="desc-sectioncontact mbot">
           If it’s an urgent matter, please text Mycha @ (847) 260-8387 or email
           us at{" "}
           <a
-            href='mailto:mychamachine@gmail.com'
+            href="mailto:mychamachine@gmail.com"
             style={{
               fontStyle: "italic",
               fontWeight: "600",
@@ -294,7 +296,7 @@ const Contact = () => {
             }}
           >
             <form
-              className='form-contact'
+              className="form-contact"
               onSubmit={(e) => {
                 e.preventDefault();
                 const shouldSubmit = checkValid();
@@ -309,100 +311,100 @@ const Contact = () => {
                   });
                 } else return;
               }}
-              id='form--contact'
+              id="form--contact"
             >
-              <label htmlFor='name-contact' className='label-contact'>
-                Name<span className='star'>*</span>
+              <label htmlFor="name-contact" className="label-contact">
+                Name<span className="star">*</span>
               </label>
               {nameError && (
                 <div
-                  className='errormsg'
+                  className="errormsg"
                   style={{ display: nameError ? "" : "none" }}
                 >
                   Missing Name!
                 </div>
               )}
               <input
-                id='name-contact'
-                className='input-contact'
+                id="name-contact"
+                className="input-contact"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                name='name'
-                type='text'
+                name="name"
+                type="text"
               />
 
-              <label htmlFor='email-contact' className='label-contact'>
-                Your Email<span className='star'>*</span>
+              <label htmlFor="email-contact" className="label-contact">
+                Your Email<span className="star">*</span>
               </label>
 
               {emailError && (
                 <div
-                  className='errormsg'
+                  className="errormsg"
                   style={{ display: emailError ? "" : "none" }}
                 >
                   Invalid Email!
                 </div>
               )}
               <input
-                id='email-contact'
-                className='input-contact'
+                id="email-contact"
+                className="input-contact"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                name='email'
-                type='text'
+                name="email"
+                type="text"
               />
 
-              <label htmlFor='phone-contact' className='label-contact'>
-                Phone Number<span className='star'>*</span>
+              <label htmlFor="phone-contact" className="label-contact">
+                Phone Number<span className="star">*</span>
               </label>
               {phoneError && (
                 <div
-                  className='errormsg'
+                  className="errormsg"
                   style={{ display: phoneError ? "" : "none" }}
                 >
                   Invalid Number!
                 </div>
               )}
               <input
-                id='phone-contact'
-                className='input-contact'
+                id="phone-contact"
+                className="input-contact"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                type='tel'
+                type="tel"
               />
 
-              <label htmlFor='reason-contact' className='label-contact'>
-                Reason<span className='star'>*</span>
+              <label htmlFor="reason-contact" className="label-contact">
+                Reason<span className="star">*</span>
               </label>
 
               <div
-                className='select-container'
+                className="select-container"
                 onClick={() => {
                   setShowSelect((prev) => !prev);
                 }}
                 style={{ zIndex: 10 }}
               >
-                <div className='select-contact2' id='reason'>
+                <div className="select-contact2" id="reason">
                   {reason === "question/suggestion"
                     ? "Question/Suggestion"
                     : "Machine/Transaction Issue"}
                 </div>
 
                 {showSelect && (
-                  <div className='li-parent' id='reason-c'>
+                  <div className="li-parent" id="reason-c">
                     <div
-                      className='li-contact'
+                      className="li-contact"
                       onClick={() => setReason("question/suggestion")}
-                      id='question-suggestion'
+                      id="question-suggestion"
                       style={{ display: showSelect ? "" : "none" }}
                     >
                       Question/Suggestion
                     </div>
 
                     <div
-                      className='li-contact'
+                      className="li-contact"
                       onClick={() => setReason("issue")}
-                      id='machine-transaction-issue'
+                      id="machine-transaction-issue"
                       style={{
                         display: showSelect ? "" : "none",
                         borderRadius: "0 0 4px 4px",
@@ -420,28 +422,28 @@ const Contact = () => {
               ) : (
                 <div>
                   {locationError && (
-                    <div className='errormsg'>Select a location!</div>
+                    <div className="errormsg">Select a location!</div>
                   )}
 
-                  <div className='label-contact'>
-                    Region<span className='star'>*</span>
+                  <div className="label-contact">
+                    Region<span className="star">*</span>
                   </div>
 
                   <div
-                    className='select-container2'
-                    id='region-container'
+                    className="select-container2"
+                    id="region-container"
                     onClick={() => {
                       setShowRegion((prev) => !prev);
                     }}
                   >
-                    <div className='select-contact2' id='region'>
+                    <div className="select-contact2" id="region">
                       {region?.name?.toUpperCase() || "Select a region"}
                     </div>
                     {showRegion && (
-                      <div className='li-parent' id='region-c'>
+                      <div className="li-parent" id="region-c">
                         {alllocations.map((item, i, a) => (
                           <div
-                            className='li-contact2'
+                            className="li-contact2"
                             onClick={() => {
                               setRegion(item);
                               setLocation(null);
@@ -462,22 +464,22 @@ const Contact = () => {
 
                   {region && (
                     <div>
-                      <div className='label-contact'>
-                        ATM Location<span className='star'>*</span>
+                      <div className="label-contact">
+                        ATM Location<span className="star">*</span>
                       </div>
 
                       <div
-                        className='select-container2'
-                        id='selectlocation-container'
+                        className="select-container2"
+                        id="selectlocation-container"
                         onClick={() => {
                           setShowSelect2((prev) => !prev);
                         }}
                       >
-                        <div className='select-contact2' id='select-location'>
+                        <div className="select-contact2" id="select-location">
                           {location?.name || "Select a location"}
                         </div>
                         {showSelect2 && (
-                          <div className='li-parent' id='select-locationc'>
+                          <div className="li-parent" id="select-locationc">
                             {alllocations
                               .find(
                                 (v) =>
@@ -489,7 +491,7 @@ const Contact = () => {
                               })
                               .map((item, i, a) => (
                                 <div
-                                  className='li-contact2'
+                                  className="li-contact2"
                                   onClick={() => setLocation(item)}
                                   id={`${item.id}-option`}
                                   style={{
@@ -506,105 +508,188 @@ const Contact = () => {
                     </div>
                   )}
 
-                  <div className='label-contact'>
-                    Form of Payment<span className='star'>*</span>
+                  <div className="label-contact">
+                    Form of Payment<span className="star">*</span>
                   </div>
                   {paymentTypeError && (
                     <div
-                      className='errormsg'
+                      className="errormsg"
                       style={{ display: paymentTypeError ? "" : "none" }}
                     >
                       Please Select
                     </div>
                   )}
-                  <div className='radio-container'>
+                  <div className="radio-container">
                     <input
-                      type='radio'
+                      type="radio"
                       onClick={() => setPaymentType("card")}
-                      name='paymenttype'
-                      id='card'
+                      name="paymenttype"
+                      id="card"
                     />
-                    <label className='mleft10' htmlFor='card'>
+                    <label className="mleft10" htmlFor="card">
                       Card Swipe
                     </label>
                   </div>
 
-                  <div className='radio-container'>
+                  <div className="radio-container">
                     <input
-                      type='radio'
+                      type="radio"
                       onClick={() => setPaymentType("mobilewallet")}
-                      name='paymenttype'
-                      id='mobilewallet'
+                      name="paymenttype"
+                      id="mobilewallet"
                     />
-                    <label className='mleft10' htmlFor='mobilewallet'>
+                    <label className="mleft10" htmlFor="mobilewallet">
                       Mobile Wallet (Google Pay, Apple Pay, etc)
                     </label>
                   </div>
-                  <div className='radio-container'>
+                  <div className="radio-container">
                     <input
-                      type='radio'
+                      type="radio"
                       onClick={() => setPaymentType("cash")}
-                      name='paymenttype'
-                      id='cash'
+                      name="paymenttype"
+                      id="cash"
                     />
-                    <label className='mleft10' htmlFor='cash'>
+                    <label className="mleft10" htmlFor="cash">
                       Cash
                     </label>
                   </div>
 
-                  {paymentType === "card" && (
+                  {(paymentType === "card" ||
+                    paymentType === "mobilewallet") && (
                     <div style={{ marginTop: "10px" }}>
-                      <label htmlFor='name-contact' className='label-contact'>
-                        Last 4 Digits of Card<span className='star'>*</span>
+                      <label className="label-contact">
+                        {paymentType === "card" ? (
+                          "Last 4 Digits of Card"
+                        ) : (
+                          <span>
+                            Virtual Account Number / Device Account Number (4
+                            digits)
+                          </span>
+                        )}
+                        <span className="star">*</span>
                       </label>
                       {last4Error && (
                         <div
-                          className='errormsg'
+                          className="errormsg"
                           style={{ display: last4Error ? "" : "none" }}
                         >
                           Missing 4 digits!
                         </div>
                       )}
-                      <input
-                        className='input-contact'
-                        value={last4}
-                        onChange={(e) => setLast4(e.target.value)}
-                        maxLength={4}
-                        type='text'
-                      />
+
+                      {paymentType === "card" ? (
+                        <input
+                          className="input-contact"
+                          value={last4}
+                          onChange={(e) => setLast4(e.target.value)}
+                          maxLength={4}
+                          type="text"
+                          style={{ marginTop: "5px" }}
+                        />
+                      ) : (
+                        <div className="contact-y">
+                          <input
+                            className="contact-i"
+                            value={last4}
+                            onChange={(e) => setLast4(e.target.value)}
+                            maxLength={4}
+                            type="text"
+                            id="l4"
+                          />
+
+                          <div
+                            className="contact-q"
+                            onClick={() => setShowTutorial((prev) => !prev)}
+                          >
+                            ?
+                          </div>
+                        </div>
+                      )}
+
+                      {showTutorial && (
+                        <div className="contact-tu">
+                          <div className="contact-tuch">
+                            <div
+                              style={{
+                                marginBottom: "10px",
+                                fontWeight: "500",
+                                textAlign: "center",
+                              }}
+                            >
+                              Apple Pay
+                            </div>
+                            <video controls>
+                              <source
+                                src="/assets/contact/tutorial-apple.mp4"
+                                type="video/mp4"
+                              ></source>
+                            </video>
+                          </div>
+
+                          <div
+                            style={{ marginTop: "20px" }}
+                            className="contact-tuch"
+                          >
+                            <div
+                              style={{
+                                marginBottom: "10px",
+                                textAlign: "center",
+                                fontWeight: "500",
+                              }}
+                              className="contact-tuch"
+                            >
+                              Google Pay
+                            </div>
+                            <div
+                              style={{
+                                marginBottom: "10px",
+                                textAlign: "center",
+                              }}
+                            >
+                              Tap to pay -> Click on card used -> Details ->
+                              Virtual account number
+                            </div>
+
+                            <img
+                              src="/assets/contact/google.png"
+                              style={{ maxWidth: "100%" }}
+                            />
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
               )}
 
               <div
-                id='textarea-container'
+                id="textarea-container"
                 style={{ marginTop: reason === "question" ? 0 : "15px" }}
               >
-                <label htmlFor='name-contact' className='label-contact'>
+                <label htmlFor="name-contact" className="label-contact">
                   {reason === "question/suggestion"
                     ? "Your Question/Suggestion Below"
                     : "Please describe the issue"}
-                  <span className='star'>*</span>
+                  <span className="star">*</span>
                 </label>
                 {descError && (
                   <div
-                    className='errormsg'
+                    className="errormsg"
                     style={{ display: descError ? "" : "none" }}
                   >
                     Missing description!
                   </div>
                 )}
                 <textarea
-                  className='tarea-contact'
+                  className="tarea-contact"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   style={{ marginTop: "5px" }}
-                  type='text'
+                  type="text"
                 />
               </div>
 
-              <button type='submit' className='submitbut-contact'>
+              <button type="submit" className="submitbut-contact">
                 Submit
               </button>
             </form>
@@ -619,7 +704,7 @@ const Contact = () => {
             )} */}
           </div>
         ) : (
-          <div className='ty-message'>
+          <div className="ty-message">
             Thank you, your message has been received.
           </div>
         )}
