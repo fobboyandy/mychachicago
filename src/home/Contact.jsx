@@ -651,7 +651,7 @@ const Contact = () => {
                             </div>
 
                             <img
-                              src="/assets/contact/google.png"
+                              src="/assets/contact/google.PNG"
                               style={{ maxWidth: "100%" }}
                             />
                           </div>
