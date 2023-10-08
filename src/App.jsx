@@ -36,7 +36,6 @@ import Shop from "./catering/shop/Shop";
 import CateringContact from "./catering/contact/CateringContact";
 
 export default function App() {
-  console.log(window.location.host);
   const dispatch = useDispatch();
 
   function openNav() {
@@ -93,47 +92,47 @@ export default function App() {
 
           {window.location.host.includes("catering") ? (
             <Routes>
-              <Route exact path='/' element={<CateringShop />} />
-              <Route path='*' element={<NotFound />} />
-              <Route exact path='/events' element={<Events />} />
-              <Route exact path='/shop' element={<Shop />} />
-              <Route exact path='/contact' element={<CateringContact />} />
+              <Route exact path="/" element={<CateringShop />} />
+              <Route path="*" element={<NotFound />} />
+              <Route exact path="/events" element={<Events />} />
+              <Route exact path="/shop" element={<Shop />} />
+              <Route exact path="/contact" element={<CateringContact />} />
             </Routes>
           ) : (
             <Routes>
-              <Route exact path='/' element={<Home />} />
-              <Route exact path='/locations/check' element={<Checker />} />
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/locations/check" element={<Checker />} />
               <Route
                 exact
-                path='/locations/check/:location'
+                path="/locations/check/:location"
                 element={<Checker />}
               />
 
-              <Route exact path='/locations' element={<MainLocations />} />
+              <Route exact path="/locations" element={<MainLocations />} />
               <Route
                 exact
-                path='/locations/:section'
+                path="/locations/:section"
                 element={<MainLocations />}
               />
 
-              <Route exact path='/contact' element={<Contact />} />
-              <Route exact path='/menu' element={<Menu />} />
-              <Route exact path='/menu/:id' element={<MenuItem />} />
-              <Route exact path='/catering' element={<CateringShop />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/menu" element={<Menu />} />
+              <Route exact path="/menu/:id" element={<MenuItem />} />
+              <Route exact path="/catering" element={<CateringShop />} />
 
-              <Route exact path='/admin' element={<Admin />} />
-              <Route exact path='/admin/stock' element={<AdminTwo />} />
+              <Route exact path="/admin" element={<Admin />} />
+              <Route exact path="/admin/stock" element={<AdminTwo />} />
 
-              <Route exact path='/contactcontact' element={<BlankContact />} />
-              <Route exact path='/contactrefund' element={<BlankContact />} />
-              <Route exact path='/contactmenu' element={<BlankMenu />} />
+              <Route exact path="/contactcontact" element={<BlankContact />} />
+              <Route exact path="/contactrefund" element={<BlankContact />} />
+              <Route exact path="/contactmenu" element={<BlankMenu />} />
               <Route
                 exact
-                path='/contactlocation'
+                path="/contactlocation"
                 element={<BlankLocations />}
               />
 
-              <Route path='*' element={<NotFound />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           )}
           <Footer />
