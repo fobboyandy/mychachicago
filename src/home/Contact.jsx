@@ -522,7 +522,10 @@ const Contact = () => {
                   <div className="radio-container">
                     <input
                       type="radio"
-                      onClick={() => setPaymentType("card")}
+                      onClick={() => {
+                        setPaymentType("card");
+                        setShowTutorial(false);
+                      }}
                       name="paymenttype"
                       id="card"
                     />
