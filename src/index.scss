@@ -84,6 +84,25 @@ a {
   color: rgb(51, 51, 51);
 }
 
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    height: 14px;
+    width: 14px;
+    // background-color: #0a0e13;
+    margin: 0 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #6dd631;
+    -webkit-border-radius: 1ex;
+    border: 3.5px solid white;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000;
+  }
+}
+
 .name-overlay {
   color: white;
 }
