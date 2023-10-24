@@ -488,6 +488,15 @@
   text-align: center;
 }
 
+.qre-hover {
+  text-decoration: underline;
+
+  &:hover {
+    color: black;
+    transition: 0.3s ease all;
+  }
+}
+
 .qre-directions {
   text-decoration: none;
   position: relative;
