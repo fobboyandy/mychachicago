@@ -92,28 +92,34 @@ const MainLocations = () => {
       setLoading2(true);
 
       await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          //on success / user accepts
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            //on success / user accepts
 
-          const latlng = new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          const geocode = new google.maps.Geocoder().geocode(
-            { latLng: latlng },
-            (results, status) => {
-              if (status === google.maps.GeocoderStatus.OK) {
-                $("#input-query").val(results[0].formatted_address);
-                handlePlaceSearch(results[0]); //take the first place from the geocode
+            const latlng = new google.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+            const geocode = new google.maps.Geocoder().geocode(
+              { latLng: latlng },
+              (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK) {
+                  $("#input-query").val(results[0].formatted_address);
+                  handlePlaceSearch(results[0]); //take the first place from the geocode
 
-                setLoading2(false);
-              } else {
-                alert("Something went wrong, please try again");
-                setLoading2(false);
+                  setLoading2(false);
+                } else {
+                  alert("Something went wrong, please try again");
+                  setLoading2(false);
+                }
               }
-            }
-          );
-        });
+            );
+          },
+          function () {
+            setLoading2(false);
+            alert("Please allow access to your location");
+          }
+        );
       });
     } else {
       alert("Geolocation is not supported on your browser/device");
