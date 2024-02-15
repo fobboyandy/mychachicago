@@ -2,6 +2,9 @@ import React, { useEffect, useCallback, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import gsap from "gsap";
+import $ from "jquery";
+
 import {
   GoogleMap,
   Marker,
@@ -10,17 +13,14 @@ import {
   Autocomplete,
 } from "@react-google-maps/api";
 
-import axios from "axios";
-
 import "./location.scss";
 import "./gmap.scss";
 
 import { location } from "./locationsobj";
 
 import LocationWord from "../longstuff/LocationsWord";
+import LoadingComponent from "../global/LoadingComponent";
 
-import gsap from "gsap";
-import $ from "jquery";
 import { dispatchSetLocations } from "../store/locations";
 import { findURLInString } from "../helperfunctions";
 
@@ -35,7 +35,10 @@ const MainLocations = () => {
   const inputRef = useRef(null);
 
   const regionsWithLocations = useSelector((state) => state.locations);
+
   const [loading, setLoading] = useState(true);
+  //overlay loading
+  const [loading2, setLoading2] = useState(false);
 
   const [allLocations, setAllLocations] = useState([]);
 
@@ -83,6 +86,39 @@ const MainLocations = () => {
   const [showCityOverlay, setShowCityOverlay] = useState(false);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  async function getCurrentLocationOfUser() {
+    if (navigator.geolocation) {
+      setLoading2(true);
+
+      await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          //on success / user accepts
+
+          const latlng = new google.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          const geocode = new google.maps.Geocoder().geocode(
+            { latLng: latlng },
+            (results, status) => {
+              if (status === google.maps.GeocoderStatus.OK) {
+                $("#input-query").val(results[0].formatted_address);
+                handlePlaceSearch(results[0]); //take the first place from the geocode
+
+                setLoading2(false);
+              } else {
+                alert("Something went wrong, please try again");
+                setLoading2(false);
+              }
+            }
+          );
+        });
+      });
+    } else {
+      alert("Geolocation is not supported on your browser/device");
+    }
+  }
 
   const handleMarkerClickOrHover = (
     id,
@@ -159,7 +195,7 @@ const MainLocations = () => {
         });
   };
 
-  async function handlePlaceSearch() {
+  async function handlePlaceSearch(s) {
     //empty the query result array
     setInfoWindowOpen(false);
     setInfoWindowData(null);
@@ -168,7 +204,7 @@ const MainLocations = () => {
     setQueryLoading(true);
     setSearchActive(true);
 
-    const place = autoCompleteRef.current.getPlace();
+    const place = s || autoCompleteRef.current.getPlace();
 
     if (!place.address_components) {
       setQueryLoading(false);
@@ -587,6 +623,8 @@ const MainLocations = () => {
 
   return (
     <div className='location-actualparent'>
+      {loading2 && <LoadingComponent />}
+
       <div className='outer-location' id='outerlocation'>
         <div className='parent-location'></div>
         <div className='locations-header'>
@@ -657,13 +695,22 @@ const MainLocations = () => {
                       autoCompleteRef.current = ref;
                     }}
                   >
-                    <input
-                      className='location-inp locations-w502 locations-nf'
-                      placeholder='Enter Zip Code'
-                      type={"text"}
-                      ref={inputRef}
-                      id='input-query'
-                    />
+                    <div className='rel flexa location-inp'>
+                      <input
+                        className='locations-w502 locations-nf'
+                        placeholder='Enter Zip Code'
+                        type={"text"}
+                        ref={inputRef}
+                        id='input-query'
+                      />
+
+                      <div
+                        className='loc-cur'
+                        onClick={() => getCurrentLocationOfUser()}
+                      >
+                        Use Current Location
+                      </div>
+                    </div>
                   </Autocomplete>
                 )}
               </div>
@@ -753,6 +800,21 @@ const MainLocations = () => {
             </div>
           </div>
         )}
+
+        <div className='flexa' style={{ margin: "10px 0" }}>
+          <div className='grow' />
+          <div
+            className='loc-res'
+            onClick={() => {
+              $("#input-query").val("");
+              setResultsFromQuery([]);
+              setSearchActive(false);
+              onLoad(null, selectedCityLocations);
+            }}
+          >
+            Reset Search
+          </div>
+        </div>
         {!selectedSection && (
           <div className='locations-ep'>
             <div className='locations-querycontainer'>
