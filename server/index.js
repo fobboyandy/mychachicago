@@ -69,17 +69,17 @@ app.get("/fetchstock2/:location", async (req, res, next) => {
   }
 });
 
-app.get("/fetchlocations", async (req, res, next) => {
-  try {
-    const { data } = await axios.get(
-      `${process.env.EDITOR_LINK}/api/data/fetchlocations`
-    );
+// app.get("/fetchlocations", async (req, res, next) => {
+//   try {
+//     const { data } = await axios.get(
+//       `${process.env.EDITOR_LINK}/api/data/fetchlocations`
+//     );
 
-    res.send(data);
-  } catch (error) {
-    next(error);
-  }
-});
+//     res.send(data);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 app.get("/fetchlocationsbyregion", async (req, res, next) => {
   try {
@@ -201,8 +201,8 @@ app.get("/fetchalldrinks", async (req, res, next) => {
 app.get("/fetchallregions", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      `${process.env.EDITOR_LINK}/api/region/fetchall`
-      // "http://localhost:3005/api/region/fetchall"
+      // `${process.env.EDITOR_LINK}/api/region/fetchall`
+      "http://localhost:3005/api/region/fetchall"
     );
 
     res.send(data);

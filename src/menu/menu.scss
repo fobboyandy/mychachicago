@@ -256,3 +256,29 @@
   position: relative;
   padding-top: 11vh;
 }
+
+.menu-tp {
+  padding: 0 10px;
+  box-sizing: border-box;
+
+  @media only screen and (max-width: 550px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.menu-span {
+  display: inline-block;
+  max-width: calc(100% - 20px);
+
+  @media only screen and (max-width: 550px) {
+    margin-top: 10px;
+  }
+}
+
+.menu-space {
+  @media only screen and (max-width: 550px) {
+    display: none;
+  }
+}
