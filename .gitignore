@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/dist
 /.pnp
 .pnp.js
 
@@ -23,5 +24,3 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
-
-/dist
