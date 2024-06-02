@@ -18,7 +18,6 @@ import "./gmap.scss";
 
 import { location } from "./locationsobj";
 
-import LocationWord from "../longstuff/LocationsWord";
 import LoadingComponent from "../global/LoadingComponent";
 
 import { dispatchSetLocations } from "../store/locations";
@@ -578,19 +577,24 @@ const MainLocations = () => {
   });
 
   useEffect(() => {
-    $.ajax({
-      url: "/fetchallregions",
-      type: "GET",
-    })
-      .then((res) => {
-        dispatch(dispatchSetLocations(res));
-        setLoading(false);
+    if (regionsWithLocations.length) {
+      setLoading(false);
+      return;
+    } else {
+      $.ajax({
+        url: "/fetchallregions",
+        type: "GET",
       })
-      .catch(() => {
-        alert("Something went wrong, please try again");
-        setLoading(false);
-      });
-  }, []);
+        .then((res) => {
+          dispatch(dispatchSetLocations(res));
+          setLoading(false);
+        })
+        .catch(() => {
+          alert("Something went wrong, please try again");
+          setLoading(false);
+        });
+    }
+  }, [regionsWithLocations]);
 
   //all locations
   useEffect(() => {
@@ -633,9 +637,13 @@ const MainLocations = () => {
 
       <div className='outer-location' id='outerlocation'>
         <div className='parent-location'></div>
-        <div className='locations-header'>
-          <LocationWord />
+        {/* <div className='locations-header'> */}
+        {/* <LocationWord /> */}
+
+        <div className='cs-t' style={{ zIndex: 10 }}>
+          L O C A T I O N S
         </div>
+        {/* </div> */}
       </div>
 
       <div

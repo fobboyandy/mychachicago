@@ -1,6 +1,218 @@
 .cs-parent {
   width: 100%;
+  margin-top: 11vh;
+}
+
+.cs-background {
+  position: fixed;
+  top: 11vh;
+  width: 100%;
+  height: 50vh;
+  background-image: url(/assets/catering/catering.jpeg);
+  background-size: cover;
+  background-position: center;
+}
+
+.cs-img {
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.cs-t {
+  font-family: aquatico;
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  user-select: none;
+  color: black;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 45px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    font-size: 30px;
+  }
+}
+
+.cs-botcon {
+  // height: 100vh; //placeholder
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5vh 5% 12vh;
+  background-color: white;
+  z-index: 2;
+  position: relative;
+}
+
+.cs-desc {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cs-notice {
+  font-size: 16px !important;
+  line-height: unset !important;
+  width: 100%;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 14px !important;
+  }
+}
+
+.cs-cart {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  fill: rgb(109, 214, 49);
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+.cs-ca {
+  height: 33px;
+  width: 33px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% + 2px), -50%);
+}
+
+.cs-carthold {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  height: 50px;
+  width: 50px;
+  opacity: 0;
+  z-index: -1;
+}
+
+.cs-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cs-img {
+  width: 60%;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+.cs-cz {
+  cursor: pointer;
+  margin-top: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.cs-half {
+  padding: 24px;
+  box-sizing: border-box;
+  cursor: pointer;
+  box-shadow: none;
+  transition: 0.5s ease all;
+  width: calc(100% - 14px);
+  aspect-ratio: 3;
+  border-radius: 10px;
+
+  &:hover {
+    box-shadow: 0 0 20px #00000026;
+
+    & > div {
+      transform: scale(1.035);
+    }
+
+    & .cs-caret {
+      animation: caret 0.7s ease;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes caret {
+      from {
+        transform: translate(-15px, -50%) rotate(-90deg);
+        opacity: 0;
+      }
+
+      to {
+        transform: translate(0, -50%) rotate(-90deg);
+        opacity: 1;
+      }
+    }
+  }
+
+  & > div {
+    transition: 0.5s ease all;
+  }
+}
+
+.cs-inner {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.cs-m {
+  width: fit-content;
+}
+
+.cs-dri {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.cs-o {
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 5vh;
+  align-items: center;
+}
+
+.cs-containermenu {
+  row-gap: 5px;
+}
+
+.cs-caret {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  right: 30px;
+  opacity: 0;
+  animation: caretout 0.7s ease;
+  visibility: hidden;
+
+  @media only screen and (max-width: 1200px) {
+    right: 10px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    right: 0px;
+  }
+}
+
+@keyframes caretout {
+  from {
+    transform: translate(0, -50%) rotate(-90deg);
+    opacity: 1;
+  }
+
+  to {
+    transform: translate(-15px, -50%) rotate(-90deg);
+    opacity: 0;
+  }
 }
