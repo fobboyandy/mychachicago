@@ -32,7 +32,9 @@ const SelectedDrinkOverlay = ({
 
   //values
   const [customizations, setCustomizations] = useState<Object>({});
+
   const [drinkQty, setDrinkQty] = useState<Number | null>(0);
+  const [drinkQtyError, setDrinkQtyError] = useState<boolean>(false);
 
   //size of X icon
   const [size, setSize] = useState<object>({});
@@ -43,8 +45,6 @@ const SelectedDrinkOverlay = ({
   const [showDesc, setShowDesc] = useState(false);
 
   const [height, setHeight] = useState(0);
-
-  console.log(size, "sz");
 
   //sort all drinks into one array and sort it
   useEffect(() => {
@@ -67,8 +67,10 @@ const SelectedDrinkOverlay = ({
     //if no id, set first drink on the sorted list
     if (!id) {
       setDrink(allDrinksSorted[0]);
+      setSize(allDrinksSorted[0].sizes.sort(sortBySize)[0]);
     } else {
       const find = allDrinksSorted.find((t) => t.id === id);
+
       if (find) {
         setDrink(find);
 
@@ -123,7 +125,21 @@ const SelectedDrinkOverlay = ({
     setCustomizationsReady(true);
   }, [drink]);
 
-  console.log(customizations, "dr");
+  const qtyInputFocusOut = useCallback(() => {
+    //if the drink qty input is null
+    if (!drinkQty) {
+      setDrinkQty(drink.minimum);
+      setDrinkQtyError(true);
+      return;
+    }
+
+    if (Number(drinkQty) < Number(drink.minimum)) {
+      setDrinkQty(drink.minimum);
+      setDrinkQtyError(true);
+    }
+  }, [drinkQty, drink]);
+
+  $("#sdo-qtyinput").unbind("focusout").on("focusout", qtyInputFocusOut);
 
   //not loaded yet, can add loading component here later
   if (!allDrinksSorted.length || !drink?.id || !customizationsReady) return;
@@ -261,12 +277,12 @@ const SelectedDrinkOverlay = ({
                       </div>
                     </div>
 
-                    <div className='sdo-div' />
-
                     {/* <div className='sdo-div' /> */}
 
                     {drink.customizations?.sort(sortAlphaName).map((t) => (
                       <div>
+                        <div className='sdo-div' />
+
                         <div className='sdo-l'>{t.name}</div>
 
                         {/* <div className='sdo-custm'>
@@ -328,64 +344,86 @@ const SelectedDrinkOverlay = ({
                       </div>
                     ))}
 
-                    <div className='flexa'>
+                    <div className='flexa' style={{ paddingBottom: "10px" }}>
                       {/* <div className='sdo-l'>Quantity</div> */}
 
-                      <div className='sdo-custm sdo-qcon'>
-                        <div
-                          className='sdo-editqty sdo-w'
-                          onClick={() =>
-                            setDrinkQty((prev) => {
-                              if (prev - 5 < Number(drink.minimum)) {
-                                return prev;
-                              } else {
-                                return Number(prev - 5);
-                              }
-                            })
-                          }
-                        >
-                          -5
-                        </div>
-                        <div className='sdo-qty'>
-                          <input
-                            className='sdo-qtyinput'
-                            value={drinkQty}
-                            id='sdo-qtyinput'
-                            type='number'
-                            onChange={(e) => {
-                              if (!e.target.value) {
-                                setDrinkQty(0);
-                                return;
-                              }
+                      <div className='sdo-qp'>
+                        <div className='sdo-custm sdo-qcon'>
+                          <div
+                            className='sdo-editqty sdo-w'
+                            onClick={() =>
+                              setDrinkQty((prev) => {
+                                if (prev - 5 < Number(drink.minimum)) {
+                                  setDrinkQtyError(true);
+                                  return prev;
+                                } else {
+                                  return Number(prev - 5);
+                                }
+                              })
+                            }
+                          >
+                            -5
+                          </div>
+                          <div className='sdo-qty'>
+                            <input
+                              className='sdo-qtyinput'
+                              value={drinkQty}
+                              id='sdo-qtyinput'
+                              type='number'
+                              onChange={(e) => {
+                                //set the drink qty error state to false
+                                setDrinkQtyError(false);
 
-                              //check to see if the input value has any non numerical values
-                              if (/^\d+$/.test(e.target.value)) {
-                                //keep the number of drinks per add under 500.
-                                if (Number(e.target.value) > 500) {
-                                  setDrinkQty(500);
-
+                                //set it to null if the input is set to nothing by the user
+                                //in the focus out function, we will check to see if the user set anything in the input
+                                //if not, we will set it to the drink minimum in the focus out function
+                                if (!e.target.value) {
+                                  setDrinkQty(null);
                                   return;
                                 }
 
-                                setDrinkQty(Number(e.target.value));
-                                return;
-                              }
+                                //check to see if the input value has any non numerical values
+                                if (/^\d+$/.test(e.target.value)) {
+                                  //keep the number of drinks per add under 500.
+                                  if (Number(e.target.value) > 500) {
+                                    setDrinkQty(500);
 
-                              //if the input value does not include any letters
-                              return;
-                            }}
-                          />
+                                    return;
+                                  }
+
+                                  // if (Number(e.target.value) < drink.minimum) {
+                                  //   setDrinkQty(drink.minimum);
+                                  //   setDrinkQtyError(true);
+                                  //   return;
+                                  // }
+
+                                  setDrinkQty(Number(e.target.value));
+                                  return;
+                                }
+
+                                //if the input value does not include any letters
+                                return;
+                              }}
+                            />
+                          </div>
+                          <div
+                            className='sdo-editqty sdo-g'
+                            onClick={() =>
+                              setDrinkQty((prev) => {
+                                setDrinkQtyError(false);
+                                return Number(prev + 5);
+                              })
+                            }
+                          >
+                            +5
+                          </div>
                         </div>
-                        <div
-                          className='sdo-editqty sdo-g'
-                          onClick={() =>
-                            setDrinkQty((prev) => {
-                              return Number(prev + 5);
-                            })
-                          }
-                        >
-                          +5
-                        </div>
+
+                        {drinkQtyError && (
+                          <div className='sdo-qtyerr'>
+                            Min Quantity is {drink.minimum}
+                          </div>
+                        )}
                       </div>
 
                       <div className='sdo-atc'>Add to Cart</div>

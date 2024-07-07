@@ -107,10 +107,11 @@
 
 .sdo-div {
   height: 2px;
-  border-radius: 50%;
+  // border-radius: 50%;
+  border-radius: 10px;
   width: 100%;
   background-color: lightgray;
-  margin: 20px 0;
+  margin: 20px 10px;
 }
 
 .sdo-custm {
@@ -145,7 +146,7 @@
 
   height: 48px;
 
-  width: calc(50% - 5px);
+  width: 100%;
 }
 
 .sdo-editqty {
@@ -235,6 +236,23 @@
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+.sdo-qp {
+  width: calc(50% - 5px);
+  position: relative;
+}
+
+.sdo-qtyerr {
+  font-size: 14px;
+  color: red;
+
+  position: absolute;
+  bottom: -10px;
+
+  @media only screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 }
 
 // .sdo-chov {

@@ -1,11 +1,11 @@
 //sort sizes by small, large
 
 function sortBySize(a, b) {
-  if (a?.name === "small") {
+  if (a?.name.toLowerCase() === "small") {
     return -2;
   }
 
-  if (a?.name === "large") return 2;
+  if (a?.name.toLowerCase() === "large") return 2;
 
   return 0;
 }
