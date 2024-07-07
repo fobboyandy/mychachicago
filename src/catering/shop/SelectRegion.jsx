@@ -15,17 +15,17 @@ const SelectRegion = ({
   const [show, setShow] = useState(false);
 
   return (
-    <div className="sr-parent">
-      <div className="sr-inner">
-        <div className="sr-f">
+    <div className='sr-parent'>
+      <div className='sr-inner'>
+        <div className='sr-f'>
           Welcome to Mycha Catering. Please select a region.
         </div>
 
         <Leaf />
 
-        <div className="select-container3" style={{ alignItems: "center" }}>
+        <div className='select-container3' style={{ alignItems: "center" }}>
           <div
-            className="select-contact2"
+            className='select-contact2'
             onClick={() => {
               setShow((prev) => !prev);
             }}
@@ -34,10 +34,10 @@ const SelectRegion = ({
           </div>
 
           {show && (
-            <div className="sr-regioncon">
+            <div className='sr-regioncon'>
               {regions?.map((re) => (
                 <div
-                  className="sr-regionsel"
+                  className='sr-regionsel'
                   onClick={() => {
                     setHoldRegion(re);
                     setShow(false);
@@ -50,7 +50,7 @@ const SelectRegion = ({
           )}
         </div>
 
-        <div className="sr-confirm" onClick={() => handleSetRegion()}>
+        <div className='sr-confirm' onClick={() => handleSetRegion()}>
           Confirm
         </div>
       </div>

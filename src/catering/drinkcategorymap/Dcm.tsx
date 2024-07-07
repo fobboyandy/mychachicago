@@ -1,16 +1,17 @@
-import React from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Dcm = ({ name, drinks }: { name: string; drinks: Array<any> }) => {
-  console.log(drinks[0].name, "dr123132123");
+const DCM = ({ name, drinks }: { name: string; drinks: Array<any> }) => {
+  const nav = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
       $(".cs-caret").css("visibility", "visible");
     }, 1000);
   }, []);
+
   return (
-    <div style={{ marginTop: "10.1px" }}>
+    <div style={{ marginTop: "10px" }}>
       <div className='menu-title'>
         <img src='/assets/leafdivider.png' className='leaf' alt='leaf' />
         {name}
@@ -24,7 +25,12 @@ const Dcm = ({ name, drinks }: { name: string; drinks: Array<any> }) => {
       <div className='container-sectionmenu cs-containermenu'>
         {drinks.map((t) => (
           <div className='cs-o'>
-            <div className='cs-half'>
+            <div
+              className='cs-half'
+              onClick={() => {
+                nav(`/catering/${t.id}`);
+              }}
+            >
               <div className='cs-inner'>
                 <div
                   className='img-menucontainer'
@@ -52,4 +58,4 @@ const Dcm = ({ name, drinks }: { name: string; drinks: Array<any> }) => {
   );
 };
 
-export default Dcm;
+export default DCM;

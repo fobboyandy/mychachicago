@@ -479,7 +479,7 @@ body {
 }
 
 .desc-sectioncontact {
-  text-align: center;
+  // text-align: center;
   font-size: 20px;
   line-height: 1.7;
 
@@ -490,7 +490,7 @@ body {
 }
 
 .mbot {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   line-height: 1.6;
 }
 
@@ -732,4 +732,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.contact-qs {
+  text-decoration: underline;
+  cursor: pointer;
 }

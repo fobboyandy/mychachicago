@@ -116,6 +116,14 @@ const Menu = () => {
     cateringobserver.observe(cateringele);
   }, [drinks, loading]);
 
+  //caret visibility
+  useEffect(() => {
+    if (loading) return;
+    setTimeout(() => {
+      $(".cs-caret").css("visibility", "visible");
+    }, 1000);
+  }, [loading]);
+
   useEffect(() => {
     if (loading) return;
     if (!drinks?.length) return;
@@ -285,44 +293,49 @@ const Menu = () => {
                 {section.drinks
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map((item) => (
-                    <div
-                      className='menu-half'
-                      id={item.htmlid}
-                      key={item.htmlid}
-                      style={{ marginBottom: "15px" }}
-                    >
+                    <div className='menu-o'>
                       <div
-                        className='img-menucontainer'
-                        style={{
-                          border: "2px solid rgb(109, 214, 49) ",
-                        }}
+                        className='menu-half'
+                        id={item.htmlid}
+                        key={item.htmlid}
+                        style={{ marginBottom: "15px" }}
+                        onClick={() => history(`/menu/${item.id}`)}
                       >
-                        <div
-                          className='img-menu'
-                          style={{
-                            backgroundImage: `url(${
-                              !item.img
-                                ? item.pathname
-                                : `data:image/png;base64,${item.img}`
-                            })`,
-                          }}
-                        />
-                      </div>
-
-                      <div className='menu-txtcontainer'>
-                        <div className='name-menu'>{item.name}</div>
-                        <div>
+                        <div className='menu-in'>
                           <div
+                            className='img-menucontainer'
                             style={{
-                              cursor: "pointer",
-                              marginTop: "8px",
-                              textDecoration: "underline",
+                              border: "2px solid rgb(109, 214, 49) ",
                             }}
-                            onClick={() => history(`/menu/${item.id}`)}
-                            className='menu-learnmore'
                           >
-                            Learn More
+                            <div
+                              className='img-menu'
+                              style={{
+                                backgroundImage: `url(${
+                                  !item.img
+                                    ? item.pathname
+                                    : `data:image/png;base64,${item.img}`
+                                })`,
+                              }}
+                            />
                           </div>
+                          <div className='menu-txtcontainer'>
+                            <div className='name-menu'>{item.name}</div>
+                            <div>
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  marginTop: "8px",
+                                  textDecoration: "underline",
+                                }}
+                                className='menu-learnmore'
+                              >
+                                Learn More
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className='mitem-caret cs-caret menu-caret' />
                         </div>
                       </div>
                     </div>
