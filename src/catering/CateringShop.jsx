@@ -15,6 +15,8 @@ import Leaf from "../longstuff/Leaf";
 import CartSvg from "./svg/CartSvg";
 import DCM from "./drinkcategorymap/DCM";
 import SelectedDrinkOverlay from "./selecteddrink/SelectedDrinkOverlay";
+import { makeGetRequest } from "../helper/ajaxRequests";
+import { dispatchSetCart } from "../store/cart";
 
 const CateringShop = () => {
   const dispatch = useDispatch();
@@ -23,7 +25,9 @@ const CateringShop = () => {
 
   const locations = useSelector((state) => state.locations);
 
+  //ready states
   const [loading, setLoading] = useState(true);
+  const [cartLoading, setCartLoading] = useState(true);
 
   const [cateringRegion, setCateringRegion] = useState(null);
   const [cateringDrinkSorted, setCateringDrinkSorted] = useState({});
@@ -146,6 +150,27 @@ const CateringShop = () => {
         { opacity: 1, x: 0, duration: 1.2 }
       );
     });
+  }, []);
+
+  useEffect(() => {
+    const findLocalCartId = window.localStorage.getItem("cartid");
+
+    if (findLocalCartId) {
+      //fetch cart
+      async function f() {
+        await makeGetRequest(`cart/fetchcart/${findLocalCartId}`)
+          .then((res) => {
+            console.log(res, "responsee");
+            dispatch(dispatchSetCart(res));
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Something went wrong, please try again");
+          });
+      }
+
+      f();
+    }
   }, []);
 
   const scroll = useCallback(() => {

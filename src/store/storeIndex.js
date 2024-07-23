@@ -5,11 +5,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import drinks from "./drinks";
 import locations from "./locations";
 import navheight from "./navheight";
+import cart from "./cart";
 
 const reducer = combineReducers({
   drinks,
   locations,
   navheight,
+  cart,
 });
 
 let middleware = "";

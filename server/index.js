@@ -236,6 +236,35 @@ app.get("/traffic", async (req, res, next) => {
   }
 });
 
+//fetch cart
+app.get("/api/cart/fetchcart/:id", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      // `${process.env.EDITOR_LINK}/api/cart/${req.params.id}`,
+      `http://localhost:3005/api/cart/findcart/${req.params.id}`
+    );
+
+    res.send(data).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//catering atc
+app.post("/api/catering/atc", async (req, res, next) => {
+  try {
+    const { data } = await axios.post(
+      // `${process.env.EDITOR_LINK}/api/cart/atc`,
+      `http://localhost:3005/api/cart/atc`,
+      req.body
+    );
+
+    res.send(data).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.put("/t", async (req, res, next) => {
   try {
     const { data } = await axios.put(

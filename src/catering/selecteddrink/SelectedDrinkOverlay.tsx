@@ -1,12 +1,16 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { sortAlphaName } from "../../helper/sortAlpha";
 
 import { sortBySize } from "../../helper/sortBySize";
 
+import { makePostRequest } from "../../helper/ajaxRequests";
+
 // import XIcon from "../../global/XIcon";
 
 import "./sdo.scss";
+import { dispatchSetCart } from "../../store/cart";
 
 // interface drink{
 //   id: string,
@@ -23,6 +27,9 @@ const SelectedDrinkOverlay = ({
 }) => {
   const nav = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
 
   //ready states
   const [customizationsReady, setCustomizationsReady] =
@@ -45,6 +52,53 @@ const SelectedDrinkOverlay = ({
   const [showDesc, setShowDesc] = useState(false);
 
   const [height, setHeight] = useState(0);
+
+  async function atc() {
+    //customization
+    const customizationArray = [];
+
+    Object.values(customizations).forEach((t) => {
+      //no length, single object
+      if (!t?.length && t?.length !== 0) {
+        customizationArray.push(t);
+      } else {
+        //array aka multiselect, so we push all the values into the result array
+        customizationArray.push(...t);
+      }
+    });
+
+    // console.log(customizationArray, "arr");
+
+    // //drink
+    // const drinkCopy = drink
+    // delete drinkCopy.img
+
+    const obj = {
+      cartId: cart?.id || null,
+      drinkId: drink.id,
+      sizeId: size.id,
+      customizations: customizationArray,
+      qty: drinkQty,
+    };
+
+    console.log(obj, "obj");
+
+    await makePostRequest("catering/atc", obj)
+      .then((res) => {
+        console.log(res, "response");
+        //res will probably be the cart because what if the user did not have a cart to start with. we can simply replace it now
+
+        //set the cart to the state
+        dispatch(dispatchSetCart(res));
+
+        //set the id of the cart to localstorage
+        window.localStorage.setItem("cartid", res.id);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Something went wrong, please try again");
+      });
+  }
 
   //sort all drinks into one array and sort it
   useEffect(() => {
@@ -426,7 +480,9 @@ const SelectedDrinkOverlay = ({
                         )}
                       </div>
 
-                      <div className='sdo-atc'>Add to Cart</div>
+                      <div className='sdo-atc' onClick={() => atc()}>
+                        Add to Cart
+                      </div>
                     </div>
                   </div>
                 </div>

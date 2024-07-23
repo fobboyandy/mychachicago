@@ -1,8 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const CartSvg = () => {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <div className='cs-cart'>
+      <div className='cs-cart-qty'>{cart?.id ? cart?.items?.length : 0}</div>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         xmlnsXlink='http://www.w3.org/1999/xlink'
