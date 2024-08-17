@@ -6,12 +6,14 @@ import drinks from "./drinks";
 import locations from "./locations";
 import navheight from "./navheight";
 import cart from "./cart";
+import showCart from "./showCart";
 
 const reducer = combineReducers({
   drinks,
   locations,
   navheight,
   cart,
+  showCart,
 });
 
 let middleware = "";

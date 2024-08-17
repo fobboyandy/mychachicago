@@ -80,13 +80,13 @@ const Footer = () => {
           </a>
         </div>
 
-        <div className='contact-footercontainer'>
+        <div className='contact-footercontainer f-s-main'>
           <PhoneIcon />
           &nbsp; (847) 260-8387
         </div>
 
         <a
-          className='contact-footercontainer footer-hov-mailpa'
+          className='contact-footercontainer footer-hov-mailpa f-s-main'
           href='mailto:mychamachine@gmail.com'
           style={{ cursor: "pointer" }}
         >
@@ -97,14 +97,14 @@ const Footer = () => {
         <div className='ul-footer'>
           {loc.pathname === "/" ? (
             <div
-              className='li-footer footer-hov'
+              className='li-footer footer-hov f-s-main'
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Home
             </div>
           ) : (
             <a
-              className='li-footer footer-hov'
+              className='li-footer footer-hov f-s-main'
               href='/'
               style={{ textDecoration: "none" }}
             >
@@ -122,7 +122,7 @@ const Footer = () => {
             Catering
           </div> */}
           <div
-            className='li-footer footer-hov'
+            className='li-footer footer-hov f-s-main'
             onClick={() => {
               loc.pathname === "/menu"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -132,14 +132,14 @@ const Footer = () => {
             Menu
           </div>
           <div
-            className='li-footer footer-hov'
+            className='li-footer footer-hov f-s-main'
             onClick={() => history("/locations")}
           >
             Locations
           </div>
 
           <div
-            className='li-footer footer-hov'
+            className='li-footer footer-hov f-s-main'
             onClick={() => {
               loc.pathname === "/locations/check"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -150,7 +150,7 @@ const Footer = () => {
           </div>
 
           <div
-            className='li-footer footer-hov'
+            className='li-footer footer-hov f-s-main'
             onClick={() => {
               loc.pathname === "/contact"
                 ? window.scrollTo({ top: 0, behavior: "smooth" })
@@ -170,13 +170,14 @@ const Footer = () => {
           }}
         >
           <div
-            style={{ fontSize: "22px", marginTop: "5px", marginRight: "5px" }}
+            style={{ marginTop: "5px", marginRight: "5px" }}
+            className='f-s-main f-ds'
           >
             ©{" "}
           </div>
-          2022 - 2023 Mycha LLC
+          2022 - 2024 Mycha LLC
         </div>
-        <div style={{ fontStyle: "italic" }}>
+        <div style={{ fontStyle: "italic" }} className='f-s-main'>
           Life is full of important choices
         </div>
       </div>

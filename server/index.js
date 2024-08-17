@@ -201,8 +201,8 @@ app.get("/fetchalldrinks", async (req, res, next) => {
 app.get("/fetchallregions", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      // `${process.env.EDITOR_LINK}/api/region/fetchall`
-      "http://localhost:3005/api/region/fetchall"
+      `${process.env.EDITOR_LINK}/api/region/fetchall`
+      // "http://localhost:3005/api/region/fetchall"
     );
 
     res.send(data);
@@ -240,8 +240,8 @@ app.get("/traffic", async (req, res, next) => {
 app.get("/api/cart/fetchcart/:id", async (req, res, next) => {
   try {
     const { data } = await axios.get(
-      // `${process.env.EDITOR_LINK}/api/cart/${req.params.id}`,
-      `http://localhost:3005/api/cart/findcart/${req.params.id}`
+      `${process.env.EDITOR_LINK}/api/cart/${req.params.id}`
+      // `http://localhost:3005/api/cart/findcart/${req.params.id}`
     );
 
     res.send(data).status(200);

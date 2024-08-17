@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 
 import "./index.scss";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { dispatchSetNavHeight } from "./store/navheight";
+import { dispatchSetShowCart } from "./store/showCart";
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
@@ -34,9 +35,13 @@ import Nav2 from "./catering/nav/Nav2";
 import Events from "./catering/events/Events";
 import Shop from "./catering/shop/Shop";
 import CateringContact from "./catering/contact/CateringContact";
+import Cart from "./catering/cart/Cart";
 
 export default function App() {
   const dispatch = useDispatch();
+
+  const showCart = useSelector((state) => state.showCart);
+  console.log(showCart);
 
   function openNav() {
     gsap.to(".overlay-nav", { y: 0, duration: 0.8, opacity: 1 });
@@ -76,10 +81,29 @@ export default function App() {
     });
   });
 
+  //set the document to no scroll when showcart is active
+  useEffect(() => {
+    if (!showCart) {
+      $("html").css("overflow", "unset");
+    } else {
+      $("html").css("overflow", "hidden");
+    }
+  }, [showCart]);
+
   return (
     <div>
       <BrowserRouter>
         <div style={{ minHeight: "100vh" }}>
+          <Cart />
+
+          {/* cart background when cart is active */}
+          {showCart && (
+            <div
+              className='index-cart-background'
+              onClick={() => dispatch(dispatchSetShowCart(false))}
+            />
+          )}
+
           {window.location.host.includes("catering") ? (
             <Nav2 />
           ) : (

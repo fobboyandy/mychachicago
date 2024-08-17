@@ -78,6 +78,10 @@
   border-radius: 20px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   z-index: 10;
+
+  @media only screen and (max-width: 650px) {
+    right: 15px;
+  }
 }
 
 .cs-cart-qty {
@@ -245,4 +249,14 @@
     transform: translate(-15px, -50%) rotate(-90deg);
     opacity: 0;
   }
+}
+
+.cs-soon {
+  width: 70%;
+}
+
+.cs-sooncontainer {
+  display: flex;
+  margin-top: 12vh;
+  justify-content: center;
 }

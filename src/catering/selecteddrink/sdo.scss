@@ -3,7 +3,7 @@
   animation: sdo 0.5s ease;
   animation-fill-mode: forwards;
   z-index: 16;
-  overflow: auto;
+  overflow: hidden; //?? might have to change later
 }
 
 .sdo-f {
@@ -222,12 +222,39 @@
   color: white;
   cursor: pointer;
 
-  transition: 0.35s ease all;
+  transition: 0.35s ease box-shadow, 0.5s ease background-color;
   user-select: none;
+
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.5);
   }
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
+}
+
+//after user clicks the atc button and successful request
+.sdo-atcclick {
+  transform: translateY(24px) !important;
+}
+
+.sdo-atcb {
+  height: 96px;
+  transform: translateY(-24px);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  transition: 0.5s ease all;
+}
+
+.sdo-atcc {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sdo-qtyinput {
@@ -241,6 +268,10 @@
 .sdo-qp {
   width: calc(50% - 5px);
   position: relative;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 }
 
 .sdo-qtyerr {
@@ -252,6 +283,12 @@
 
   @media only screen and (max-width: 500px) {
     font-size: 12px;
+  }
+}
+
+.sdo-bqtycon {
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
   }
 }
 

@@ -36,6 +36,7 @@ const SelectedDrinkOverlay = ({
     useState<Boolean>(false);
 
   const [allDrinksSorted, setAllDrinksSorted] = useState<Array<Object>>([]);
+  console.log(allDrinksSorted, "all");
 
   //values
   const [customizations, setCustomizations] = useState<Object>({});
@@ -48,12 +49,16 @@ const SelectedDrinkOverlay = ({
 
   //selected drink
   const [drink, setDrink] = useState<Object>({});
+  console.log(drink, "fdr");
 
   const [showDesc, setShowDesc] = useState(false);
 
   const [height, setHeight] = useState(0);
 
   async function atc() {
+    //animation of previous atc is still going, prevents spam
+    if ($(".sdo-atcb").hasClass("sdo-atcclick")) return;
+
     //customization
     const customizationArray = [];
 
@@ -93,6 +98,13 @@ const SelectedDrinkOverlay = ({
 
         //set the id of the cart to localstorage
         window.localStorage.setItem("cartid", res.id);
+
+        //added to cart animation
+        $(".sdo-atcb").addClass("sdo-atcclick");
+
+        setTimeout(() => {
+          $(".sdo-atcb").removeClass("sdo-atcclick");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -398,7 +410,10 @@ const SelectedDrinkOverlay = ({
                       </div>
                     ))}
 
-                    <div className='flexa' style={{ paddingBottom: "10px" }}>
+                    <div
+                      className='flexa sdo-bqtycon'
+                      style={{ paddingBottom: "10px" }}
+                    >
                       {/* <div className='sdo-l'>Quantity</div> */}
 
                       <div className='sdo-qp'>
@@ -481,7 +496,10 @@ const SelectedDrinkOverlay = ({
                       </div>
 
                       <div className='sdo-atc' onClick={() => atc()}>
-                        Add to Cart
+                        <div className='sdo-atcb'>
+                          <div className='sdo-atcc'>Successfully Added!</div>
+                          <div className='sdo-atcc'>Add to Cart</div>
+                        </div>
                       </div>
                     </div>
                   </div>
