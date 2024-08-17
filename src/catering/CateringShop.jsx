@@ -13,7 +13,7 @@ import "./cs.scss";
 import AbsoluteSelect from "../global/AbsoluteSelect";
 import Leaf from "../longstuff/Leaf";
 import CartSvg from "./svg/CartSvg";
-import DCM from "./drinkcategorymap/DCM.tsx";
+// import DCM from "./drinkcategorymap/DCM.tsx";
 import SelectedDrinkOverlay from "./selecteddrink/SelectedDrinkOverlay";
 import { makeGetRequest } from "../helper/ajaxRequests";
 import { dispatchSetCart } from "../store/cart";
