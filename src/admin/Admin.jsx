@@ -159,12 +159,14 @@ const Admin = () => {
             setLastUpdated("none");
           }
 
+
+
           await $.ajax({
             type: "GET",
-            url: `/getstockforalocation/${selectedLocation2}`,
+            url: `https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/${selectedLocation2}`,
           }).then((res) => {
 
-            console.log("getstockforalocation")
+            console.log("getstockforalocation", {selectedLocation2})
 
 
             setLayout(res);

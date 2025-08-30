@@ -56,7 +56,7 @@ const Checker = () => {
         .then((res) => {
 
 
-          console.log("fetch_url", fetch_url, "res", res)
+          // console.log("fetch_url", fetch_url, "res", res)
 
 
           if (
