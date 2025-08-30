@@ -115,6 +115,12 @@ const Admin = () => {
         url: `/fetchstock/${selectedLocation}`,
       })
         .then(async (res) => {
+
+
+          console.log("set stock data response", res)
+
+
+
           let nostock = false;
           if (typeof res !== "object") {
             if (count > 6) {
