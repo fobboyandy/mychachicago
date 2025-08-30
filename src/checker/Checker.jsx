@@ -45,10 +45,13 @@ const Checker = () => {
   async function handleChange(loc) {
     setLoading(true);
 
+
+    fetch_url = 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
+
     async function f(count) {
       await $.ajax({
         type: "GET",
-        url: 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
+        url: fetch_url
       })
         .then((res) => {
           // if (
@@ -71,8 +74,8 @@ const Checker = () => {
           // }
 
           // setDrinks(res);
-
-          console.log("loc", loc, "url", url, "res", res)
+          
+          console.log("loc", loc, "url", fetch_url, "res", res)
 
           setSelectedLocation(loc);
 
