@@ -49,7 +49,7 @@ const Checker = () => {
     async function f(count) {
       await $.ajax({
         type: "GET",
-        url: fetch_url
+        url: 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
       })
         .then((res) => {
           // if (
