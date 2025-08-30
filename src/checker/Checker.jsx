@@ -48,29 +48,31 @@ const Checker = () => {
     async function f(count) {
       await $.ajax({
         type: "GET",
-        url: `/getstockforalocation/${loc?.fetchName}`,
+        url: 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
       })
         .then((res) => {
-          if (
-            res === "not found" ||
-            !res ||
-            !res.length ||
-            res === "" ||
-            typeof res !== "object"
-          ) {
-            //wont prevent all errors, but will decrease by alot for sure
-            if (count < 9) {
-              //less than 9 requests, keep running
-              f(count + 1); //if return is nothing, meaning error, just rerun and eventually it will work
-              return;
-            } else {
-              alert("Something went wrong, please refresh page"); //if doesnt work after 8 times, throw error
-              setLoading(false);
-              setDrinks([]);
-            }
-          }
+          // if (
+          //   res === "not found" ||
+          //   !res ||
+          //   !res.length ||
+          //   res === "" ||
+          //   typeof res !== "object"
+          // ) {
+          //   //wont prevent all errors, but will decrease by alot for sure
+          //   if (count < 9) {
+          //     //less than 9 requests, keep running
+          //     f(count + 1); //if return is nothing, meaning error, just rerun and eventually it will work
+          //     return;
+          //   } else {
+          //     alert("Something went wrong, please refresh page"); //if doesnt work after 8 times, throw error
+          //     setLoading(false);
+          //     setDrinks([]);
+          //   }
+          // }
 
-          setDrinks(res);
+          // setDrinks(res);
+
+          console.log("loc", loc, "url", url, "res", res)
 
           setSelectedLocation(loc);
 
