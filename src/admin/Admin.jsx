@@ -114,34 +114,32 @@ const Admin = () => {
         type: "GET",
         url: `/fetchstock/${selectedLocation}`,
       })
-        .then(async (res) => {
+        .then(async (res) => 
+          {
 
+            let nostock = false;
+            if (typeof res !== "object") {
+              if (count > 6) {
+                //over 6 times, files most likely doesnt exist
+                // //change something here. s3 should return "not found" or something. need a test location without a stock file to see what it is.
+                // alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
+                // setLoading(false);
+                setStock(
+                  Array(6).fill({
+                    1: 0,
+                    2: 0,
+                    3: 0,
+                    4: 0,
+                    5: 0,
+                    6: 0,
+                    7: 0,
+                  })
+                );
 
-          console.log("set stock data response", res)
-
-
-
-          let nostock = false;
-          if (typeof res !== "object") {
-            if (count > 6) {
-              //over 6 times, files most likely doesnt exist
-              // //change something here. s3 should return "not found" or something. need a test location without a stock file to see what it is.
-              // alert("Something went wrong, please try again"); // if recursive run more than 8 times, something is probably wrong
-              // setLoading(false);
-              setStock(
-                Array(6).fill({
-                  1: 0,
-                  2: 0,
-                  3: 0,
-                  4: 0,
-                  5: 0,
-                  6: 0,
-                  7: 0,
-                })
-              );
-
-              nostock = true;
-            } else {
+                nostock = true;
+            } 
+            else 
+            {
               f(count + 1); //run again to see if its network or s3 error
               return;
             }
@@ -158,8 +156,6 @@ const Admin = () => {
           } else {
             setLastUpdated("none");
           }
-
-
 
           await $.ajax({
             type: "GET",
