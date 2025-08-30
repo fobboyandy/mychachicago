@@ -49,7 +49,7 @@ const Checker = () => {
     async function f(count) {
       await $.ajax({
         type: "GET",
-        url: 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
+        url: `https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/${loc?.fetchName}`
       })
         .then((res) => {
           // if (
@@ -73,7 +73,7 @@ const Checker = () => {
 
           // setDrinks(res);
 
-          let fetch_url = 'https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/' + loc
+          let fetch_url = `https://mycha-stock-endpoint-fobboyand-604254e78019.herokuapp.com/fetch_stock_location/${loc?.fetchName}`
 
           console.log("fetch_url", fetch_url, "res", res)
 
