@@ -163,6 +163,10 @@ const Admin = () => {
             type: "GET",
             url: `/getstockforalocation/${selectedLocation2}`,
           }).then((res) => {
+
+            console.log("getstockforalocation")
+
+
             setLayout(res);
             setLoading(false);
           });
@@ -176,6 +180,10 @@ const Admin = () => {
               });
 
               result.push(inner);
+
+
+              console.log("setting stock to result", result)
+
               setStock(result);
             });
           } else {
