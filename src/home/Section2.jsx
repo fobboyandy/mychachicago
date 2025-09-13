@@ -239,15 +239,6 @@ const Section2 = () => {
             regulated kitchen and stock our machines with fresh products every
             morning.
           </div>
-
-          <div className='desc-section2' style={{ marginTop: "30px" }}>
-            At Mycha, we guarantee{" "}
-            <span style={{ color: "rgb(109, 214, 49)", fontStyle: "italic" }}>
-              quality and freshness.
-            </span>{" "}
-            Our drinks have a shelf life of 24-48 hours and drinks that reach
-            this point are immediately removed
-          </div>
         </div>
         <div className='instagram op0'>
           <div className='head-section2'>
